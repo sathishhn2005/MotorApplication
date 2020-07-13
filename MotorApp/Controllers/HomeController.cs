@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MotorApp.Models;
 
 namespace MotorApp.Controllers
 {
@@ -13,18 +14,30 @@ namespace MotorApp.Controllers
             return View();
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
 
+        public ActionResult Login()
+        {
             return View();
         }
-
-        public ActionResult Contact()
+        [HttpGet]
+        public ActionResult Login(LoginViewModel objModels)
         {
-            ViewBag.Message = "Your contact page.";
+            try
+            {
+                if (objModels.Email != null && objModels.Password != null)
+                {
+                    return View("Index");
+                }
+                else
+                {
+                    return View("Login");
+                }
+            }
+            catch (Exception ex)
+            {
+                return View("Login");
+            }
 
-            return View();
         }
     }
 }
