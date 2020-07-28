@@ -1,0 +1,199 @@
+﻿@model IEnumerable<MotorApp.BusinessEntities.DomesticModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Master Domestic</h1>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="./">Home</a></li>
+        <li class="breadcrumb-item">Masters</li>
+        <li class="breadcrumb-item active" aria-current="page">Master Domestic</li>
+    </ol>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 mb-4">
+        <!-- Simple Tables -->
+        <div class="card">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Master Domestic</h6>
+                <div>
+
+                    @using (Html.BeginForm("BulkUpload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <input type="file" name="postedFile" accept=".xls,.xlsx" />
+                        @*<input type="submit" value="Import" />*@
+                        <input type="hidden" id="txtMotorMaster" name="txtMotorMaster" value="4">
+                        <button type="submit" class="btn btn-success btn-sm waves-effect">Upload Data</button>
+                        <a href="~/MasterUploads/DomesticBulkUpload.xlsx" download>Download Sample format</a>
+
+                    }
+                </div>
+                <div class="btn-group btn-group-sm">
+                    <button class="btn btn-secondary buttons-copy buttons-html5" tabindex="0"
+                            type="button">
+                        <span>XLS</span>
+                    </button>
+                    <button class="btn btn-secondary buttons-print" tabindex="0"
+                            type="button">
+                        <span>Print</span>
+                    </button>
+                    <button class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0"
+                            type="button">
+                        <span>PDF</span>
+                    </button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table align-items-center table-flush">
+                    <tr>
+                        <th>Policy No</th>
+                        <th>Issue Date</th>
+                        <th>Branch</th>
+                        <th>No.of Plan</th>
+                        <th>QuotationNo</th>
+
+                        <th>Actions</th>
+
+
+                    </tr>
+                    @if (Model != null)
+                    {
+                        foreach (var d in Model)
+                        {
+                            <tr>
+                                <td>@d.DraftNo</td>
+                                <td>@d.PolicyNo</td>
+                                <td>@d.IssueDate</td>
+                                <td>@d.PostalCode</td>
+                                <td>@d.Branch</td>
+
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-primary" data-toggle="modal"
+                                       data-target="#myModal">Detail</a>
+                                </td>
+
+
+                            </tr>
+                        }
+                    }
+                    </table>
+            </div>
+            <div class="card-footer"></div>
+        </div>
+    </div>
+</div>
+<!-- sample modal content -->
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myModalLabel">Customer Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-8 mx-auto">
+                        <form class="form-horizontal">
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Customer Code</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" id="CustomerCode" value="CSH014" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Customer Name</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" id="CustomerName"
+                                           value="Cash Customers-Amarat" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Vehicle Type</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" id="VehicleType" value="Private Vehicle"
+                                           readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Vehicle Make</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" id="VehicleMake" value="Hyundai Creta"
+                                           readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Registration No</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" id="RegistrationNo" value="Y/86906"
+                                           readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Vehicle Year</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" id="VehicleYear" value="2015" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Engine No</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" id="EngineNo" value="G4FGFU692427" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Chassis No</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" id="ChassisNo" value="MALC281CXGM061547"
+                                           readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Sum Insured</label>
+                                <div class="col-9">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">₹</span>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm" id="SumInsuredAmt" value="4335"
+                                               readonly="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">No of Passengers</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" id="NoofPassengers" value="5" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">GEO Y/N</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" id="GEO" value="Geo" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Revised SI(85%)</label>
+                                <div class="col-9">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">₹</span>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm" id="RevisedSI" value="3684.75" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-secondary btn-sm waves-effect" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary btn-sm waves-effect waves-light">Renew</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

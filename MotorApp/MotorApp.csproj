@@ -144,6 +144,10 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="MasterUploads\MotorBulkUpload.xlsx" />
+    <Content Include="MasterUploads\DomesticBulkUpload.xlsx" />
+    <Content Include="MasterUploads\IndividualBulkUpload.xlsx" />
+    <Content Include="MasterUploads\TravelBulkUpload.xlsx" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -168,6 +172,10 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\MasterDatabase.cshtml" />
+    <Content Include="Views\Home\MasterTravel.cshtml" />
+    <Content Include="Views\Home\MasterIndividual.cshtml" />
+    <Content Include="Views\Home\MasterDomestic.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -184,6 +192,20 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MotorApp.BAL\MotorApp.BAL.csproj">
+      <Project>{dc4b8522-2a65-4a20-b4e8-1e6356321783}</Project>
+      <Name>MotorApp.BAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MotorApp.BusinessEntities\MotorApp.BusinessEntities.csproj">
+      <Project>{4a2bdaf4-65b1-4ea2-95a6-d7a6e2af1ee3}</Project>
+      <Name>MotorApp.BusinessEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MotorApp.Utilities\MotorApp.Utilities.csproj">
+      <Project>{6cd02d8f-aeb3-4b64-9f06-5d130711b00e}</Project>
+      <Name>MotorApp.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
