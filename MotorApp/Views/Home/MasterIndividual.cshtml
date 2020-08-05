@@ -14,36 +14,63 @@
 
 <div class="row">
     <div class="col-lg-12 mb-4">
+        <div class="card mb-3">
+            <div class="card-header py-2 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Search</h6>
+            </div>
+            <form id="IndividualForm">
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-2">
+                            <input class="form-control form-control-sm  mb-3" id="PolicyNo" name="PolicyNo" type="text" placeholder="Policy No">
+                        </div>
+                        <div class="col-2">
+                            <input class="form-control form-control-sm  mb-3" id="EndorsementNo" name="EndorsementNo" type="text" placeholder="Endorsement No">
+                        </div>
+                        <div class="col-2">
+                            <input class="form-control form-control-sm  mb-3" id="AssuredName" name="AssuredName" type="text" placeholder="Assured Name">
+                        </div>
+                        <div class="col-2">
+                            <input class="form-control form-control-sm  mb-3" id="MobileNo" name="MobileNo" type="text" placeholder="Mobile No">
+                        </div>
+                        <div class="col-2">
+                            <input class="form-control form-control-sm  mb-3" id="CustomerCode" name="CustomerCode" type="text" placeholder="Customer Code">
+                        </div>
+                        <div class="col-2 text-center">
+                            <button class="btn btn-primary btn-sm" id="btnSearch" type="button">
+                                <i class="fas fa-search fa-sm"></i> Search
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </form>
+        </div>
         <!-- Simple Tables -->
         <div class="card">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Master Individual</h6>
-                <div>
+                <h6 class="m-0 font-weight-bold text-primary">List of Individual Policy</h6>
+                
+                    <input type="file" name="postedFile" id="fileUploadIndividual" accept=".xls,.xlsx" />
+                    <button type="submit" id="btnUpload" class="btn btn-success btn-sm waves-effect">Upload Data</button>
+                    <a href="~/MasterUploads/IndividualBulkUpload.xlsx" download>Download Sample format</a>
+                    <a class="btn btn-primary btn-sm mx-1" href="InsertIndividualIns#step-1">
+                        <i class="fas fa-user-plus fa-sm"></i> Add
+                        Individual Policy
+                    </a>
 
-                    @using (Html.BeginForm("BulkUpload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                    {
-                        <input type="file" name="postedFile" accept=".xls,.xlsx" />
-                        @*<input type="submit" value="Import" />*@
-                        <input type="hidden" id="txtMotorMaster" name="txtMotorMaster" value="3">
-                        <button type="submit" class="btn btn-success btn-sm waves-effect">Upload Data</button>
-                        <a href="~/MasterUploads/IndividualBulkUpload.xlsx" download>Download Sample format</a>
+                    <button class="btn btn-primary btn-sm mx-1" type="button" data-toggle="modal"
+                            data-target="#uploadBulk">
+                        <i class="fas fa-upload fa-sm"></i> Bulk Upload Policy
+                    </button>
 
-                    }
-                </div>
-                <div class="btn-group btn-group-sm">
-                    <button class="btn btn-secondary buttons-copy buttons-html5" tabindex="0"
-                            type="button">
-                        <span>XLS</span>
+                    <button class="btn btn-primary btn-sm mx-1" type="button">
+                        <i class="fas fa-download fa-sm"></i>
+                        Download Policy
                     </button>
-                    <button class="btn btn-secondary buttons-print" tabindex="0"
-                            type="button">
-                        <span>Print</span>
-                    </button>
-                    <button class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0"
-                            type="button">
-                        <span>PDF</span>
-                    </button>
-                </div>
+                
             </div>
             <div class="table-responsive">
                 <table class="table align-items-center table-flush">
@@ -51,8 +78,10 @@
                         <th>Policy No</th>
                         <th>Issue Date</th>
                         <th>Branch</th>
-                        <th>No.of Plan</th>
-                        <th>QuotationNo</th>
+                        <th>Assured Name</th>
+                        <th>Assured MobileNumber</th>
+                        <th>Policy StartDate</th>
+                        <th>Policy EndDate</th>
 
                         <th>Actions</th>
 
@@ -66,19 +95,25 @@
                                 <td>@d.PolicyNo</td>
                                 <td>@d.IssueDate</td>
                                 <td>@d.Branch</td>
-                                <td>@d.NameofthePlan</td>
-                                <td>@d.QuotationNo</td>
+                                <td>@d.LifeAssuredName</td>
+                                <td>@d.AssuredMobileNo</td>
+                                <td>@d.PolicyStartDate</td>
+                                <td>@d.PolicyEndDate</td>
+                                <td class="d-flex flex-row align-items-center justify-content-between">
+                                    <i class="fas fa-pencil-alt pointer" aria-hidden="true" data-toggle="modal"
+                                       data-target="#myModal" onclick="renewal(@d.IndividualId)">
 
-                                <td>
-                                    <a href="#" class="btn btn-sm btn-primary" data-toggle="modal"
-                                       data-target="#myModal">Detail</a>
+                                    </i>
+                                    <i class="fas fa-eye pointer" aria-hidden="true" data-toggle="modal"
+                                       data-target="#myModal"></i>
+                                    <a href="EditIndividualIns?id=@d.IndividualId">Edit</a>
                                 </td>
 
 
                             </tr>
                         }
                     }
-                    </table>
+                </table>
             </div>
             <div class="card-footer"></div>
         </div>
@@ -89,7 +124,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title mt-0" id="myModalLabel">Customer Details</h5>
+                <h5 class="modal-title mt-0" id="myModalLabel">Premium Sheet</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -97,57 +132,57 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-8 mx-auto">
-                        <form class="form-horizontal">
+                        <form id="formRenewal" class="form-horizontal">
                             <div class="form-group row mb-3">
+                                <input type="hidden" name="MotorId" id="Mid">
                                 <label for="inputEmail3" class="col-3 col-form-label">Customer Code</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" id="CustomerCode" value="CSH014" readonly>
+                                    <input type="text" class="form-control form-control-sm" name="CustomerCode" required id="CustomerCode">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Customer Name</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" id="CustomerName"
-                                           value="Cash Customers-Amarat" readonly>
+                                    <input type="text" class="form-control form-control-sm" name="CustomerName" id="CustomerName">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Vehicle Type</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" id="VehicleType" value="Private Vehicle"
+                                    <input type="text" class="form-control form-control-sm" name="VehicleType" id="VehicleType"
                                            readonly>
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Vehicle Make</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" id="VehicleMake" value="Hyundai Creta"
+                                    <input type="text" class="form-control form-control-sm" name="VehicleMake" id="VehicleMake"
                                            readonly>
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Registration No</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" id="RegistrationNo" value="Y/86906"
+                                    <input type="text" class="form-control form-control-sm" name="RegistrationNo" id="RegistrationNo"
                                            readonly>
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Vehicle Year</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" id="VehicleYear" value="2015" readonly>
+                                    <input type="text" class="form-control form-control-sm" name="VehicleYear" id="VehicleYear" readonly>
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Engine No</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" id="EngineNo" value="G4FGFU692427" readonly>
+                                    <input type="text" class="form-control form-control-sm" name="EngineNo" id="EngineNo" readonly>
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Chassis No</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" id="ChassisNo" value="MALC281CXGM061547"
+                                    <input type="text" class="form-control form-control-sm" name="ChassisNo" id="ChassisNo"
                                            readonly>
                                 </div>
                             </div>
@@ -158,21 +193,19 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">₹</span>
                                         </div>
-                                        <input type="text" class="form-control form-control-sm" id="SumInsuredAmt" value="4335"
-                                               readonly="">
+                                        <input type="text" class="form-control form-control-sm" name="SumInsured" id="SumInsured">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">No of Passengers</label>
+                                <label for="inputEmail3" class="col-3 col-form-label">Premium</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" id="NoofPassengers" value="5" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">GEO Y/N</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" id="GEO" value="Geo" readonly>
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">₹</span>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm" name="PremiumAmount" id="PremiumAmount">
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
@@ -182,18 +215,179 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">₹</span>
                                         </div>
-                                        <input type="text" class="form-control form-control-sm" id="RevisedSI" value="3684.75" readonly>
+                                        <input type="text" class="form-control form-control-sm" name="RivisedSI" id="RivisedSI">
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">No of Passengers</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" name="NoofPassengers" id="NoofPassengers" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">GEO Y/N</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" name="GEO" id="GEO" readonly>
+                                </div>
+                            </div>
+
                         </form>
                     </div>
                 </div>
             </div>
             <div class="modal-footer justify-content-center">
                 <button type="button" class="btn btn-secondary btn-sm waves-effect" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary btn-sm waves-effect waves-light">Renew</button>
+                <button type="button" id="btnRenewal" class="btn btn-primary btn-sm waves-effect waves-light">Renew</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+</div>
+<!-- /.modal -->
+<script>
+
+
+    function renewal(id) {
+        $.ajax({
+            url: '/Home/EditIndividualModal/?IndId=' + id, // The method name + paramater
+            success: function (data) {
+                $('#VehicleType').val(data.VehicleType)
+                $('#VehicleMake').val(data.MakeModel)
+                $('#RegistrationNo').val(data.RegistrationNo)
+                $('#VehicleYear').val(data.YearofManufacture)
+                $('#EngineNo').val(data.EngineNo)
+                $('#ChassisNo').val(data.ChassisNo)
+                $('#NoofPassengers').val(data.SeatingCapacity)
+                $('#GEO').val(data.GeographicalArea)
+                $('#Mid').val(data.MotorId)
+                $('#SumInsured').val(data.SumInsured)
+                $('#PremiumAmount').val(data.PremiumAmount)
+                $('#RivisedSI').val(data.RivisedSI)
+                $('#CustomerCode').val(data.CustomerCode)
+                $('#CustomerName').val(data.CustomerName)
+
+
+                // $('#myModal').html(data); // This should be an empty div where you can inject your new html (the partial view)
+            }
+        });
+    }
+
+
+    $(document).ready(function () {
+        $('#btnRenewal').on('click', function () {
+            var renewalData = $('#formRenewal').serialize();
+            $.ajax({
+
+                type: "POST",
+                url: "/Home/UpdateIndividualIns",
+                dataType: "json",
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                data: renewalData,
+                success: function (res) {
+                    if (res > 0)
+                        alert('Data Renewed Successfully')
+                    else if (res == -2) {
+                        alert('Please provide all mandatory fields')
+                        return false;
+                    }
+                    $('#formRenewal').reset();
+                },
+                error: function () {
+                    // $("#lblMessage").html('Error while Registring the Company!.');
+                    $('#formRenewal').reset();
+                }
+            })
+        });
+    });
+
+    $(document).ready(function () {
+        $('#btnSearch').on('click', function () {
+            var formData = $('#MotorForm').serialize();
+            $.ajax({
+
+                type: "GET",
+                url: "/Home/SearchMotor",
+                dataType: "json",
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                data: formData,
+                success: function (res) {
+                    Model = res;
+                },
+                error: function () {
+                    // $("#lblMessage").html('Error while Registring the Company!.');
+                }
+            })
+        });
+    });
+    $(document).ready(function () {
+        $("#PolicyNo").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tblMotor tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+        $("#EndorsementNo").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tblMotor tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+        $("#AssuredName").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tblMotor tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+        $("#MobileNo").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tblMotor tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+        $("#CustomerCode").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tblMotor tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+    $(document).ready(function () {
+        $('#btnUpload').click(function () {
+
+            // Checking whether FormData is available in browser
+            if (window.FormData !== undefined) {
+
+                var fileUpload = $("#fileUploadIndividual").get(0);
+                var files = fileUpload.files;
+
+                // Create FormData object
+                var fileData = new FormData();
+
+                // Looping over all files and add it to FormData object
+                for (var i = 0; i < files.length; i++) {
+                    fileData.append(files[i].name, files[i]);
+                }
+
+                // Adding one more key to FormData object
+                fileData.append('txtMotorMaster', '3');
+
+                $.ajax({
+                    url: '/Home/UploadFiles',
+                    type: "POST",
+                    contentType: false, // Not to set any content header
+                    processData: false, // Not to process data
+                    data: fileData,
+                    success: function (result) {
+                        alert(result);
+                        window.location.href = "MasterIndividual";
+                    },
+                    error: function (err) {
+                        alert(err.statusText);
+                    }
+                });
+            } else {
+                alert("FormData is not supported.");
+            }
+        });
+    });
+</script>

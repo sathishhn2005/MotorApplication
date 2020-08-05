@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,10 @@ namespace MotorApp.BusinessEntities
         public long MotorId { get; set; }
         public string PolicyDetails { get; set; }
 
-        public DateTime? IssueDate { get; set; }
+        [Display(Name = "Issue Date")]
+        public DateTime IssueDate { get; set; }
+
+        
 
         public string PolicyNo { get; set; }
 
@@ -21,13 +25,14 @@ namespace MotorApp.BusinessEntities
 
         public string Branch { get; set; }
 
-        public DateTime? PolicyStartDate { get; set; }
+        public DateTime PolicyStartDate { get; set; }
 
-        public DateTime? PolicyEndDate { get; set; }
+        public DateTime PolicyEndDate { get; set; }
 
         public string AgentCode { get; set; }
 
         public string BrokerCode { get; set; }
+        public string AgentCode_BrokerCode { get; set; }
 
         public string UAEExtensionNilPremiaum { get; set; }
 
@@ -41,7 +46,7 @@ namespace MotorApp.BusinessEntities
 
         public string VehicleType { get; set; }
 
-        public int? YearofManufacture { get; set; }
+        public int YearofManufacture { get; set; }
 
         public string VehicleAge { get; set; }
 
@@ -51,19 +56,19 @@ namespace MotorApp.BusinessEntities
 
         public string GeographicalArea { get; set; }
 
-        public DateTime? FirstRegDate { get; set; }
+        public DateTime FirstRegDate { get; set; }
 
-        public int? SeatingCapacity { get; set; }
+        public int SeatingCapacity { get; set; }
 
         public string RoadAssistance { get; set; }
 
-        public long? SumInsured_RO { get; set; }
+        public long SumInsured_RO { get; set; }
 
         public string Voluntaryexcess { get; set; }
 
         public string NoClaimsDiscount { get; set; }
 
-        public DateTime? LicenceFirstIssued { get; set; }
+        public DateTime LicenceFirstIssued { get; set; }
 
         public string SpecialDiscount { get; set; }
 
@@ -94,6 +99,8 @@ namespace MotorApp.BusinessEntities
         public string AssuredInformations { get; set; }
 
         public string AssuredName { get; set; }
+        public string AssuredName_Arabic  { get; set; }
+        
 
         public string CivilID_CRNo { get; set; }
 
@@ -119,15 +126,21 @@ namespace MotorApp.BusinessEntities
 
         public string VIPCustomer { get; set; }
 
-        public DateTime? CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         public string CreatedBy { get; set; }
 
-        public DateTime? ModifiedAt { get; set; }
+        public DateTime ModifiedAt { get; set; }
 
         public string ModifiedBy { get; set; }
+        
         public int Flag { get; set; }
+        public long SumInsured { get; set; }
+        public long PremiumAmount { get; set; }
+        public long RivisedSI { get; set; }
 
-
+        public string CustomerCode { get; set; }
+        public string CustomerName { get; set; }
+       
     }
 }

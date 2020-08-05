@@ -9,12 +9,24 @@
     <meta name="author" content="">
     <link href="~/img/logo/logo.png" rel="icon">
     <title>MotorInsurance - Dashboard</title>
-    <link href="~/vendor/morris/morris.css" rel="stylesheet" type="text/css">
-    <link href="~/vendor/fontawesome-free/css/all.css" rel="stylesheet" type="text/css">
-    <link href="~/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <link href="~/css/ruang-admin.css" rel="stylesheet">
+    <link href="~/vendor/morris/morris.css" rel="stylesheet" type="text/css" />
+    <link href="~/vendor/fontawesome-free/css/all.css" rel="stylesheet" type="text/css" />
+    <link href="~/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/css/ruang-admin.css" rel="stylesheet" />
+    <link href="~/vendor/smart_wizard/css/smart_wizard_all.css" rel="stylesheet" type="text/css" />
     @*@Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")*@
+        @Scripts.Render("~/bundles/modernizr")*@
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/js/ruang-admin.min.js"></script>
+    <script src="~/vendor/chart.js/Chart.min.js"></script>
+    <script src="~/js/demo/chart-area-demo.js"></script>
+    <script src="~/vendor/morris/morris.js"></script>
+    <script src="~/vendor/morris/raphael.min.js"></script>
+
+    
 </head>
 <body id="page-top">
     <div id="wrapper">
@@ -86,11 +98,11 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
                    aria-expanded="true" aria-controls="collapseBootstrap">
                     <i class="far fa-fw fa-window-maximize"></i>
-                    <span>Master Database</span>
+                    <span>Master Motor</span>
                 </a>
                 <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Master Database</h6>
+                        <h6 class="collapse-header">Master Motor</h6>
                         <a class="collapse-item" href="#">Uploading Renewal policy</a>
                         <a class="collapse-item" href="#">Uploading of raw data</a>
                         <a class="collapse-item" href="#">All renewal policies</a>
@@ -317,6 +329,7 @@
                     </div>
                 </div>
                 <div class="container-fluid" id="container-wrapper">
+
                     @RenderBody()
                 </div>
             </div>
@@ -339,14 +352,9 @@
     @*@Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")*@
     @RenderSection("scripts", required: false)
-    <script src="~/vendor/jquery/jquery.min.js"></script>
-    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="~/js/ruang-admin.min.js"></script>
-    <script src="~/vendor/chart.js/Chart.min.js"></script>
-    <script src="~/js/demo/chart-area-demo.js"></script>
-    <script src="~/vendor/morris/morris.js"></script>
-    <script src="~/vendor/morris/raphael.min.js"></script>
+
+    <script src="~/vendor/smart_wizard/js/jquery.smartWizard.js"></script>
+
     <script>
         !function ($) {
             "use strict";
