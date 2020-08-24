@@ -1,20 +1,17 @@
 ﻿@model IEnumerable<MotorApp.BusinessEntities.MotorModel>
-
-
-
+@using MotorApp.BusinessEntities;
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Master Motor</h1>
-    <ol class="breadcrumb">
+    <ol class="breadcrumb my-2">
         <li class="breadcrumb-item"><a href="./">Home</a></li>
         <li class="breadcrumb-item">Masters</li>
         <li class="breadcrumb-item active" aria-current="page">Master Motor</li>
     </ol>
 </div>
-
 <div class="row">
     <div class="col-lg-12 mb-4">
         <div class="card mb-3">
@@ -24,109 +21,129 @@
             <form id="MotorForm">
                 <div class="card-body">
                     <div class="row">
+                        @using (Html.BeginForm("MasterDatabase", "Home", FormMethod.Get))
+                        {
 
-                        <div class="col-2">
-                            <input class="form-control form-control-sm  mb-3" id="PolicyNo" name="PolicyNo" type="text" placeholder="Policy No">
-                        </div>
+                            <div class="col-2">
+                                <input class="form-control form-control-sm  mb-3" name="PolicyNo" type="text" placeholder="Policy No">
 
-                        <div class="col-2">
-                            <input class="form-control form-control-sm  mb-3" id="PolStartDate" name="PolicyStartDate" type="date" placeholder="Policy Start Date">
+                            </div>
+                            <div class="col-2">
+                                <input class="form-control form-control-sm  mb-3" name="AgentCode_BrokerCode" type="text" placeholder="Producer Name">
+                            </div>
+                            <div class="col-2">
+                                <input class="form-control form-control-sm  mb-3" name="AssuredName" type="text" placeholder="Assured Name">
+                            </div>
 
-                        </div>
-                        <div class="col-2">
-                            <input class="form-control form-control-sm  mb-3" id="PolEndDate" name="PolicyEndDate" type="date" placeholder="Policy End Date">
-                        </div>
-                        <div class="col-2">
-                            <input class="form-control form-control-sm  mb-3" id="MobileNo" name="MobileNo" type="text" placeholder="Mobile No">
-                        </div>
 
-                        <div class="col-2 text-center">
-                            <button class="btn btn-primary btn-sm" id="btnSearch" type="button">
-                                <i class="fas fa-search fa-sm"></i> Search
-                            </button>
-                        </div>
-
+                            <div class="col-2">
+                                <input class="form-control form-control-sm  mb-3" name="Branch" type="text" placeholder="Branch">
+                            </div>
+                            <div class="col-2">
+                                <select class="form-control form-control-sm" name="Status" required="required">
+                                    <option disabled selected> -- select an option -- </option>
+                                    <option>Completed</option>
+                                    <option>Dropped</option>
+                                    <option>On Hold</option>
+                                </select>
+                            </div>
+                            <div class="col-2 text-center">
+                                @*<a>Search</a>*@
+                                @*<button class="btn btn-primary btn-sm" type="button">
+                                        <i class="fas fa-search fa-sm"></i> Search
+                                    </button>*@
+                                <input class="btn btn-primary btn-sm" type="submit" value="Search" />
+                            </div>
+                        }
                     </div>
-
                 </div>
             </form>
         </div>
         <!-- Simple Tables -->
-
         <div class="card">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">List of Motor Policies</h6>
-
-                <input type="file" name="postedFile" id="fileUploadMotor" accept=".xls,.xlsx" />
-                <input type="hidden" id="txtMotorMaster" name="txtMotorMaster" value="1">
-
-                <button type="submit" id="btnUpload" class="btn btn-success btn-sm waves-effect">Upload Data</button>
-                <a href="~/MasterUploads/MotorBulkUpload.xlsx" download>Download Sample format</a>
-
-
-                <a class="btn btn-primary btn-sm mx-1" href="MotorInsurance#step-1">
-                    <i class="fas fa-user-plus fa-sm"></i> Add
-                    Single Policy
-                </a>
-
-                <button class="btn btn-primary btn-sm mx-1" type="button" data-toggle="modal"
-                        data-target="#uploadBulk">
-                    <i class="fas fa-upload fa-sm"></i> Bulk Upload Policy
-                </button>
-
-                <button class="btn btn-primary btn-sm mx-1" type="button">
-                    <i class="fas fa-download fa-sm"></i>
-                    Download Policy
-                </button>
-
-
+                <div class="d-none">
+                    <input type="file" name="postedFile" id="fileUploadMotor" accept=".xls,.xlsx" />
+                    <input type="hidden" id="txtMotorMaster" name="txtMotorMaster" value="1">
+                    @*<button type="submit" id="btnUpload" class="btn btn-success btn-sm waves-effect">Upload Data</button>*@
+                </div>
+                <div>
+                    <a class="btn btn-primary btn-sm mx-1" href="MotorInsurance#step-1">
+                        <i class="fas fa-user-plus fa-sm"></i> Add
+                        Single Policy
+                    </a>
+                    <button class="btn btn-primary btn-sm mx-1" type="button" data-toggle="modal" data-backdrop="static"
+                            data-target="#uploadBulk">
+                        <i class="fas fa-upload fa-sm"></i> Bulk Upload Policy
+                    </button>
+                    <button class="btn btn-primary btn-sm mx-1" type="button">
+                        <i class="fas fa-download fa-sm"></i>
+                        Download Policy
+                    </button>
+                </div>
             </div>
             <div class="table-responsive">
                 <table id="tblMotor" class="table align-items-center table-flush">
                     <tr>
                         <th>Policy No</th>
-                        <th>Issue Date</th>
-                        <th>Branch</th>
+                        <th>Producer Name</th>
                         <th>Assured Name</th>
-                        <th>Assured MobileNumber</th>
-                        <th>Policy StartDate</th>
-                        <th>Policy EndDate</th>
+                        <th>Mobile Number</th>
+                        <th>Branch</th>
+                        <th>Status</th>
                         <th>Actions</th>
 
-
                     </tr>
-                    @if (Model != null)
+                    @if (Model.Count() == 0)
                     {
-                        foreach (var d in Model)
+
+                        <tr>
+                            <td colspan="5">
+                                No record found
+                            </td>
+                        </tr>
+
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
                         {
                             <tr>
-                                <td>@d.PolicyNo</td>
-                                <td>@d.IssueDate.ToString("dd-MM-yyyy")</td>
-                                <td>@d.Branch</td>
-                                <td>@d.AssuredName</td>
-                                <td>@d.MobileNo</td>
-                                <td>@d.PolicyStartDate</td>
-                                <td>@d.PolicyEndDate</td>
-
-                                @*<td>
-                                        <a href="#" class="btn btn-sm btn-primary" data-toggle="modal"
-                                           data-target="#myModal">Detail</a>
-                                    </td>*@
+                                <td>@Html.DisplayFor(modelItem => item.PolicyNo)</td>
+                                <td>@Html.DisplayFor(modelItem => item.AgentCode_BrokerCode)</td>
+                                <td>@Html.DisplayFor(modelItem => item.AssuredName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.MobileNo)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Branch)</td>
+                                @if (item.Status.Equals("Completed"))
+                                {
+                                    <td><span class="badge badge-success">@Html.DisplayFor(modelItem => item.Status)</span></td>
+                                }
+                                @if (item.Status.Equals("Dropped"))
+                                {
+                                    <td><span class="badge badge-danger">@Html.DisplayFor(modelItem => item.Status)</span></td>
+                                }
+                                @if (item.Status.Equals("On Hold"))
+                                {
+                                    <td><span class="badge badge-info">@Html.DisplayFor(modelItem => item.Status)</span></td>
+                                }
+                                @if (item.Status.Equals(""))
+                                {
+                                    <td><span class="badge badge-info"></span></td>
+                                }
                                 <td class="d-flex flex-row align-items-center justify-content-between">
-                                    <i class="fas fa-pencil-alt pointer" aria-hidden="true" data-toggle="modal"
-                                       data-target="#myModal" onclick="renewal(@d.MotorId)">
-
-                                    </i>
                                     <i class="fas fa-eye pointer" aria-hidden="true" data-toggle="modal"
-                                       data-target="#myModal"></i>
-                                    <a href="Edit?MotorId=@d.MotorId">Edit</a>
+                                       data-target="#myModal" onclick="renewal(@item.MotorId)">
+                                    </i>
+                                    @*<i class="fas fa-eye pointer" aria-hidden="true" data-toggle="modal"
+                                        data-target="#myModal"></i>*@
+                                    <a href="Edit?MotorID=@item.MotorId"><i class="fas fa-pencil-alt pointer" aria-hidden="true"></i></a>
                                 </td>
-
                             </tr>
+
                         }
                     }
                 </table>
-
             </div>
             <div class="card-footer"></div>
         </div>
@@ -233,32 +250,28 @@
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">No of Passengers</label>
+                                <label for="inputEmail3" class="col-3 col-form-label">Status</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" name="NoofPassengers" id="NoofPassengers" readonly>
+                                    <select class="form-control form-control-sm" id="Status" name="Status" required="required">
+                                        <option disabled selected> -- select an option -- </option>
+                                        <option>Completed</option>
+                                        <option>Dropped</option>
+                                        <option>On Hold</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">GEO Y/N</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" name="GEO" id="GEO" readonly>
-                                </div>
-                            </div>
-
                         </form>
                     </div>
                 </div>
             </div>
             <div class="modal-footer justify-content-center">
                 <button type="button" class="btn btn-secondary btn-sm waves-effect" data-dismiss="modal">Close</button>
-                <button type="button" id="btnRenewal" class="btn btn-primary btn-sm waves-effect waves-light">Renew</button>
+                <button type="button" id="btnRenewal" class="btn btn-primary btn-sm waves-effect waves-light">Submit</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
-
 <!-- /.modal -->
-
 <div id="uploadBulk" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
@@ -271,36 +284,60 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-10 mx-auto">
+                        <div class="text-right">
+                            <a href="~/MasterUploads/MotorBulkUpload.xlsx" class="btn btn-dark btn-sm" download><i class="fas fa-download fa-sm"></i> Download Sample format</a>
+                        </div>
                         @*<form method="post" enctype="multipart/form-data">*@
-                        <div class="upload">
-                            <div class="upload-files">
-                                <header>
-                                    <p>
-                                        <i class="fa fa-cloud-upload" aria-hidden="true"></i>
-                                        <span class="up mr-1">Bulk</span>
-                                        <span class="load">Upload</span>
-                                    </p>
-                                </header>
-                                <div class="body" id="drop">
-                                    <i class="fa fa-file-text-o pointer-none" aria-hidden="true"></i>
-                                    <p class="pointer-none">
-                                        <b>Drag and drop</b> files here <br /> or <a href=""
-                                                                                     id="triggerFile">browse</a> to begin the upload
-                                    </p>
-                                    <input type="file" multiple="multiple" />
-
+                        <div class="fileuploader fileuploader-theme-dragdrop">
+                            @*<input type="file" name="postedFile" id="fileUploadMotor" accept=".xls,.xlsx" />
+                                <input type="hidden" id="txtMotorMaster" name="txtMotorMaster" value="1">*@
+                            <input type="hidden" name="fileuploader-list-files" value="[]">
+                            <input type="file" name="files[]" multiple="multiple" style="position: absolute; z-index: -9999; height: 0px; width: 0px; padding: 0px; margin: 0px; line-height: 0; outline: 0px; border: 0px; opacity: 0;">
+                            <div class="fileuploader-input">
+                                <div class="fileuploader-input-inner">
+                                    <div class="fileuploader-icon-main"></div>
+                                    <h3 class="fileuploader-input-caption">
+                                        <span>Drag and drop files here</span>
+                                    </h3>
+                                    <p> </p>
+                                    <button type="button" class="fileuploader-input-button">
+                                        <span>Browse files</span>
+                                    </button>
                                 </div>
-                                <footer>
-                                    <div class="divider">
-                                        <span>
-                                            <AR>FILES</AR>
-                                        </span>
-                                    </div>
-                                    <div class="list-files">
-                                        <!--   template   -->
-                                    </div>
-                                    <button class="importar">UPDATE FILES</button>
-                                </footer>
+                            </div>
+                            <div class="fileuploader-items">
+                                <ul class="fileuploader-items-list">
+                                    <li class="fileuploader-item file-type-application file-ext-xlsx file-has-popup upload-successful">
+                                        <div id="fileContainer" class="columns" style="display: none;">
+                                            <div class="column-thumbnail">
+                                                <div class="fileuploader-item-image fileuploader-no-thumbnail">
+                                                    <div style="background-color: #591605" class="fileuploader-item-icon"><i>xlsx</i></div>
+                                                </div>
+                                                <span class="fileuploader-action-popup"></span>
+                                            </div>
+                                            <div class="column-title">
+                                                <div id="fileName">SampleFile.xlsx</div>
+                                                <span id="fileSize">0 KB</span>
+                                            </div>
+                                            <div class="column-actions">
+                                                <button type="button" id="clearFiles" class="btn btn-success btn-sm round" title="Delete">
+                                                    <i class="fas fa-check fa-sm"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="progress-bar2" style="display: none;">
+                                            <div class="fileuploader-progressbar">
+                                                <div class="bar" style="width: 100%;"></div>
+                                            </div>
+                                            <span>100%</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="mt-2">
+                                <button id="btnUpload" type="submit" class="btn btn-success btn-block">
+                                    <i class="fas fa-upload fa-sm"></i><span>Upload</span>
+                                </button>
                             </div>
                         </div>
                         @*</form>*@
@@ -314,7 +351,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
-
 
 <script>
 
@@ -345,16 +381,76 @@
                     processData: false, // Not to process data
                     data: fileData,
                     success: function (result) {
-                        alert(result);
-                        window.location.href = "MasterDatabase";
+                        //alert(result);
+                        //window.location.href = "MasterDatabase";
+                        if (result == 1) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: "File Doesn't belongs to Motor Policy",
+                            });
+                        }
+                        if (result == "success") {
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: "File Uploaded Successfully!",
+
+                            }).then(
+                                function () { window.location.href = "MasterDatabase"; });
+                        }
+                        if (result == "same") {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Warning!',
+                                text: "All the Records already exists. Try uploading new data.",
+                            }).then(
+                                function () { window.location.href = "MasterDatabase"; });
+                        }
                     },
                     error: function (err) {
-                        alert(err.statusText);
+                        //alert(err.statusText);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: err.statusText,
+                        })
                     }
                 });
             } else {
-                alert("FormData is not supported.");
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Oops...',
+                    text: "FormData is not supported.",
+                })
             }
+        });
+        $('.fileuploader-input').click(function () {
+            $("#fileUploadMotor").click();
+        });
+        $('#clearFiles').click(function () {
+            $("#fileContainer").hide();
+            $('#fileUploadMotor').val('');
+        });
+        $('#clearFiles').hover(
+            function () {
+                $('#clearFiles').removeClass("btn-success").addClass("btn-danger");
+                $('#clearFiles .fas').removeClass("fa-check").addClass("fa-trash");
+            },
+            function () {
+                $('#clearFiles').removeClass("btn-danger").addClass("btn-success");
+                $('#clearFiles .fas').removeClass("fa-trash").addClass("fa-check");
+            });
+        $('#fileUploadMotor').change(function (e) {
+            var fileName = e.target.files[0].name;
+            var fileSize = e.target.files[0].size;
+            $("#fileContainer").show();
+            $("#fileName").html(fileName);
+            fileSize = (fileSize / 1024).toFixed(2);
+            $("#fileSize").html(fileSize + " KB");
+
+            //alert('The file "' + fileName + '" has been selected.');
         });
     });
     function renewal(MotorId) {
@@ -363,6 +459,7 @@
         $.ajax({
             url: '/Home/EditModal/?MotorId=' + MotorId, // The method name + paramater
             success: function (data) {
+
                 $('#VehicleType').val(data.VehicleType)
                 $('#VehicleMake').val(data.MakeModel)
                 $('#RegistrationNo').val(data.RegistrationNo)
@@ -377,6 +474,7 @@
                 $('#RivisedSI').val(data.RivisedSI)
                 $('#CustomerCode').val(data.CustomerCode)
                 $('#CustomerName').val(data.CustomerName)
+                $('#Status').val(data.Status)
 
 
                 // $('#myModal').html(data); // This should be an empty div where you can inject your new html (the partial view)
@@ -396,10 +494,20 @@
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 data: renewalData,
                 success: function (res) {
-                    if (res > 0)
-                        alert('Data Renewed Successfully')
+                    if (res > 0) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '',
+                            text: "Data Submitted Successfully.",
+                        })
+                    }
                     else if (res == -2) {
-                        alert('Please provide all mandatory fields')
+                        Swal.fire({
+                            icon: 'warning',
+                            title: '',
+                            text: "Please provide all mandatory fields.",
+                        })
+                        //alert('Please provide all mandatory fields')
                         return false;
                     }
                     $('#formRenewal').reset();
@@ -423,7 +531,10 @@
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 data: formData,
                 success: function (res) {
-                    Model = res;
+                    $("#tblMotor tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(formData) > -1)
+                    });
+
                 },
                 error: function () {
                     // $("#lblMessage").html('Error while Registring the Company!.');
@@ -456,11 +567,70 @@
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
-        $("#CustomerCode").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#tblMotor tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
+
     });
+    window.onload = function () {
+
+        var btn = document.getElementById('uploadBtn'),
+            progressBar = document.getElementById('progressBar'),
+            progressOuter = document.getElementById('progressOuter'),
+            msgBox = document.getElementById('msgBox');
+        var fileUpload = $("#fileUploadMotor").get(0);
+        var files = fileUpload.files;
+        var files = fileUpload.files;
+
+        // Create FormData object
+        var fileData = new FormData();
+
+        // Looping over all files and add it to FormData object
+        for (var i = 0; i < files.length; i++) {
+            fileData.append(files[i].name, files[i]);
+        }
+
+        // Adding one more key to FormData object
+        fileData.append('txtMotorMaster', '1');
+        var uploader = new ss.SimpleUpload({
+            button: btn,
+            url: '/Home/UploadFiles',
+            multipart: true,
+            data: fileData,
+            hoverClass: 'hover',
+            focusClass: 'focus',
+            responseType: 'json',
+            startXHR: function () {
+                progressOuter.style.display = 'block'; // make progress bar visible
+                this.setProgressBar(progressBar);
+            },
+            onSubmit: function () {
+                msgBox.innerHTML = ''; // empty the message box
+                btn.innerHTML = 'Uploading...'; // change button text to "Uploading..."
+            },
+            onComplete: function (filename, response) {
+                btn.innerHTML = 'Choose Another File';
+                progressOuter.style.display = 'none'; // hide progress bar when upload is completed
+
+                if (!response) {
+                    msgBox.innerHTML = 'Unable to upload file';
+                    return;
+                }
+
+                if (response.success === true) {
+                    msgBox.innerHTML = '<strong>' + escapeTags(filename) + '</strong>' + ' successfully uploaded.';
+
+                } else {
+                    if (response.msg) {
+                        msgBox.innerHTML = escapeTags(response.msg);
+
+                    } else {
+                        msgBox.innerHTML = 'An error occurred and the upload failed.';
+                    }
+                }
+            },
+            onError: function () {
+                progressOuter.style.display = 'none';
+                msgBox.innerHTML = 'Unable to upload file';
+            }
+        });
+    };
+
 </script>

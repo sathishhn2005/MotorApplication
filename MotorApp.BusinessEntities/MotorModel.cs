@@ -15,8 +15,8 @@ namespace MotorApp.BusinessEntities
         [Display(Name = "Issue Date")]
         public DateTime IssueDate { get; set; }
 
-        
 
+        private string agentCode_BrokerCode = string.Empty;
         public string PolicyNo { get; set; }
 
         public string TypeofTransaction { get; set; }
@@ -32,7 +32,8 @@ namespace MotorApp.BusinessEntities
         public string AgentCode { get; set; }
 
         public string BrokerCode { get; set; }
-        public string AgentCode_BrokerCode { get; set; }
+        
+        //public string AgentCode_BrokerCode { get; set; }
 
         public string UAEExtensionNilPremiaum { get; set; }
 
@@ -135,12 +136,18 @@ namespace MotorApp.BusinessEntities
         public string ModifiedBy { get; set; }
         
         public int Flag { get; set; }
+        public long ProducerCodeId { get; set; }
+        
         public long SumInsured { get; set; }
         public long PremiumAmount { get; set; }
         public long RivisedSI { get; set; }
 
         public string CustomerCode { get; set; }
         public string CustomerName { get; set; }
-       
+        public string Status { get; set; }
+        
+        public List<ProducerCodeMaster> ProducerMaster { get; set; }
+        [Display(Name = "Producer Code")]
+        public string AgentCode_BrokerCode { get => agentCode_BrokerCode; set => agentCode_BrokerCode = value; }
     }
 }

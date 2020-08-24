@@ -8,6 +8,11 @@ using MotorApp.Utilities;
 using MotorApp.BusinessEntities;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Caching;
+using System.Web.Routing;
+using System.Web.Services;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace MotorApp.Controllers
 {
@@ -18,48 +23,314 @@ namespace MotorApp.Controllers
         private List<TravelModel> travelModel;
         private List<IndividualModel> indiviModel;
         private List<DomesticModel> domesModel;
+        private List<ProducerCodeMaster> lstProducerCodeMaster;
+        private DashBoard lstInfo;
+        string IsExists = string.Empty;
+        static string U_Name = string.Empty;
+        static long RoleId = 0;
+        dynamic lstInput;
+        
         public HomeController()
         {
-            long returnCode = objMotorBAL.GetMasterViews(out motorModel, out travelModel, out indiviModel, out domesModel);
+            if (!string.IsNullOrEmpty(U_Name))
+            {
+                long returnCode = objMotorBAL.GetMasterViews(out motorModel, out travelModel, out indiviModel, out domesModel, out lstProducerCodeMaster);
+            }
+
+
+        }
+
+        public IEnumerable<SelectListItem> lstProItems
+        {
+            get { return new SelectList(lstProducerCodeMaster, "ProducerCodeId", "ProducerName"); }
         }
 
         MotorBAL objMotorBAL = new MotorBAL();
         public ActionResult Index()
         {
-            return View();
+
+            if (TempData["Input"] != null)
+            {
+                lstInput = TempData["Input"];
+            }
+            long returnCode = objMotorBAL.GetUserInsInfo(lstInput, out lstInfo);
+            ViewBag.RoleId = RoleId;
+           
+            ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
+            ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
+            ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
+            ViewBag.PolicyLost = lstInfo.PolicyLost;
+            ViewBag.UserName = "";
+            if (lstInfo != null)
+            {
+                U_Name = lstInfo.UserName;
+                //ViewBag.UserName = U_Name
+            }
+            if (!returnCode.Equals(1))
+            {
+
+                return RedirectToAction("Login");
+            }
+            return View(lstInfo);
         }
 
+        [HttpGet]
+        public JsonResult GetRevenueByYear()
+        {
+            List<DashBoard> lst = new List<DashBoard>();
+            List<DataPoint> dataPoints = new List<DataPoint>();
+
+            dataPoints.Add(new DataPoint("JAN", 70, 55));
+            dataPoints.Add(new DataPoint("FEB", 70, 85));
+            dataPoints.Add(new DataPoint("MAR", 74, 45));
+            dataPoints.Add(new DataPoint("APRIL", 84, 85));
+            dataPoints.Add(new DataPoint("MAY", 90, 95));
+            dataPoints.Add(new DataPoint("JUN", 65, 75));
+            dataPoints.Add(new DataPoint("JULY", 53, 45));
+            ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
+
+            if (TempData["Input"] != null)
+            {
+                lstInput = TempData["Input"];
+            }
+            long returnCode = objMotorBAL.GetUserInsInfo(lstInput, out lstInfo);
+            if (lstInfo != null)
+                U_Name = lstInfo.UserName;
+            if (!returnCode.Equals(1))
+            {
+
+                //  return dataPoints;
+                return Json(new
+                {
+                    list = dataPoints
+                }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new
+            {
+                list = dataPoints
+            }, JsonRequestBehavior.AllowGet);
+
+        }
+        [HttpGet]
+        public ActionResult MasterDatabase(MotorModel objMotorModel)
+        {
+            ViewBag.RoleId = RoleId;
+
+            string PolicyNo = objMotorModel.PolicyNo ?? "";
+            string AgentCode_BrokerCode = objMotorModel.AgentCode_BrokerCode ?? "";
+            string Branch = objMotorModel.Branch ?? "";
+            string AssuredName = objMotorModel.AssuredName ?? "";
+            string Status = objMotorModel.Status ?? "";
+
+            List<MotorModel> lst = new List<MotorModel>();
+
+            if (!string.IsNullOrEmpty(PolicyNo) || !string.IsNullOrEmpty(AgentCode_BrokerCode) || !string.IsNullOrEmpty(Branch) || !string.IsNullOrEmpty(AssuredName)
+                || !string.IsNullOrEmpty(Status))
+            {
+                if (RoleId.Equals(1))
+                    lst = motorModel.Where(x => x.PolicyNo == PolicyNo || x.AgentCode_BrokerCode == AgentCode_BrokerCode ||
+                                      x.Branch == Branch || x.AssuredName == AssuredName && x.Status == Status).OrderBy(x => x.MotorId).ToList();
+                else
+                    lst = motorModel.Where(x => x.PolicyNo == PolicyNo || x.AgentCode_BrokerCode == AgentCode_BrokerCode ||
+                                  x.Branch == Branch || x.AssuredName == AssuredName || x.Status == Status && x.AgentCode == U_Name).OrderBy(x => x.MotorId).ToList();
+
+                return View(lst);
+            }
+            else if (RoleId.Equals(1))
+                return View(motorModel);
+
+            else
+                return View(motorModel.Where(x => x.AgentCode == U_Name).OrderBy(x => x.MotorId));
+
+
+
+        }
         public ActionResult MasterDatabase()
         {
-            return View(motorModel);
+
+            ViewBag.RoleId = RoleId;
+            if (RoleId.Equals(1))
+                return View(motorModel);
+            //query.Where(s => s.AgentCode_BrokerCode == lstInfo.UserName).FirstOrDefault();
+            //return View(motorModel);
+            if (!string.IsNullOrEmpty(U_Name))
+                return View(motorModel.Where(x => x.AgentCode == U_Name).OrderBy(x => x.MotorId));
+            else
+                return View(motorModel);
         }
-        public ActionResult MasterTravel()
+        [HttpGet]
+        public ActionResult MasterTravel(TravelModel objTravelModel)
         {
-            return View(travelModel);
+            ViewBag.RoleId = RoleId;
+
+            string PolicyNo = objTravelModel.PolicyNo ?? "";
+            string AgentCode_BrokerCode = objTravelModel.Broker_AgentCode ?? "";
+            string Branch = objTravelModel.Branch ?? "";
+
+            string AssuredName = objTravelModel.AssuredName ?? "";
+            string Status = objTravelModel.Status ?? "";
+
+            List<TravelModel> lst = new List<TravelModel>();
+
+            if (!string.IsNullOrEmpty(PolicyNo) || !string.IsNullOrEmpty(AgentCode_BrokerCode) || !string.IsNullOrEmpty(Branch) || !string.IsNullOrEmpty(AssuredName)
+                || !string.IsNullOrEmpty(Status))
+            {
+                if (RoleId.Equals(1))
+                    lst = travelModel.Where(x => x.PolicyNo == PolicyNo || x.Broker_AgentCode == AgentCode_BrokerCode ||
+                                      x.Branch == Branch || x.AssuredName == AssuredName && x.Status == Status).OrderBy(x => x.TravelId).ToList();
+                else
+                    lst = travelModel.Where(x => x.PolicyNo == PolicyNo || x.Broker_AgentCode == AgentCode_BrokerCode ||
+                                  x.Branch == Branch || x.AssuredName == AssuredName || x.Status == Status && x.AgentCode == U_Name).OrderBy(x => x.TravelId).ToList();
+
+                return View(lst);
+            }
+            else if (RoleId.Equals(1))
+                return View(travelModel);
+
+            else
+                return View(travelModel.Where(x => x.AgentCode == U_Name).OrderBy(x => x.TravelId));
+
+
+
         }
-        public ActionResult MasterIndividual()
+        /* public ActionResult MasterTravel()
+         {
+             ViewBag.RoleId = RoleId;
+             if (RoleId.Equals(1))
+                 return View(travelModel);
+             if (!string.IsNullOrEmpty(U_Name))
+                 return View(travelModel.Where(x => x.AgentCode == U_Name).OrderBy(x => x.TravelId));
+             else
+                 return View(travelModel);
+         }*/
+        /* public ActionResult MasterIndividual()
+         {
+             ViewBag.RoleId = RoleId;
+             if (RoleId.Equals(1))
+                 return View(indiviModel);
+             if (!string.IsNullOrEmpty(U_Name))
+                 return View(indiviModel.Where(x => x.AgentCode == U_Name).OrderBy(x => x.IndividualId));
+             else
+                 return View(indiviModel);
+         }*/
+        [HttpGet]
+        public ActionResult MasterIndividual(IndividualModel objInd)
         {
-            return View(indiviModel);
+            ViewBag.RoleId = RoleId;
+
+            string PolicyNo = objInd.PolicyNo ?? "";
+            string AgentCode_BrokerCode = objInd.Broker_AgentCode ?? "";
+            string Branch = objInd.Branch ?? "";
+
+            string AssuredName = objInd.LifeAssuredName ?? "";
+            string Status = objInd.Status ?? "";
+
+            List<IndividualModel> lst = new List<IndividualModel>();
+
+            if (!string.IsNullOrEmpty(PolicyNo) || !string.IsNullOrEmpty(AgentCode_BrokerCode) || !string.IsNullOrEmpty(Branch) || !string.IsNullOrEmpty(AssuredName)
+                || !string.IsNullOrEmpty(Status))
+            {
+                if (RoleId.Equals(1))
+                    lst = indiviModel.Where(x => x.PolicyNo == PolicyNo || x.Broker_AgentCode == AgentCode_BrokerCode ||
+                                      x.Branch == Branch || x.LifeAssuredName == AssuredName && x.Status == Status).OrderBy(x => x.IndividualId).ToList();
+                else
+                    lst = indiviModel.Where(x => x.PolicyNo == PolicyNo || x.Broker_AgentCode == AgentCode_BrokerCode ||
+                                  x.Branch == Branch || x.LifeAssuredName == AssuredName || x.Status == Status && x.AgentCode == U_Name).OrderBy(x => x.IndividualId).ToList();
+
+                return View(lst);
+            }
+            else if (RoleId.Equals(1))
+                return View(indiviModel);
+
+            else
+                return View(indiviModel.Where(x => x.AgentCode == U_Name).OrderBy(x => x.IndividualId));
+
+
+
         }
-        public ActionResult MasterDomestic()
+        /*   public ActionResult MasterDomestic()
+           {
+               ViewBag.RoleId = RoleId;
+               if (RoleId.Equals(1))
+                   return View(domesModel);
+               if (!string.IsNullOrEmpty(U_Name))
+                   return View(domesModel.Where(x => x.AgentCode == U_Name).OrderBy(x => x.DomesticId));
+               else
+                   return View(domesModel);
+
+           }*/
+        [HttpGet]
+        public ActionResult MasterDomestic(DomesticModel objDom)
         {
-            return View(domesModel);
+            ViewBag.RoleId = RoleId;
+
+            string PolicyNo = objDom.PolicyNo ?? "";
+            string AgentCode_BrokerCode = objDom.Broker_AgentCode ?? "";
+            string Branch = objDom.Branch ?? "";
+
+            string AssuredName = objDom.AssuredName ?? "";
+            string Status = objDom.Status ?? "";
+
+            List<DomesticModel> lst = new List<DomesticModel>();
+
+            if (!string.IsNullOrEmpty(PolicyNo) || !string.IsNullOrEmpty(AgentCode_BrokerCode) || !string.IsNullOrEmpty(Branch) || !string.IsNullOrEmpty(AssuredName)
+                || !string.IsNullOrEmpty(Status))
+            {
+                if (RoleId.Equals(1))
+                    lst = domesModel.Where(x => x.PolicyNo == PolicyNo || x.Broker_AgentCode == AgentCode_BrokerCode ||
+                                      x.Branch == Branch || x.AssuredName == AssuredName && x.Status == Status).OrderBy(x => x.DomesticId).ToList();
+                else
+                    lst = domesModel.Where(x => x.PolicyNo == PolicyNo || x.Broker_AgentCode == AgentCode_BrokerCode ||
+                                  x.Branch == Branch || x.AssuredName == AssuredName || x.Status == Status && x.AgentCode == U_Name).OrderBy(x => x.DomesticId).ToList();
+
+                return View(lst);
+            }
+            else if (RoleId.Equals(1))
+                return View(domesModel);
+
+            else
+                return View(domesModel.Where(x => x.AgentCode == U_Name).OrderBy(x => x.DomesticId));
+
         }
         public ActionResult Login()
         {
+            if (TempData["IsExists"] == null)
+                TempData["IsExists"] = "";
+            if (!string.IsNullOrEmpty(TempData["IsExists"].ToString()))
+            {
+                ViewBag.NotFound = TempData["IsExists"].ToString();
+            }
             return View();
         }
         [HttpGet]
-        public ActionResult Login(LoginViewModel objModels)
+        public ActionResult LoginMotor(LoginViewModel objModels)
         {
             try
             {
-                if (objModels.Email != null && objModels.Password != null)
+                if (objModels.UserName != null && objModels.Password != null && objModels.Role.ToString() != null)
                 {
-                    return View("Index");
+
+                    long returnCode = objMotorBAL.IsUserExists(objModels);
+                    if (returnCode > 0)
+                    {
+                        RoleId = returnCode;
+                        ViewBag.RoleId = RoleId;
+                        lstInput = objModels;
+                        TempData["Input"] = lstInput;
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        TempData["IsExists"] = "User not found";
+                        return RedirectToAction("Login");
+                    }
+                    //lstInput = objModels;
+                    //TempData["Input"] = lstInput;
+                    //return RedirectToAction("Index");
                 }
                 else
                 {
+                    ViewBag.Err = "Please Provide all the mandatory fields.";
                     return View("Login");
                 }
             }
@@ -73,6 +344,7 @@ namespace MotorApp.Controllers
         public ActionResult UploadFiles()
         {
             string filePath = string.Empty;
+            string textAlert = string.Empty;
             int reqFrom = Convert.ToInt32(Request.Form["txtMotorMaster"]);
             // Checking no of files injected in Request object  
             if (Request.Files.Count > 0)
@@ -95,22 +367,33 @@ namespace MotorApp.Controllers
 
                         long returnCode = objMotorBAL.BulkUploadMotor(extension, filePath, reqFrom, out rowsCnt, out string fileMismatchErr);
                         if (returnCode.Equals(0))
+                        {
                             alert = "All the Records already exists. Try uploading new data.";
+                            textAlert = "same";
+                        }
                         else if (returnCode > 0)
+                        {
                             alert = "File Uploaded Successfully!";
+                            textAlert = "success";
+                        }
 
                         if (string.IsNullOrEmpty(fileMismatchErr))
-                            return Json(alert + Environment.NewLine + "'Total No.of rows in spreadsheet: '" + rowsCnt + "''" + Environment.NewLine + "'Total No.of rows Inserted: '" + returnCode + "'");
+                            //return Json(alert + Environment.NewLine + "'Total No.of rows in spreadsheet: '" + rowsCnt + "''" + Environment.NewLine + "'Total No.of rows Inserted: '" + returnCode + "'");
+                            return Json(textAlert);
                         else
                         {
                             if (reqFrom.Equals(1))
-                                return Json("Error.!" + Environment.NewLine + fileMismatchErr + Environment.NewLine + "File Doesn't belongs to Motor Policy");
+                                //return Json("Error.!" + Environment.NewLine + fileMismatchErr + Environment.NewLine + "File Doesn't belongs to Motor Policy");
+                                return Json(reqFrom);
                             if (reqFrom.Equals(2))
-                                return Json("Error.!" + Environment.NewLine + fileMismatchErr + Environment.NewLine + "File Doesn't belongs to Travel Policy");
+                                //return Json("Error.!" + Environment.NewLine + fileMismatchErr + Environment.NewLine + "File Doesn't belongs to Travel Policy");
+                                return Json(reqFrom);
                             if (reqFrom.Equals(3))
-                                return Json("Error.!" + Environment.NewLine + fileMismatchErr + Environment.NewLine + "File Doesn't belongs to Individual Policy");
+                                // return Json("Error.!" + Environment.NewLine + fileMismatchErr + Environment.NewLine + "File Doesn't belongs to Individual Policy");
+                                return Json(reqFrom);
                             if (reqFrom.Equals(4))
-                                return Json("Error.!" + Environment.NewLine + fileMismatchErr + Environment.NewLine + "File Doesn't belongs to Domestic Policy");
+                                //return Json("Error.!" + Environment.NewLine + fileMismatchErr + Environment.NewLine + "File Doesn't belongs to Domestic Policy");
+                                return Json(reqFrom);
                             else
                                 return Json("Error occurred.");
                         }
@@ -180,6 +463,9 @@ namespace MotorApp.Controllers
           }*/
         public ActionResult MotorInsurance()
         {
+            ViewBag.UserName = U_Name;
+            ViewBag.RoleId = RoleId;
+            //ViewBag.lstProducerMaster = lstProducerCodeMaster;
             return View();
         }
         [HttpPost]
@@ -223,14 +509,17 @@ namespace MotorApp.Controllers
         }
         public ActionResult InsertTravelIns()
         {
+            ViewBag.RoleId = RoleId;
             return View();
         }
         public ActionResult InsertIndividualIns()
         {
+            ViewBag.RoleId = RoleId;
             return View();
         }
         public ActionResult InsertDomesticIns()
         {
+            ViewBag.RoleId = RoleId;
             return View();
         }
         [HttpPost]
@@ -299,12 +588,10 @@ namespace MotorApp.Controllers
         [HttpGet]
         public ActionResult Edit(int MotorId)
         {
+            ViewBag.RoleId = RoleId;
             IList<MotorModel> motorList = new List<MotorModel>();
             motorList = motorModel;
-            //Get the student from studentList sample collection for demo purpose.
-            //Get the student from the database in the real application
             var std = motorList.Where(s => s.MotorId == MotorId).FirstOrDefault();
-
 
             return View("MotorInsurance", std);
         }
@@ -325,6 +612,8 @@ namespace MotorApp.Controllers
         [HttpGet]
         public ActionResult EditTravel(int TravelId)
         {
+            ViewBag.RoleId = RoleId;
+
             IList<TravelModel> motorList = new List<TravelModel>();
             motorList = travelModel;
             var obj = motorList.Where(s => s.TravelId == TravelId).FirstOrDefault();
@@ -346,6 +635,7 @@ namespace MotorApp.Controllers
         [HttpGet]
         public ActionResult EditIndividualIns(int id)
         {
+            ViewBag.RoleId = RoleId;
             IList<IndividualModel> motorList = new List<IndividualModel>();
             motorList = indiviModel;
             var obj = motorList.Where(s => s.IndividualId == id).FirstOrDefault();
@@ -367,6 +657,7 @@ namespace MotorApp.Controllers
         [HttpGet]
         public ActionResult EditDomesticIns(int id)
         {
+            ViewBag.RoleId = RoleId;
             IList<DomesticModel> motorList = new List<DomesticModel>();
             motorList = domesModel;
             var obj = motorList.Where(s => s.DomesticId == id).FirstOrDefault();
@@ -382,6 +673,172 @@ namespace MotorApp.Controllers
 
             return Json(std, JsonRequestBehavior.AllowGet);
         }
-        /*Individual Single entry Edit/Add End*/
+        [HttpGet]
+        public ActionResult Search(MotorModel objMotorModel)
+        {
+
+            //List<MotorModel> lst = new List<MotorModel>();
+            //string PolicyNo = Request["PolicyNo"].ToString();
+            ////IList<DomesticModel> motorList = new List<DomesticModel>();
+            ////motorList = domesModel;
+            ////var std = motorList.Where(s => s.DomesticId == DomesticId).FirstOrDefault();
+
+            ////return Json(std, JsonRequestBehavior.AllowGet);
+
+            ////  motorModel = obj.ToList();
+            ////return View("MasterDatabase", motorModel
+            ////                    .Where(x => x.PolicyNo == objMotorModel.PolicyNo || x.AgentCode_BrokerCode == objMotorModel.AgentCode_BrokerCode ||
+            ////                    x.MobileNo == objMotorModel.MobileNo || x.AssuredName == objMotorModel.AssuredName || x.Status == objMotorModel.Status)
+            ////                   .OrderBy(x => x.MotorId));
+            //lst = motorModel.Where(x => x.PolicyNo == PolicyNo).ToList();
+            //return View(lst);
+            string PolicyNo = objMotorModel.PolicyNo;
+            if (!string.IsNullOrEmpty(PolicyNo))
+            {
+                List<MotorModel> lst = new List<MotorModel>();
+                lst = motorModel.Where(x => x.PolicyNo == PolicyNo).ToList();
+                return View(lst);
+            }
+            else
+                return View(motorModel);
+        }
+        [HttpGet]
+        public JsonResult SearchMotor(MotorModel objMotorModel)
+        {
+            try
+            {
+                ModelState.Clear();
+
+                string PolicyNo = Request["PolicyNo"].ToString();
+                List<MotorModel> lst = new List<MotorModel>();
+                //IList<DomesticModel> motorList = new List<DomesticModel>();
+                //motorList = domesModel;
+                //var std = motorList.Where(s => s.DomesticId == DomesticId).FirstOrDefault();
+
+                //return Json(std, JsonRequestBehavior.AllowGet);
+
+                //  motorModel = obj.ToList();
+                //return View("MasterDatabase", motorModel
+                //                    .Where(x => x.PolicyNo == objMotorModel.PolicyNo || x.AgentCode_BrokerCode == objMotorModel.AgentCode_BrokerCode ||
+                //                    x.MobileNo == objMotorModel.MobileNo || x.AssuredName == objMotorModel.AssuredName || x.Status == objMotorModel.Status)
+                //                   .OrderBy(x => x.MotorId));
+
+                lst = motorModel.Where(x => x.PolicyNo == PolicyNo).ToList();
+                //  return View("MasterDatabase", lst);
+                return Json(new
+                {
+                    list = lst
+                }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+        public ActionResult MotorDB()
+        {
+
+            if (TempData["Input"] != null)
+            {
+                lstInput = TempData["Input"];
+            }
+            long returnCode = objMotorBAL.UserMDB(U_Name, 1, out lstInfo);
+            ViewBag.RoleId = RoleId;
+            ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
+            ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
+            ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
+            ViewBag.PolicyLost = lstInfo.PolicyLost;
+            if (!returnCode.Equals(1))
+            {
+
+                return RedirectToAction("Login");
+            }
+            return View("Index", lstInfo);
+        }
+        public ActionResult TravelDB()
+        {
+
+            if (TempData["Input"] != null)
+            {
+                lstInput = TempData["Input"];
+            }
+            long returnCode = objMotorBAL.UserMDB(U_Name, 2, out lstInfo);
+            ViewBag.RoleId = RoleId;
+            ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
+            ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
+            ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
+            ViewBag.PolicyLost = lstInfo.PolicyLost;
+            if (!returnCode.Equals(1))
+            {
+
+                return RedirectToAction("Login");
+            }
+            return View("Index", lstInfo);
+        }
+        public ActionResult IndividualDB()
+        {
+
+            if (TempData["Input"] != null)
+            {
+                lstInput = TempData["Input"];
+            }
+            long returnCode = objMotorBAL.UserMDB(U_Name, 3, out lstInfo);
+            ViewBag.RoleId = RoleId;
+            ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
+            ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
+            ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
+            ViewBag.PolicyLost = lstInfo.PolicyLost;
+            if (!returnCode.Equals(1))
+            {
+
+                return RedirectToAction("Login");
+            }
+            return View("Index", lstInfo);
+        }
+        public ActionResult DomesticDB()
+        {
+
+            if (TempData["Input"] != null)
+            {
+                lstInput = TempData["Input"];
+            }
+            long returnCode = objMotorBAL.UserMDB(U_Name, 4, out lstInfo);
+            ViewBag.RoleId = RoleId;
+            ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
+            ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
+            ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
+            ViewBag.PolicyLost = lstInfo.PolicyLost;
+
+            if (!returnCode.Equals(1))
+            {
+
+                return RedirectToAction("Login");
+            }
+            return View("Index", lstInfo);
+        }
+
+    }
+    [DataContract]
+    public class DataPoint
+    {
+        public DataPoint(string y, double a, double b)
+        {
+            this.y = y;
+            this.a = a;
+            this.b = b;
+        }
+
+        //Explicitly setting the name to be used while serializing to JSON.
+        [DataMember(Name = "y")]
+        public string y = "";
+
+        //Explicitly setting the name to be used while serializing to JSON.
+        [DataMember(Name = "a")]
+        public Nullable<double> a = null;
+        [DataMember(Name = "b")]
+        public Nullable<double> b = null;
     }
 }

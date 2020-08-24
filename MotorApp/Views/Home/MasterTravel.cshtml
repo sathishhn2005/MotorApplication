@@ -21,107 +21,128 @@
             <div class="card-header py-2 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">Search</h6>
             </div>
-            <div class="card-body">
-                @using (Html.BeginForm("TravelSearch", "Home", FormMethod.Get))
-                {
+            <form>
+                <div class="card-body">
                     <div class="row">
+                        @using (Html.BeginForm("MasterTravel", "Home", FormMethod.Get))
+                        {
 
-                        <div class="col-md-2">
-                            <input class="form-control form-control-sm  mb-3" name="PolicyNo" type="text" placeholder="Policy No">
-                        </div>
-                        <div class="col-2">
-                            <input class="form-control form-control-sm  mb-3" name="EndorsementNo" type="text" placeholder="Endorsement No">
-                        </div>
-                        <div class="col-2">
-                            <input class="form-control form-control-sm  mb-3" name="AssuredName" type="text" placeholder="Assured Name">
-                        </div>
-                        <div class="col-2">
-                            <input class="form-control form-control-sm  mb-3" name="MobileNo" type="text" placeholder="Mobile No">
-                        </div>
-                        <div class="col-2">
-                            <input class="form-control form-control-sm  mb-3" name="CustomerCode" type="text" placeholder="Customer Code">
-                        </div>
-                        <div class="col-2 text-center">
-                            <button class="btn btn-primary btn-sm" id="btnSearch" type="button">
-                                <i class="fas fa-search fa-sm"></i> Search
-                            </button>
-                        </div>
+                            <div class="col-2">
+                                <input class="form-control form-control-sm  mb-3" name="PolicyNo" type="text" placeholder="Policy No">
 
+                            </div>
+                            <div class="col-2">
+                                <input class="form-control form-control-sm  mb-3" name="Broker_AgentCode" type="text" placeholder="Producer Name">
+                            </div>
+                            <div class="col-2">
+                                <input class="form-control form-control-sm  mb-3" name="AssuredName" type="text" placeholder="Assured Name">
+                            </div>
+
+
+                            <div class="col-2">
+                                <input class="form-control form-control-sm  mb-3" name="Branch" type="text" placeholder="Branch">
+                            </div>
+                            <div class="col-2">
+                                <select class="form-control form-control-sm" name="Status" required="required">
+                                    <option disabled selected> -- select an option -- </option>
+                                    <option>Completed</option>
+                                    <option>Dropped</option>
+                                    <option>On Hold</option>
+                                </select>
+                            </div>
+                            <div class="col-2 text-center">
+
+                                <input class="btn btn-primary btn-sm" type="submit" value="Search" />
+                            </div>
+                        }
                     </div>
-                }
-            </div>
+                </div>
+            </form>
         </div>
         <!-- Simple Tables -->
         <div class="card">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">List of Travel Policy</h6>
-
-                <input type="file" name="postedFile" id="fileUploadTravel" accept=".xls,.xlsx" />
-                <button type="submit" id="btnUpload" class="btn btn-success btn-sm waves-effect">Upload Data</button>
-                <a href="~/MasterUploads/TravelBulkUpload.xlsx" download>Download Sample format</a>
-
-
-
-                <a class="btn btn-primary btn-sm mx-1" href="InsertTravelIns#step-1">
-                    <i class="fas fa-user-plus fa-sm"></i> Add
-                    Single Policy
-                </a>
-
-                <button class="btn btn-primary btn-sm mx-1" type="button" data-toggle="modal"
-                        data-target="#uploadBulk">
-                    <i class="fas fa-upload fa-sm"></i> Bulk Upload Policy
-                </button>
-
-                <button class="btn btn-primary btn-sm mx-1" type="button">
-                    <i class="fas fa-download fa-sm"></i>
-                    Download Policy
-                </button>
-
+                <div class="d-none">
+                    <input type="file" name="postedFile" id="fileUploadTravel" accept=".xls,.xlsx" />
+                    @*<button type="submit" id="btnUpload" class="btn btn-success btn-sm waves-effect">Upload Data</button>*@
+                </div>
+                <div>
+                    <a class="btn btn-primary btn-sm mx-1" href="InsertTravelIns#step-1">
+                        <i class="fas fa-user-plus fa-sm"></i> Add
+                        Single Policy
+                    </a>
+                    <button class="btn btn-primary btn-sm mx-1" type="button" data-toggle="modal"
+                            data-target="#uploadBulk">
+                        <i class="fas fa-upload fa-sm"></i> Bulk Upload Policy
+                    </button>
+                    <button class="btn btn-primary btn-sm mx-1" type="button">
+                        <i class="fas fa-download fa-sm"></i>
+                        Download Policy
+                    </button>
+                </div>
             </div>
             <div class="table-responsive">
                 <table class="table align-items-center table-flush">
                     <tr>
                         <th>Policy No</th>
-                        <th>Issue Date</th>
-                        <th>Branch</th>
+                        <th>Producer Name</th>
                         <th>Assured Name</th>
-                        <th>Assured MobileNumber</th>
-                        <th>Departure Date</th>
-                        <th>Date of Return</th>
-
+                        <th>Mobile Number</th>
+                        <th>Branch</th>
+                        <th>Status</th>
                         <th>Actions</th>
 
-
                     </tr>
-                    @if (Model != null)
+                    @if (Model.Count() == 0)
                     {
-                        foreach (var d in Model)
+
+                        <tr>
+                            <td colspan="5">
+                                No record found
+                            </td>
+                        </tr>
+
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
                         {
                             <tr>
-                                <td>@d.PolicyNo</td>
-                                <td>@d.IssueDate</td>
-                                <td>@d.Branch</td>
-                                <td>@d.AssuredName</td>
-                                <td>@d.Mobile</td>
-                                <td>@d.DepartureDate</td>
-                                <td>@d.DateOfReturn</td>
-                                @*<td>
-                                        <a href="#" class="btn btn-sm btn-primary" data-toggle="modal"
-                                           data-target="#myModal">Detail</a>
-                                    </td>*@
+                                <td>@Html.DisplayFor(modelItem => item.PolicyNo)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Broker_AgentCode)</td>
+                                <td>@Html.DisplayFor(modelItem => item.AssuredName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Mobile)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Branch)</td>
+
+                                @if (item.Status.Equals("Completed"))
+                                {
+                                    <td><span class="badge badge-success">@Html.DisplayFor(modelItem => item.Status)</span></td>
+                                }
+                                @if (item.Status.Equals("Dropped"))
+                                {
+                                    <td><span class="badge badge-danger">@Html.DisplayFor(modelItem => item.Status)</span></td>
+                                }
+                                @if (item.Status.Equals("On Hold"))
+                                {
+                                    <td><span class="badge badge-info">@Html.DisplayFor(modelItem => item.Status)</span></td>
+                                }
+                                @if (item.Status.Equals(""))
+                                {
+                                    <td><span class="badge badge-info"></span></td>
+                                }
                                 <td class="d-flex flex-row align-items-center justify-content-between">
-                                    <i class="fas fa-pencil-alt pointer" aria-hidden="true" data-toggle="modal"
-                                       data-target="#myModal" onclick="renewal(@d.TravelId)">
-
-                                    </i>
                                     <i class="fas fa-eye pointer" aria-hidden="true" data-toggle="modal"
-                                       data-target="#myModal"></i>
-                                    <a href="EditTravel?TravelId=@d.TravelId">Edit</a>
+                                       data-target="#myModal" onclick="renewal(@item.TravelId)">
+                                    </i>
+                                  
+                                    <a href="EditTravel?TravelId=@item.TravelId"><i class="fas fa-pencil-alt pointer" aria-hidden="true"></i></a>
                                 </td>
-
                             </tr>
+
                         }
                     }
+                    
                 </table>
             </div>
             <div class="card-footer"></div>
@@ -229,18 +250,16 @@
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">No of Passengers</label>
+                                <label for="inputEmail3" class="col-3 col-form-label">Status</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" name="NoofPassengers" id="NoofPassengers" readonly>
+                                    <select class="form-control form-control-sm" id="status" name="status" required="required">
+                                        <option disabled selected> -- select an option -- </option>
+                                        <option>Completed</option>
+                                        <option>Dropped</option>
+                                        <option>On Hold</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">GEO Y/N</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" name="GEO" id="GEO" readonly>
-                                </div>
-                            </div>
-
                         </form>
                     </div>
                 </div>
@@ -253,6 +272,85 @@
     </div><!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+<div id="uploadBulk" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="uploadBulkLabel">Upload Bulk Data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-10 mx-auto">
+                        <div class="text-right">
+                            <a href="~/MasterUploads/MotorBulkUpload.xlsx" class="btn btn-dark btn-sm" download><i class="fas fa-download fa-sm"></i> Download Sample format</a>
+                        </div>
+                        @*<form method="post" enctype="multipart/form-data">*@
+                        <div class="fileuploader fileuploader-theme-dragdrop">
+                            @*<input type="file" name="postedFile" id="fileUploadTravel" accept=".xls,.xlsx" />
+                                <input type="hidden" id="txtMotorMaster" name="txtMotorMaster" value="1">*@
+                            <input type="hidden" name="fileuploader-list-files" value="[]">
+                            <input type="file" name="files[]" multiple="multiple" style="position: absolute; z-index: -9999; height: 0px; width: 0px; padding: 0px; margin: 0px; line-height: 0; outline: 0px; border: 0px; opacity: 0;">
+                            <div class="fileuploader-input">
+                                <div class="fileuploader-input-inner">
+                                    <div class="fileuploader-icon-main"></div>
+                                    <h3 class="fileuploader-input-caption">
+                                        <span>Drag and drop files here</span>
+                                    </h3>
+                                    <p> </p>
+                                    <button type="button" class="fileuploader-input-button">
+                                        <span>Browse files</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="fileuploader-items">
+                                <ul class="fileuploader-items-list">
+                                    <li class="fileuploader-item file-type-application file-ext-xlsx file-has-popup upload-successful">
+                                        <div id="fileContainer" class="columns" style="display: none;">
+                                            <div class="column-thumbnail">
+                                                <div class="fileuploader-item-image fileuploader-no-thumbnail">
+                                                    <div style="background-color: #591605" class="fileuploader-item-icon"><i>xlsx</i></div>
+                                                </div>
+                                                <span class="fileuploader-action-popup"></span>
+                                            </div>
+                                            <div class="column-title">
+                                                <div id="fileName">SampleFile.xlsx</div>
+                                                <span id="fileSize">0 KB</span>
+                                            </div>
+                                            <div class="column-actions">
+                                                <button type="button" id="clearFiles" class="btn btn-success btn-sm round" title="Delete">
+                                                    <i class="fas fa-check fa-sm"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="progress-bar2" style="display: none;">
+                                            <div class="fileuploader-progressbar">
+                                                <div class="bar" style="width: 100%;"></div>
+                                            </div>
+                                            <span>100%</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="mt-2">
+                                <button id="btnUpload" type="submit" class="btn btn-success btn-block">
+                                    <i class="fas fa-upload fa-sm"></i><span>Upload</span>
+                                </button>
+                            </div>
+                        </div>
+                        @*</form>*@
+                    </div>
+                </div>
+            </div>
+            @*<div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary btn-sm waves-effect" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary btn-sm waves-effect waves-light">Renew</button>
+                </div>*@
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 <script>
 
 
@@ -386,8 +484,34 @@
                     processData: false, // Not to process data
                     data: fileData,
                     success: function (result) {
-                        alert(result);
-                        window.location.href = "MasterTravel";
+                        //alert(result);
+                        //window.location.href = "MasterTravel";
+                        if (result == 2) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: "File Doesn't belongs to Travel Policy",
+
+                            })
+                        }
+                        if (result == "success") {
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: "File Uploaded Successfully!",
+
+                            }).then(
+                                function () { window.location.href = "MasterTravel"; });
+                        }
+                        if (result == "same") {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Warning!',
+                                text: "All the Records already exists. Try uploading new data.",
+                            }).then(
+                                function () { window.location.href = "MasterTravel"; });
+                        }
                     },
                     error: function (err) {
                         alert(err.statusText);
@@ -396,6 +520,32 @@
             } else {
                 alert("FormData is not supported.");
             }
+        });
+        $('.fileuploader-input').click(function () {
+            $("#fileUploadTravel").click();
+        });
+        $('#clearFiles').click(function () {
+            $("#fileContainer").hide();
+            $('#fileUploadTravel').val('');
+        });
+        $('#clearFiles').hover(
+            function () {
+                $('#clearFiles').removeClass("btn-success").addClass("btn-danger");
+                $('#clearFiles .fas').removeClass("fa-check").addClass("fa-trash");
+            },
+            function () {
+                $('#clearFiles').removeClass("btn-danger").addClass("btn-success");
+                $('#clearFiles .fas').removeClass("fa-trash").addClass("fa-check");
+            });
+        $('#fileUploadTravel').change(function (e) {
+            var fileName = e.target.files[0].name;
+            var fileSize = e.target.files[0].size;
+            $("#fileContainer").show();
+            $("#fileName").html(fileName);
+            fileSize = (fileSize / 1024).toFixed(2);
+            $("#fileSize").html(fileSize + " KB");
+
+            //alert('The file "' + fileName + '" has been selected.');
         });
     });
 </script>

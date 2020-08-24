@@ -1,18 +1,18 @@
 ﻿@model MotorApp.BusinessEntities.MotorModel
-
-
+@using MotorApp.Models;
+@using MotorApp.BAL;
+@using MotorApp.BusinessEntities;
 @{
     ViewBag.Title = "MotorInsurance";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
+
 @*@using (Html.BeginForm("InsertMotorIns", "Home", FormMethod.Post))
     {*@
-<h2>MotorInsurance</h2>
+
 <div id="wrapper">
     <!-- Sidebar -->
-
-
 
     <div id="content-wrapper" class="d-flex flex-column">
         <div id="content">
@@ -56,7 +56,6 @@
                                         </li>
                                     </ul>
                                     <div class="tab-content">
-
                                         <form id="MotorForm">
                                             <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
                                                 <div class="col-12">
@@ -66,7 +65,6 @@
                                                             <div class="col-md-5">
                                                                 @*@Html.EditorFor(model => model.IssueDate, "{0:dd-mm-yyyy}", new { htmlAttributes = new { type = "date", @class = "form-control form-control-sm" } })*@
                                                                 @Html.TextBoxFor(model => model.IssueDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
-
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
@@ -100,9 +98,15 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
+                                                                @Html.LabelFor(model => model.AgentCode_BrokerCode, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                                <div class="col-md-5">@Html.EditorFor(model => model.AgentCode_BrokerCode, new { htmlAttributes = new { type = "text", @class = "form-control form-control-sm" } })</div>
+                                                            </div>
+                                                        @*<div class="form-group row">
                                                             @Html.LabelFor(model => model.AgentCode_BrokerCode, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                            <div class="col-md-5">@Html.EditorFor(model => model.AgentCode_BrokerCode, new { htmlAttributes = new { type = "text", @class = "form-control form-control-sm" } })</div>
-                                                        </div>
+                                                            <div class="col-md-5">
+                                                                @Html.DropDownListFor(m => m.ProducerMaster, new SelectList((new MotorApp.BAL.MotorBAL()).GetProducerMaster(ViewBag.UserName), "ProducerCodeId", "ProducerName", 0), new { @id = "ProducerCodeId", @class = "form-control form-control-sm" })
+                                                            </div>
+                                                        </div>*@
                                                         <div class="form-group row">
                                                             @Html.LabelFor(model => model.UAEExtensionNilPremiaum, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
                                                             <div class="col-md-5">@Html.EditorFor(model => model.UAEExtensionNilPremiaum, new { htmlAttributes = new { type = "text", @class = "form-control form-control-sm" } })</div>
@@ -290,7 +294,6 @@
                                                     <div class="col-md-5">@Html.EditorFor(model => model.VIPCustomer, new { htmlAttributes = new { type = "text", @class = "form-control form-control-sm" } })</div>
                                                 </div>
                                             </div>
-
                                         </form>
                                     </div>
                                 </div>
@@ -303,10 +306,8 @@
             </div>
             <!---Container Fluid-->
         </div>
-
     </div>
 </div>
-
 <script>
     $(document).ready(function () {
 

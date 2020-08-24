@@ -1,0 +1,71 @@
+﻿@using MotorApp.BusinessEntities;
+
+@model Users
+
+@{
+    Layout = null;
+}
+@Html.AntiForgeryToken()
+<link href="~/vendor/fontawesome-free/css/all.css" rel="stylesheet" type="text/css" />
+<link href="~/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+
+<link href="~/css/ruang-admin.css" rel="stylesheet" />
+
+<div class="form-horizontal container my-4 col-md-6 offset-md-3">
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @using (Html.BeginForm("Login", "Home", FormMethod.Get))
+    {
+        <div class="col-md-2">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon">
+                    <img src="~/img/logo/logoMI.png" height="100" width="200">
+                </div>
+
+            </a>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.RoleName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Role",
+                  new SelectList(Enum.GetValues(typeof(MotorInsRoles))),
+                  "Select Role",
+                  new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Login" class="btn btn-primary btn-sm" />
+            </div>
+        </div>
+    }
+
+</div>
+@*policynumber
+producrename
+assueredname
+policy start
+search button*@
+
+<script src="~/vendor/jquery/jquery.min.js"></script>
+<script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="~/js/ruang-admin.min.js"></script>

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -12,86 +13,96 @@
     <link href="~/vendor/morris/morris.css" rel="stylesheet" type="text/css" />
     <link href="~/vendor/fontawesome-free/css/all.css" rel="stylesheet" type="text/css" />
     <link href="~/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
-
     <link href="~/css/ruang-admin.css" rel="stylesheet" />
     <link href="~/vendor/smart_wizard/css/smart_wizard_all.css" rel="stylesheet" type="text/css" />
+
     @*@Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")*@
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="~/vendor/jquery/jquery.min.js"></script>
     <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="~/js/ruang-admin.min.js"></script>
+    <script src="~/js/ruang-admin.js"></script>
     <script src="~/vendor/chart.js/Chart.min.js"></script>
     <script src="~/js/demo/chart-area-demo.js"></script>
     <script src="~/vendor/morris/morris.js"></script>
     <script src="~/vendor/morris/raphael.min.js"></script>
-
-    
+    <script src="~/vendor/pekeUpload/SimpleAjaxUploader.js"></script>
 </head>
 <body id="page-top">
+    @*Login Starts*@
     <div id="wrapper">
         <!-- Sidebar -->
         <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon">
-                    <img src="~/img/logo/logoMI.png">
-                </div>
-                <div class="sidebar-brand-text mx-2">Motor Insurance</div>
+                @*<div class="sidebar-brand-icon">
+                        <img src="~/img/logo/logoMI.png">
+                    </div>*@
+                <div class="sidebar-brand-text mx-2">Al Madina Insurance</div>
             </a>
-            <hr class="sidebar-divider mb-3 mt-0">
+            <hr class="sidebar-divider mb-3 mt-0" />
             <div class="sidebar-heading">
                 Dashboard
             </div>
+            @if (ViewBag.RoleId == 1)
+            {
+                <li class="nav-item ">
+                    <a class="nav-link" href="index">
+                        <i class="fas fa-fw fa-star"></i>
+                        <span>Admin Dashboard</span>
+                    </a>
+                </li>
+            }
             <li class="nav-item ">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="MotorDB">
                     <i class="fas fa-fw fa-car"></i>
                     <span>Motor Policies</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="IndividualDB">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Individual life Policies</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="TravelDB">
                     <i class="fas fa-fw fa-plane"></i>
                     <span>Travel Insurance Policies</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="DomesticDB">
                     <i class="fas fa-fw fa-users"></i>
                     <span>Domestic Helper Policy</span>
                 </a>
             </li>
             <hr class="sidebar-divider">
             <div class="sidebar-heading">
-                Features
+                Masters
             </div>
             <li class="nav-item">
                 <a class="nav-link" href="MasterDatabase">
-                    <i class="fas fa-fw fa-database"></i>
-                    <span>Master Motor</span>
+                    <i class="fas fa-fw fa-car"></i>
+                    <span>Motor Insurance Masters</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="MasterTravel">
-                    <i class="fas fa-fw fa-database"></i>
-                    <span>Master Travel</span>
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Travel Insurance Masters</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="MasterIndividual">
-                    <i class="fas fa-fw fa-database"></i>
-                    <span>Master Individual</span>
+                    <i class="fas fa-fw fa-plane"></i>
+                    <span>Individual Insurance Masters</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="MasterDomestic">
-                    <i class="fas fa-fw fa-database"></i>
-                    <span>Master Domestic</span>
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Domestic Insurance Masters</span>
                 </a>
             </li>
             <li class="nav-item hide">
@@ -117,7 +128,7 @@
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <!-- TopBar -->
-                <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
+                <nav class="navbar navbar-expand navbar-light bg-navbar topbar static-top">
                     <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
@@ -143,7 +154,7 @@
                                 </form>
                             </div>
                         </li>
-                        <li class="nav-item dropdown no-arrow mx-1">
+                        <li class="nav-item dropdown no-arrow mx-1 d-none">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
@@ -190,7 +201,7 @@
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                             </div>
                         </li>
-                        <li class="nav-item dropdown no-arrow mx-1">
+                        <li class="nav-item dropdown no-arrow mx-1 d-none">
                             <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-envelope fa-fw"></i>
@@ -230,7 +241,7 @@
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
                             </div>
                         </li>
-                        <li class="nav-item dropdown no-arrow mx-1">
+                        <li class="nav-item dropdown no-arrow mx-1 d-none">
                             <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-tasks fa-fw"></i>
@@ -284,8 +295,8 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
-                                <img class="img-profile rounded-circle" src="~/img/boy.png" style="max-width: 60px">
-                                <span class="ml-2 d-none d-lg-inline text-white small">Maman Ketoprak</span>
+                                @*<img class="img-profile rounded-circle" src="~/img/boy.png" style="max-width: 60px">*@
+                                <span class="ml-2 d-none d-lg-inline text-white">Hi, Mohammad Ketoprak!!</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
@@ -301,7 +312,7 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="login.html">
+                                <a class="dropdown-item" href="login">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -329,12 +340,10 @@
                     </div>
                 </div>
                 <div class="container-fluid" id="container-wrapper">
-
                     @RenderBody()
                 </div>
             </div>
             <!-- Footer -->
-
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
@@ -350,12 +359,11 @@
         </div>
     </div>
     @*@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")*@
+        @Scripts.Render("~/bundles/bootstrap")*@
     @RenderSection("scripts", required: false)
-
     <script src="~/vendor/smart_wizard/js/jquery.smartWizard.js"></script>
-
     <script>
+        var chartData = [];
         !function ($) {
             "use strict";
 
@@ -389,8 +397,8 @@
                     });
                 },
                 Dashboard.prototype.init = function () {
-                    //creating bar chart
                     var $barData = [
+
                         { y: 'Jan', a: 75, b: 65 },
                         { y: 'Feb', a: 100, b: 90 },
                         { y: 'Mar', a: 85, b: 75 },
@@ -400,20 +408,57 @@
                         { y: 'Jul', a: 80, b: 65 },
                         { y: 'Aug', a: 100, b: 85 }
                     ];
-                    this.createBarChart('morris-bar-example', $barData, 'y', ['a', 'b'], ['Series A', 'Series B'], ['#30419b', '#02c58d']);
+                    //creating bar chart
+                    $.ajax({
+                        type: "GET",
+                        contentType: "application/json; charset=utf-8",
+                        url: "GetRevenueByYear",
+                        data: "{}",
+                        dataType: "json",
+                        success: function (Result) {
+                            debugger;
+                            chartData = Result.list;
+                            //$barData = [
+                            //    { y: 'Jan', a: 75, b: 65 },
+                            //    { y: 'Feb', a: 100, b: 90 },
+                            //    { y: 'Mar', a: 85, b: 75 },
+                            //    { y: 'Apr', a: 40, b: 50 },
+                            //    { y: 'May', a: 85, b: 75 },
+                            //    { y: 'Jun', a: 55, b: 45 },
+                            //    { y: 'Jul', a: 80, b: 65 },
+                            //    { y: 'Aug', a: 100, b: 85 }
+                            //];
+                            //var data = [];
+
+                            //for (var i in Result) {
+                            //    var serie = { name: Result[i].year, y: Result[i].amount, drilldown: Result[i].drilldown };
+                            //    data.push(serie);
+                            //}
+
+                            // BindChart(data);
+                        },
+                        error: function (Result) {
+                            alert("Error");
+                        }
+                    });
+
+
+
+
+                    this.createBarChart('morris-bar-example', chartData, 'y', ['a', 'b'], ['Series A', 'Series B'], ['#30419b', '#02c58d']);
 
                     //creating donut chart
                     var $donutData = [
-                        { label: "Policies Renewed", value: 335 },
-                        { label: "Policies Pending", value: 225 },
-                        { label: "Policies Lost", value: 100 }
+                        { label: "Policies Renewed", value: @ViewBag.TotPoltoBeRenewed },
+                        { label: "Policies Pending", value:  @ViewBag.TotPolforRenewal },
+                        { label: "Policies Lost", value:  @ViewBag.PolicyLost }
                     ];
                     this.createDonutChart('morris-donut-example', $donutData, ['#fcbe2d', '#30419b', '#02c58d']);
                 },
                 //init
                 $.Dashboard = new Dashboard, $.Dashboard.Constructor = Dashboard
         }(window.jQuery),
-
+            
             //initializing
             function ($) {
                 "use strict";

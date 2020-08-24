@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MotorApp.BusinessEntities
@@ -104,7 +105,7 @@ namespace MotorApp.BusinessEntities
         [Display(Name = "Appointee Civil ID No")]
         public string AppointeeCivilIDNo { get; set; }
 
-
+        public string Status { get; set; }
         public DateTime? CreatedAt { get; set; }
 
         public string CreatedBy { get; set; }
@@ -112,7 +113,14 @@ namespace MotorApp.BusinessEntities
         public DateTime? UpdatedAt { get; set; }
 
         public string UpdatedBy { get; set; }
+        public string AgentCode { get; set; }
+        public List<ProducerCodeMaster> ProducerMaster { get; set; }
 
+        public long SumInsured { get; set; }
+        public long PremiumAmount { get; set; }
+        public long RivisedSI { get; set; }
 
+        public string CustomerCode { get; set; }
+        public string CustomerName { get; set; }
     }
 }

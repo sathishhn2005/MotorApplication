@@ -9,6 +9,7 @@ namespace MotorApp.BusinessEntities
 {
     public class TravelModel
     {
+        
         public long TravelId { get; set; }
 
         [Display(Name = "Issue Date")]
@@ -141,6 +142,15 @@ namespace MotorApp.BusinessEntities
 
         public string UpdatedBy { get; set; }
         public int Flag { get; set; }
+        public string AgentCode { get; set; }
+        public string Status { get; set; }
+        public List<ProducerCodeMaster> ProducerMaster { get; set; }
 
+        public long SumInsured { get; set; }
+        public long PremiumAmount { get; set; }
+        public long RivisedSI { get; set; }
+
+        public string CustomerCode { get; set; }
+        public string CustomerName { get; set; }
     }
 }

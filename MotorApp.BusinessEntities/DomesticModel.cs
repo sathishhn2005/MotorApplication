@@ -9,6 +9,7 @@ namespace MotorApp.BusinessEntities
 {
     public class DomesticModel
     {
+        
         public long DomesticId { get; set; }
         [Display(Name = "Draft No ")]
         public string DraftNo { get; set; }
@@ -88,7 +89,7 @@ namespace MotorApp.BusinessEntities
         [Display(Name = "Email ")]
         public string Email { get; set; }
 
-        
+        public string Status { get; set; }
 
         public DateTime? CreatedAt { get; set; }
 
@@ -97,7 +98,14 @@ namespace MotorApp.BusinessEntities
         public DateTime? UpdatedAt { get; set; }
 
         public string UpdatedBy { get; set; }
+        public string AgentCode { get; set; }
+        public List<ProducerCodeMaster> ProducerMaster { get; set; }
 
+        public long SumInsured { get; set; }
+        public long PremiumAmount { get; set; }
+        public long RivisedSI { get; set; }
 
+        public string CustomerCode { get; set; }
+        public string CustomerName { get; set; }
     }
 }

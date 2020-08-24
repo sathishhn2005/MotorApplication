@@ -135,13 +135,14 @@ namespace MotorApp.DAL
             return returnCode;
         }
         public long GetMasterViews(out List<MotorModel> lstMotorModel, out List<TravelModel> lstTravelModel, out List<IndividualModel> lstIndividualModel,
-            out List<DomesticModel> lstDomesticModel)
+            out List<DomesticModel> lstDomesticModel, out List<ProducerCodeMaster> lstProducerCodeMaster)
         {
             long returnCode = -1;
             lstMotorModel = new List<MotorModel>();
             lstTravelModel = new List<TravelModel>();
             lstIndividualModel = new List<IndividualModel>();
             lstDomesticModel = new List<DomesticModel>();
+            lstProducerCodeMaster = new List<ProducerCodeMaster>();
 
             try
             {
@@ -231,7 +232,9 @@ namespace MotorApp.DAL
                                              PremiumAmount = Convert.ToInt64(dr["PremiumAmount"]),
                                              RivisedSI = Convert.ToInt64(dr["RivisedSI"]),
                                              CustomerCode = dr["CustomerCode"].ToString(),
-                                             CustomerName = dr["CustomerName"].ToString()
+                                             CustomerName = dr["CustomerName"].ToString(),
+                                             Status = dr["Status"].ToString(),
+                                             AgentCode = dr["AgentCode"].ToString()
 
                                          }).ToList();
                     }
@@ -281,7 +284,13 @@ namespace MotorApp.DAL
                                               Sex = dr["Sex"].ToString(),
                                               PassportNoFamilyMember = dr["PassportNoFamilyMember"].ToString(),
                                               ExtensionFamilyMember = dr["ExtensionFamilyMember"].ToString(),
-
+                                              AgentCode = dr["AgentCode"].ToString(),
+                                              SumInsured = Convert.ToInt64(dr["SumInsured"]),
+                                              PremiumAmount = Convert.ToInt64(dr["PremiumAmount"]),
+                                              RivisedSI = Convert.ToInt64(dr["RivisedSI"]),
+                                              CustomerCode = dr["CustomerCode"].ToString(),
+                                              CustomerName = dr["CustomerName"].ToString(),
+                                              Status = dr["Status"].ToString()
 
                                           }).ToList();
                     }
@@ -340,8 +349,14 @@ namespace MotorApp.DAL
                                                   RelationshiptotheNominee = dr["RelationshiptotheNominee"].ToString(),
 
                                                   AppointeeCivilIDNo = dr["AppointeeCivilIDNo"].ToString(),
-                                                  NomineeOfficePhoneNo = dr["NomineeOfficePhoneNo"].ToString()
-
+                                                  NomineeOfficePhoneNo = dr["NomineeOfficePhoneNo"].ToString(),
+                                                  AgentCode = dr["AgentCode"].ToString(),
+                                                  SumInsured = Convert.ToInt64(dr["SumInsured"]),
+                                                  PremiumAmount = Convert.ToInt64(dr["PremiumAmount"]),
+                                                  RivisedSI = Convert.ToInt64(dr["RivisedSI"]),
+                                                  CustomerCode = dr["CustomerCode"].ToString(),
+                                                  CustomerName = dr["CustomerName"].ToString(),
+                                                  Status = dr["Status"].ToString()
 
                                               }).ToList();
                     }
@@ -390,9 +405,27 @@ namespace MotorApp.DAL
                                                 SponsorNationality = dr["SponsorNationality"].ToString(),
                                                 VIPCustomer = dr["VIPCustomer"].ToString(),
                                                 Email = dr["Email"].ToString(),
+                                                AgentCode = dr["AgentCode"].ToString(),
+                                                SumInsured = Convert.ToInt64(dr["SumInsured"]),
+                                                PremiumAmount = Convert.ToInt64(dr["PremiumAmount"]),
+                                                RivisedSI = Convert.ToInt64(dr["RivisedSI"]),
+                                                CustomerCode = dr["CustomerCode"].ToString(),
+                                                CustomerName = dr["CustomerName"].ToString(),
+                                                Status = dr["Status"].ToString()
 
 
                                             }).ToList();
+                    }
+                    if (ds.Tables[4].Rows.Count > 0)
+                    {
+                        lstProducerCodeMaster = (from DataRow dr in ds.Tables[4].Rows
+                                                 select new ProducerCodeMaster()
+                                                 {
+
+                                                     ProducerCodeId = (long)dr["ProducerCodeId"],
+                                                     ProducerCode = dr["ProducerCode"].ToString(),
+                                                     ProducerName = dr["ProducerName"].ToString(),
+                                                 }).ToList();
                     }
                     returnCode = 1;
                 }
@@ -468,6 +501,7 @@ namespace MotorApp.DAL
                     cmd.Parameters.AddWithValue("@PremiumAmount", objMotorModel.PremiumAmount);
                     cmd.Parameters.AddWithValue("@RivisedSI", objMotorModel.RivisedSI);
                     cmd.Parameters.AddWithValue("@MotorId", objMotorModel.MotorId);
+                    cmd.Parameters.AddWithValue("@Status", objMotorModel.Status);
 
                     returnCode = cmd.ExecuteNonQuery();
 
@@ -600,6 +634,216 @@ namespace MotorApp.DAL
                 throw;
             }
             return returnCode;
+        }
+        public long GetUserInsuranceInfo(dynamic lstInput, out DashBoard lstInfo)
+        {
+            long returnCode = -1;
+            lstInfo = new DashBoard();
+            try
+            {
+                DataSet ds = new DataSet();
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = "SP_GetUserInsInfo"
+                    };
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+                    cmd.Parameters.AddWithValue("@UserName", lstInput.UserName);
+                    cmd.Parameters.AddWithValue("@Password", lstInput.Password);
+                    cmd.Parameters.AddWithValue("@RoleId", lstInput.Role);
+
+                    SqlDataReader reader;
+                    reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        lstInfo.TotPoltoBeRenewed = (int)reader.GetValue(0);
+                        lstInfo.TotPolforRenewal = (int)reader.GetValue(1);
+                        lstInfo.NoOfPoRenewed = (int)reader.GetValue(2);
+                        lstInfo.PolicyLost = (int)reader.GetValue(3);
+                        lstInfo.UserName = reader.GetValue(4).ToString();
+                        returnCode = 1;
+                    }
+                    reader.Close();
+                    cmd.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return returnCode;
+        }
+        public long RegisterUser(dynamic obj)
+        {
+            long returnCode = -1;
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    SqlCommand cmd;
+                    cmd = new SqlCommand
+                    {
+                        CommandText = "SP_RegisterUser",
+                        CommandTimeout = 180,
+                        Connection = con,
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    cmd.Parameters.AddWithValue("@Password", "1234");
+                    cmd.Parameters.AddWithValue("@RoleId", obj.Role);
+                    cmd.Parameters.AddWithValue("@UserName", obj.UserName);
+
+
+                    returnCode = cmd.ExecuteNonQuery();
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return returnCode;
+        }
+        public long IsUserExistsMotorIns(dynamic obj)
+        {
+            long returnCode = -1;
+            long RoleId = 0;
+            SqlCommand cmd;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+
+                    string query = "Select count(*) Count,RoleId from TB_Users where UserName='" + obj.UserName + "' and Password='" + obj.Password + "'  and roleid=(select roleid from TB_RoleMaster where RoleName='" + obj.Role + "' ) group by RoleId";
+                    cmd = new SqlCommand(query, con);
+                    SqlDataReader reader;
+                    reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        returnCode = (int)reader.GetValue(0);
+                        RoleId = Convert.ToInt64(reader.GetValue(1));
+
+                    }
+                    reader.Close();
+                    cmd.Dispose();
+                    // returnCode = Convert.ToInt64(cmd.ExecuteScalar());
+                    //cmd.Dispose();
+                    if (returnCode > 0)
+                    {
+                        returnCode = RoleId;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return returnCode;
+        }
+        public long GetUserDBoard(string u_name, int flag, out DashBoard lstInfo)
+        {
+            long returnCode = -1;
+            string sp_name = string.Empty;
+            lstInfo = new DashBoard();
+            if (flag.Equals(1))
+                sp_name = "SP_GetUserMDB";
+            if (flag.Equals(2))
+                sp_name = "SP_GetUserTravelDB";
+            if (flag.Equals(3))
+                sp_name = "SP_GetUserIndividualDB";
+            if (flag.Equals(4))
+                sp_name = "SP_GetUserDomesticDB";
+            try
+            {
+                DataSet ds = new DataSet();
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = sp_name
+                    };
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+                    cmd.Parameters.AddWithValue("@UserName", u_name);
+
+                    SqlDataReader reader;
+                    reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        lstInfo.TotPoltoBeRenewed = (int)reader.GetValue(0);
+                        lstInfo.TotPolforRenewal = (int)reader.GetValue(1);
+                        lstInfo.NoOfPoRenewed = (int)reader.GetValue(2);
+                        lstInfo.PolicyLost = (int)reader.GetValue(3);
+                        lstInfo.UserName = reader.GetValue(4).ToString();
+                        returnCode = 1;
+                    }
+                    reader.Close();
+                    cmd.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return returnCode;
+        }
+        public List<ProducerCodeMaster> GetProducerMaster(string u_name)
+        {
+            List<ProducerCodeMaster> lst = new List<ProducerCodeMaster>();
+            try
+            {
+                DataSet ds = new DataSet();
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = "SP_GetProducerMaster"
+                    };
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+                    cmd.Parameters.AddWithValue("@AgentCodeBrokerCode", u_name);
+
+                    SqlDataAdapter sdaAdapter = new SqlDataAdapter
+                    {
+                        SelectCommand = cmd
+                    };
+                    sdaAdapter.Fill(ds);
+
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        lst = (from DataRow dr in ds.Tables[0].Rows
+                               select new ProducerCodeMaster()
+                               {
+
+                                   ProducerCodeId = (long)dr["ProducerCodeId"],
+                                   ProducerCode = dr["ProducerCode"].ToString(),
+                                   ProducerName = dr["ProducerName"].ToString(),
+                               }).ToList();
+                    }
+                    cmd.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return lst;
         }
 
     }
