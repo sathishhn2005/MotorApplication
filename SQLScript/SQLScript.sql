@@ -1,6 +1,6 @@
 USE [MotorIns]
 GO
-/****** Object:  UserDefinedTableType [dbo].[UDT_DomesticBulkUpload]    Script Date: 25-08-2020 00:01:55 ******/
+/****** Object:  UserDefinedTableType [dbo].[UDT_DomesticBulkUpload]    Script Date: 30-08-2020 00:04:34 ******/
 CREATE TYPE [dbo].[UDT_DomesticBulkUpload] AS TABLE(
 	[DraftNo] [nvarchar](50) NULL,
 	[PolicyNo] [nvarchar](50) NULL,
@@ -42,7 +42,7 @@ CREATE TYPE [dbo].[UDT_DomesticBulkUpload] AS TABLE(
 	[Email] [nvarchar](30) NULL
 )
 GO
-/****** Object:  UserDefinedTableType [dbo].[UDT_DomesticInsSave]    Script Date: 25-08-2020 00:01:55 ******/
+/****** Object:  UserDefinedTableType [dbo].[UDT_DomesticInsSave]    Script Date: 30-08-2020 00:04:34 ******/
 CREATE TYPE [dbo].[UDT_DomesticInsSave] AS TABLE(
 	[DraftNo] [nvarchar](50) NULL,
 	[PolicyNo] [nvarchar](50) NULL,
@@ -84,7 +84,7 @@ CREATE TYPE [dbo].[UDT_DomesticInsSave] AS TABLE(
 	[Email] [nvarchar](30) NULL
 )
 GO
-/****** Object:  UserDefinedTableType [dbo].[UDT_IndividualBulkUpload]    Script Date: 25-08-2020 00:01:55 ******/
+/****** Object:  UserDefinedTableType [dbo].[UDT_IndividualBulkUpload]    Script Date: 30-08-2020 00:04:34 ******/
 CREATE TYPE [dbo].[UDT_IndividualBulkUpload] AS TABLE(
 	[QuotationNo] [nvarchar](50) NULL,
 	[PolicyNo] [nvarchar](50) NULL,
@@ -136,7 +136,7 @@ CREATE TYPE [dbo].[UDT_IndividualBulkUpload] AS TABLE(
 	[AppointeeCivilIDNo] [nvarchar](50) NULL
 )
 GO
-/****** Object:  UserDefinedTableType [dbo].[UDT_IndividualInsSave]    Script Date: 25-08-2020 00:01:55 ******/
+/****** Object:  UserDefinedTableType [dbo].[UDT_IndividualInsSave]    Script Date: 30-08-2020 00:04:34 ******/
 CREATE TYPE [dbo].[UDT_IndividualInsSave] AS TABLE(
 	[QuotationNo] [nvarchar](50) NULL,
 	[PolicyNo] [nvarchar](50) NULL,
@@ -188,7 +188,7 @@ CREATE TYPE [dbo].[UDT_IndividualInsSave] AS TABLE(
 	[AppointeeCivilIDNo] [nvarchar](50) NULL
 )
 GO
-/****** Object:  UserDefinedTableType [dbo].[UDT_MotorBulkUpload]    Script Date: 25-08-2020 00:01:55 ******/
+/****** Object:  UserDefinedTableType [dbo].[UDT_MotorBulkUpload]    Script Date: 30-08-2020 00:04:34 ******/
 CREATE TYPE [dbo].[UDT_MotorBulkUpload] AS TABLE(
 	[IssueDate] [datetime] NULL,
 	[PolicyNo] [nvarchar](50) NULL,
@@ -242,7 +242,7 @@ CREATE TYPE [dbo].[UDT_MotorBulkUpload] AS TABLE(
 	[VIPCustomer] [nvarchar](20) NULL
 )
 GO
-/****** Object:  UserDefinedTableType [dbo].[UDT_MotorInsSave]    Script Date: 25-08-2020 00:01:55 ******/
+/****** Object:  UserDefinedTableType [dbo].[UDT_MotorInsSave]    Script Date: 30-08-2020 00:04:34 ******/
 CREATE TYPE [dbo].[UDT_MotorInsSave] AS TABLE(
 	[IssueDate] [datetime] NULL,
 	[PolicyNo] [nvarchar](50) NULL,
@@ -297,7 +297,7 @@ CREATE TYPE [dbo].[UDT_MotorInsSave] AS TABLE(
 	[VIPCustomer] [nvarchar](20) NULL
 )
 GO
-/****** Object:  UserDefinedTableType [dbo].[UDT_TravelBulkUpload]    Script Date: 25-08-2020 00:01:55 ******/
+/****** Object:  UserDefinedTableType [dbo].[UDT_TravelBulkUpload]    Script Date: 30-08-2020 00:04:34 ******/
 CREATE TYPE [dbo].[UDT_TravelBulkUpload] AS TABLE(
 	[IssueDate] [datetime] NULL,
 	[PolicyNo] [nvarchar](50) NULL,
@@ -341,7 +341,7 @@ CREATE TYPE [dbo].[UDT_TravelBulkUpload] AS TABLE(
 	[ExtensionFamilyMember] [nvarchar](50) NULL
 )
 GO
-/****** Object:  UserDefinedTableType [dbo].[UDT_TravelInsSave]    Script Date: 25-08-2020 00:01:55 ******/
+/****** Object:  UserDefinedTableType [dbo].[UDT_TravelInsSave]    Script Date: 30-08-2020 00:04:34 ******/
 CREATE TYPE [dbo].[UDT_TravelInsSave] AS TABLE(
 	[IssueDate] [datetime] NULL,
 	[PolicyNo] [nvarchar](50) NULL,
@@ -385,7 +385,21 @@ CREATE TYPE [dbo].[UDT_TravelInsSave] AS TABLE(
 	[ExtensionFamilyMember] [nvarchar](50) NULL
 )
 GO
-/****** Object:  Table [dbo].[TB_Domestic]    Script Date: 25-08-2020 00:01:55 ******/
+/****** Object:  Table [dbo].[TB_Calender]    Script Date: 30-08-2020 00:04:34 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TB_Calender](
+	[CalenderId] [bigint] IDENTITY(1,1) NOT NULL,
+	[MonthName] [nvarchar](30) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[CalenderId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TB_Domestic]    Script Date: 30-08-2020 00:04:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -446,7 +460,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TB_Individual]    Script Date: 25-08-2020 00:01:55 ******/
+/****** Object:  Table [dbo].[TB_Individual]    Script Date: 30-08-2020 00:04:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -517,7 +531,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TB_Motor]    Script Date: 25-08-2020 00:01:55 ******/
+/****** Object:  Table [dbo].[TB_Motor]    Script Date: 30-08-2020 00:04:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -593,7 +607,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TB_ProducerCodeMaster]    Script Date: 25-08-2020 00:01:55 ******/
+/****** Object:  Table [dbo].[TB_ProducerCodeMaster]    Script Date: 30-08-2020 00:04:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -610,7 +624,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TB_RoleMaster]    Script Date: 25-08-2020 00:01:55 ******/
+/****** Object:  Table [dbo].[TB_RoleMaster]    Script Date: 30-08-2020 00:04:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -624,7 +638,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TB_Travel]    Script Date: 25-08-2020 00:01:55 ******/
+/****** Object:  Table [dbo].[TB_Travel]    Script Date: 30-08-2020 00:04:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -687,7 +701,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TB_Users]    Script Date: 25-08-2020 00:01:55 ******/
+/****** Object:  Table [dbo].[TB_Users]    Script Date: 30-08-2020 00:04:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -707,6 +721,34 @@ PRIMARY KEY CLUSTERED
 	[UserId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[TB_Calender] ON 
+GO
+INSERT [dbo].[TB_Calender] ([CalenderId], [MonthName]) VALUES (1, N'January')
+GO
+INSERT [dbo].[TB_Calender] ([CalenderId], [MonthName]) VALUES (2, N'February')
+GO
+INSERT [dbo].[TB_Calender] ([CalenderId], [MonthName]) VALUES (3, N'March')
+GO
+INSERT [dbo].[TB_Calender] ([CalenderId], [MonthName]) VALUES (4, N'April')
+GO
+INSERT [dbo].[TB_Calender] ([CalenderId], [MonthName]) VALUES (5, N'May')
+GO
+INSERT [dbo].[TB_Calender] ([CalenderId], [MonthName]) VALUES (6, N'June')
+GO
+INSERT [dbo].[TB_Calender] ([CalenderId], [MonthName]) VALUES (7, N'July')
+GO
+INSERT [dbo].[TB_Calender] ([CalenderId], [MonthName]) VALUES (8, N'August')
+GO
+INSERT [dbo].[TB_Calender] ([CalenderId], [MonthName]) VALUES (9, N'September')
+GO
+INSERT [dbo].[TB_Calender] ([CalenderId], [MonthName]) VALUES (10, N'October')
+GO
+INSERT [dbo].[TB_Calender] ([CalenderId], [MonthName]) VALUES (11, N'November')
+GO
+INSERT [dbo].[TB_Calender] ([CalenderId], [MonthName]) VALUES (12, N'December')
+GO
+SET IDENTITY_INSERT [dbo].[TB_Calender] OFF
 GO
 SET IDENTITY_INSERT [dbo].[TB_Domestic] ON 
 GO
@@ -838,7 +880,7 @@ INSERT [dbo].[TB_Motor] ([MotorId], [IssueDate], [PolicyNo], [TypeofTransaction]
 GO
 INSERT [dbo].[TB_Motor] ([MotorId], [IssueDate], [PolicyNo], [TypeofTransaction], [PolicyNumberifRenewal], [Branch], [PolicyStartDate], [PolicyEndDate], [AgentCode], [BrokerCode], [UAEExtensionNilPremiaum], [MazayaCard], [Make_Model], [BodyType], [VehicleType], [YearofManufacture], [VehicleAge], [Tonnage], [DriverAge], [GeographicalArea], [FirstRegDate], [SeatingCapacity], [RoadAssistance], [SumInsured_RO], [Voluntaryexcess], [NoClaimsDiscount], [LicenceFirstIssued], [SpecialDiscount], [PurchaseType], [AgencyRepair], [RegistrationNo], [MakeModel], [EngineNo], [ChassisNo], [VehicleCC], [PlateColor], [Color], [Cylinder], [Hirepurchase_BankName], [AssuredName_Arabic], [AgentCode_BrokerCode], [AssuredName], [CivilID_CRNo], [PostBox], [PostalCode], [City], [ResPhoneNo], [Nationality], [MobileNo], [EmailId], [NillAdditionalDriver], [Marketer], [IssueFrom], [VIPCustomer], [SumInsured], [PremiumAmount], [RivisedSI], [CustomerCode], [CustomerName], [CreatedAt], [CreatedBy], [ModifiedAt], [ModifiedBy], [Status]) VALUES (2, CAST(N'2020-08-07T13:57:00.000' AS DateTime), N'P/004/01/20/2402/00002', N'New Policy/Renewal', N'Renew2', N'Head Office', CAST(N'2020-08-07T13:57:00.000' AS DateTime), CAST(N'2020-08-08T23:59:00.000' AS DateTime), NULL, NULL, N'No', N'Card2', N'BMW', N'Car', N'Personal Vehicle', 2015, N'5', N'5', N'32', N'Sultanate of Oman', CAST(N'2016-05-10T00:00:00.000' AS DateTime), 5, N'No', 5000, N'Excess2', N'5', CAST(N'2016-01-13T00:00:00.000' AS DateTime), N'6', N'Local Purchase', N'Yes', N'5434565', N'ASHOK LEYLAND', N'324234235', N'46456456455', N'56', N'Yellow', N'Red', N'Cylinder2', N'Hirepurchase_BankName2', NULL, N'SH005 - Mr.Ghaith AL-Maghribi', N'AL HAMRIYA MARKETING SHOWROOM', N'5675856757', N'342', N'131', N'Al Hamriyah', N'99342197', N'Omani', N'99342152', N'sathish@gmail.com', N'No', N'Direct', N'AMI Head Office', N'Yes', 5000, 50, 100, N'CSh002', N'Prasad', CAST(N'2020-08-24T17:08:13.447' AS DateTime), NULL, NULL, NULL, N'Dropped')
 GO
-INSERT [dbo].[TB_Motor] ([MotorId], [IssueDate], [PolicyNo], [TypeofTransaction], [PolicyNumberifRenewal], [Branch], [PolicyStartDate], [PolicyEndDate], [AgentCode], [BrokerCode], [UAEExtensionNilPremiaum], [MazayaCard], [Make_Model], [BodyType], [VehicleType], [YearofManufacture], [VehicleAge], [Tonnage], [DriverAge], [GeographicalArea], [FirstRegDate], [SeatingCapacity], [RoadAssistance], [SumInsured_RO], [Voluntaryexcess], [NoClaimsDiscount], [LicenceFirstIssued], [SpecialDiscount], [PurchaseType], [AgencyRepair], [RegistrationNo], [MakeModel], [EngineNo], [ChassisNo], [VehicleCC], [PlateColor], [Color], [Cylinder], [Hirepurchase_BankName], [AssuredName_Arabic], [AgentCode_BrokerCode], [AssuredName], [CivilID_CRNo], [PostBox], [PostalCode], [City], [ResPhoneNo], [Nationality], [MobileNo], [EmailId], [NillAdditionalDriver], [Marketer], [IssueFrom], [VIPCustomer], [SumInsured], [PremiumAmount], [RivisedSI], [CustomerCode], [CustomerName], [CreatedAt], [CreatedBy], [ModifiedAt], [ModifiedBy], [Status]) VALUES (3, CAST(N'2020-09-07T13:57:00.000' AS DateTime), N'P/004/01/20/2402/00003', N'New Policy/Renewal', N'Renew3', N'Head Office', CAST(N'2020-09-07T13:56:00.007' AS DateTime), CAST(N'2020-08-09T23:58:59.997' AS DateTime), NULL, NULL, N'No', N'Card3', N'ASHOK LEYLAND', N'Truck', N'Commercial Vehicle', 2015, N'5', N'5', N'29', N'Sultanate of Oman', CAST(N'2016-05-10T00:00:00.000' AS DateTime), 5, N'No', 5000, N'Excess3', N'2', CAST(N'2016-01-13T00:00:00.000' AS DateTime), N'7', N'Local Purchase', N'Yes', N'5434541', N'ASHOK LEYLAND', N'324234236', N'46456456421', N'56', N'White', N'Pink', N'Cylinder3', N'Hirepurchase_BankName3', NULL, N'SH006 - Ms.Tahani Abdullah Al Najadi', N'AL HAMRIYA MARKETING SHOWROOM', N'5675856758', N'342', N'131', N'Al Hamriyah', N'99342197', N'Omani', N'99342108', N'jeeva@gmail.com', N'No', N'Direct', N'AMI Head Office', N'Yes', NULL, NULL, NULL, NULL, NULL, CAST(N'2020-08-24T17:08:13.447' AS DateTime), NULL, NULL, NULL, NULL)
+INSERT [dbo].[TB_Motor] ([MotorId], [IssueDate], [PolicyNo], [TypeofTransaction], [PolicyNumberifRenewal], [Branch], [PolicyStartDate], [PolicyEndDate], [AgentCode], [BrokerCode], [UAEExtensionNilPremiaum], [MazayaCard], [Make_Model], [BodyType], [VehicleType], [YearofManufacture], [VehicleAge], [Tonnage], [DriverAge], [GeographicalArea], [FirstRegDate], [SeatingCapacity], [RoadAssistance], [SumInsured_RO], [Voluntaryexcess], [NoClaimsDiscount], [LicenceFirstIssued], [SpecialDiscount], [PurchaseType], [AgencyRepair], [RegistrationNo], [MakeModel], [EngineNo], [ChassisNo], [VehicleCC], [PlateColor], [Color], [Cylinder], [Hirepurchase_BankName], [AssuredName_Arabic], [AgentCode_BrokerCode], [AssuredName], [CivilID_CRNo], [PostBox], [PostalCode], [City], [ResPhoneNo], [Nationality], [MobileNo], [EmailId], [NillAdditionalDriver], [Marketer], [IssueFrom], [VIPCustomer], [SumInsured], [PremiumAmount], [RivisedSI], [CustomerCode], [CustomerName], [CreatedAt], [CreatedBy], [ModifiedAt], [ModifiedBy], [Status]) VALUES (3, CAST(N'2020-09-07T00:00:00.000' AS DateTime), N'P/004/01/20/2402/00003', N'New Policy/Renewal', N'Renew3', N'Head Office', CAST(N'2020-09-07T00:00:00.000' AS DateTime), CAST(N'2020-09-23T00:00:00.000' AS DateTime), NULL, NULL, N'No', N'Card3', N'ASHOK LEYLAND', N'Truck', N'Commercial Vehicle', 2015, N'5', N'5', N'29', N'Sultanate of Oman', CAST(N'2016-05-10T00:00:00.000' AS DateTime), 5, N'No', 5000, N'Excess3', N'2', CAST(N'2016-01-13T00:00:00.000' AS DateTime), N'7', N'Local Purchase', N'Yes', N'5434541', N'ASHOK LEYLAND', N'324234236', N'46456456421', N'56', N'White', N'Pink', N'Cylinder3', N'Hirepurchase_BankName3', NULL, N'SH006 - Ms.Tahani Abdullah Al Najadi', N'AL HAMRIYA MARKETING SHOWROOM', N'5675856758', N'342', N'131', N'Al Hamriyah', N'99342197', N'Omani', N'99342108', N'jeeva@gmail.com', N'No', N'Direct', N'AMI Head Office', N'Yes', 200000, 2522, 25, N'Code', N'Test', CAST(N'2020-08-24T17:08:13.447' AS DateTime), NULL, CAST(N'2020-08-29T23:42:24.093' AS DateTime), NULL, N'OnHold')
 GO
 INSERT [dbo].[TB_Motor] ([MotorId], [IssueDate], [PolicyNo], [TypeofTransaction], [PolicyNumberifRenewal], [Branch], [PolicyStartDate], [PolicyEndDate], [AgentCode], [BrokerCode], [UAEExtensionNilPremiaum], [MazayaCard], [Make_Model], [BodyType], [VehicleType], [YearofManufacture], [VehicleAge], [Tonnage], [DriverAge], [GeographicalArea], [FirstRegDate], [SeatingCapacity], [RoadAssistance], [SumInsured_RO], [Voluntaryexcess], [NoClaimsDiscount], [LicenceFirstIssued], [SpecialDiscount], [PurchaseType], [AgencyRepair], [RegistrationNo], [MakeModel], [EngineNo], [ChassisNo], [VehicleCC], [PlateColor], [Color], [Cylinder], [Hirepurchase_BankName], [AssuredName_Arabic], [AgentCode_BrokerCode], [AssuredName], [CivilID_CRNo], [PostBox], [PostalCode], [City], [ResPhoneNo], [Nationality], [MobileNo], [EmailId], [NillAdditionalDriver], [Marketer], [IssueFrom], [VIPCustomer], [SumInsured], [PremiumAmount], [RivisedSI], [CustomerCode], [CustomerName], [CreatedAt], [CreatedBy], [ModifiedAt], [ModifiedBy], [Status]) VALUES (4, CAST(N'2020-10-07T13:57:00.000' AS DateTime), N'P/004/01/20/2402/00004', N'New Policy/Renewal', N'Renew4', N'Head Office', CAST(N'2020-10-07T13:55:00.010' AS DateTime), CAST(N'2020-08-10T23:58:59.997' AS DateTime), NULL, NULL, N'No', N'Card4', N'ASHOK LEYLAND', N'Truck', N'Commercial Vehicle', 2015, N'5', N'5', N'26', N'Sultanate of Oman', CAST(N'2016-05-10T00:00:00.000' AS DateTime), 5, N'No', 5000, N'Excess4', N'7', CAST(N'2016-01-13T00:00:00.000' AS DateTime), N'5', N'Local Purchase', N'Yes', N'5434536', N'ASHOK LEYLAND', N'324234232', N'46456456478', N'56', N'Yellow', N'Red', N'Cylinder4', N'Hirepurchase_BankName4', NULL, N'SH007 - Ms.Ahad Ali Al Wahaibi', N'AL HAMRIYA MARKETING SHOWROOM', N'5675856759', N'342', N'131', N'Al Hamriyah', N'99342197', N'Omani', N'99342064', N'madhan@gmail.com', N'No', N'Direct', N'AMI Head Office', N'Yes', NULL, NULL, NULL, NULL, NULL, CAST(N'2020-08-24T17:08:13.447' AS DateTime), NULL, NULL, NULL, NULL)
 GO
@@ -1758,7 +1800,7 @@ ALTER TABLE [dbo].[TB_Travel] ADD  DEFAULT (getdate()) FOR [CreatedAt]
 GO
 ALTER TABLE [dbo].[TB_Users] ADD  DEFAULT (getdate()) FOR [CreatedAt]
 GO
-/****** Object:  StoredProcedure [dbo].[SP_DomesticBulkUpload]    Script Date: 25-08-2020 00:01:56 ******/
+/****** Object:  StoredProcedure [dbo].[SP_DomesticBulkUpload]    Script Date: 30-08-2020 00:04:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1786,7 +1828,58 @@ SponsorOfficePhone,SponsorNationality,VIPCustomer,Email
 FROM @UDT_MotorBulkUpload WHERE PolicyNo NOT IN (SELECT DISTINCT POLICYNO FROM TB_Domestic )
 end
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetMastersView]    Script Date: 25-08-2020 00:01:56 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetBarChart]    Script Date: 30-08-2020 00:04:34 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE proc [dbo].[SP_GetBarChart] (@flag int)
+AS 
+BEGIN
+if(@flag=1)
+begin 
+select * from (select c.Calenderid, c.MonthName,PolicyNo,IsNull(Status,'NotProgressed') as Status from
+tb_motor M 
+
+right join TB_Calender C on C.MonthName=DATENAME(month, PolicyEndDate)) t
+pivot
+(Count (PolicyNo) for Status in([Dropped],[Completed],[NotProgressed])) as pivot_final_table
+--a.* b* totcnt
+END
+if(@flag=2)
+begin 
+select * from (select c.Calenderid, c.MonthName,PolicyNo,IsNull(Status,'NotProgressed') as Status from
+TB_Travel M 
+
+right join TB_Calender C on C.MonthName=DATENAME(month, DateOfReturn)) t
+pivot
+(Count (PolicyNo) for Status in([Dropped],[Completed],[NotProgressed])) as pivot_final_table
+--a.* b* totcnt
+END
+if(@flag=3)
+begin 
+select * from (select c.Calenderid, c.MonthName,PolicyNo,IsNull(Status,'NotProgressed') as Status from
+TB_Individual M 
+
+right join TB_Calender C on C.MonthName=DATENAME(month, PolicyEndDate)) t
+pivot
+(Count (PolicyNo) for Status in([Dropped],[Completed],[NotProgressed])) as pivot_final_table
+--a.* b* totcnt
+END
+if(@flag=4)
+begin 
+select * from (select c.Calenderid, c.MonthName,PolicyNo,IsNull(Status,'NotProgressed') as Status from
+TB_Domestic M 
+
+right join TB_Calender C on C.MonthName=DATENAME(month, PolicyEndDate)) t
+pivot
+(Count (PolicyNo) for Status in([Dropped],[Completed],[NotProgressed])) as pivot_final_table
+--a.* b* totcnt
+END
+end
+GO
+/****** Object:  StoredProcedure [dbo].[SP_GetMastersView]    Script Date: 30-08-2020 00:04:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1852,7 +1945,24 @@ select ProducerCodeId,ProducerCode,ProducerName from tb_producercodemaster
 end
 
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetProducerMaster]    Script Date: 25-08-2020 00:01:56 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetPMDashBoard]    Script Date: 30-08-2020 00:04:34 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE proc [dbo].[SP_GetPMDashBoard]
+(@RoleName nvarchar(50)
+)
+as
+begin
+declare @RoleId int
+set @RoleId=(select RoleId FROM TB_RoleMaster WHERE RoleName=@RoleName)
+select distinct ProducerCodeId, U.UserName+' - '+PCM.ProducerName as ProducerName,u.UserName from TB_Users U 
+
+Inner join TB_ProducerCodeMaster PCM on PCM.ProducerCode=U.UserName where u.RoleId=@RoleId
+end
+GO
+/****** Object:  StoredProcedure [dbo].[SP_GetProducerMaster]    Script Date: 30-08-2020 00:04:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1874,7 +1984,7 @@ set @U_Name=@AgentCodeBrokerCode
 select ProducerCodeId,ProducerCode,ProducerName from tb_producercodemaster where ProducerCode=@U_Name
 end
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetUserDomesticDB]    Script Date: 25-08-2020 00:01:56 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetUserDomesticDB]    Script Date: 30-08-2020 00:04:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1905,13 +2015,13 @@ LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2)
 end and
 PolicyEndDate<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)))
 
-set @TotPolforRenewal=(select count(*) from TB_Domestic where
+set @TotPolforRenewal=(select count(*) from TB_Domestic where 
 @UserName=CASE 
 WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
 else
 LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
 end and
- PolicyEndDate< EOMONTH(getdate(),1))
+status='OnHold')
 
 set @NoOfPoRenewed=(select count(*) from TB_Domestic where 
 @UserName=CASE 
@@ -1933,29 +2043,21 @@ select @TotPoltoBeRenewed as TotPoltoBeRenewed,@TotPolforRenewal as TotPolforRen
 end
 else
 begin
-set @TotPoltoBeRenewed=(select count(*) from TB_Domestic where 
+set @TotPoltoBeRenewed=(select count(*) from TB_Domestic where PolicyEndDate<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)))
 
-PolicyEndDate<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)))
+set @TotPolforRenewal=(select count(*) from TB_Domestic where status='OnHold')
 
-set @TotPolforRenewal=(select count(*) from TB_Domestic where
+set @NoOfPoRenewed=(select count(*) from TB_Domestic where status='Completed')
 
- PolicyEndDate< EOMONTH(getdate(),1))
+set @PolicyLost=(select count(*) from TB_Domestic where status='Dropped')
 
-set @NoOfPoRenewed=(select count(*) from TB_Domestic where 
-
-status='Completed')
-
-set @PolicyLost=(select count(*) from TB_Domestic where 
-
-
-status='Dropped')
 select @TotPoltoBeRenewed as TotPoltoBeRenewed,@TotPolforRenewal as TotPolforRenewal,@NoOfPoRenewed as NoOfPoRenewed,@PolicyLost as PolicyLost,@UserName as UserName
 
 end
 end
 end
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetUserIndividualDB]    Script Date: 25-08-2020 00:01:56 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetUserIndividualDB]    Script Date: 30-08-2020 00:04:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1992,7 +2094,7 @@ WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
 else
 LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
 end and
- PolicyEndDate< EOMONTH(getdate(),1))
+status='OnHold')
 
 set @NoOfPoRenewed=(select count(*) from TB_Individual where 
 @UserName=CASE 
@@ -2019,9 +2121,9 @@ set @TotPoltoBeRenewed=(select count(*) from TB_Individual where
 
 PolicyEndDate<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)))
 
-set @TotPolforRenewal=(select count(*) from TB_Individual where
+set @TotPolforRenewal=(select count(*) from TB_Individual where 
 
- PolicyEndDate< EOMONTH(getdate(),1))
+status='OnHold')
 
 set @NoOfPoRenewed=(select count(*) from TB_Individual where 
 
@@ -2036,7 +2138,7 @@ end
 end
 end
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetUserInsInfo]    Script Date: 25-08-2020 00:01:56 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetUserInsInfo]    Script Date: 30-08-2020 00:04:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2056,6 +2158,7 @@ if(@IsExists>0)
 
 begin
 declare @TotPoltoBeRenewed int,@TotPolforRenewal int,@NoOfPoRenewed int,@PolicyLost int
+declare @TotPoltoBeRenewedCM int,@TotPolOnHoldCM int,@NoOfPoRenewedCM int,@PolicyLostCM int
 if(@RoleId=1)
 begin
 set @TotPoltoBeRenewed=(select count(*) from TB_Motor where PolicyEndDate between getdate() and DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)))+
@@ -2063,10 +2166,11 @@ set @TotPoltoBeRenewed=(select count(*) from TB_Motor where PolicyEndDate betwee
 (select count(*) from TB_Individual where PolicyEndDate between getdate() and DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)))+
 (select count(*) from TB_Travel where DateOfReturn between getdate() and DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)))
 
-set @TotPolforRenewal=(select count(*) from TB_Motor where PolicyEndDate between getdate() and  EOMONTH(getdate(),1))+
-(select count(*) from TB_Domestic where PolicyEndDate between getdate() and  EOMONTH(getdate(),1))+
-(select count(*) from TB_Individual where PolicyEndDate between getdate() and  EOMONTH(getdate(),1))+
-(select count(*) from TB_Travel where DateOfReturn between getdate() and  EOMONTH(getdate(),1))
+set @TotPolforRenewal=(
+select count(*) from TB_Motor where status='OnHold')+
+(select count(*) from TB_Domestic where status='OnHold')+
+(select count(*) from TB_Individual where status='OnHold')+
+(select count(*) from TB_Travel where status='OnHold')
 
 set @NoOfPoRenewed=(
 select count(*) from TB_Motor where status='Completed')+
@@ -2079,9 +2183,31 @@ set @PolicyLost=(select count(*) from TB_Motor where status='Dropped')+
 (select count(*) from TB_Individual where status='Dropped')+
 (select count(*) from TB_Travel where status='Dropped')
 
+set @TotPoltoBeRenewedCM=(select count(*) from TB_Motor where PolicyEndDate between GETDATE() and  EOMONTH(getdate(),1))+
+(select count(*) from TB_Domestic where PolicyEndDate between GETDATE() and  EOMONTH(getdate(),1))+
+(select count(*) from TB_Individual where PolicyEndDate between GETDATE() and  EOMONTH(getdate(),1))+
+(select count(*) from TB_Travel where DateOfReturn between GETDATE() and  EOMONTH(getdate(),1))
+
+set @TotPolOnHoldCM=(
+select count(*) from TB_Motor where status='OnHold' and PolicyEndDate between GETDATE() and  EOMONTH(getdate(),1))+
+(select count(*) from TB_Domestic where status='OnHold' and PolicyEndDate between GETDATE() and  EOMONTH(getdate(),1))+
+(select count(*) from TB_Individual where status='OnHold' and PolicyEndDate between GETDATE() and  EOMONTH(getdate(),1))+
+(select count(*) from TB_Travel where status='OnHold' and DateOfReturn between GETDATE() and  EOMONTH(getdate(),1))
+
+set @NoOfPoRenewedCM=(
+select count(*) from TB_Motor where status='Completed' and PolicyEndDate between GETDATE() and  EOMONTH(getdate(),1))+
+(select count(*) from TB_Domestic where status='Completed' and PolicyEndDate between GETDATE() and  EOMONTH(getdate(),1))+
+(select count(*) from TB_Individual where status='Completed' and PolicyEndDate between GETDATE() and  EOMONTH(getdate(),1))+
+(select count(*) from TB_Travel where status='Completed' and DateOfReturn between GETDATE() and  EOMONTH(getdate(),1))
+
+set @PolicyLostCM=(select count(*) from TB_Motor where status='Dropped' and PolicyEndDate between GETDATE() and  EOMONTH(getdate(),1))+
+(select count(*) from TB_Domestic where status='Dropped' and PolicyEndDate between GETDATE() and  EOMONTH(getdate(),1))+
+(select count(*) from TB_Individual where status='Dropped' and PolicyEndDate between GETDATE() and  EOMONTH(getdate(),1))+
+(select count(*) from TB_Travel where status='Dropped' and DateOfReturn between GETDATE() and  EOMONTH(getdate(),1))
 
 
-select @TotPoltoBeRenewed as TotPoltoBeRenewed,@TotPolforRenewal as TotPolforRenewal,@NoOfPoRenewed as NoOfPoRenewed,@PolicyLost as PolicyLost,@UserName as UserName
+
+select @TotPoltoBeRenewed as TotPoltoBeRenewed,@TotPolforRenewal as TotPolforRenewal,@NoOfPoRenewed as NoOfPoRenewed,@PolicyLost as PolicyLost,@UserName as UserName, @TotPoltoBeRenewedCM as TotPoltoBeRenewedCM,@TotPolOnHoldCM as TotPolforRenewalCM,@NoOfPoRenewedCM as NoOfPoRenewedCM,@PolicyLostCM as PolicyLostCM,@UserName as UserName
 end
 else if(@RoleId=2)
 begin
@@ -2099,10 +2225,10 @@ LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
 
 LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)
 
-set @TotPolforRenewal=(select count(*) from TB_Motor where PolicyEndDate< EOMONTH(getdate(),1) and LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 1)=@UserName)+
-(select count(*) from TB_Domestic where PolicyEndDate< EOMONTH(getdate(),1) and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
-(select count(*) from TB_Individual where PolicyEndDate< EOMONTH(getdate(),1)and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
-(select count(*) from TB_Travel where DateOfReturn< EOMONTH(getdate(),1)and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)
+set @TotPolforRenewal=(select count(*) from TB_Motor where Status='OnHold' and LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 1)=@UserName)+
+(select count(*) from TB_Domestic where Status='OnHold' and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
+(select count(*) from TB_Individual where Status='OnHold'and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
+(select count(*) from TB_Travel where Status='OnHold'and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)
 
 set @NoOfPoRenewed=(select count(*) from TB_Motor where status='Completed' and LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 1)=@UserName)+ --PolicyEndDate=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0)))+
 (select count(*) from TB_Domestic where PolicyEndDate=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0))and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
@@ -2113,7 +2239,7 @@ set @PolicyLost=(select count(*) from TB_Motor where status='Dropped' and LEFT(A
 (select count(*) from TB_Domestic where PolicyEndDate=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0))and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
 (select count(*) from TB_Individual where PolicyEndDate=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0))and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
 (select count(*) from TB_Travel where DateOfReturn=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0))and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)
-select @TotPoltoBeRenewed as TotPoltoBeRenewed,@TotPolforRenewal as TotPolforRenewal,@NoOfPoRenewed as NoOfPoRenewed,@PolicyLost as PolicyLost,@UserName as UserName
+select @TotPoltoBeRenewed as TotPoltoBeRenewed,@TotPolforRenewal as TotPolforRenewal,@NoOfPoRenewed as NoOfPoRenewed,@PolicyLost as PolicyLost,@UserName as UserName,0,0,0,0
 end
 else if(@RoleId=3)
 begin
@@ -2148,21 +2274,375 @@ LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2)
 end)
 
 
-set @TotPolforRenewal=(select count(*) from TB_Motor where PolicyEndDate< EOMONTH(getdate(),1) and 
+set @TotPolforRenewal=(select count(*) from TB_Motor where Status='OnHold' and 
 @UserName=CASE 
 WHEN (CHARINDEX('-',AgentCode_BrokerCode)-2 <= 0) THEN AgentCode_BrokerCode
 else
 LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 2) 
 end
 )+
-(select count(*) from TB_Domestic where PolicyEndDate< EOMONTH(getdate(),1) and 
+(select count(*) from TB_Domestic where Status='OnHold' and 
 @UserName=CASE 
 WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
 else
 LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
 end
 )+
-(select count(*) from TB_Individual where PolicyEndDate< EOMONTH(getdate(),1)and @UserName=CASE 
+(select count(*) from TB_Individual where Status='OnHold'and @UserName=CASE 
+WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
+else
+LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
+end
+)+
+(select count(*) from TB_Travel where Status='OnHold'and @UserName=CASE 
+WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
+else
+LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
+end
+)
+
+set @NoOfPoRenewed=(select count(*) from TB_Motor where status='Completed' and @UserName=CASE 
+WHEN (CHARINDEX('-',AgentCode_BrokerCode)-2 <= 0) THEN AgentCode_BrokerCode
+else
+LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 2) 
+end
+)+ --PolicyEndDate=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0)))+
+(select count(*) from TB_Domestic where PolicyEndDate=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0))and @UserName=CASE 
+WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
+else
+LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
+end
+)+
+(select count(*) from TB_Individual where PolicyEndDate=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0))and @UserName=CASE 
+WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
+else
+LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
+end
+)+
+(select count(*) from TB_Travel where DateOfReturn=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0))and @UserName=CASE 
+WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
+else
+LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
+end
+)
+
+set @PolicyLost=(select count(*) from TB_Motor where status='Dropped' and @UserName=CASE 
+WHEN (CHARINDEX('-',AgentCode_BrokerCode)-2 <= 0) THEN AgentCode_BrokerCode
+else
+LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 2) 
+end
+)+-- PolicyEndDate=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0)))+
+(select count(*) from TB_Domestic where PolicyEndDate=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0))and @UserName=CASE 
+WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
+else
+LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
+end
+)+
+(select count(*) from TB_Individual where PolicyEndDate=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0))and @UserName=CASE 
+WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
+else
+LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
+end
+)+
+(select count(*) from TB_Travel where DateOfReturn=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0))and @UserName=CASE 
+WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
+else
+LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
+end
+)
+select @TotPoltoBeRenewed as TotPoltoBeRenewed,@TotPolforRenewal as TotPolforRenewal,@NoOfPoRenewed as NoOfPoRenewed,@PolicyLost as PolicyLost,@UserName as UserName,0,0,0,0
+end
+else if(@RoleId=4)
+begin
+set @TotPoltoBeRenewed=(select count(*) from TB_Motor where PolicyEndDate<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)))+
+(select count(*) from TB_Domestic where PolicyEndDate<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)))+
+(select count(*) from TB_Individual where PolicyEndDate<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)))+
+(select count(*) from TB_Travel where DateOfReturn<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)))
+
+set @TotPolforRenewal=(select count(*) from TB_Motor where Status='OnHold')+
+(select count(*) from TB_Domestic where Status='OnHold')+
+(select count(*) from TB_Individual where Status='OnHold')+
+(select count(*) from TB_Travel where Status='OnHold')
+
+set @NoOfPoRenewed=(
+select count(*) from TB_Motor where status='Completed')+
+(select count(*) from TB_Domestic where status='Completed')+
+(select count(*) from TB_Individual where status='Completed')+
+(select count(*) from TB_Travel where status='Completed')
+
+set @PolicyLost=(select count(*) from TB_Motor where status='Dropped')+
+(select count(*) from TB_Domestic where status='Dropped')+
+(select count(*) from TB_Individual where status='Dropped')+
+(select count(*) from TB_Travel where status='Dropped')
+
+
+
+select @TotPoltoBeRenewed as TotPoltoBeRenewed,@TotPolforRenewal as TotPolforRenewal,@NoOfPoRenewed as NoOfPoRenewed,@PolicyLost as PolicyLost,@UserName as UserName,0,0,0,0
+end
+
+else if(@RoleId=5)
+begin
+print 1
+set @TotPoltoBeRenewed=(select count(*) from TB_Motor where PolicyEndDate<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)) and 
+LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 1)=@UserName
+)+
+(select count(*) from TB_Domestic where PolicyEndDate<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)) and
+
+LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
+(select count(*) from TB_Individual where PolicyEndDate<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0))and
+
+LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
+(select count(*) from TB_Travel where DateOfReturn<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0))and
+
+LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)
+
+set @TotPolforRenewal=(select count(*) from TB_Motor where Status='OnHold' and LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 1)=@UserName)+
+(select count(*) from TB_Domestic where Status='OnHold' and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
+(select count(*) from TB_Individual where Status='OnHold'and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
+(select count(*) from TB_Travel where Status='OnHold'and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)
+
+set @NoOfPoRenewed=(select count(*) from TB_Motor where status='Completed' and LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 1)=@UserName)+ --PolicyEndDate=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0)))+
+(select count(*) from TB_Domestic where PolicyEndDate=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0))and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
+(select count(*) from TB_Individual where PolicyEndDate=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0))and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
+(select count(*) from TB_Travel where DateOfReturn=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0))and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)
+
+set @PolicyLost=(select count(*) from TB_Motor where status='Dropped' and LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 1)=@UserName)+-- PolicyEndDate=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0)))+
+(select count(*) from TB_Domestic where PolicyEndDate=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0))and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
+(select count(*) from TB_Individual where PolicyEndDate=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0))and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
+(select count(*) from TB_Travel where DateOfReturn=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0))and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)
+select @TotPoltoBeRenewed as TotPoltoBeRenewed,@TotPolforRenewal as TotPolforRenewal,@NoOfPoRenewed as NoOfPoRenewed,@PolicyLost as PolicyLost,@UserName as UserName,0,0,0,0
+end
+end
+else
+
+select @IsExists=0
+end
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[SP_GetUserMDB]    Script Date: 30-08-2020 00:04:34 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE proc [dbo].[SP_GetUserMDB]
+(
+@UserName nvarchar(50)
+)
+as 
+begin
+declare @IsExists int,@RoleId int
+set @RoleId=(select distinct roleid from TB_Users where UserName=@UserName)
+set @IsExists=(select count(*) from TB_Users where  UserName=@UserName)
+
+if(@IsExists>0)
+
+begin
+declare @TotPoltoBeRenewed int,@TotPolforRenewal int,@NoOfPoRenewed int,@PolicyLost int
+if(@UserName<>'' and @RoleId<>1)
+begin
+
+set @TotPoltoBeRenewed=(select count(*) from TB_Motor where 
+@UserName=CASE 
+WHEN (CHARINDEX('-',AgentCode_BrokerCode)-2 <= 0) THEN AgentCode_BrokerCode
+else
+LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 2) 
+end and
+PolicyEndDate between getdate() and DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)))
+
+set @TotPolforRenewal=(select count(*) from TB_Motor where
+@UserName=CASE 
+WHEN (CHARINDEX('-',AgentCode_BrokerCode)-2 <= 0) THEN AgentCode_BrokerCode
+else
+LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 2) 
+end and
+ Status='OnHold')
+
+set @NoOfPoRenewed=(select count(*) from TB_Motor where 
+@UserName=CASE 
+WHEN (CHARINDEX('-',AgentCode_BrokerCode)-2 <= 0) THEN AgentCode_BrokerCode
+else
+LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 2) 
+end and
+status='Completed')
+
+set @PolicyLost=(select count(*) from TB_Motor where 
+
+@UserName=CASE 
+WHEN (CHARINDEX('-',AgentCode_BrokerCode)-2 <= 0) THEN AgentCode_BrokerCode
+else
+LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 2) 
+end and
+status='Dropped')
+select @TotPoltoBeRenewed as TotPoltoBeRenewed,@TotPolforRenewal as TotPolforRenewal,@NoOfPoRenewed as NoOfPoRenewed,@PolicyLost as PolicyLost,@UserName as UserName
+end
+else
+begin
+
+print 2
+set @TotPoltoBeRenewed=(select count(*) from TB_Motor where 
+
+PolicyEndDate between getdate() and DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)))
+
+set @TotPolforRenewal=(select count(*) from TB_Motor where
+
+ Status='OnHold')
+
+set @NoOfPoRenewed=(select count(*) from TB_Motor where 
+
+status='Completed')
+
+set @PolicyLost=(select count(*) from TB_Motor where 
+
+
+status='Dropped')
+select @TotPoltoBeRenewed as TotPoltoBeRenewed,@TotPolforRenewal as TotPolforRenewal,@NoOfPoRenewed as NoOfPoRenewed,@PolicyLost as PolicyLost,@UserName as UserName
+
+end
+
+end
+
+end
+GO
+/****** Object:  StoredProcedure [dbo].[SP_GetUserTravelDB]    Script Date: 30-08-2020 00:04:34 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE proc [dbo].[SP_GetUserTravelDB]
+(
+@UserName nvarchar(50)
+)
+as 
+begin
+declare @IsExists int,@RoleId int
+set @RoleId=(select distinct roleid from TB_Users where UserName=@UserName)
+set @IsExists=(select count(*) from TB_Users where  UserName=@UserName)
+if(@IsExists>0)
+
+begin
+declare @TotPoltoBeRenewed int,@TotPolforRenewal int,@NoOfPoRenewed int,@PolicyLost int
+if(@UserName<>'' and @RoleId<>1)
+begin
+print 1
+set @TotPoltoBeRenewed=(select count(*) from TB_Travel where 
+@UserName=CASE 
+WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
+else
+LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
+end and
+DateOfReturn<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)))
+
+set @TotPolforRenewal=(select count(*) from TB_Travel where
+@UserName=CASE 
+WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
+else
+LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
+end and
+ Status='OnHold')
+
+set @NoOfPoRenewed=(select count(*) from TB_Travel where 
+@UserName=CASE 
+WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
+else
+LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
+end and
+status='Completed')
+
+set @PolicyLost=(select count(*) from TB_Travel where 
+
+@UserName=CASE 
+WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
+else
+LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
+end and
+status='Dropped')
+select @TotPoltoBeRenewed as TotPoltoBeRenewed,@TotPolforRenewal as TotPolforRenewal,@NoOfPoRenewed as NoOfPoRenewed,@PolicyLost as PolicyLost,@UserName as UserName
+end
+else
+begin
+set @TotPoltoBeRenewed=(select count(*) from TB_Travel where 
+
+DateOfReturn<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)))
+
+set @TotPolforRenewal=(select count(*) from TB_Travel where
+
+ Status='OnHold')
+
+set @NoOfPoRenewed=(select count(*) from TB_Travel where 
+
+status='Completed')
+
+set @PolicyLost=(select count(*) from TB_Travel where 
+
+
+status='Dropped')
+select @TotPoltoBeRenewed as TotPoltoBeRenewed,@TotPolforRenewal as TotPolforRenewal,@NoOfPoRenewed as NoOfPoRenewed,@PolicyLost as PolicyLost,@UserName as UserName
+
+end
+end
+end
+GO
+/****** Object:  StoredProcedure [dbo].[SP_GetUserwiseReport]    Script Date: 30-08-2020 00:04:34 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE proc [dbo].[SP_GetUserwiseReport]
+(@UserName nvarchar(50))
+as
+begin
+declare @TotPoltoBeRenewed int,@TotPolforRenewal int,@NoOfPoRenewed int,@PolicyLost int
+set @TotPoltoBeRenewed=(select count(*) from TB_Motor where PolicyEndDate<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)) and 
+@UserName=CASE 
+WHEN (CHARINDEX('-',AgentCode_BrokerCode)-2 <= 0) THEN AgentCode_BrokerCode
+else
+LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 2) 
+end
+)+
+(select count(*) from TB_Domestic where PolicyEndDate<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)) and
+
+@UserName=
+CASE 
+WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
+else
+LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
+end)+
+(select count(*) from TB_Individual where PolicyEndDate<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0))and
+
+@UserName=CASE 
+WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
+else
+LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
+end)+
+(select count(*) from TB_Travel where DateOfReturn<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0))and
+
+@UserName=CASE 
+WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
+else
+LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
+end)
+
+
+set @TotPolforRenewal=(select count(*) from TB_Motor where Status='OnHold' and 
+@UserName=CASE 
+WHEN (CHARINDEX('-',AgentCode_BrokerCode)-2 <= 0) THEN AgentCode_BrokerCode
+else
+LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 2) 
+end
+)+
+(select count(*) from TB_Domestic where Status='OnHold' and 
+@UserName=CASE 
+WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
+else
+LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
+end
+)+
+(select count(*) from TB_Individual where Status='OnHold'and @UserName=CASE 
 WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
 else
 LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
@@ -2225,242 +2705,10 @@ LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2)
 end
 )
 select @TotPoltoBeRenewed as TotPoltoBeRenewed,@TotPolforRenewal as TotPolforRenewal,@NoOfPoRenewed as NoOfPoRenewed,@PolicyLost as PolicyLost,@UserName as UserName
-end
-else if(@RoleId=4)
-begin
-set @TotPoltoBeRenewed=(select count(*) from TB_Motor where PolicyEndDate<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)))+
-(select count(*) from TB_Domestic where PolicyEndDate<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)))+
-(select count(*) from TB_Individual where PolicyEndDate<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)))+
-(select count(*) from TB_Travel where DateOfReturn<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)))
 
-set @TotPolforRenewal=(select count(*) from TB_Motor where PolicyEndDate< EOMONTH(getdate(),1))+
-(select count(*) from TB_Domestic where PolicyEndDate< EOMONTH(getdate(),1))+
-(select count(*) from TB_Individual where PolicyEndDate< EOMONTH(getdate(),1))+
-(select count(*) from TB_Travel where DateOfReturn< EOMONTH(getdate(),1))
-
-set @NoOfPoRenewed=(
-select count(*) from TB_Motor where status='Completed')+
-(select count(*) from TB_Domestic where status='Completed')+
-(select count(*) from TB_Individual where status='Completed')+
-(select count(*) from TB_Travel where status='Completed')
-
-set @PolicyLost=(select count(*) from TB_Motor where status='Dropped')+
-(select count(*) from TB_Domestic where status='Dropped')+
-(select count(*) from TB_Individual where status='Dropped')+
-(select count(*) from TB_Travel where status='Dropped')
-
-
-
-select @TotPoltoBeRenewed as TotPoltoBeRenewed,@TotPolforRenewal as TotPolforRenewal,@NoOfPoRenewed as NoOfPoRenewed,@PolicyLost as PolicyLost,@UserName as UserName
-end
-
-else if(@RoleId=5)
-begin
-print 1
-set @TotPoltoBeRenewed=(select count(*) from TB_Motor where PolicyEndDate<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)) and 
-LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 1)=@UserName
-)+
-(select count(*) from TB_Domestic where PolicyEndDate<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)) and
-
-LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
-(select count(*) from TB_Individual where PolicyEndDate<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0))and
-
-LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
-(select count(*) from TB_Travel where DateOfReturn<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0))and
-
-LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)
-
-set @TotPolforRenewal=(select count(*) from TB_Motor where PolicyEndDate< EOMONTH(getdate(),1) and LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 1)=@UserName)+
-(select count(*) from TB_Domestic where PolicyEndDate< EOMONTH(getdate(),1) and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
-(select count(*) from TB_Individual where PolicyEndDate< EOMONTH(getdate(),1)and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
-(select count(*) from TB_Travel where DateOfReturn< EOMONTH(getdate(),1)and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)
-
-set @NoOfPoRenewed=(select count(*) from TB_Motor where status='Completed' and LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 1)=@UserName)+ --PolicyEndDate=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0)))+
-(select count(*) from TB_Domestic where PolicyEndDate=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0))and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
-(select count(*) from TB_Individual where PolicyEndDate=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0))and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
-(select count(*) from TB_Travel where DateOfReturn=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0))and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)
-
-set @PolicyLost=(select count(*) from TB_Motor where status='Dropped' and LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 1)=@UserName)+-- PolicyEndDate=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0)))+
-(select count(*) from TB_Domestic where PolicyEndDate=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0))and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
-(select count(*) from TB_Individual where PolicyEndDate=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0))and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)+
-(select count(*) from TB_Travel where DateOfReturn=DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE()), 0))and LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 1)=@UserName)
-select @TotPoltoBeRenewed as TotPoltoBeRenewed,@TotPolforRenewal as TotPolforRenewal,@NoOfPoRenewed as NoOfPoRenewed,@PolicyLost as PolicyLost,@UserName as UserName
-end
-end
-else
-
-select @IsExists=0
-end
-
-
-GO
-/****** Object:  StoredProcedure [dbo].[SP_GetUserMDB]    Script Date: 25-08-2020 00:01:56 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
-
-CREATE proc [dbo].[SP_GetUserMDB]
-(
-@UserName nvarchar(50)
-)
-as 
-begin
-declare @IsExists int,@RoleId int
-set @RoleId=(select distinct roleid from TB_Users where UserName=@UserName)
-set @IsExists=(select count(*) from TB_Users where  UserName=@UserName)
-
-if(@IsExists>0)
-
-begin
-declare @TotPoltoBeRenewed int,@TotPolforRenewal int,@NoOfPoRenewed int,@PolicyLost int
-if(@UserName<>'' and @RoleId<>1)
-begin
-
-set @TotPoltoBeRenewed=(select count(*) from TB_Motor where 
-@UserName=CASE 
-WHEN (CHARINDEX('-',AgentCode_BrokerCode)-2 <= 0) THEN AgentCode_BrokerCode
-else
-LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 2) 
-end and
-PolicyEndDate between getdate() and DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)))
-
-set @TotPolforRenewal=(select count(*) from TB_Motor where
-@UserName=CASE 
-WHEN (CHARINDEX('-',AgentCode_BrokerCode)-2 <= 0) THEN AgentCode_BrokerCode
-else
-LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 2) 
-end and
- PolicyEndDate between getdate() and  EOMONTH(getdate(),1))
-
-set @NoOfPoRenewed=(select count(*) from TB_Motor where 
-@UserName=CASE 
-WHEN (CHARINDEX('-',AgentCode_BrokerCode)-2 <= 0) THEN AgentCode_BrokerCode
-else
-LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 2) 
-end and
-status='Completed')
-
-set @PolicyLost=(select count(*) from TB_Motor where 
-
-@UserName=CASE 
-WHEN (CHARINDEX('-',AgentCode_BrokerCode)-2 <= 0) THEN AgentCode_BrokerCode
-else
-LEFT(AgentCode_BrokerCode, CHARINDEX('-', AgentCode_BrokerCode) - 2) 
-end and
-status='Dropped')
-select @TotPoltoBeRenewed as TotPoltoBeRenewed,@TotPolforRenewal as TotPolforRenewal,@NoOfPoRenewed as NoOfPoRenewed,@PolicyLost as PolicyLost,@UserName as UserName
-end
-else
-begin
-
-print 2
-set @TotPoltoBeRenewed=(select count(*) from TB_Motor where 
-
-PolicyEndDate between getdate() and DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)))
-
-set @TotPolforRenewal=(select count(*) from TB_Motor where
-
- PolicyEndDate between getdate() and  EOMONTH(getdate(),1))
-
-set @NoOfPoRenewed=(select count(*) from TB_Motor where 
-
-status='Completed')
-
-set @PolicyLost=(select count(*) from TB_Motor where 
-
-
-status='Dropped')
-select @TotPoltoBeRenewed as TotPoltoBeRenewed,@TotPolforRenewal as TotPolforRenewal,@NoOfPoRenewed as NoOfPoRenewed,@PolicyLost as PolicyLost,@UserName as UserName
-
-end
-
-end
 end
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetUserTravelDB]    Script Date: 25-08-2020 00:01:56 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
-
-CREATE proc [dbo].[SP_GetUserTravelDB]
-(
-@UserName nvarchar(50)
-)
-as 
-begin
-declare @IsExists int,@RoleId int
-set @RoleId=(select distinct roleid from TB_Users where UserName=@UserName)
-set @IsExists=(select count(*) from TB_Users where  UserName=@UserName)
-if(@IsExists>0)
-
-begin
-declare @TotPoltoBeRenewed int,@TotPolforRenewal int,@NoOfPoRenewed int,@PolicyLost int
-if(@UserName<>'' and @RoleId<>1)
-begin
-print 1
-set @TotPoltoBeRenewed=(select count(*) from TB_Travel where 
-@UserName=CASE 
-WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
-else
-LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
-end and
-DateOfReturn<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)))
-
-set @TotPolforRenewal=(select count(*) from TB_Travel where
-@UserName=CASE 
-WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
-else
-LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
-end and
- DateOfReturn< EOMONTH(getdate(),1))
-
-set @NoOfPoRenewed=(select count(*) from TB_Travel where 
-@UserName=CASE 
-WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
-else
-LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
-end and
-status='Completed')
-
-set @PolicyLost=(select count(*) from TB_Travel where 
-
-@UserName=CASE 
-WHEN (CHARINDEX('-',Broker_AgentCode)-2 <= 0) THEN Broker_AgentCode
-else
-LEFT(Broker_AgentCode, CHARINDEX('-', Broker_AgentCode) - 2) 
-end and
-status='Dropped')
-select @TotPoltoBeRenewed as TotPoltoBeRenewed,@TotPolforRenewal as TotPolforRenewal,@NoOfPoRenewed as NoOfPoRenewed,@PolicyLost as PolicyLost,@UserName as UserName
-end
-else
-begin
-set @TotPoltoBeRenewed=(select count(*) from TB_Travel where 
-
-DateOfReturn<DATEADD(dd, -1, DATEADD(yy, DATEDIFF(yy, 0, GETDATE())+1, 0)))
-
-set @TotPolforRenewal=(select count(*) from TB_Travel where
-
- DateOfReturn< EOMONTH(getdate(),1))
-
-set @NoOfPoRenewed=(select count(*) from TB_Travel where 
-
-status='Completed')
-
-set @PolicyLost=(select count(*) from TB_Travel where 
-
-
-status='Dropped')
-select @TotPoltoBeRenewed as TotPoltoBeRenewed,@TotPolforRenewal as TotPolforRenewal,@NoOfPoRenewed as NoOfPoRenewed,@PolicyLost as PolicyLost,@UserName as UserName
-
-end
-end
-end
-GO
-/****** Object:  StoredProcedure [dbo].[SP_IndividualBulkUpload]    Script Date: 25-08-2020 00:01:56 ******/
+/****** Object:  StoredProcedure [dbo].[SP_IndividualBulkUpload]    Script Date: 30-08-2020 00:04:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2489,7 +2737,7 @@ FROM @UDT_MotorBulkUpload WHERE QuotationNo NOT IN (SELECT DISTINCT QuotationNo 
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[SP_MotorBulkUpload]    Script Date: 25-08-2020 00:01:56 ******/
+/****** Object:  StoredProcedure [dbo].[SP_MotorBulkUpload]    Script Date: 30-08-2020 00:04:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2523,7 +2771,7 @@ FROM @UDT_MotorBulkUpload WHERE PolicyNo NOT IN (SELECT DISTINCT PolicyNo FROM T
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[SP_MotorDomesticSave]    Script Date: 25-08-2020 00:01:56 ******/
+/****** Object:  StoredProcedure [dbo].[SP_MotorDomesticSave]    Script Date: 30-08-2020 00:04:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2677,7 +2925,7 @@ M.Email=UDT.Email
         END 
   END 
 GO
-/****** Object:  StoredProcedure [dbo].[SP_MotorIndividualSave]    Script Date: 25-08-2020 00:01:56 ******/
+/****** Object:  StoredProcedure [dbo].[SP_MotorIndividualSave]    Script Date: 30-08-2020 00:04:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2773,7 +3021,7 @@ M.AppointeeCivilIDNo=UDT.AppointeeCivilIDNo
         END 
   END 
 GO
-/****** Object:  StoredProcedure [dbo].[SP_MotorInsSave]    Script Date: 25-08-2020 00:01:56 ******/
+/****** Object:  StoredProcedure [dbo].[SP_MotorInsSave]    Script Date: 30-08-2020 00:04:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2963,7 +3211,7 @@ ELSE
         END 
   END 
 GO
-/****** Object:  StoredProcedure [dbo].[SP_MotorInsUpdate]    Script Date: 25-08-2020 00:01:56 ******/
+/****** Object:  StoredProcedure [dbo].[SP_MotorInsUpdate]    Script Date: 30-08-2020 00:04:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2988,7 +3236,7 @@ AS
         END 
   
 GO
-/****** Object:  StoredProcedure [dbo].[SP_MotorTravelSave]    Script Date: 25-08-2020 00:01:56 ******/
+/****** Object:  StoredProcedure [dbo].[SP_MotorTravelSave]    Script Date: 30-08-2020 00:04:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3145,7 +3393,7 @@ ELSE
         END 
   END 
 GO
-/****** Object:  StoredProcedure [dbo].[SP_RegisterUser]    Script Date: 25-08-2020 00:01:56 ******/
+/****** Object:  StoredProcedure [dbo].[SP_RegisterUser]    Script Date: 30-08-2020 00:04:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3167,7 +3415,7 @@ select @UserName,@Password,@RoleId,@RoleName,'SuperAdmin'
 end
 end
 GO
-/****** Object:  StoredProcedure [dbo].[SP_TravelBulkUpload]    Script Date: 25-08-2020 00:01:56 ******/
+/****** Object:  StoredProcedure [dbo].[SP_TravelBulkUpload]    Script Date: 30-08-2020 00:04:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

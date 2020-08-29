@@ -42,7 +42,7 @@
                                     <option disabled selected> -- select an option -- </option>
                                     <option>Completed</option>
                                     <option>Dropped</option>
-                                    <option>On Hold</option>
+                                    <option>OnHold</option>
                                 </select>
                             </div>
                             <div class="col-2 text-center">
@@ -118,7 +118,7 @@
                                 {
                                     <td><span class="badge badge-danger">@Html.DisplayFor(modelItem => item.Status)</span></td>
                                 }
-                                @if (item.Status.Equals("On Hold"))
+                                @if (item.Status.Equals("OnHold"))
                                 {
                                     <td><span class="badge badge-info">@Html.DisplayFor(modelItem => item.Status)</span></td>
                                 }
@@ -249,7 +249,7 @@
                                         <option disabled selected> -- select an option -- </option>
                                         <option>Completed</option>
                                         <option>Dropped</option>
-                                        <option>On Hold</option>
+                                        <option>OnHold</option>
                                     </select>
                                 </div>
                             </div>

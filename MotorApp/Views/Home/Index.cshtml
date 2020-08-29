@@ -1,5 +1,6 @@
 ﻿@model MotorApp.BusinessEntities.DashBoard
-
+@using MotorApp.BAL;
+@using MotorApp.BusinessEntities;
 @{
     ViewBag.Title = "Home Page";
 }
@@ -11,24 +12,19 @@
 
         <div class="col-md-4">
             <label for="cars">Choose Role</label>
-            <select id="cars" class="form-control">
-                <option value="1">Admin</option>
-                <option value="2">Agent</option>
-                <option value="3">Broker</option>
-                <option value="4">Branches</option>
-                <option value="5">DirectSales</option>
-            </select>
+
+            @Html.DropDownList("Role",
+                  new SelectList(Enum.GetValues(typeof(MotorInsRoles))),
+                  "Select Role",
+                  new { @class = "form-control" })
         </div>
         <div class="col-md-4">
             <label for="cars">Choose Producer</label>
-
-            <select id="cars" class="form-control">
-                <option value="1">RISK MANAGEMENT SERVICES</option>
-                <option value="2">MUSCAT INSURANCE SERVICES</option>
-                <option value="3">INSURANCE MANAGEMENT SERVICES</option>
-                <option value="4">AON MAJAN LLC</option>
-                <option value="5">MARSH OMAN</option>
-            </select>
+            @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @name = "Form1" }))
+            {
+                <select class="form-control" name="ddlProducer" id="ddlProducer"><option value="0">--Select Producer--</option></select>
+                <input type="submit" value="Search" />
+            }
         </div>
     }
     <ol class="breadcrumb my-2">
@@ -65,8 +61,6 @@
                 </div>
             </div>
         </div>
-
-
         <!-- Earnings (Annual) Card Example -->
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card h-100">
@@ -127,6 +121,94 @@
                 </div>
             </div>
         </div>
+        if (ViewBag.RoleId == 1)
+        {
+            
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col ">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                                    Total Policies renewed
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    @Model.TotPoltoBeRenewedCM
+
+                                </div>
+                                <div class="mt-2 mb-0 text-muted text-xs">
+                                    @*<span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>*@
+                                    <span>Since last year</span>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-calendar fa-2x text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Earnings (Annual) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">Total Policies OnHold</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotPolforRenewalCM</div>
+                                <div class="mt-2 mb-0 text-muted text-xs">
+                                    @*<span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>*@
+                                    <span>Since last years</span>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-shopping-cart fa-2x text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- New User Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">No of Policies renewed</div>
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@Model.NoOfPoRenewedCM</div>
+                                <div class="mt-2 mb-0 text-muted text-xs">
+                                    @*<span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 20.4%</span>*@
+                                    <span>Since last month</span>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-users fa-2x text-info"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Pending Requests Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">Policies Lost</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.PolicyLostCM</div>
+                                <div class="mt-2 mb-0 text-muted text-xs">
+                                    @*<span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>*@
+                                    <span>Since yesterday</span>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-comments fa-2x text-warning"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
     }
     <!-- Area Chart -->
     <div class="col-xl-8 col-lg-7">
@@ -318,7 +400,7 @@
                          aria-labelledby="dropdownMenuLink">
                         <div class="dropdown-header">Select Periode</div>
                         @*<a class="dropdown-item" href="#">Today</a>
-                        <a class="dropdown-item" href="#">Week</a>*@
+                            <a class="dropdown-item" href="#">Week</a>*@
                         <a class="dropdown-item active" href="#">Month</a>
                         <a class="dropdown-item" href="#">This Year</a>
                     </div>
@@ -375,3 +457,36 @@
     </div>
 </div>
 <!--Row-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#Role").on("change", function () {
+            var RoleId = $('#Role').val();
+            $("#ddlProducer option").remove();
+            $.ajax({
+                type: "GET", url: "GetProducerInfo?RoleId=" + RoleId + "", dataType: "json", contentType: "application/json", success: function (res) {
+                    $.each(res.list, function (data, value) {
+
+                        $("#ddlProducer").append($("<option></option>").val(value.UserName).html(value.ProducerName));
+                    })
+                }
+
+            });
+            //$.ajax(
+            //    {
+            //        url: '/Home/GetProducerInfo?RoleId=' + $('#Role').val(),
+            //        type: 'GET',
+            //        data: "",
+            //        contentType: 'application/json; charset=utf-8',
+            //        success: function (data) {
+            //            $.each(res.d, function (data, value) {
+
+            //                $("#ddlProducer").append($("<option></option>").val(value.CountryId).html(value.CountryName));
+            //            });
+            //        },
+            //        error: function () {
+            //            alert("error");
+            //        }
+            //    });
+        });
+    });
+</script>

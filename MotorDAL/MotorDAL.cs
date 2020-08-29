@@ -666,6 +666,53 @@ namespace MotorApp.DAL
                         lstInfo.NoOfPoRenewed = (int)reader.GetValue(2);
                         lstInfo.PolicyLost = (int)reader.GetValue(3);
                         lstInfo.UserName = reader.GetValue(4).ToString();
+                        lstInfo.TotPoltoBeRenewedCM = (int)reader.GetValue(5);
+                        lstInfo.TotPolforRenewalCM = (int)reader.GetValue(6);
+                        
+                        lstInfo.NoOfPoRenewedCM = (int)reader.GetValue(7);
+                        lstInfo.PolicyLostCM = (int)reader.GetValue(8);
+                        returnCode = 1;
+                    }
+                    reader.Close();
+                    cmd.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return returnCode;
+        }
+        public long GetUserwiseReport(string U_name, out DashBoard lstInfo)
+        {
+            long returnCode = -1;
+            lstInfo = new DashBoard();
+            try
+            {
+                DataSet ds = new DataSet();
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = "SP_GetUserwiseReport"
+                    };
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+                    cmd.Parameters.AddWithValue("@UserName", U_name);
+
+
+                    SqlDataReader reader;
+                    reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        lstInfo.TotPoltoBeRenewed = (int)reader.GetValue(0);
+                        lstInfo.TotPolforRenewal = (int)reader.GetValue(1);
+                        lstInfo.NoOfPoRenewed = (int)reader.GetValue(2);
+                        lstInfo.PolicyLost = (int)reader.GetValue(3);
+                        lstInfo.UserName = reader.GetValue(4).ToString();
                         returnCode = 1;
                     }
                     reader.Close();
@@ -845,6 +892,95 @@ namespace MotorApp.DAL
             }
             return lst;
         }
+        public List<ProducerCodeMaster> GetPMDDB(string RoleId)
+        {
+            List<ProducerCodeMaster> lst = new List<ProducerCodeMaster>();
+            try
+            {
+                DataSet ds = new DataSet();
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = "SP_GetPMDashBoard"
+                    };
 
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+                    cmd.Parameters.AddWithValue("@RoleName", RoleId);
+
+                    SqlDataAdapter sdaAdapter = new SqlDataAdapter
+                    {
+                        SelectCommand = cmd
+                    };
+                    sdaAdapter.Fill(ds);
+
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        lst = (from DataRow dr in ds.Tables[0].Rows
+                               select new ProducerCodeMaster()
+                               {
+
+                                   ProducerCodeId = (long)dr["ProducerCodeId"],
+                                   ProducerName = dr["ProducerName"].ToString(),
+                                   UserName = dr["UserName"].ToString(),
+                               }).ToList();
+                    }
+                    cmd.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return lst;
+        }
+        public List<DataPoint> GetDBBarchart(int flag)
+        {
+            List<DataPoint> lst = new List<DataPoint>();
+            try
+            {
+                DataSet ds = new DataSet();
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = "SP_GetBarChart"
+                    };
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+                    cmd.Parameters.AddWithValue("@flag", flag);
+
+                    SqlDataAdapter sdaAdapter = new SqlDataAdapter
+                    {
+                        SelectCommand = cmd
+                    };
+                    sdaAdapter.Fill(ds);
+
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        lst = (from DataRow dr in ds.Tables[0].Rows
+                               select new DataPoint()
+                               {
+
+                                   y = dr["MonthName"].ToString(),
+                                   a = (int)dr["Dropped"],
+                                   b = (int)dr["Completed"],
+                                   c = (int)dr["NotProgressed"],
+                                   
+                               }).ToList();
+                    }
+                    cmd.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return lst;
+        }
     }
 }

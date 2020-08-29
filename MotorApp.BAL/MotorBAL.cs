@@ -199,7 +199,7 @@ namespace MotorApp.BAL
                 catch (Exception ex)
                 {
                     transactionScope.Dispose();
-                  //  throw ex;
+                    //  throw ex;
                 }
 
                 return returnCode;
@@ -294,5 +294,74 @@ namespace MotorApp.BAL
                 return lst;
             }
         }
+        public List<ProducerCodeMaster> GetProducerMasterDashBoard(string RoleId)
+        {
+            List<ProducerCodeMaster> lst = new List<ProducerCodeMaster>();
+            using (TransactionScope transactionScope = new TransactionScope())
+            {
+                try
+                {
+
+                    lst = objMotorAppDAL.GetPMDDB(RoleId);
+                    transactionScope.Complete();
+                    transactionScope.Dispose();
+
+                }
+                catch (Exception ex)
+                {
+                    transactionScope.Dispose();
+                    throw ex;
+                }
+
+                return lst;
+            }
+        }
+        public long GetUserReport(string name,out DashBoard lstInfo)
+        {
+            long returnCode = -1;
+            lstInfo = new DashBoard();
+            using (TransactionScope transactionScope = new TransactionScope())
+            {
+                try
+                {
+                    returnCode = objMotorAppDAL.GetUserwiseReport(name, out lstInfo);
+
+                    transactionScope.Complete();
+                    transactionScope.Dispose();
+
+                }
+                catch (Exception ex)
+                {
+                    transactionScope.Dispose();
+                    //  throw ex;
+                }
+
+                return returnCode;
+            }
+        }
+        public List<DataPoint> GetBarChart(int flag)
+        {
+            
+            List<DataPoint> lst = new List<DataPoint>();
+            using (TransactionScope transactionScope = new TransactionScope())
+            {
+                try
+                {
+                    lst = objMotorAppDAL.GetDBBarchart(flag);
+
+                    transactionScope.Complete();
+                    transactionScope.Dispose();
+
+                }
+                catch (Exception ex)
+                {
+                    transactionScope.Dispose();
+                    //  throw ex;
+                }
+
+                return lst;
+            }
+        }
+        
     }
 }

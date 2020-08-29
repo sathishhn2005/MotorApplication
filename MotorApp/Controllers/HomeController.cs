@@ -19,6 +19,7 @@ namespace MotorApp.Controllers
 
     public class HomeController : Controller
     {
+
         private List<MotorModel> motorModel;
         private List<TravelModel> travelModel;
         private List<IndividualModel> indiviModel;
@@ -28,8 +29,9 @@ namespace MotorApp.Controllers
         string IsExists = string.Empty;
         static string U_Name = string.Empty;
         static long RoleId = 0;
+        static int TypeId = 0;
         dynamic lstInput;
-        
+
         public HomeController()
         {
             if (!string.IsNullOrEmpty(U_Name))
@@ -49,29 +51,44 @@ namespace MotorApp.Controllers
         public ActionResult Index()
         {
 
-            if (TempData["Input"] != null)
+            string uname = Request.Form["ddlProducer"];
+            if (string.IsNullOrEmpty(uname))
             {
-                lstInput = TempData["Input"];
-            }
-            long returnCode = objMotorBAL.GetUserInsInfo(lstInput, out lstInfo);
-            ViewBag.RoleId = RoleId;
-           
-            ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
-            ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
-            ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
-            ViewBag.PolicyLost = lstInfo.PolicyLost;
-            ViewBag.UserName = "";
-            if (lstInfo != null)
-            {
-                U_Name = lstInfo.UserName;
-                //ViewBag.UserName = U_Name
-            }
-            if (!returnCode.Equals(1))
-            {
+                if (TempData["Input"] != null)
+                {
+                    lstInput = TempData["Input"];
+                }
+                long returnCode = objMotorBAL.GetUserInsInfo(lstInput, out lstInfo);
+                ViewBag.RoleId = RoleId;
 
-                return RedirectToAction("Login");
+                ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
+                ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
+                ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
+                ViewBag.PolicyLost = lstInfo.PolicyLost;
+                ViewBag.UserName = "";
+                if (lstInfo != null)
+                {
+                    U_Name = lstInfo.UserName;
+                    //ViewBag.UserName = U_Name
+                }
+                if (!returnCode.Equals(1))
+                {
+
+                    return RedirectToAction("Login");
+                }
+                return View(lstInfo);
             }
-            return View(lstInfo);
+            else
+            {
+                long returnCode = objMotorBAL.GetUserReport(uname,out lstInfo);
+                ViewBag.RoleId = RoleId;
+
+                ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
+                ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
+                ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
+                ViewBag.PolicyLost = lstInfo.PolicyLost;
+                return View(lstInfo);
+            }
         }
 
         [HttpGet]
@@ -79,14 +96,8 @@ namespace MotorApp.Controllers
         {
             List<DashBoard> lst = new List<DashBoard>();
             List<DataPoint> dataPoints = new List<DataPoint>();
-
-            dataPoints.Add(new DataPoint("JAN", 70, 55));
-            dataPoints.Add(new DataPoint("FEB", 70, 85));
-            dataPoints.Add(new DataPoint("MAR", 74, 45));
-            dataPoints.Add(new DataPoint("APRIL", 84, 85));
-            dataPoints.Add(new DataPoint("MAY", 90, 95));
-            dataPoints.Add(new DataPoint("JUN", 65, 75));
-            dataPoints.Add(new DataPoint("JULY", 53, 45));
+            dataPoints = objMotorBAL.GetBarChart(TypeId);
+           
             ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
 
             if (TempData["Input"] != null)
@@ -747,6 +758,7 @@ namespace MotorApp.Controllers
             }
             long returnCode = objMotorBAL.UserMDB(U_Name, 1, out lstInfo);
             ViewBag.RoleId = RoleId;
+            TypeId = 1;
             ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
             ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
             ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
@@ -766,6 +778,7 @@ namespace MotorApp.Controllers
                 lstInput = TempData["Input"];
             }
             long returnCode = objMotorBAL.UserMDB(U_Name, 2, out lstInfo);
+            TypeId = 2;
             ViewBag.RoleId = RoleId;
             ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
             ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
@@ -787,6 +800,7 @@ namespace MotorApp.Controllers
             }
             long returnCode = objMotorBAL.UserMDB(U_Name, 3, out lstInfo);
             ViewBag.RoleId = RoleId;
+            TypeId = 3;
             ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
             ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
             ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
@@ -807,6 +821,7 @@ namespace MotorApp.Controllers
             }
             long returnCode = objMotorBAL.UserMDB(U_Name, 4, out lstInfo);
             ViewBag.RoleId = RoleId;
+            TypeId = 4;
             ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
             ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
             ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
@@ -819,26 +834,17 @@ namespace MotorApp.Controllers
             }
             return View("Index", lstInfo);
         }
-
-    }
-    [DataContract]
-    public class DataPoint
-    {
-        public DataPoint(string y, double a, double b)
+        public JsonResult GetProducerInfo(string RoleId)
         {
-            this.y = y;
-            this.a = a;
-            this.b = b;
+            List<ProducerCodeMaster> lst = new List<ProducerCodeMaster>();
+            lst = objMotorBAL.GetProducerMasterDashBoard(RoleId);
+
+            return Json(new
+            {
+                list = lst
+            }, JsonRequestBehavior.AllowGet);
         }
 
-        //Explicitly setting the name to be used while serializing to JSON.
-        [DataMember(Name = "y")]
-        public string y = "";
-
-        //Explicitly setting the name to be used while serializing to JSON.
-        [DataMember(Name = "a")]
-        public Nullable<double> a = null;
-        [DataMember(Name = "b")]
-        public Nullable<double> b = null;
     }
+   
 }
