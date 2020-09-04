@@ -4,14 +4,10 @@ using System.Web;
 using System.Web.Mvc;
 using MotorApp.Models;
 using MotorApp.BAL;
-using MotorApp.Utilities;
 using MotorApp.BusinessEntities;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Caching;
-using System.Web.Routing;
-using System.Web.Services;
-using System.Runtime.Serialization;
+
 using Newtonsoft.Json;
 
 namespace MotorApp.Controllers
@@ -52,7 +48,8 @@ namespace MotorApp.Controllers
         {
 
             string uname = Request.Form["ddlProducer"];
-            if (string.IsNullOrEmpty(uname))
+            TypeId = 1;
+            if (string.IsNullOrEmpty(uname) || uname.Equals("Admin"))
             {
                 if (TempData["Input"] != null)
                 {
@@ -131,19 +128,18 @@ namespace MotorApp.Controllers
             string AgentCode_BrokerCode = objMotorModel.AgentCode_BrokerCode ?? "";
             string Branch = objMotorModel.Branch ?? "";
             string AssuredName = objMotorModel.AssuredName ?? "";
-            string Status = objMotorModel.Status ?? "";
+            
 
             List<MotorModel> lst = new List<MotorModel>();
 
-            if (!string.IsNullOrEmpty(PolicyNo) || !string.IsNullOrEmpty(AgentCode_BrokerCode) || !string.IsNullOrEmpty(Branch) || !string.IsNullOrEmpty(AssuredName)
-                || !string.IsNullOrEmpty(Status))
+            if (!string.IsNullOrEmpty(PolicyNo) || !string.IsNullOrEmpty(AgentCode_BrokerCode) || !string.IsNullOrEmpty(Branch) || !string.IsNullOrEmpty(AssuredName))
             {
                 if (RoleId.Equals(1))
                     lst = motorModel.Where(x => x.PolicyNo == PolicyNo || x.AgentCode_BrokerCode == AgentCode_BrokerCode ||
-                                      x.Branch == Branch || x.AssuredName == AssuredName && x.Status == Status).OrderBy(x => x.MotorId).ToList();
+                                      x.Branch == Branch || x.AssuredName == AssuredName ).OrderBy(x => x.MotorId).ToList();
                 else
                     lst = motorModel.Where(x => x.PolicyNo == PolicyNo || x.AgentCode_BrokerCode == AgentCode_BrokerCode ||
-                                  x.Branch == Branch || x.AssuredName == AssuredName || x.Status == Status && x.AgentCode == U_Name).OrderBy(x => x.MotorId).ToList();
+                                  x.Branch == Branch || x.AssuredName == AssuredName && x.AgentCode == U_Name).OrderBy(x => x.MotorId).ToList();
 
                 return View(lst);
             }
@@ -179,19 +175,19 @@ namespace MotorApp.Controllers
             string Branch = objTravelModel.Branch ?? "";
 
             string AssuredName = objTravelModel.AssuredName ?? "";
-            string Status = objTravelModel.Status ?? "";
+            
 
             List<TravelModel> lst = new List<TravelModel>();
 
             if (!string.IsNullOrEmpty(PolicyNo) || !string.IsNullOrEmpty(AgentCode_BrokerCode) || !string.IsNullOrEmpty(Branch) || !string.IsNullOrEmpty(AssuredName)
-                || !string.IsNullOrEmpty(Status))
+                )
             {
                 if (RoleId.Equals(1))
                     lst = travelModel.Where(x => x.PolicyNo == PolicyNo || x.Broker_AgentCode == AgentCode_BrokerCode ||
-                                      x.Branch == Branch || x.AssuredName == AssuredName && x.Status == Status).OrderBy(x => x.TravelId).ToList();
+                                      x.Branch == Branch || x.AssuredName == AssuredName ).OrderBy(x => x.TravelId).ToList();
                 else
                     lst = travelModel.Where(x => x.PolicyNo == PolicyNo || x.Broker_AgentCode == AgentCode_BrokerCode ||
-                                  x.Branch == Branch || x.AssuredName == AssuredName || x.Status == Status && x.AgentCode == U_Name).OrderBy(x => x.TravelId).ToList();
+                                  x.Branch == Branch || x.AssuredName == AssuredName && x.AgentCode == U_Name).OrderBy(x => x.TravelId).ToList();
 
                 return View(lst);
             }
@@ -234,19 +230,19 @@ namespace MotorApp.Controllers
             string Branch = objInd.Branch ?? "";
 
             string AssuredName = objInd.LifeAssuredName ?? "";
-            string Status = objInd.Status ?? "";
+            
 
             List<IndividualModel> lst = new List<IndividualModel>();
 
             if (!string.IsNullOrEmpty(PolicyNo) || !string.IsNullOrEmpty(AgentCode_BrokerCode) || !string.IsNullOrEmpty(Branch) || !string.IsNullOrEmpty(AssuredName)
-                || !string.IsNullOrEmpty(Status))
+                )
             {
                 if (RoleId.Equals(1))
                     lst = indiviModel.Where(x => x.PolicyNo == PolicyNo || x.Broker_AgentCode == AgentCode_BrokerCode ||
-                                      x.Branch == Branch || x.LifeAssuredName == AssuredName && x.Status == Status).OrderBy(x => x.IndividualId).ToList();
+                                      x.Branch == Branch || x.LifeAssuredName == AssuredName ).OrderBy(x => x.IndividualId).ToList();
                 else
                     lst = indiviModel.Where(x => x.PolicyNo == PolicyNo || x.Broker_AgentCode == AgentCode_BrokerCode ||
-                                  x.Branch == Branch || x.LifeAssuredName == AssuredName || x.Status == Status && x.AgentCode == U_Name).OrderBy(x => x.IndividualId).ToList();
+                                  x.Branch == Branch || x.LifeAssuredName == AssuredName && x.AgentCode == U_Name).OrderBy(x => x.IndividualId).ToList();
 
                 return View(lst);
             }
@@ -280,19 +276,19 @@ namespace MotorApp.Controllers
             string Branch = objDom.Branch ?? "";
 
             string AssuredName = objDom.AssuredName ?? "";
-            string Status = objDom.Status ?? "";
+            
 
             List<DomesticModel> lst = new List<DomesticModel>();
 
             if (!string.IsNullOrEmpty(PolicyNo) || !string.IsNullOrEmpty(AgentCode_BrokerCode) || !string.IsNullOrEmpty(Branch) || !string.IsNullOrEmpty(AssuredName)
-                || !string.IsNullOrEmpty(Status))
+                )
             {
                 if (RoleId.Equals(1))
                     lst = domesModel.Where(x => x.PolicyNo == PolicyNo || x.Broker_AgentCode == AgentCode_BrokerCode ||
-                                      x.Branch == Branch || x.AssuredName == AssuredName && x.Status == Status).OrderBy(x => x.DomesticId).ToList();
+                                      x.Branch == Branch || x.AssuredName == AssuredName ).OrderBy(x => x.DomesticId).ToList();
                 else
                     lst = domesModel.Where(x => x.PolicyNo == PolicyNo || x.Broker_AgentCode == AgentCode_BrokerCode ||
-                                  x.Branch == Branch || x.AssuredName == AssuredName || x.Status == Status && x.AgentCode == U_Name).OrderBy(x => x.DomesticId).ToList();
+                                  x.Branch == Branch || x.AssuredName == AssuredName  && x.AgentCode == U_Name).OrderBy(x => x.DomesticId).ToList();
 
                 return View(lst);
             }
@@ -335,9 +331,7 @@ namespace MotorApp.Controllers
                         TempData["IsExists"] = "User not found";
                         return RedirectToAction("Login");
                     }
-                    //lstInput = objModels;
-                    //TempData["Input"] = lstInput;
-                    //return RedirectToAction("Index");
+                   
                 }
                 else
                 {
@@ -688,21 +682,7 @@ namespace MotorApp.Controllers
         public ActionResult Search(MotorModel objMotorModel)
         {
 
-            //List<MotorModel> lst = new List<MotorModel>();
-            //string PolicyNo = Request["PolicyNo"].ToString();
-            ////IList<DomesticModel> motorList = new List<DomesticModel>();
-            ////motorList = domesModel;
-            ////var std = motorList.Where(s => s.DomesticId == DomesticId).FirstOrDefault();
-
-            ////return Json(std, JsonRequestBehavior.AllowGet);
-
-            ////  motorModel = obj.ToList();
-            ////return View("MasterDatabase", motorModel
-            ////                    .Where(x => x.PolicyNo == objMotorModel.PolicyNo || x.AgentCode_BrokerCode == objMotorModel.AgentCode_BrokerCode ||
-            ////                    x.MobileNo == objMotorModel.MobileNo || x.AssuredName == objMotorModel.AssuredName || x.Status == objMotorModel.Status)
-            ////                   .OrderBy(x => x.MotorId));
-            //lst = motorModel.Where(x => x.PolicyNo == PolicyNo).ToList();
-            //return View(lst);
+          
             string PolicyNo = objMotorModel.PolicyNo;
             if (!string.IsNullOrEmpty(PolicyNo))
             {
@@ -722,18 +702,7 @@ namespace MotorApp.Controllers
 
                 string PolicyNo = Request["PolicyNo"].ToString();
                 List<MotorModel> lst = new List<MotorModel>();
-                //IList<DomesticModel> motorList = new List<DomesticModel>();
-                //motorList = domesModel;
-                //var std = motorList.Where(s => s.DomesticId == DomesticId).FirstOrDefault();
-
-                //return Json(std, JsonRequestBehavior.AllowGet);
-
-                //  motorModel = obj.ToList();
-                //return View("MasterDatabase", motorModel
-                //                    .Where(x => x.PolicyNo == objMotorModel.PolicyNo || x.AgentCode_BrokerCode == objMotorModel.AgentCode_BrokerCode ||
-                //                    x.MobileNo == objMotorModel.MobileNo || x.AssuredName == objMotorModel.AssuredName || x.Status == objMotorModel.Status)
-                //                   .OrderBy(x => x.MotorId));
-
+               
                 lst = motorModel.Where(x => x.PolicyNo == PolicyNo).ToList();
                 //  return View("MasterDatabase", lst);
                 return Json(new

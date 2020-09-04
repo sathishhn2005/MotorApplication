@@ -19,7 +19,7 @@ namespace MotorApp.BusinessEntities
     public enum MotorInsRoles
     {
 
-        //Admin = 1,
+        Admin = 1,
 
         Agent = 2,
         Broker = 3,

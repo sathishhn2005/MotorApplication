@@ -15,19 +15,10 @@
     <link href="~/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="~/css/ruang-admin.css" rel="stylesheet" />
     <link href="~/vendor/smart_wizard/css/smart_wizard_all.css" rel="stylesheet" type="text/css" />
-
+    <script src="~/vendor/jquery/jquery.js"></script>
     @*@Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")*@
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-    <script src="~/vendor/jquery/jquery.min.js"></script>
-    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="~/js/ruang-admin.js"></script>
-    <script src="~/vendor/chart.js/Chart.min.js"></script>
-    <script src="~/js/demo/chart-area-demo.js"></script>
-    <script src="~/vendor/morris/morris.js"></script>
-    <script src="~/vendor/morris/raphael.min.js"></script>
-    <script src="~/vendor/pekeUpload/SimpleAjaxUploader.js"></script>
+
 </head>
 <body id="page-top">
     @*Login Starts*@
@@ -38,7 +29,7 @@
                 @*<div class="sidebar-brand-icon">
                         <img src="~/img/logo/logoMI.png">
                     </div>*@
-                <div class="sidebar-brand-text mx-2">Al Madina Insurance</div>
+                <div class="sidebar-brand-text mx-2">Motor Renewal Tracker</div>
             </a>
             <hr class="sidebar-divider mb-3 mt-0" />
             <div class="sidebar-heading">
@@ -46,13 +37,12 @@
             </div>
             @if (ViewBag.RoleId == 1)
             {
-                <li class="nav-item ">
-                    <a class="nav-link" href="index">
-                        <i class="fas fa-fw fa-star"></i>
-                        <span>Admin Dashboard</span>
-                    </a>
-                </li>
-            }
+<li class="nav-item ">
+    <a class="nav-link" href="index">
+        <i class="fas fa-fw fa-star"></i>
+        <span>Admin Dashboard</span>
+    </a>
+</li>}
             <li class="nav-item ">
                 <a class="nav-link" href="MotorDB">
                     <i class="fas fa-fw fa-car"></i>
@@ -296,7 +286,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
                                 @*<img class="img-profile rounded-circle" src="~/img/boy.png" style="max-width: 60px">*@
-                                <span class="ml-2 d-none d-lg-inline text-white">Hi, Mohammad Ketoprak!!</span>
+                                <span class="ml-2 d-none d-lg-inline text-white font-16"">Welcome, <b>User</b></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
@@ -361,6 +351,16 @@
     @*@Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")*@
     @RenderSection("scripts", required: false)
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/js/ruang-admin.js"></script>
+    @*<script src="~/vendor/chart.js/Chart.min.js"></script>
+        <script src="~/js/demo/chart-area-demo.js"></script>*@
+    <script src="~/vendor/morris/morris.js"></script>
+    <script src="~/vendor/morris/raphael.min.js"></script>
+    <script src="~/vendor/pekeUpload/SimpleAjaxUploader.js"></script>
     <script src="~/vendor/smart_wizard/js/jquery.smartWizard.js"></script>
     <script>
         var chartData = [];
@@ -382,33 +382,22 @@
                 });
             },
                 //creates Bar chart
-                Dashboard.prototype.createBarChart = function (element, data, xkey, ykeys, labels, lineColors) {
-                    Morris.Bar({
-                        element: element,
-                        data: data,
-                        xkey: xkey,
-                        ykeys: ykeys,
-                        labels: labels,
-                        gridLineColor: '#eef0f2',
-                        barSizeRatio: 0.4,
-                        resize: true,
-                        hideHover: 'auto',
-                        barColors: lineColors
-                    });
-                },
+                //Dashboard.prototype.createBarChart = function (element, data, xkey, ykeys, labels, lineColors) {
+                //    Morris.Bar({
+                //        element: element,
+                //        data: data,
+                //        xkey: xkey,
+                //        ykeys: ykeys,
+                //        labels: labels,
+                //        gridLineColor: '#eef0f2',
+                //        barSizeRatio: 0.4,
+                //        resize: true,
+                //        hideHover: 'auto',
+                //        barColors: lineColors
+                //    });
+                //},
                 Dashboard.prototype.init = function () {
-                    var $barData = [
 
-                        { y: 'Jan', a: 75, b: 65 },
-                        { y: 'Feb', a: 100, b: 90 },
-                        { y: 'Mar', a: 85, b: 75 },
-                        { y: 'Apr', a: 40, b: 50 },
-                        { y: 'May', a: 85, b: 75 },
-                        { y: 'Jun', a: 55, b: 45 },
-                        { y: 'Jul', a: 80, b: 65 },
-                        { y: 'Aug', a: 100, b: 85 }
-                    ];
-                    //creating bar chart
                     $.ajax({
                         type: "GET",
                         contentType: "application/json; charset=utf-8",
@@ -417,24 +406,20 @@
                         dataType: "json",
                         success: function (Result) {
                             chartData = Result.list;
-                            //$barData = [
-                            //    { y: 'Jan', a: 75, b: 65 },
-                            //    { y: 'Feb', a: 100, b: 90 },
-                            //    { y: 'Mar', a: 85, b: 75 },
-                            //    { y: 'Apr', a: 40, b: 50 },
-                            //    { y: 'May', a: 85, b: 75 },
-                            //    { y: 'Jun', a: 55, b: 45 },
-                            //    { y: 'Jul', a: 80, b: 65 },
-                            //    { y: 'Aug', a: 100, b: 85 }
-                            //];
-                            //var data = [];
-
-                            //for (var i in Result) {
-                            //    var serie = { name: Result[i].year, y: Result[i].amount, drilldown: Result[i].drilldown };
-                            //    data.push(serie);
-                            //}
-
-                            // BindChart(data);
+                            debugger;
+                            Morris.Bar({
+                                element: 'morris-bar-example',
+                                data: chartData,
+                                xkey: 'y',
+                                ykeys: ['a', 'b', 'c'],
+                                labels: ['Lost Policies','Policy yet to Renew', 'Pending Policies'],
+                                gridLineColor: '#eef0f2',
+                                barSizeRatio: 0.4,
+                                xLabelAngle: 45,
+                                resize: true,
+                                hideHover: 'auto',
+                                barColors: ['#30419b', '#02c58d', '#ffa426']
+                            });
                         },
                         error: function (Result) {
                             alert("Error");
@@ -444,12 +429,13 @@
 
 
 
-                    this.createBarChart('morris-bar-example', chartData, 'y', ['a', 'b'], ['Series A', 'Series B'], ['#30419b', '#02c58d']);
+                    //this.createBarChart('morris-bar-example', chartData, 'y', ['a', 'b'], ['Series A', 'Series B'], ['#30419b', '#02c58d']);
 
                     //creating donut chart
+
                     var $donutData = [
-                        { label: "Policies Renewed", value: @ViewBag.TotPoltoBeRenewed },
-                        { label: "Policies Pending", value:  @ViewBag.TotPolforRenewal },
+                        { label: "Total Policies to be renewed (2020)", value: @ViewBag.TotPoltoBeRenewed },
+                        { label: "Policies renewed", value:  @ViewBag.NoOfPoRenewed },
                         { label: "Policies Lost", value:  @ViewBag.PolicyLost }
                     ];
                     this.createDonutChart('morris-donut-example', $donutData, ['#fcbe2d', '#30419b', '#02c58d']);
@@ -457,7 +443,7 @@
                 //init
                 $.Dashboard = new Dashboard, $.Dashboard.Constructor = Dashboard
         }(window.jQuery),
-            
+
             //initializing
             function ($) {
                 "use strict";

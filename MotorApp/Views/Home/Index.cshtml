@@ -1,215 +1,205 @@
 ﻿@model MotorApp.BusinessEntities.DashBoard
 @using MotorApp.BAL;
 @using MotorApp.BusinessEntities;
-@{
-    ViewBag.Title = "Home Page";
-}
+@{ ViewBag.Title = "Home Page"; }
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @name = "Form1" }))
+{
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
 
     @if (ViewBag.RoleId == 1)
     {
+<label for="cars">Choose Role</label>
+                <div class="col-md-2">
 
-        <div class="col-md-4">
-            <label for="cars">Choose Role</label>
 
-            @Html.DropDownList("Role",
-                  new SelectList(Enum.GetValues(typeof(MotorInsRoles))),
-                  "Select Role",
-                  new { @class = "form-control" })
-        </div>
-        <div class="col-md-4">
-            <label for="cars">Choose Producer</label>
-            @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @name = "Form1" }))
-            {
-                <select class="form-control" name="ddlProducer" id="ddlProducer"><option value="0">--Select Producer--</option></select>
-                <input type="submit" value="Search" />
-            }
-        </div>
-    }
+                    @Html.DropDownList("Role",
+                                                   new SelectList(Enum.GetValues(typeof(MotorInsRoles))),
+                                                   "Select Role",
+                                                   new { @class = "form-control form-control-sm" })
+                </div>
+                                <label for="cars">Choose Producer</label>
+
+                                                <div class="col-md-2">
+                                                    <select class="form-control  form-control-sm" name="ddlProducer" id="ddlProducer"><option value="0">--Select Producer--</option></select>
+                                                </div>
+                                                                <input class="btn btn-primary btn-sm" type="submit" value="Search" />}
     <ol class="breadcrumb my-2">
         <li class="breadcrumb-item"><a href="./">Home</a></li>
         <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
     </ol>
 </div>
+}
 <div class="row mb-3">
     <!-- Earnings (Monthly) Card Example -->
     @if (Model != null)
     {
 
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col ">
-                            <div class="text-xs font-weight-bold text-uppercase mb-1">
-                                Total Policies to be renewed (2020)
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                @Model.TotPoltoBeRenewed
+<div class="col-xl-3 col-md-6 mb-4">
+    <div class="card h-100">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col ">
+                    <div class="text-xs font-weight-bold text-uppercase mb-1">
+                        Total Policies to be renewed (2020)
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                        @Model.TotPoltoBeRenewed
 
-                            </div>
-                            <div class="mt-2 mb-0 text-muted text-xs">
-                                @*<span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>*@
-                                <span>Since last year</span>
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-primary"></i>
-                        </div>
                     </div>
+                    <div class="mt-2 mb-0 text-muted text-xs">
+                        @*<span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>*@
+                        <span>Since last year</span>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <i class="fas fa-calendar fa-2x text-primary"></i>
                 </div>
             </div>
         </div>
-        <!-- Earnings (Annual) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-uppercase mb-1">Total Policies for renewal (current & next month)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotPolforRenewal</div>
-                            <div class="mt-2 mb-0 text-muted text-xs">
-                                @*<span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>*@
-                                <span>Since last years</span>
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-shopping-cart fa-2x text-success"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- New User Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-uppercase mb-1">No of Policies renewed</div>
-                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@Model.NoOfPoRenewed</div>
-                            <div class="mt-2 mb-0 text-muted text-xs">
-                                @*<span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 20.4%</span>*@
-                                <span>Since last month</span>
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-users fa-2x text-info"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Pending Requests Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-uppercase mb-1">Policies Lost</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.PolicyLost</div>
-                            <div class="mt-2 mb-0 text-muted text-xs">
-                                @*<span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>*@
-                                <span>Since yesterday</span>
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-comments fa-2x text-warning"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        if (ViewBag.RoleId == 1)
-        {
-            
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col ">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1">
-                                    Total Policies renewed
+    </div>
+</div> <!-- Earnings (Annual) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Total Policies OnHold</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotPolforRenewal</div>
+                                    <div class="mt-2 mb-0 text-muted text-xs">
+                                        @*<span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>*@
+                                        <span>Since last years</span>
+                                    </div>
                                 </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    @Model.TotPoltoBeRenewedCM
+                                <div class="col-auto">
+                                    <i class="fas fa-shopping-cart fa-2x text-success"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- New User Card Example -->
+                                <div class="col-xl-3 col-md-6 mb-4">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-uppercase mb-1">No of Policies renewed</div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@Model.NoOfPoRenewed</div>
+                                                    <div class="mt-2 mb-0 text-muted text-xs">
+                                                        @*<span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 20.4%</span>*@
+                                                        <span>Since last month</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-users fa-2x text-info"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- Pending Requests Card Example -->
+                                                <div class="col-xl-3 col-md-6 mb-4">
+                                                    <div class="card h-100">
+                                                        <div class="card-body">
+                                                            <div class="row no-gutters align-items-center">
+                                                                <div class="col mr-2">
+                                                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Policies Lost</div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.PolicyLost</div>
+                                                                    <div class="mt-2 mb-0 text-muted text-xs">
+                                                                        @*<span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>*@
+                                                                        <span>Since yesterday</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <i class="fas fa-comments fa-2x text-warning"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> if (ViewBag.RoleId == 1)
+                                                {
 
-                                </div>
-                                <div class="mt-2 mb-0 text-muted text-xs">
-                                    @*<span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>*@
-                                    <span>Since last year</span>
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-calendar fa-2x text-primary"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Earnings (Annual) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1">Total Policies OnHold</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotPolforRenewalCM</div>
-                                <div class="mt-2 mb-0 text-muted text-xs">
-                                    @*<span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>*@
-                                    <span>Since last years</span>
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-shopping-cart fa-2x text-success"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- New User Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1">No of Policies renewed</div>
-                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@Model.NoOfPoRenewedCM</div>
-                                <div class="mt-2 mb-0 text-muted text-xs">
-                                    @*<span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 20.4%</span>*@
-                                    <span>Since last month</span>
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-users fa-2x text-info"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Pending Requests Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1">Policies Lost</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.PolicyLostCM</div>
-                                <div class="mt-2 mb-0 text-muted text-xs">
-                                    @*<span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>*@
-                                    <span>Since yesterday</span>
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-comments fa-2x text-warning"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-    }
+                                <div class="col-xl-3 col-md-6 mb-4">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <div class="row align-items-center">
+                                                <div class="col ">
+                                                    <div class="text-xs font-weight-bold text-uppercase mb-1">
+                                                        Total Policies to be renewed
+                                                    </div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                        @Model.TotPoltoBeRenewedCM
+
+                                                    </div>
+                                                    <div class="mt-2 mb-0 text-muted text-xs">
+                                                        @*<span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>*@
+                                                        <span>Since last year</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-calendar fa-2x text-primary"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- Earnings (Annual) Card Example -->
+                                                    <div class="col-xl-3 col-md-6 mb-4">
+                                                        <div class="card h-100">
+                                                            <div class="card-body">
+                                                                <div class="row no-gutters align-items-center">
+                                                                    <div class="col mr-2">
+                                                                        <div class="text-xs font-weight-bold text-uppercase mb-1">Total Policies OnHold</div>
+                                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotPolforRenewalCM</div>
+                                                                        <div class="mt-2 mb-0 text-muted text-xs">
+                                                                            @*<span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>*@
+                                                                            <span>Since last years</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <i class="fas fa-shopping-cart fa-2x text-success"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div> <!-- New User Card Example -->
+                                                                        <div class="col-xl-3 col-md-6 mb-4">
+                                                                            <div class="card h-100">
+                                                                                <div class="card-body">
+                                                                                    <div class="row no-gutters align-items-center">
+                                                                                        <div class="col mr-2">
+                                                                                            <div class="text-xs font-weight-bold text-uppercase mb-1">No of Policies renewed</div>
+                                                                                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@Model.NoOfPoRenewedCM</div>
+                                                                                            <div class="mt-2 mb-0 text-muted text-xs">
+                                                                                                @*<span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 20.4%</span>*@
+                                                                                                <span>Since last month</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-auto">
+                                                                                            <i class="fas fa-users fa-2x text-info"></i>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div> <!-- Pending Requests Card Example -->
+                                                                                            <div class="col-xl-3 col-md-6 mb-4">
+                                                                                                <div class="card h-100">
+                                                                                                    <div class="card-body">
+                                                                                                        <div class="row no-gutters align-items-center">
+                                                                                                            <div class="col mr-2">
+                                                                                                                <div class="text-xs font-weight-bold text-uppercase mb-1">Policies Lost</div>
+                                                                                                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.PolicyLostCM</div>
+                                                                                                                <div class="mt-2 mb-0 text-muted text-xs">
+                                                                                                                    @*<span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>*@
+                                                                                                                    <span>Since yesterday</span>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <div class="col-auto">
+                                                                                                                <i class="fas fa-comments fa-2x text-warning"></i>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>}
+                                                                                    }
     <!-- Area Chart -->
     <div class="col-xl-8 col-lg-7">
         <div class="card mb-4">
@@ -232,26 +222,27 @@
             </div>
             @if (Model != null)
             {
-                <div class="card-body">
-                    <ul class="list-inline widget-chart m-t-20 m-b-15 text-center">
-                        <li class="list-inline-item">
-                            <h5>@Model.TotPoltoBeRenewed</h5>
-                            <p class="text-muted">Total Policies</p>
-                        </li>
-                        <li class="list-inline-item">
-                            <h5>@Model.TotPolforRenewal</h5>
-                            <p class="text-muted">Total Pending Policies</p>
-                        </li>
-                        <li class="list-inline-item">
-                            <h5>@Model.PolicyLost</h5>
-                            <p class="text-muted">Total Policies Lost</p>
-                        </li>
-                    </ul>
-                    <div class="chart-area">
-                        <div id="morris-bar-example" class="morris-charts" style="height: 300px"></div>
-                    </div>
-                </div>
-            }
+<div class="card-body">
+    <ul class="list-inline widget-chart m-t-20 m-b-15 text-center">
+        <li class="list-inline-item">
+            <h5>@Model.TotPoltoBeRenewed</h5>
+            <p class="text-muted">
+                TOTAL POLICIES TO BE RENEWED (2020)
+            </p>
+        </li>
+        <li class="list-inline-item">
+            <h5>@Model.NoOfPoRenewed</h5>
+            <p class="text-muted">Total Policies Renewed</p>
+        </li>
+        <li class="list-inline-item">
+            <h5>@Model.PolicyLost</h5>
+            <p class="text-muted">Total Policies Lost</p>
+        </li>
+    </ul>
+    <div class="chart-area">
+        <div id="morris-bar-example" class="morris-charts" style="height: 300px"></div>
+    </div>
+</div>      }
         </div>
 
     </div>
@@ -260,7 +251,7 @@
         <div class="card mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">Total Policies Info</h6>
-                <div class="dropdown no-arrow">
+                <div class="dropdown d-none no-arrow">
                     <a class="dropdown-toggle btn btn-primary btn-sm" href="#" role="button" id="dropdownMenuLink"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Month <i class="fas fa-chevron-down"></i>

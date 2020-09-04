@@ -647,7 +647,7 @@ namespace MotorApp.DAL
                     con.Open();
                     SqlCommand cmd = new SqlCommand
                     {
-                        CommandText = "SP_GetUserInsInfo"
+                        CommandText = "SP_GetUserwiseInfo"
                     };
 
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -836,6 +836,11 @@ namespace MotorApp.DAL
                         lstInfo.NoOfPoRenewed = (int)reader.GetValue(2);
                         lstInfo.PolicyLost = (int)reader.GetValue(3);
                         lstInfo.UserName = reader.GetValue(4).ToString();
+                        lstInfo.TotPoltoBeRenewedCM = (int)reader.GetValue(5);
+                        lstInfo.TotPolforRenewalCM = (int)reader.GetValue(6);
+
+                        lstInfo.NoOfPoRenewedCM = (int)reader.GetValue(7);
+                        lstInfo.PolicyLostCM = (int)reader.GetValue(8);
                         returnCode = 1;
                     }
                     reader.Close();
