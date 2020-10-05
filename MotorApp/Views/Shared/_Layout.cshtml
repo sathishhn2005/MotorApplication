@@ -29,7 +29,7 @@
                 @*<div class="sidebar-brand-icon">
                         <img src="~/img/logo/logoMI.png">
                     </div>*@
-                <div class="sidebar-brand-text mx-2">Motor Renewal Tracker</div>
+                <div class="sidebar-brand-text mx-2">Motor <span class="logo-sub">Renet</span></div>
             </a>
             <hr class="sidebar-divider mb-3 mt-0" />
             <div class="sidebar-heading">
@@ -37,12 +37,19 @@
             </div>
             @if (ViewBag.RoleId == 1)
             {
-<li class="nav-item ">
-    <a class="nav-link" href="index">
-        <i class="fas fa-fw fa-star"></i>
-        <span>Admin Dashboard</span>
-    </a>
-</li>}
+                <li class="nav-item ">
+                    <a class="nav-link" href="index">
+                        <i class="fas fa-fw fa-star"></i>
+                        <span>Admin Dashboard</span>
+                    </a>
+                </li>
+            }
+            <li class="nav-item ">
+                <a class="nav-link" href="indexBI">
+                    <i class="fas fa-fw fa-star"></i>
+                    <span>BI Dashboard</span>
+                </a>
+            </li>
             <li class="nav-item ">
                 <a class="nav-link" href="MotorDB">
                     <i class="fas fa-fw fa-car"></i>
@@ -286,7 +293,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
                                 @*<img class="img-profile rounded-circle" src="~/img/boy.png" style="max-width: 60px">*@
-                                <span class="ml-2 d-none d-lg-inline text-white font-16"">Welcome, <b>User</b></span>
+                                <span class="ml-2 d-none d-lg-inline text-white font-16" ">Welcome, <b>User</b></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
@@ -359,9 +366,12 @@
     @*<script src="~/vendor/chart.js/Chart.min.js"></script>
         <script src="~/js/demo/chart-area-demo.js"></script>*@
     <script src="~/vendor/morris/morris.js"></script>
+    <script src="~/vendor/chart.js/Chart.js"></script>
+    <script src="~/vendor/chart.js/utils.js"></script>
     <script src="~/vendor/morris/raphael.min.js"></script>
     <script src="~/vendor/pekeUpload/SimpleAjaxUploader.js"></script>
     <script src="~/vendor/smart_wizard/js/jquery.smartWizard.js"></script>
+    <script src="~/vendor/Bootstrap-Checkbox/bootstrap4-toggle.js"></script>
     <script>
         var chartData = [];
         !function ($) {
@@ -406,13 +416,12 @@
                         dataType: "json",
                         success: function (Result) {
                             chartData = Result.list;
-                            debugger;
                             Morris.Bar({
                                 element: 'morris-bar-example',
                                 data: chartData,
                                 xkey: 'y',
                                 ykeys: ['a', 'b', 'c'],
-                                labels: ['Lost Policies','Policy yet to Renew', 'Pending Policies'],
+                                labels: ['Lost Policies', 'Policy yet to Renew', 'Pending Policies'],
                                 gridLineColor: '#eef0f2',
                                 barSizeRatio: 0.4,
                                 xLabelAngle: 45,
@@ -427,18 +436,35 @@
                     });
 
 
-
-
-                    //this.createBarChart('morris-bar-example', chartData, 'y', ['a', 'b'], ['Series A', 'Series B'], ['#30419b', '#02c58d']);
+                //this.createBarChart('morris-bar-example', chartData, 'y', ['a', 'b'], ['Series A', 'Series B'], ['#30419b', '#02c58d']);
 
                     //creating donut chart
 
-                    var $donutData = [
+                    @*var $donutData = [
                         { label: "Total Policies to be renewed (2020)", value: @ViewBag.TotPoltoBeRenewed },
                         { label: "Policies renewed", value:  @ViewBag.NoOfPoRenewed },
                         { label: "Policies Lost", value:  @ViewBag.PolicyLost }
+                    ];*@
+                var $donutData = [
+                        { label: "Total Policies to be renewed (2020)", value: @ViewBag.TNPYear },
+                        { label: "Policies renewed", value:  @ViewBag.TNPRenewedYear },
+                        { label: "Policies Lost", value:   @ViewBag.TNPLostYear }
                     ];
-                    this.createDonutChart('morris-donut-example', $donutData, ['#fcbe2d', '#30419b', '#02c58d']);
+                this.createDonutChart('morris-donut-example', $donutData, ['#fcbe2d', '#30419b', '#02c58d']);
+                var $monthlypolicy = [
+                    { label: "Total Available ", value: @ViewBag.TNPMonth },
+                    { label: "Renewed", value:  @ViewBag.TNPRenewedMonth },
+                    { label: "Under Process ", value:  @ViewBag.TNPUnderProcessMonth },
+                    { label: "Lost ", value:  @ViewBag.TNPLostMonth}
+                    ];
+                this.createDonutChart('monthly-policy', $monthlypolicy, ['#6777EF', '#66bb6a', '#ffa426', '#fc544b']);
+                var $yearlypolicy = [
+                    { label: "Total Available ", value: @ViewBag.TNPYear },
+                    { label: "Renewed", value: @ViewBag.TNPRenewedYear },
+                    { label: "Under Process ", value: @ViewBag.TNPUnderProcessYear },
+                    { label: "Lost ", value: @ViewBag.TNPLostYear }
+                ];
+                this.createDonutChart('yearly-policy', $yearlypolicy, ['#6777EF', '#66bb6a', '#ffa426', '#fc544b']);
                 },
                 //init
                 $.Dashboard = new Dashboard, $.Dashboard.Constructor = Dashboard
@@ -450,5 +476,8 @@
                 $.Dashboard.init();
             }(window.jQuery);
     </script>
+
+    
+    
 </body>
 </html>

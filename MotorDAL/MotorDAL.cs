@@ -635,6 +635,78 @@ namespace MotorApp.DAL
             }
             return returnCode;
         }
+
+        public long GetNewMIDashBoard(dynamic lstInput, out DashBoard lstInfo)
+        {
+            long returnCode = -1;
+            lstInfo = new DashBoard();
+            try
+            {
+                DataSet ds = new DataSet();
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = "SP_GetMIDashBoard"
+                    };
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+                    cmd.Parameters.AddWithValue("@UserName", lstInput.UserName);
+                    //cmd.Parameters.AddWithValue("@Password", lstInput.Password);
+                    //cmd.Parameters.AddWithValue("@RoleId", lstInput.Role);
+
+                    SqlDataReader reader;
+                    reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        lstInfo.TNPYear = (long)reader.GetValue(0);
+                        lstInfo.TNPUnderProcessYear = (long)reader.GetValue(1);
+                        lstInfo.TNPLostYear = (long)reader.GetValue(2);
+                        lstInfo.TNPRenewedYear = (long)reader.GetValue(3);
+                        lstInfo.PercentageRenewedYear = (decimal)reader.GetValue(4);
+                        lstInfo.TNPMonth = (long)reader.GetValue(5);
+                        lstInfo.TNPLostMonth = (long)reader.GetValue(6);
+                        lstInfo.TNPUnderProcessMonth = (long)reader.GetValue(7);
+                        lstInfo.TNPRenewedMonth = (long)reader.GetValue(8);
+                        lstInfo.PercentageRenewedMonth = (decimal)reader.GetValue(9);
+                        lstInfo.TNPYearPremium = (long)reader.GetValue(10);
+                        lstInfo.TNPUPYearPremium = (long)reader.GetValue(11);
+                        lstInfo.TNPLostYearPremium = (long)reader.GetValue(12);
+                        lstInfo.TNPRenewedYearPremium = (long)reader.GetValue(13);
+                        lstInfo.PercentPremiumRenewedYear = (decimal)reader.GetValue(14);
+                        lstInfo.TNPMonthPremium = (long)reader.GetValue(15);
+                        lstInfo.TNPLostMonthPremium = (long)reader.GetValue(16);
+                        lstInfo.TNPUPMonthPremium = (long)reader.GetValue(17);
+                        lstInfo.TNPRenewedMonthPremium = (long)reader.GetValue(18);
+                        lstInfo.PercentPremiumRenewedMonth = (decimal)reader.GetValue(19);
+                        lstInfo.UserName = (string)reader.GetValue(20);
+
+                        lstInfo.TotPoltoBeRenewed = 0;
+                        lstInfo.TotPolforRenewal  = 0;
+                        lstInfo.NoOfPoRenewed = 0;
+                        lstInfo.PolicyLost = 0;
+                        
+                        lstInfo.TotPoltoBeRenewedCM = 0;
+                        lstInfo.TotPolforRenewalCM = 0;
+
+                        lstInfo.NoOfPoRenewedCM = 0;
+                        lstInfo.PolicyLostCM = 0;
+
+                        returnCode = 1;
+                    }
+                    reader.Close();
+                    cmd.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return returnCode;
+        }
         public long GetUserInsuranceInfo(dynamic lstInput, out DashBoard lstInfo)
         {
             long returnCode = -1;
@@ -647,7 +719,7 @@ namespace MotorApp.DAL
                     con.Open();
                     SqlCommand cmd = new SqlCommand
                     {
-                        CommandText = "SP_GetUserwiseInfo"
+                        CommandText = "SP_GetUserInsInfo"
                     };
 
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -661,16 +733,39 @@ namespace MotorApp.DAL
 
                     while (reader.Read())
                     {
-                        lstInfo.TotPoltoBeRenewed = (int)reader.GetValue(0);
-                        lstInfo.TotPolforRenewal = (int)reader.GetValue(1);
-                        lstInfo.NoOfPoRenewed = (int)reader.GetValue(2);
-                        lstInfo.PolicyLost = (int)reader.GetValue(3);
-                        lstInfo.UserName = reader.GetValue(4).ToString();
-                        lstInfo.TotPoltoBeRenewedCM = (int)reader.GetValue(5);
-                        lstInfo.TotPolforRenewalCM = (int)reader.GetValue(6);
-                        
-                        lstInfo.NoOfPoRenewedCM = (int)reader.GetValue(7);
-                        lstInfo.PolicyLostCM = (int)reader.GetValue(8);
+                        lstInfo.TNPYear = (long)reader.GetValue(0);
+                        lstInfo.TNPUnderProcessYear = (long)reader.GetValue(1);
+                        lstInfo.TNPLostYear = (long)reader.GetValue(2);
+                        lstInfo.TNPRenewedYear = (long)reader.GetValue(3);
+                        lstInfo.PercentageRenewedYear = (decimal)reader.GetValue(4);
+                        lstInfo.TNPMonth = (long)reader.GetValue(5);
+                        lstInfo.TNPLostMonth = (long)reader.GetValue(6);
+                        lstInfo.TNPUnderProcessMonth = (long)reader.GetValue(7);
+                        lstInfo.TNPRenewedMonth = (long)reader.GetValue(8);
+                        lstInfo.PercentageRenewedMonth = (decimal)reader.GetValue(9);
+                        lstInfo.TNPYearPremium = (long)reader.GetValue(10);
+                        lstInfo.TNPUPYearPremium = (long)reader.GetValue(11);
+                        lstInfo.TNPLostYearPremium = (long)reader.GetValue(12);
+                        lstInfo.TNPRenewedYearPremium = (long)reader.GetValue(13);
+                        lstInfo.PercentPremiumRenewedYear = (decimal)reader.GetValue(14);
+                        lstInfo.TNPMonthPremium = (long)reader.GetValue(15);
+                        lstInfo.TNPLostMonthPremium = (long)reader.GetValue(16);
+                        lstInfo.TNPUPMonthPremium = (long)reader.GetValue(17);
+                        lstInfo.TNPRenewedMonthPremium = (long)reader.GetValue(18);
+                        lstInfo.PercentPremiumRenewedMonth = (decimal)reader.GetValue(19);
+                        lstInfo.UserName = (string)reader.GetValue(20);
+
+                        lstInfo.TotPoltoBeRenewed = 0;
+                        lstInfo.TotPolforRenewal = 0;
+                        lstInfo.NoOfPoRenewed = 0;
+                        lstInfo.PolicyLost = 0;
+
+                        lstInfo.TotPoltoBeRenewedCM = 0;
+                        lstInfo.TotPolforRenewalCM = 0;
+
+                        lstInfo.NoOfPoRenewedCM = 0;
+                        lstInfo.PolicyLostCM = 0;
+
                         returnCode = 1;
                     }
                     reader.Close();
@@ -831,16 +926,39 @@ namespace MotorApp.DAL
 
                     while (reader.Read())
                     {
-                        lstInfo.TotPoltoBeRenewed = (int)reader.GetValue(0);
-                        lstInfo.TotPolforRenewal = (int)reader.GetValue(1);
-                        lstInfo.NoOfPoRenewed = (int)reader.GetValue(2);
-                        lstInfo.PolicyLost = (int)reader.GetValue(3);
-                        lstInfo.UserName = reader.GetValue(4).ToString();
-                        lstInfo.TotPoltoBeRenewedCM = (int)reader.GetValue(5);
-                        lstInfo.TotPolforRenewalCM = (int)reader.GetValue(6);
+                        lstInfo.TNPYear = (long)reader.GetValue(0);
+                        lstInfo.TNPUnderProcessYear = (long)reader.GetValue(1);
+                        lstInfo.TNPLostYear = (long)reader.GetValue(2);
+                        lstInfo.TNPRenewedYear = (long)reader.GetValue(3);
+                        lstInfo.PercentageRenewedYear = (decimal)reader.GetValue(4);
+                        lstInfo.TNPMonth = (long)reader.GetValue(5);
+                        lstInfo.TNPLostMonth = (long)reader.GetValue(6);
+                        lstInfo.TNPUnderProcessMonth = (long)reader.GetValue(7);
+                        lstInfo.TNPRenewedMonth = (long)reader.GetValue(8);
+                        lstInfo.PercentageRenewedMonth = (decimal)reader.GetValue(9);
+                        lstInfo.TNPYearPremium = (long)reader.GetValue(10);
+                        lstInfo.TNPUPYearPremium = (long)reader.GetValue(11);
+                        lstInfo.TNPLostYearPremium = (long)reader.GetValue(12);
+                        lstInfo.TNPRenewedYearPremium = (long)reader.GetValue(13);
+                        lstInfo.PercentPremiumRenewedYear = (decimal)reader.GetValue(14);
+                        lstInfo.TNPMonthPremium = (long)reader.GetValue(15);
+                        lstInfo.TNPLostMonthPremium = (long)reader.GetValue(16);
+                        lstInfo.TNPUPMonthPremium = (long)reader.GetValue(17);
+                        lstInfo.TNPRenewedMonthPremium = (long)reader.GetValue(18);
+                        lstInfo.PercentPremiumRenewedMonth = (decimal)reader.GetValue(19);
+                        lstInfo.UserName = (string)reader.GetValue(20);
 
-                        lstInfo.NoOfPoRenewedCM = (int)reader.GetValue(7);
-                        lstInfo.PolicyLostCM = (int)reader.GetValue(8);
+                        lstInfo.TotPoltoBeRenewed = 0;
+                        lstInfo.TotPolforRenewal = 0;
+                        lstInfo.NoOfPoRenewed = 0;
+                        lstInfo.PolicyLost = 0;
+
+                        lstInfo.TotPoltoBeRenewedCM = 0;
+                        lstInfo.TotPolforRenewalCM = 0;
+
+                        lstInfo.NoOfPoRenewedCM = 0;
+                        lstInfo.PolicyLostCM = 0;
+
                         returnCode = 1;
                     }
                     reader.Close();
@@ -972,10 +1090,10 @@ namespace MotorApp.DAL
                                {
 
                                    y = dr["MonthName"].ToString(),
-                                   a = (int)dr["Dropped"],
-                                   b = (int)dr["Completed"],
-                                   c = (int)dr["NotProgressed"],
-                                   
+                                   a = (int)dr["Lost"],
+                                   b = (int)dr["Renewed"],
+                                   c = (int)dr["Under process"],
+
                                }).ToList();
                     }
                     cmd.Dispose();

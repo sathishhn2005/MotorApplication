@@ -39,9 +39,19 @@
                             <div class="col-2">
                                 <input class="form-control form-control-sm  mb-3" name="Branch" type="text" placeholder="Branch">
                             </div>
-                            
+                            <div class="col-2">
+                                <select class="form-control form-control-sm" name="Status" required="required">
+                                    <option disabled selected> -- select an option -- </option>
+                                    <option>Completed</option>
+                                    <option>Dropped</option>
+                                    <option>OnHold</option>
+                                </select>
+                            </div>
                             <div class="col-2 text-center">
-                                
+                                @*<a>Search</a>*@
+                                @*<button class="btn btn-primary btn-sm" type="button">
+                                        <i class="fas fa-search fa-sm"></i> Search
+                                    </button>*@
                                 <input class="btn btn-primary btn-sm" type="submit" value="Search" />
                             </div>
                         }

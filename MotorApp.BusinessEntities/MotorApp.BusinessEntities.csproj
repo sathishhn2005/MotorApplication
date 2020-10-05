@@ -47,6 +47,7 @@
     <Compile Include="DashBoard.cs" />
     <Compile Include="DomesticModel.cs" />
     <Compile Include="IndividualModel.cs" />
+    <Compile Include="Insurance.cs" />
     <Compile Include="MotorModel.cs" />
     <Compile Include="ProducerCodeMaster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

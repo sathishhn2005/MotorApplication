@@ -1,0 +1,371 @@
+﻿@{ ViewBag.Title = "BI Dashboard"; }
+<div class="row mt-3">
+    <div class="col-xl-6 col-lg-6">
+        <div class="card mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Broker Renewed vs Available</h6>
+                <div class="">
+                    <label class="font-weight-bold mr-2">Yearly</label>
+                    <input type="checkbox" data-toggle="toggle" data-size="xs">
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="Mchart-bar ">
+                    <div id="BrokerRenewed" class="morris-charts" style="height: 250px"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-xl-6 col-lg-6">
+        <div class="card mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Agents Renewed VS Available </h6>
+                <div class="">
+                    <label class="font-weight-bold mr-2">Yearly</label>
+                    <input type="checkbox" data-toggle="toggle" data-size="xs">
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="Mchart-bar ">
+                    <div id="AgentsRenewed" class="morris-charts" style="height: 250px"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-xl-6 col-lg-6">
+        <div class="card mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Direct Sales Renewed VS Available</h6>
+                <div class="">
+                    <label class="font-weight-bold mr-2">Yearly</label>
+                    <input type="checkbox" data-toggle="toggle" data-size="xs">
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="Mchart-bar ">
+                    <div id="DirectRenewed" class="morris-charts" style="height: 250px"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-xl-6 col-lg-6">
+        <div class="card mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Branch Renewed VS Available </h6>
+                <div class="">
+                    <label class="font-weight-bold mr-2">Yearly</label>
+                    <input type="checkbox" data-toggle="toggle" data-size="xs">
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="Mchart-bar ">
+                    <div id="BranchRenewed" class="morris-charts" style="height: 250px"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-xl-12 col-lg-12">
+        <div class="card mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Producer's Performance </h6>
+                <div class="">
+                    <label class="font-weight-bold mr-2">Yearly</label>
+                    <input type="checkbox" data-toggle="toggle" data-size="xs">
+                </div>
+            </div>
+
+            <div class="card-body">
+                <canvas id="ProducerPerformance" height="100"></canvas>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-xl-12 col-lg-12">
+        <div class="card mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Specific Producer's Chart </h6>
+                <div class="flex-grow-1">
+                    <form class="form-inline  d-flex flex-row align-items-center justify-content-around">
+                        <label for="cars" class="col-form-label">Choose Role</label>
+                            <select class="form-control form-control-sm col-md-3">
+                                <option>--Select--</option>
+                                <option>Broker</option>
+                                <option>Agent</option>
+                                <option>DST member</option>
+                                <option>Branch</option>
+                            </select>
+                        <label for="cars" class="col-form-label">Choose Producer</label>
+                            <select class="form-control form-control-sm col-md-3">
+                                <option>--Select--</option>
+                                <option>BA001</option>
+                                <option>BA818</option>
+                                <option>BA237</option>
+                                <option>BA233</option>
+                            </select>
+                        <button type="button" id="randomizeData" class="btn btn-primary btn-sm">Search</button>
+                    </form>
+                </div>
+                <div class="">
+                    <label class="font-weight-bold mr-2">Yearly</label>
+                    <input type="checkbox" data-toggle="toggle" data-size="xs">
+                </div>
+            </div>
+
+            <div class="card-body">
+                <canvas id="SpecificProducer" height="100"></canvas>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    setTimeout(function () { 
+            Morris.Bar({
+                element: 'BrokerRenewed',
+                data: [
+                    { y: 'Jan', a: 45, b: 12 },
+                    { y: 'Feb', a: 44, b: 34 },
+                    { y: 'Mar', a: 21, b: 40 },
+                    { y: 'Apr', a: 25, b: 65 },
+                    { y: 'May', a: 54, b: 56 },
+                    { y: 'Jun', a: 75, b: 54 },
+                    { y: 'Jul', a: 60, b: 87 },
+                    { y: 'Aug', a: 20, b: 76 },
+                    { y: 'Sep', a: 35, b: 65 },
+                    { y: 'Oct', a: 40, b: 23 },
+                    { y: 'Nov', a: 75, b: 34 },
+                    { y: 'Dec', a: 90, b: 12 },
+                ],
+                xkey: 'y',
+                ykeys: ['a', 'b'],
+                labels: ['Policies Renewed', 'Available Policies'],
+                gridLineColor: '#eef0f2',
+                barSizeRatio: 0.4,
+                xLabelAngle: 45,
+                resize: true,
+                hideHover: 'auto',
+                barColors: ['#4dc9f6', '#f67019']
+            });
+            Morris.Bar({
+                element: 'AgentsRenewed',
+                data: [
+                    { y: 'Jan', a: 12, b: 43 },
+                    { y: 'Feb', a: 52, b: 37 },
+                    { y: 'Mar', a: 54, b: 28 },
+                    { y: 'Apr', a: 86, b: 15 },
+                    { y: 'May', a: 25, b: 24 },
+                    { y: 'Jun', a: 30, b: 76 },
+                    { y: 'Jul', a: 65, b: 76 },
+                    { y: 'Aug', a: 80, b: 25 },
+                    { y: 'Sep', a: 75, b: 34 },
+                    { y: 'Oct', a: 22, b: 54 },
+                    { y: 'Nov', a: 11, b: 74 },
+                    { y: 'Dec', a: 19, b: 14 },
+                ],
+                xkey: 'y',
+                ykeys: ['a', 'b'],
+                labels: ['Policies Renewed', 'Available Policies'],
+                gridLineColor: '#eef0f2',
+                barSizeRatio: 0.4,
+                xLabelAngle: 45,
+                resize: true,
+                hideHover: 'auto',
+                barColors: ['#f53794', '#537bc4']
+            });
+            Morris.Bar({
+                element: 'DirectRenewed',
+                data: [
+                    { y: 'Jan', a: 12, b: 70 },
+                    { y: 'Feb', a: 23, b: 35 },
+                    { y: 'Mar', a: 53, b: 10 },
+                    { y: 'Apr', a: 34, b: 25 },
+                    { y: 'May', a: 76, b: 30 },
+                    { y: 'Jun', a: 95, b: 15 },
+                    { y: 'Jul', a: 28, b: 20 },
+                    { y: 'Aug', a: 37, b: 70 },
+                    { y: 'Sep', a: 45, b: 65 },
+                    { y: 'Oct', a: 26, b: 40 },
+                    { y: 'Nov', a: 86, b: 35 },
+                    { y: 'Dec', a: 40, b: 10 },
+                ],
+                xkey: 'y',
+                ykeys: ['a', 'b'],
+                labels: ['Policies Renewed', 'Available Policies'],
+                gridLineColor: '#eef0f2',
+                barSizeRatio: 0.4,
+                xLabelAngle: 45,
+                resize: true,
+                hideHover: 'auto',
+                barColors: ['#acc236', '#166a8f']
+            });
+            Morris.Bar({
+                element: 'BranchRenewed',
+                data: [
+                    { y: 'Jan', a: 100, b: 90 },
+                    { y: 'Feb', a: 75, b: 65 },
+                    { y: 'Mar', a: 50, b: 40 },
+                    { y: 'Apr', a: 75, b: 65 },
+                    { y: 'May', a: 50, b: 40 },
+                    { y: 'Jun', a: 75, b: 65 },
+                    { y: 'Jul', a: 100, b: 90 },
+                    { y: 'Aug', a: 100, b: 90 },
+                    { y: 'Sep', a: 75, b: 65 },
+                    { y: 'Oct', a: 50, b: 40 },
+                    { y: 'Nov', a: 75, b: 65 },
+                    { y: 'Dec', a: 50, b: 40 },
+                ],
+                xkey: 'y',
+                ykeys: ['a', 'b'],
+                labels: ['Policies Renewed', 'Available Policies'],
+                gridLineColor: '#eef0f2',
+                barSizeRatio: 0.4,
+                xLabelAngle: 45,
+                resize: true,
+                hideHover: 'auto',
+                barColors: ['#00a950', '#58595b']
+            });
+    }, 100);
+    window.onload = function () {
+        var myLine = new Chart(document.getElementById('ProducerPerformance'), {
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                datasets: [{
+                    label: 'Broker',
+                    backgroundColor: '#8549ba',
+                    borderColor: '#8549ba',
+                    data: [
+                        20, 40, 13, 12, 25, 10, 5, 32, 6, 38, 20, 25
+                    ],
+                    fill: false,
+                }, {
+                    label: 'Agent',
+                    fill: false,
+                    backgroundColor: '#E65A26',
+                    borderColor: '#E65A26',
+                    data: [
+                        40, 24, 15, 18, 10, 6, 20, 37, 12, 27, 14, 3
+                    ],
+                }, {
+                    label: 'Direct Sale',
+                    fill: false,
+                    backgroundColor: '#537bc4',
+                    borderColor: '#537bc4',
+                    data: [
+                        24, 35, 20, 10, 16, 27, 39, 40, 27, 10, 9, 29
+                    ],
+                }, {
+                    label: 'Branch',
+                    fill: false,
+                    backgroundColor: '#acc236',
+                    borderColor: '#acc236',
+                    data: [
+                        3, 40, 24, 35, 16, 19, 29, 35, 10, 35, 6, 14
+                    ],
+                }]
+            },
+            options: {
+                responsive: true,
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Month'
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Value'
+                        }
+                    }]
+                }
+            }
+        });
+
+        var spBarChart = new Chart(document.getElementById("SpecificProducer"), {
+            "type": "bar",
+            "data": {
+                "labels": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                "datasets": [{
+                    "label": 'Renewed',
+                    "backgroundColor": '#E65A26',
+                    "borderColor": '#E65A26',
+                    "borderWidth": 1,
+                    "data": [
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor()
+                    ]
+                }, {
+                    "label": 'Available',
+                    "backgroundColor": '#537bc4',
+                    "borderColor": '#537bc4',
+                    "borderWidth": 1,
+                    "data": [
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor()
+                    ]
+                }]
+
+            },
+            "options": {
+                "scales": {
+                    "yAxes": [{
+                        "ticks": {
+                            "beginAtZero": true
+                        }
+                    }]
+                }
+            }
+        });
+        document.getElementById('randomizeData').addEventListener('click', function () {
+            spBarChart.data.datasets.forEach(function (dataset) {
+                dataset.data = dataset.data.map(function () {
+                    return randomScalingFactor();
+                });
+
+            });
+            spBarChart.update();
+        });
+    };
+</script>

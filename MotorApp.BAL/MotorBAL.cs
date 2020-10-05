@@ -253,6 +253,7 @@ namespace MotorApp.BAL
         {
             long returnCode = -1;
             lstInfo = new DashBoard();
+           
             using (TransactionScope transactionScope = new TransactionScope())
             {
                 try
@@ -316,7 +317,7 @@ namespace MotorApp.BAL
                 return lst;
             }
         }
-        public long GetUserReport(string name,out DashBoard lstInfo)
+        public long GetUserReport(string name, out DashBoard lstInfo)
         {
             long returnCode = -1;
             lstInfo = new DashBoard();
@@ -341,7 +342,7 @@ namespace MotorApp.BAL
         }
         public List<DataPoint> GetBarChart(int flag)
         {
-            
+
             List<DataPoint> lst = new List<DataPoint>();
             using (TransactionScope transactionScope = new TransactionScope())
             {
@@ -362,6 +363,32 @@ namespace MotorApp.BAL
                 return lst;
             }
         }
-        
+        public long GetMIDashBoard(dynamic lstInput, out DashBoard lstInfo)
+        {
+            long returnCode = -1;
+            lstInfo = new DashBoard();
+            using (TransactionScope transactionScope = new TransactionScope())
+            {
+                try
+                {
+
+                    returnCode = objMotorAppDAL.GetNewMIDashBoard(lstInput, out lstInfo);
+
+                   
+
+
+                    transactionScope.Complete();
+                    transactionScope.Dispose();
+
+                }
+                catch (Exception ex)
+                {
+                    transactionScope.Dispose();
+                    //  throw ex;
+                }
+
+                return returnCode;
+            }
+        }
     }
 }

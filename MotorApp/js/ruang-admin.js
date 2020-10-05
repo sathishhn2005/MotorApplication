@@ -82,4 +82,4 @@ $('.popover-dismiss').popover({
 
 var version = document.getElementById('version-MotorInsurance');
 
-version.innerHTML = "Version 1.0.1";
+version.innerText = "Version 1.0.1";
