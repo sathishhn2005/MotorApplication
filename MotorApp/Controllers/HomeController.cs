@@ -13,6 +13,7 @@ using System.Web.Routing;
 using System.Web.Services;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using System.Data;
 
 namespace MotorApp.Controllers
 {
@@ -25,6 +26,7 @@ namespace MotorApp.Controllers
         private List<IndividualModel> indiviModel;
         private List<DomesticModel> domesModel;
         private List<ProducerCodeMaster> lstProducerCodeMaster;
+        private List<Insurance> lstNewIns;
         private DashBoard lstInfo;
         string IsExists = string.Empty;
         static string U_Name = string.Empty;
@@ -36,7 +38,7 @@ namespace MotorApp.Controllers
         {
             if (!string.IsNullOrEmpty(U_Name))
             {
-                long returnCode = objMotorBAL.GetMasterViews(out motorModel, out travelModel, out indiviModel, out domesModel, out lstProducerCodeMaster);
+                long returnCode = objMotorBAL.GetMasterViews(out motorModel, out travelModel, out indiviModel, out domesModel, out lstProducerCodeMaster, out lstNewIns);
             }
 
 
@@ -120,7 +122,17 @@ namespace MotorApp.Controllers
         }
         public ActionResult IndexBI()
         {
-            return View("IndexBI");
+            //List<BIDashBoard> lstBIDB = new List<BIDashBoard>();
+            //try
+            //{
+            //    long returnCode = objMotorBAL.GetBIDB(out lstBIDB);
+            //}
+            //catch (Exception ex)
+            //{
+
+            //    throw;
+            //}
+            return View();
         }
 
         [HttpGet]
@@ -155,37 +167,38 @@ namespace MotorApp.Controllers
 
         }
         [HttpGet]
-        public ActionResult MasterDatabase(MotorModel objMotorModel)
+        public ActionResult MasterDatabase(Insurance objMotorModel)
         {
             ViewBag.RoleId = RoleId;
 
             string PolicyNo = objMotorModel.PolicyNo ?? "";
-            string AgentCode_BrokerCode = objMotorModel.AgentCode_BrokerCode ?? "";
-            string Branch = objMotorModel.Branch ?? "";
+            string divisionName = objMotorModel.DivisionName ?? "";
             string AssuredName = objMotorModel.AssuredName ?? "";
-            string Status = objMotorModel.Status ?? "";
+            string productName = objMotorModel.ProductName ?? "";
+            string instype = objMotorModel.InsType ?? "";
 
-            List<MotorModel> lst = new List<MotorModel>();
+            List<Insurance> lst = new List<Insurance>();
 
-            if (!string.IsNullOrEmpty(PolicyNo) || !string.IsNullOrEmpty(AgentCode_BrokerCode) || !string.IsNullOrEmpty(Branch) || !string.IsNullOrEmpty(AssuredName)
-                || !string.IsNullOrEmpty(Status))
+            if (!string.IsNullOrEmpty(PolicyNo) || !string.IsNullOrEmpty(divisionName) || !string.IsNullOrEmpty(productName) || !string.IsNullOrEmpty(AssuredName))
+
             {
                 if (RoleId.Equals(1))
-                    lst = motorModel.Where(x => x.PolicyNo == PolicyNo || x.AgentCode_BrokerCode == AgentCode_BrokerCode ||
-                                      x.Branch == Branch || x.AssuredName == AssuredName && x.Status == Status).OrderBy(x => x.MotorId).ToList();
+                    lst = lstNewIns.Where(x => x.PolicyNo == PolicyNo || x.DivisionName == divisionName ||
+                                      x.AssuredName == AssuredName || x.ProductName == productName || x.InsType == instype).OrderBy(x => x.InsuranceID).ToList();
                 else
-                    lst = motorModel.Where(x => x.PolicyNo == PolicyNo || x.AgentCode_BrokerCode == AgentCode_BrokerCode ||
-                                  x.Branch == Branch || x.AssuredName == AssuredName || x.Status == Status && x.AgentCode == U_Name).OrderBy(x => x.MotorId).ToList();
+                    lst = lstNewIns.Where(x => x.PolicyNo == PolicyNo || x.DivisionName == divisionName ||
+                                  x.ProductName == productName || x.AssuredName == AssuredName || x.InsType == instype).OrderBy(x => x.InsuranceID).ToList();
 
                 return View(lst);
             }
             else if (RoleId.Equals(1))
-                return View(motorModel);
+                return View(lstNewIns);
 
             else
-                return View(motorModel.Where(x => x.AgentCode == U_Name).OrderBy(x => x.MotorId));
+                return View(lstNewIns.Where(x => x.InsType == "Motor").OrderBy(x => x.InsuranceID));
 
 
+            //return View(lstNewIns.Where(x => x.InsType == "Motor").OrderBy(x => x.InsuranceID));
 
         }
         public ActionResult MasterDatabase()
@@ -526,16 +539,17 @@ namespace MotorApp.Controllers
             }
             return returnCode;
         }
+
         [HttpPost]
-        public long UpdateMotorIns(MotorModel model)
+        public long UpdateMotorIns(Insurance model)
         {
             long returnCode = 1;
             try
             {
-                if (model.SumInsured > 0 && model.RivisedSI > 0 && model.PremiumAmount > 0 && model.MotorId > 0 &&
-                    !string.IsNullOrEmpty(model.CustomerCode) && !string.IsNullOrEmpty(model.CustomerName))
+                if (model.RevisedSumInsured > 0 && model.GrossPremium > 0 && model.RenewalPremium > 0 && model.InsuranceID > 0)
                 {
-                    returnCode = objMotorBAL.UpdateMotorIns(model);
+                    returnCode = objMotorBAL.UpdateNewIns(model);
+                    //  returnCode = objMotorBAL.SaveNewIns(model);
                 }
                 else
                 {
@@ -632,21 +646,24 @@ namespace MotorApp.Controllers
         public ActionResult Edit(int MotorId)
         {
             ViewBag.RoleId = RoleId;
-            IList<MotorModel> motorList = new List<MotorModel>();
-            motorList = motorModel;
-            var std = motorList.Where(s => s.MotorId == MotorId).FirstOrDefault();
+            IList<Insurance> motorList = new List<Insurance>();
+            motorList = lstNewIns;
+            var std = motorList.Where(s => s.InsuranceID == MotorId).FirstOrDefault();
 
             return View("MotorInsurance", std);
         }
         [HttpGet]
-        public ActionResult EditModal(int MotorId)
+        public ActionResult EditModal(int InsId)
         {
 
-            IList<MotorModel> motorList = new List<MotorModel>();
-            motorList = motorModel;
+            //IList<MotorModel> motorList = new List<MotorModel>();
+            //motorList = motorModel;
 
-            var std = motorList.Where(s => s.MotorId == MotorId).FirstOrDefault();
+            //var std = motorList.Where(s => s.MotorId == MotorId).FirstOrDefault();
+            IList<Insurance> motorList = new List<Insurance>();
+            motorList = lstNewIns;
 
+            var std = motorList.Where(s => s.InsuranceID == InsId).FirstOrDefault();
 
             return Json(std, JsonRequestBehavior.AllowGet);
         }
@@ -908,6 +925,102 @@ namespace MotorApp.Controllers
             ViewBag.TNPRenewedMonthPremium = lstInfo.TNPRenewedMonthPremium;
             ViewBag.PercentPremiumRenewedMonth = lstInfo.PercentPremiumRenewedMonth;
 
+
+        }
+        [HttpPost]
+        public long InsertNewInsur(Insurance model)
+        {
+            long returnCode = 1;
+            try
+            {
+                returnCode = objMotorBAL.SaveNewIns(model);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return returnCode;
+        }
+        [HttpGet]
+        public JsonResult GetBIChartBoard()
+        {
+            List<BIDashBoard> lst = new List<BIDashBoard>();
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            long returnCode = objMotorBAL.GetBIDB(out lst);
+            if (lst.Count > 0)
+            {
+
+                dataPoints = (from item in lst
+
+                              select new DataPoint()
+                              {
+                                  y = item.MonthName,
+                                  a = item.Available,
+                                  b = item.Renewed,
+                                  BusinessType = item.BusinessType
+                              }).ToList();
+
+            }
+
+
+            if (!returnCode.Equals(1))
+            {
+                return Json(new
+                {
+                    agentList = dataPoints.Where(x => x.BusinessType == "Agent"),
+                    brokerList = dataPoints.Where(x => x.BusinessType == "Broker"),
+                    directList = dataPoints.Where(x => x.BusinessType == "Direct"),
+                    branchList = dataPoints.Where(x => x.BusinessType == "Branch")
+                }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new
+            {
+                agentList = dataPoints.Where(x => x.BusinessType == "Agent"),
+                brokerList = dataPoints.Where(x => x.BusinessType == "Broker"),
+                directList = dataPoints.Where(x => x.BusinessType == "Direct"),
+                branchList = dataPoints.Where(x => x.BusinessType == "Branch")
+            }, JsonRequestBehavior.AllowGet);
+
+        }
+        [HttpGet]
+        public JsonResult GetBIChartBoardProducerPerformance()
+        {
+            List<BIDashBoard> lst = new List<BIDashBoard>();
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            long returnCode = objMotorBAL.GetBIDB(out lst);
+            if (lst.Count > 0)
+            {
+
+                dataPoints = (from item in lst
+
+                              select new DataPoint()
+                              {
+                                  y = item.MonthName,
+                                  a = item.Available,
+                                  b = item.Renewed,
+                                  BusinessType = item.BusinessType
+                              }).ToList();
+
+            }
+
+
+            if (!returnCode.Equals(1))
+            {
+                return Json(new
+                {
+                    Agent = dataPoints.Where(x => x.BusinessType == "Agent"),
+                    Broker = dataPoints.Where(x => x.BusinessType == "Broker"),
+                    Direct = dataPoints.Where(x => x.BusinessType == "Direct"),
+                    Branch = dataPoints.Where(x => x.BusinessType == "Branch")
+                }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new
+            {
+                Agent = dataPoints.Where(x => x.BusinessType == "Agent"),
+                Broker = dataPoints.Where(x => x.BusinessType == "Broker"),
+                Direct = dataPoints.Where(x => x.BusinessType == "Direct"),
+                Branch = dataPoints.Where(x => x.BusinessType == "Branch")
+            }, JsonRequestBehavior.AllowGet);
 
         }
     }

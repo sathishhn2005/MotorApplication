@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BIDashBoard.cs" />
     <Compile Include="DataPoint.cs" />
     <Compile Include="DashBoard.cs" />
     <Compile Include="DomesticModel.cs" />

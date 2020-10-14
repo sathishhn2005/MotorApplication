@@ -29,5 +29,8 @@ namespace MotorApp.BusinessEntities
         public Nullable<int> b = null;
         [DataMember(Name = "c")]
         public Nullable<int> c = null;
+
+        [DataMember(Name = "BusinessType")]
+        public string BusinessType = "";
     }
 }

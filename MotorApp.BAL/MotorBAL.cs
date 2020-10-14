@@ -39,7 +39,7 @@ namespace MotorApp.BAL
         public long GetMasterViews(out List<MotorModel> lstMotorModel,
             out List<TravelModel> lstTravelModel,
             out List<IndividualModel> lstIndividualModel,
-            out List<DomesticModel> lstDomesticModel, out List<ProducerCodeMaster> lstProducerCodeMaster)
+            out List<DomesticModel> lstDomesticModel, out List<ProducerCodeMaster> lstProducerCodeMaster, out List<Insurance> lstNewIns)
         {
             long returnCode = -1;
 
@@ -47,7 +47,7 @@ namespace MotorApp.BAL
             {
                 try
                 {
-                    returnCode = objMotorAppDAL.GetMasterViews(out lstMotorModel, out lstTravelModel, out lstIndividualModel, out lstDomesticModel, out lstProducerCodeMaster);
+                    returnCode = objMotorAppDAL.GetMasterViews(out lstMotorModel, out lstTravelModel, out lstIndividualModel, out lstDomesticModel, out lstProducerCodeMaster, out lstNewIns);
                     transactionScope.Complete();
                     transactionScope.Dispose();
 
@@ -253,7 +253,7 @@ namespace MotorApp.BAL
         {
             long returnCode = -1;
             lstInfo = new DashBoard();
-           
+
             using (TransactionScope transactionScope = new TransactionScope())
             {
                 try
@@ -374,7 +374,7 @@ namespace MotorApp.BAL
 
                     returnCode = objMotorAppDAL.GetNewMIDashBoard(lstInput, out lstInfo);
 
-                   
+
 
 
                     transactionScope.Complete();
@@ -385,6 +385,94 @@ namespace MotorApp.BAL
                 {
                     transactionScope.Dispose();
                     //  throw ex;
+                }
+
+                return returnCode;
+            }
+        }
+        public long SaveNewIns(Insurance objMotorModal)
+        {
+            long returnCode = -1;
+
+            using (TransactionScope transactionScope = new TransactionScope())
+            {
+                try
+                {
+                    returnCode = objMotorAppDAL.SaveInsu(objMotorModal);
+                    transactionScope.Complete();
+                    transactionScope.Dispose();
+
+                }
+                catch (Exception ex)
+                {
+                    transactionScope.Dispose();
+                    throw ex;
+                }
+
+                return returnCode;
+            }
+        }
+        public long UpdateNewIns(Insurance objMotorModal)
+        {
+            long returnCode = -1;
+
+            using (TransactionScope transactionScope = new TransactionScope())
+            {
+                try
+                {
+                    returnCode = objMotorAppDAL.NewInsUpdate(objMotorModal);
+                    transactionScope.Complete();
+                    transactionScope.Dispose();
+
+                }
+                catch (Exception ex)
+                {
+                    transactionScope.Dispose();
+                    throw ex;
+                }
+
+                return returnCode;
+            }
+        }
+        public long GetBIDB(out List<BIDashBoard> lstBIDashBoard)
+        {
+            long returnCode = -1;
+
+            using (TransactionScope transactionScope = new TransactionScope())
+            {
+                try
+                {
+                    returnCode = objMotorAppDAL.GetBIDasbBoard(out lstBIDashBoard);
+                    transactionScope.Complete();
+                    transactionScope.Dispose();
+
+                }
+                catch (Exception ex)
+                {
+                    transactionScope.Dispose();
+                    throw ex;
+                }
+
+                return returnCode;
+            }
+        }
+        public long GetBIDBProdPerfo(out List<BIDashBoard> lstBIDashBoard)
+        {
+            long returnCode = -1;
+
+            using (TransactionScope transactionScope = new TransactionScope())
+            {
+                try
+                {
+                    returnCode = objMotorAppDAL.GetBIDasbBoardPF(out lstBIDashBoard);
+                    transactionScope.Complete();
+                    transactionScope.Dispose();
+
+                }
+                catch (Exception ex)
+                {
+                    transactionScope.Dispose();
+                    throw ex;
                 }
 
                 return returnCode;

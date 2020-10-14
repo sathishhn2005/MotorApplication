@@ -84,7 +84,7 @@
                     <span>Motor Insurance Masters</span>
                 </a>
             </li>
-            <li class="nav-item">
+            @*<li class="nav-item">
                 <a class="nav-link" href="MasterTravel">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Travel Insurance Masters</span>
@@ -101,7 +101,7 @@
                     <i class="fas fa-fw fa-users"></i>
                     <span>Domestic Insurance Masters</span>
                 </a>
-            </li>
+            </li>*@
             <li class="nav-item hide">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
                    aria-expanded="true" aria-controls="collapseBootstrap">
@@ -445,6 +445,7 @@
                         { label: "Policies renewed", value:  @ViewBag.NoOfPoRenewed },
                         { label: "Policies Lost", value:  @ViewBag.PolicyLost }
                     ];*@
+                
                 var $donutData = [
                         { label: "Total Policies to be renewed (2020)", value: @ViewBag.TNPYear },
                         { label: "Policies renewed", value:  @ViewBag.TNPRenewedYear },
@@ -477,7 +478,7 @@
             }(window.jQuery);
     </script>
 
-    
-    
+
+
 </body>
 </html>

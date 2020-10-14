@@ -1,9 +1,8 @@
-﻿@model IEnumerable<MotorApp.BusinessEntities.MotorModel>
+﻿@model IEnumerable<MotorApp.BusinessEntities.Insurance>
 @using MotorApp.BusinessEntities;
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Master Motor</h1>
     <ol class="breadcrumb my-2">
@@ -26,10 +25,9 @@
 
                             <div class="col-2">
                                 <input class="form-control form-control-sm  mb-3" name="PolicyNo" type="text" placeholder="Policy No">
-
                             </div>
                             <div class="col-2">
-                                <input class="form-control form-control-sm  mb-3" name="AgentCode_BrokerCode" type="text" placeholder="Producer Name">
+                                <input class="form-control form-control-sm  mb-3" name="DivisionName" type="text" placeholder="Division Name">
                             </div>
                             <div class="col-2">
                                 <input class="form-control form-control-sm  mb-3" name="AssuredName" type="text" placeholder="Assured Name">
@@ -37,21 +35,17 @@
 
 
                             <div class="col-2">
-                                <input class="form-control form-control-sm  mb-3" name="Branch" type="text" placeholder="Branch">
+                                <input class="form-control form-control-sm  mb-3" name="ProductName" type="text" placeholder="Product Name">
                             </div>
                             <div class="col-2">
-                                <select class="form-control form-control-sm" name="Status" required="required">
-                                    <option disabled selected> -- select an option -- </option>
-                                    <option>Completed</option>
-                                    <option>Dropped</option>
-                                    <option>OnHold</option>
-                                </select>
+                                <input class="form-control form-control-sm  mb-3" name="InsType" type="text" placeholder="Insurance Type">
                             </div>
+
                             <div class="col-2 text-center">
                                 @*<a>Search</a>*@
                                 @*<button class="btn btn-primary btn-sm" type="button">
-                                        <i class="fas fa-search fa-sm"></i> Search
-                                    </button>*@
+                    <i class="fas fa-search fa-sm"></i> Search
+                </button>*@
                                 <input class="btn btn-primary btn-sm" type="submit" value="Search" />
                             </div>
                         }
@@ -87,13 +81,13 @@
                 <table id="tblMotor" class="table align-items-center table-flush">
                     <tr>
                         <th>Policy No</th>
-                        <th>Producer Name</th>
-                        <th>Assured Name</th>
-                        <th>Mobile Number</th>
-                        <th>Branch</th>
+                        <th>Division Name</th>
+                      
+                        <th>Insurance Type</th>
+                        <th>Policy Start Date</th>
+                        <th>Policy End Date</th>
                         <th>Status</th>
                         <th>Actions</th>
-
                     </tr>
                     @if (Model.Count() == 0)
                     {
@@ -109,37 +103,38 @@
                     {
                         foreach (var item in Model)
                         {
-                            <tr>
-                                <td>@Html.DisplayFor(modelItem => item.PolicyNo)</td>
-                                <td>@Html.DisplayFor(modelItem => item.AgentCode_BrokerCode)</td>
-                                <td>@Html.DisplayFor(modelItem => item.AssuredName)</td>
-                                <td>@Html.DisplayFor(modelItem => item.MobileNo)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Branch)</td>
-                                @if (item.Status.Equals("Completed"))
-                                {
-                                    <td><span class="badge badge-success">@Html.DisplayFor(modelItem => item.Status)</span></td>
-                                }
-                                @if (item.Status.Equals("Dropped"))
-                                {
-                                    <td><span class="badge badge-danger">@Html.DisplayFor(modelItem => item.Status)</span></td>
-                                }
-                                @if (item.Status.Equals("OnHold"))
-                                {
-                                    <td><span class="badge badge-info">@Html.DisplayFor(modelItem => item.Status)</span></td>
-                                }
-                                @if (item.Status.Equals(""))
-                                {
-                                    <td><span class="badge badge-info"></span></td>
-                                }
-                                <td class="d-flex flex-row align-items-center justify-content-between">
-                                    <i class="fas fa-eye pointer" aria-hidden="true" data-toggle="modal"
-                                       data-target="#myModal" onclick="renewal(@item.MotorId)">
-                                    </i>
-                                    @*<i class="fas fa-eye pointer" aria-hidden="true" data-toggle="modal"
-                                        data-target="#myModal"></i>*@
-                                    <a href="Edit?MotorID=@item.MotorId"><i class="fas fa-pencil-alt pointer" aria-hidden="true"></i></a>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.PolicyNo)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DivisionName)</td>
+                            
+                            <td>@Html.DisplayFor(modelItem => item.InsType)</td>
+                            <td>@Html.DisplayFor(modelItem => item.PolicyFromDate)</td>
+                            <td>@Html.DisplayFor(modelItem => item.PolicyToDate)</td>
+                            @if (item.Status.Equals("Renewed"))
+                            {
+                                <td><span class="badge badge-success">@Html.DisplayFor(modelItem => item.Status)</span></td>
+                            }
+                            @if (item.Status.Equals("Lost"))
+                            {
+                                <td><span class="badge badge-danger">@Html.DisplayFor(modelItem => item.Status)</span></td>
+                            }
+                            @if (item.Status.Equals("Under process"))
+                            {
+                                <td><span class="badge badge-info">@Html.DisplayFor(modelItem => item.Status)</span></td>
+                            }
+                            @if (item.Status.Equals(""))
+                            {
+                                <td><span class="badge badge-info"></span></td>
+                            }
+                            <td class="d-flex flex-row align-items-center justify-content-between">
+                                <i class="fas fa-eye pointer" aria-hidden="true" data-toggle="modal"
+                                   data-target="#myModal" onclick="renewal(@item.InsuranceID)">
+                                </i>
+                                @*<i class="fas fa-eye pointer" aria-hidden="true" data-toggle="modal"
+            data-target="#myModal"></i>*@
+                                <a href="Edit?MotorID=@item.InsuranceID"><i class="fas fa-pencil-alt pointer" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
 
                         }
                     }
@@ -164,99 +159,151 @@
                     <div class="col-8 mx-auto">
                         <form id="formRenewal" class="form-horizontal">
                             <div class="form-group row mb-3">
-                                <input type="hidden" name="MotorId" id="Mid">
-                                <label for="inputEmail3" class="col-3 col-form-label">Customer Code</label>
+                                <input type="hidden" name="InsuranceID" id="InsuranceID">
+                                <label for="inputEmail3" class="col-3 col-form-label">Division Name</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" name="CustomerCode" required id="CustomerCode">
+                                    <input type="text" class="form-control form-control-sm" name="DivisionName" required id="DivisionName">
+
+
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Product Code</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" name="ProductCode" required id="ProductCode">
+
+
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Product Name</label>
+                                <div class="col-9">
+
+                                    <input type="text" class="form-control form-control-sm" name="ProductName" required id="ProductName">
+
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Business Type</label>
+                                <div class="col-9">
+
+                                    <input type="text" class="form-control form-control-sm" name="BusinessType" required id="BusinessType">
+
+
+
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Policy No</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" name="PolicyNo" required id="PolicyNo">
+
+
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Assured Name</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" name="AssuredName" required id="AssuredName">
+
+
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Assured Mobile</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" name="AssuredMobile" required id="AssuredMobile">
+
+
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Customer Name</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" name="CustomerName" id="CustomerName">
+                                    <input type="text" class="form-control form-control-sm" name="CustomerName" required id="CustomerName">
+
+
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Vehicle Type</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" name="VehicleType" id="VehicleType"
-                                           readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Vehicle Make</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" name="VehicleMake" id="VehicleMake"
-                                           readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Registration No</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" name="RegistrationNo" id="RegistrationNo"
-                                           readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Vehicle Year</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" name="VehicleYear" id="VehicleYear" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Engine No</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" name="EngineNo" id="EngineNo" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Chassis No</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" name="ChassisNo" id="ChassisNo"
-                                           readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Sum Insured</label>
+                                <label for="inputEmail3" class="col-3 col-form-label">Revised SumInsured</label>
                                 <div class="col-9">
                                     <div class="input-group input-group-sm">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">₹</span>
                                         </div>
-                                        <input type="text" class="form-control form-control-sm" name="SumInsured" id="SumInsured">
+
+                                        <input type="number" class="form-control form-control-sm" name="RevisedSumInsured" required id="RevisedSumInsured">
+
+
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Premium</label>
+                                <label for="inputEmail3" class="col-3 col-form-label">Gross Premium</label>
                                 <div class="col-9">
                                     <div class="input-group input-group-sm">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">₹</span>
                                         </div>
-                                        <input type="text" class="form-control form-control-sm" name="PremiumAmount" id="PremiumAmount">
+                                        <input type="number" class="form-control form-control-sm" name="GrossPremium" required id="GrossPremium">
+
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Revised SI(85%)</label>
+                                <label for="inputEmail3" class="col-3 col-form-label">Renewal Premium</label>
                                 <div class="col-9">
                                     <div class="input-group input-group-sm">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">₹</span>
                                         </div>
-                                        <input type="text" class="form-control form-control-sm" name="RivisedSI" id="RivisedSI">
+                                        <input type="number" class="form-control form-control-sm" name="RenewalPremium" required id="RenewalPremium">
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Source Code</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" name="SourceCode" required id="SourceCode">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Source Name</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" name="SourceName" required id="SourceName">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Customer Category</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" name="CustomerCategory" required id="CustomerCategory">
+                                </div>
+                            </div>
+                           
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Remarks</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" name="Remarks" required id="Remarks">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Marketing Executive</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" name="MarketingExecutive" required id="MarketingExecutive">
+                                </div>
+                            </div>
+
+
+
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Status</label>
                                 <div class="col-9">
                                     <select class="form-control form-control-sm" id="Status" name="Status" required="required">
                                         <option disabled selected> -- select an option -- </option>
-                                        <option>Completed</option>
-                                        <option>Dropped</option>
-                                        <option>OnHold</option>
+                                        <option>Renewed</option>
+                                        <option>Lost</option>
+                                        <option>Under process</option>
                                     </select>
                                 </div>
                             </div>
@@ -351,7 +398,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
-
 <script>
 
     $(document).ready(function () {
@@ -457,25 +503,55 @@
         // $('#myModal').modal('show');
         Id = MotorId;
         $.ajax({
-            url: '/Home/EditModal/?MotorId=' + MotorId, // The method name + paramater
+            url: '/Home/EditModal/?InsId=' + MotorId, // The method name + paramater
             success: function (data) {
 
-                $('#VehicleType').val(data.VehicleType)
-                $('#VehicleMake').val(data.MakeModel)
-                $('#RegistrationNo').val(data.RegistrationNo)
-                $('#VehicleYear').val(data.YearofManufacture)
-                $('#EngineNo').val(data.EngineNo)
-                $('#ChassisNo').val(data.ChassisNo)
-                $('#NoofPassengers').val(data.SeatingCapacity)
-                $('#GEO').val(data.GeographicalArea)
-                $('#Mid').val(data.MotorId)
-                $('#SumInsured').val(data.SumInsured)
-                $('#PremiumAmount').val(data.PremiumAmount)
-                $('#RivisedSI').val(data.RivisedSI)
-                $('#CustomerCode').val(data.CustomerCode)
-                $('#CustomerName').val(data.CustomerName)
-                $('#Status').val(data.Status)
+                //$('#VehicleType').val(data.VehicleType)
+                //$('#VehicleMake').val(data.MakeModel)
+                //$('#RegistrationNo').val(data.RegistrationNo)
+                //$('#VehicleYear').val(data.YearofManufacture)
+                //$('#EngineNo').val(data.EngineNo)
+                //$('#ChassisNo').val(data.ChassisNo)
+                //$('#NoofPassengers').val(data.SeatingCapacity)
+                //$('#GEO').val(data.GeographicalArea)
+                //$('#Mid').val(data.MotorId)
+                //$('#SumInsured').val(data.SumInsured)
+                //$('#PremiumAmount').val(data.PremiumAmount)
+                //$('#RivisedSI').val(data.RivisedSI)
+                //$('#CustomerCode').val(data.CustomerCode)
+                //$('#CustomerName').val(data.CustomerName)
+                //$('#Status').val(data.Status)
+                $('#InsuranceID').val(data.InsuranceID);
+                $('#DivisionName').val(data.DivisionName);
+                $('#ProductCode').val(data.ProductCode);
+                $('#ProductName').val(data.ProductName);
 
+                $('#BusinessType').val(data.BusinessType);
+
+                $('#PolicyNo').val(data.PolicyNo);
+
+                $('#AssuredName').val(data.AssuredName);
+
+                $('#AssuredMobile').val(data.AssuredMobile);
+
+                $('#CustomerName').val(data.CustomerName);
+
+                $('#SourceCode').val(data.SourceCode);
+
+                $('#SourceName').val(data.SourceName);
+
+                $('#CustomerCategory').val(data.CustomerCategory);
+               
+
+                $('#GrossPremium').val(data.GrossPremium);
+
+                $('#RevisedSumInsured').val(data.RevisedSumInsured);
+
+                $('#RenewalPremium').val(data.RenewalPremium);
+
+                $('#MarketingExecutive').val(data.MarketingExecutive);
+
+                $('#Remarks').val(data.Remarks);
 
                 // $('#myModal').html(data); // This should be an empty div where you can inject your new html (the partial view)
             }

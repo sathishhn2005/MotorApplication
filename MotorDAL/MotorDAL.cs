@@ -135,7 +135,7 @@ namespace MotorApp.DAL
             return returnCode;
         }
         public long GetMasterViews(out List<MotorModel> lstMotorModel, out List<TravelModel> lstTravelModel, out List<IndividualModel> lstIndividualModel,
-            out List<DomesticModel> lstDomesticModel, out List<ProducerCodeMaster> lstProducerCodeMaster)
+            out List<DomesticModel> lstDomesticModel, out List<ProducerCodeMaster> lstProducerCodeMaster, out List<Insurance> lstNewIns)
         {
             long returnCode = -1;
             lstMotorModel = new List<MotorModel>();
@@ -143,6 +143,7 @@ namespace MotorApp.DAL
             lstIndividualModel = new List<IndividualModel>();
             lstDomesticModel = new List<DomesticModel>();
             lstProducerCodeMaster = new List<ProducerCodeMaster>();
+            lstNewIns = new List<Insurance>();
 
             try
             {
@@ -427,6 +428,43 @@ namespace MotorApp.DAL
                                                      ProducerName = dr["ProducerName"].ToString(),
                                                  }).ToList();
                     }
+                    if (ds.Tables[5].Rows.Count > 0)
+                    {
+                        //DTtoListConverter.ConvertTo(ds.Tables[5], out lstNewIns);
+                        lstNewIns = (from DataRow dr in ds.Tables[5].Rows
+                                     select new Insurance()
+                                     {
+                                         InsuranceID = Convert.ToInt64(dr["InsuranceID"]),
+                                         DivisionName = dr["DivisionName"].ToString(),
+                                         ProductCode = dr["ProductCode"].ToString(),
+                                         ProductName = dr["ProductName"].ToString(),
+                                         BusinessType = dr["BusinessType"].ToString(),
+
+                                         PolicyNo = dr["PolicyNo"].ToString(),
+                                         AssuredName = dr["AssuredName"].ToString(),
+                                         AssuredMobile = dr["AssuredMobile"].ToString(),
+                                         CustomerName = dr["CustomerName"].ToString(),
+                                         SourceCode = dr["SourceCode"].ToString(),
+
+                                         SourceName = dr["SourceName"].ToString(),
+                                         CustomerCategory = dr["CustomerCategory"].ToString(),
+                                         PolicyFromDate = Convert.ToDateTime(dr["PolicyFromDate"]),
+                                         PolicyToDate = Convert.ToDateTime(dr["PolicyToDate"]),
+                                         GrossPremium = Convert.ToInt64(dr["GrossPremium"]),
+
+                                         DivisionCode = dr["DivnCode"].ToString(),
+                                         CustomerCode = dr["CustomerCode"].ToString(),
+                                         Charges = Convert.ToInt64(dr["Charges"]),
+                                         Status = dr["Status"].ToString(),
+                                         InsType = dr["InsType"].ToString(),
+
+                                         RevisedSumInsured = Convert.ToInt64(dr["RevisedSumInsured"]),
+                                         RenewalPremium = Convert.ToInt64(dr["RenewalPremium"]),
+                                         MarketingExecutive = dr["MarketingExecutive"].ToString(),
+                                         Remarks = dr["Remarks"].ToString(),
+
+                                     }).ToList();
+                    }
                     returnCode = 1;
                 }
             }
@@ -685,10 +723,10 @@ namespace MotorApp.DAL
                         lstInfo.UserName = (string)reader.GetValue(20);
 
                         lstInfo.TotPoltoBeRenewed = 0;
-                        lstInfo.TotPolforRenewal  = 0;
+                        lstInfo.TotPolforRenewal = 0;
                         lstInfo.NoOfPoRenewed = 0;
                         lstInfo.PolicyLost = 0;
-                        
+
                         lstInfo.TotPoltoBeRenewedCM = 0;
                         lstInfo.TotPolforRenewalCM = 0;
 
@@ -1104,6 +1142,187 @@ namespace MotorApp.DAL
                 throw ex;
             }
             return lst;
+        }
+        public long SaveInsu(Insurance obj)
+        {
+            long returnCode = -1;
+            DataTable dt = new DataTable();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    dt = objUtility.ConvertIns(obj);
+                    if (dt.Rows.Count > 0)
+                    {
+                        SqlCommand cmd;
+                        cmd = new SqlCommand
+                        {
+                            CommandText = "SP_NewInsSave",
+                            CommandTimeout = 180,
+                            Connection = con,
+                            CommandType = CommandType.StoredProcedure
+                        };
+                        SqlParameter UDTparam = new SqlParameter
+                        {
+                            ParameterName = "@UDT_NewInsSave",
+                            Size = -1,
+                            Value = dt
+                        };
+                        cmd.Parameters.Add(UDTparam);
+                        returnCode = cmd.ExecuteNonQuery();
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return returnCode;
+        }
+        public long NewInsUpdate(Insurance objMotorModel)
+        {
+            long returnCode = -1;
+            DataTable dt = new DataTable();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    SqlCommand cmd;
+                    cmd = new SqlCommand
+                    {
+                        CommandText = "SP_InsUpdate",
+                        CommandTimeout = 180,
+                        Connection = con,
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    cmd.Parameters.AddWithValue("@CustomerCode", objMotorModel.CustomerCode ?? "");
+                    cmd.Parameters.AddWithValue("@CustomerName", objMotorModel.CustomerName ?? "");
+                    cmd.Parameters.AddWithValue("@PremiumAmount", objMotorModel.RenewalPremium);
+                    cmd.Parameters.AddWithValue("@RivisedSI", objMotorModel.RevisedSumInsured);
+                    cmd.Parameters.AddWithValue("@InsId", objMotorModel.InsuranceID);
+                    cmd.Parameters.AddWithValue("@GrossPremium", objMotorModel.GrossPremium);
+                    cmd.Parameters.AddWithValue("@Status", objMotorModel.Status ?? "");
+
+                    returnCode = cmd.ExecuteNonQuery();
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return returnCode;
+        }
+        public long GetBIDasbBoard(out List<BIDashBoard> lstBIDashBoard )
+        {
+            long returnCode = -1;
+            lstBIDashBoard = new List<BIDashBoard>();
+            try
+            {
+                DataSet ds = new DataSet();
+                string[] strBussType = { "Broker", "Direct", "Branch", "Agent" };
+                foreach (var item in strBussType)
+                {
+                    using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                    {
+                        con.Open();
+                        SqlCommand cmd = new SqlCommand
+                        {
+                            CommandText = "SP_GetBIDashBoard"
+                        };
+
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@BusinessType", item);
+
+                        SqlDataAdapter sdaAdapter = new SqlDataAdapter
+                        {
+                            SelectCommand = cmd
+                        };
+                        sdaAdapter.Fill(ds);
+                        //ds.Tables[0].Rows.Count;
+
+                        if (ds.Tables[0].Rows.Count > 0)
+                        {
+                            lstBIDashBoard = (from DataRow dr in ds.Tables[0].Rows
+                                             select new BIDashBoard()
+                                             {
+                                                 CalenderId = Convert.ToInt32(dr["CalenderId"]),
+                                                 Renewed = Convert.ToInt32(dr["Renewed"]),
+                                                 Available = Convert.ToInt32(dr["Available"]),
+                                                 MonthName = dr["MonthName"].ToString(),
+                                                 BusinessType = dr["BusinessType"].ToString(),
+                                             }).ToList();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return returnCode;
+        }
+        public long GetBIDasbBoardPF(out List<BIDashBoard> lstBIDashBoard)
+        {
+            long returnCode = -1;
+            lstBIDashBoard = new List<BIDashBoard>();
+            try
+            {
+                DataSet ds = new DataSet();
+                string[] strBussType = { "Broker", "Direct", "Branch", "Agent" };
+                foreach (var item in strBussType)
+                {
+                    using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                    {
+                        con.Open();
+                        SqlCommand cmd = new SqlCommand
+                        {
+                            CommandText = "SP_GetBIDBProducerPerformance"
+                        };
+
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@BusinessType", item);
+
+                        SqlDataAdapter sdaAdapter = new SqlDataAdapter
+                        {
+                            SelectCommand = cmd
+                        };
+                        sdaAdapter.Fill(ds);
+                        //ds.Tables[0].Rows.Count;
+
+                        if (ds.Tables[0].Rows.Count > 0)
+                        {
+                            lstBIDashBoard = (from DataRow dr in ds.Tables[0].Rows
+                                              select new BIDashBoard()
+                                              {
+                                                  CalenderId = Convert.ToInt32(dr["CalenderId"]),
+                                                  Renewed = Convert.ToInt32(dr["Renewed"]),
+                                                  Available = Convert.ToInt32(dr["Available"]),
+                                                  MonthName = dr["MonthName"].ToString(),
+                                                  BusinessType = dr["BusinessType"].ToString(),
+                                              }).ToList();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return returnCode;
         }
     }
 }

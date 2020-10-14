@@ -485,5 +485,80 @@ namespace MotorApp.Utilities
             }
             
         }
+        public DataTable ConvertIns(Insurance _objMotorIns)
+        {
+            try
+            {
+                DataTable _dt = new DataTable();
+                _dt.Columns.Add("DivisionCode", typeof(string));
+                _dt.Columns.Add("DivisionName", typeof(string));
+                _dt.Columns.Add("ProductCode", typeof(string));
+                _dt.Columns.Add("ProductName", typeof(string));
+                _dt.Columns.Add("BusinessType", typeof(string));
+
+                _dt.Columns.Add("PolicyNo", typeof(string));
+                _dt.Columns.Add("AssuredName", typeof(string));
+                _dt.Columns.Add("AssuredMobile", typeof(string));
+                _dt.Columns.Add("CustomerName", typeof(string));
+                _dt.Columns.Add("SourceCode", typeof(string));
+
+                _dt.Columns.Add("SourceName", typeof(string));
+                _dt.Columns.Add("CustomerCategory", typeof(string));
+                _dt.Columns.Add("PolicyFromDate", typeof(DateTime));
+                _dt.Columns.Add("PolicyToDate", typeof(DateTime));
+                _dt.Columns.Add("GrossPremium", typeof(string));
+
+                _dt.Columns.Add("RevisedSumInsured", typeof(long));
+                _dt.Columns.Add("RenewalPremium", typeof(long));
+                _dt.Columns.Add("MarketingExecutive", typeof(string));
+                _dt.Columns.Add("Remarks", typeof(string));
+                _dt.Columns.Add("Status", typeof(string));
+
+                _dt.Columns.Add("CustomerCode", typeof(string));
+                _dt.Columns.Add("Charges", typeof(long));
+                _dt.Columns.Add("InsType", typeof(string));
+
+                DataRow _dr;
+                _dr = _dt.NewRow();
+                _dr["DivisionCode"] = _objMotorIns.DivisionCode;
+                _dr["DivisionName"] = _objMotorIns.DivisionName;
+                _dr["ProductCode"] = _objMotorIns.ProductCode;
+                _dr["ProductName"] = _objMotorIns.ProductName;
+                _dr["BusinessType"] = _objMotorIns.BusinessType;
+
+                _dr["PolicyNo"] = _objMotorIns.PolicyNo;
+                _dr["AssuredName"] = _objMotorIns.AssuredName;
+                _dr["AssuredMobile"] = _objMotorIns.AssuredMobile;
+                _dr["CustomerName"] = _objMotorIns.CustomerName;
+                _dr["SourceCode"] = _objMotorIns.SourceCode;
+
+                _dr["SourceName"] = _objMotorIns.SourceName;
+                _dr["CustomerCategory"] = _objMotorIns.CustomerCategory;
+                _dr["PolicyFromDate"] = _objMotorIns.PolicyFromDate;
+                _dr["PolicyToDate"] = _objMotorIns.PolicyToDate;
+                _dr["GrossPremium"] = _objMotorIns.GrossPremium;
+
+                _dr["RevisedSumInsured"] = _objMotorIns.RevisedSumInsured;
+                _dr["RenewalPremium"] = _objMotorIns.RenewalPremium;
+                _dr["MarketingExecutive"] = _objMotorIns.MarketingExecutive;
+                _dr["Remarks"] = _objMotorIns.Remarks;
+                _dr["Status"] = _objMotorIns.Status;
+
+
+                _dr["CustomerCode"] = _objMotorIns.CustomerCode;
+                _dr["Charges"] = _objMotorIns.Charges;
+                _dr["InsType"] = _objMotorIns.InsType;
+
+
+                _dt.Rows.Add(_dr);
+
+                return _dt;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
