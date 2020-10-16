@@ -122,6 +122,7 @@ namespace MotorApp.Controllers
         }
         public ActionResult IndexBI()
         {
+            ViewBag.RoleId = RoleId;
             //List<BIDashBoard> lstBIDB = new List<BIDashBoard>();
             //try
             //{
@@ -179,7 +180,7 @@ namespace MotorApp.Controllers
 
             List<Insurance> lst = new List<Insurance>();
 
-            if (!string.IsNullOrEmpty(PolicyNo) || !string.IsNullOrEmpty(divisionName) || !string.IsNullOrEmpty(productName) || !string.IsNullOrEmpty(AssuredName))
+            if (!string.IsNullOrEmpty(PolicyNo) || !string.IsNullOrEmpty(divisionName) || !string.IsNullOrEmpty(productName) || !string.IsNullOrEmpty(AssuredName) || !string.IsNullOrEmpty(instype))
 
             {
                 if (RoleId.Equals(1))
@@ -1021,6 +1022,46 @@ namespace MotorApp.Controllers
                 Direct = dataPoints.Where(x => x.BusinessType == "Direct"),
                 Branch = dataPoints.Where(x => x.BusinessType == "Branch")
             }, JsonRequestBehavior.AllowGet);
+
+        }
+        [HttpGet]
+        public JsonResult GetYearWiseReportMIDB(string BusinessType)
+        {
+
+            DataSet ds = objMotorBAL.GetYearWiseDashBoard(BusinessType);
+            JsonConvert.SerializeObject(new { item = ds.Tables[0] });
+
+            return Json(new
+            {
+                lst = JsonConvert.SerializeObject(new { item = ds.Tables[0] }),
+            }, JsonRequestBehavior.AllowGet);
+
+        }
+        [HttpGet]
+        public JsonResult GetSpecificProducerDBChart(string ProducerName, string BusinessType)
+        {
+            List<BIDashBoard> lst = new List<BIDashBoard>();
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            long returnCode = objMotorBAL.GetSProducerDBChart(out lst, BusinessType, ProducerName);
+            if (lst.Count > 0)
+            {
+
+                dataPoints = (from item in lst
+
+                              select new DataPoint()
+                              {
+                                  y = item.MonthName,
+                                  a = item.Available,
+                                  b = item.Renewed,
+
+                              }).ToList();
+
+            }
+            return Json(new
+            {
+                lst = dataPoints
+            }, JsonRequestBehavior.AllowGet);
+
 
         }
     }

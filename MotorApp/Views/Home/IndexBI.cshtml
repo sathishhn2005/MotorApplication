@@ -7,7 +7,7 @@
                 <h6 class="m-0 font-weight-bold text-primary">Broker Renewed vs Available</h6>
                 <div class="">
                     <label class="font-weight-bold mr-2">Yearly</label>
-                    <input type="checkbox" data-toggle="toggle" data-size="xs">
+                    <input type="checkbox" id="broker" data-toggle="toggle" data-size="xs">
                 </div>
             </div>
             <div class="card-body">
@@ -23,7 +23,7 @@
                 <h6 class="m-0 font-weight-bold text-primary">Agents Renewed VS Available </h6>
                 <div class="">
                     <label class="font-weight-bold mr-2">Yearly</label>
-                    <input type="checkbox" data-toggle="toggle" data-size="xs">
+                    <input type="checkbox" id="agent" data-toggle="toggle" data-size="xs">
                 </div>
             </div>
             <div class="card-body">
@@ -39,7 +39,7 @@
                 <h6 class="m-0 font-weight-bold text-primary">Direct Sales Renewed VS Available</h6>
                 <div class="">
                     <label class="font-weight-bold mr-2">Yearly</label>
-                    <input type="checkbox" data-toggle="toggle" data-size="xs">
+                    <input type="checkbox" id="direct" data-toggle="toggle" data-size="xs">
                 </div>
             </div>
             <div class="card-body">
@@ -55,7 +55,7 @@
                 <h6 class="m-0 font-weight-bold text-primary">Branch Renewed VS Available </h6>
                 <div class="">
                     <label class="font-weight-bold mr-2">Yearly</label>
-                    <input type="checkbox" data-toggle="toggle" data-size="xs">
+                    <input type="checkbox" id="branch" data-toggle="toggle" data-size="xs">
                 </div>
             </div>
             <div class="card-body">
@@ -69,10 +69,10 @@
         <div class="card mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">Producer's Performance </h6>
-                <div class="">
-                    <label class="font-weight-bold mr-2">Yearly</label>
-                    <input type="checkbox" data-toggle="toggle" data-size="xs">
-                </div>
+                @*<div class="">
+                        <label class="font-weight-bold mr-2">Yearly</label>
+                        <input type="checkbox" data-toggle="toggle" data-size="xs">
+                    </div>*@
             </div>
             <div class="card-body">
                 <canvas id="ProducerPerformance" height="100"></canvas>
@@ -86,15 +86,15 @@
                 <div class="flex-grow-1">
                     <form class="form-inline  d-flex flex-row align-items-center justify-content-around">
                         <label for="cars" class="col-form-label">Choose Role</label>
-                        <select class="form-control form-control-sm col-md-3">
+                        <select id="ddlRole" class="form-control form-control-sm col-md-3">
                             <option>--Select--</option>
                             <option>Broker</option>
                             <option>Agent</option>
-                            <option>DST member</option>
+                            <option>Direct</option>
                             <option>Branch</option>
                         </select>
                         <label for="cars" class="col-form-label">Choose Producer</label>
-                        <select class="form-control form-control-sm col-md-3">
+                        <select id="ddlProducer" class="form-control form-control-sm col-md-3">
                             <option>--Select--</option>
                             <option>BA001</option>
                             <option>BA818</option>
@@ -104,10 +104,10 @@
                         <button type="button" id="randomizeData" class="btn btn-primary btn-sm">Search</button>
                     </form>
                 </div>
-                <div class="">
-                    <label class="font-weight-bold mr-2">Yearly</label>
-                    <input type="checkbox" data-toggle="toggle" data-size="xs">
-                </div>
+                @*<div class="">
+                        <label class="font-weight-bold mr-2">Yearly</label>
+                        <input type="checkbox" data-toggle="toggle" data-size="xs">
+                    </div>*@
             </div>
             <div class="card-body">
                 <canvas id="SpecificProducer" height="100"></canvas>
@@ -116,6 +116,70 @@
     </div>
 </div>
 <script>
+
+    $('#branch').change(function () {
+        GetYearWiseReport('Branch');
+    });
+    $("#broker").on('change', function () {
+        if ($(this).is(':checked')) {
+            $(this).attr('value', 'true');
+            GetYearWiseReport('Broker');
+        } else {
+            $(this).attr('value', 'false');
+            setTimeout();
+        }
+
+    });
+    $("#agent").on('change', function () {
+        if ($(this).is(':checked')) {
+            $(this).attr('value', 'true');
+            GetYearWiseReport('Agent');
+        } else {
+            $(this).attr('value', 'false');
+            setTimeout();
+        }
+
+    });
+    $("#direct").on('change', function () {
+        if ($(this).is(':checked')) {
+            $(this).attr('value', 'true');
+            GetYearWiseReport('Direct');
+        } else {
+            $(this).attr('value', 'false');
+            setTimeout();
+        }
+
+    });
+    $("#branch").on('change', function () {
+        if ($(this).is(':checked')) {
+            $(this).attr('value', 'true');
+            GetYearWiseReport('Branch');
+        } else {
+            $(this).attr('value', 'false');
+            setTimeout();
+        }
+
+    });
+
+
+    function GetYearWiseReport(BussType) {
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: "GetYearWiseReportMIDB?BussType='" + BussType + "'",
+            data: { 'BusinessType': BussType },
+            dataType: "json",
+            success: function (Result) {
+                console.log(Result);
+                var res = JSON.parse(Result.lst);
+                console.log(res);
+
+            },
+            error: function (Result) {
+                alert("Error");
+            }
+        });
+    }
     setTimeout(function () {
         $.ajax({
             type: "GET",
@@ -204,22 +268,22 @@
                 var Branc = [];
                 var DirSale = [];
                 jQuery.each(Result.Agent, function (key, value) {
-                    console.log(key, value);
+
                     Agnt.push(value.b);
                     //write some code here to build the table? I'm just guessing
                 });
                 jQuery.each(Result.Broker, function (key, value) {
-                    console.log(key, value);
+
                     Brokr.push(value.b);
                     //write some code here to build the table? I'm just guessing
                 });
                 jQuery.each(Result.Direct, function (key, value) {
-                    console.log(key, value);
+
                     DirSale.push(value.b);
                     //write some code here to build the table? I'm just guessing
                 });
                 jQuery.each(Result.Branch, function (key, value) {
-                    console.log(key, value);
+
                     Branc.push(value.b);
                     //write some code here to build the table? I'm just guessing
                 });
@@ -359,13 +423,37 @@
             }
         });
         document.getElementById('randomizeData').addEventListener('click', function () {
-            spBarChart.data.datasets.forEach(function (dataset) {
-                dataset.data = dataset.data.map(function () {
-                    return randomScalingFactor();
-                });
+            var BussType = $("#ddlRole").val();
+            var ProducerName = $("#ddlProducer").val();
+            $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                url: "GetSpecificProducerDBChart",
+                data: { 'ProducerName': ProducerName, 'BusinessType': BussType, },
+                dataType: "json",
+                success: function (Result) {
+                    //console.log(Result.lst);
+                    var res = Result.lst;
+                    //console.log(res);
+                    spBarChart.data.datasets.forEach(function (res) {
+                        dataset.res = dataset.data.map(function () {
+                            return randomScalingFactor();
+                        });
 
+                    });
+                    spBarChart.update();
+                },
+                error: function (Result) {
+                    alert("Error");
+                }
             });
-            spBarChart.update();
+            //spBarChart.data.datasets.forEach(function (dataset) {
+            //    dataset.data = dataset.data.map(function () {
+            //        return randomScalingFactor();
+            //    });
+
+            //});
+            //spBarChart.update();
         });
     };
 </script>

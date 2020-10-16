@@ -84,7 +84,7 @@ namespace MotorApp.Utilities
 
                 DataRow _dr;
                 _dr = _dt.NewRow();
-                
+
                 _dr["QuotationNo"] = _objIndIns.QuotationNo;
                 _dr["PolicyNo"] = _objIndIns.PolicyNo;
                 _dr["IssueDate"] = _objIndIns.IssueDate;
@@ -374,8 +374,8 @@ namespace MotorApp.Utilities
                 _dr["Marketer"] = _objMotorIns.Marketer;
                 _dr["IssueFrom"] = _objMotorIns.IssueFrom;
                 _dr["VIPCustomer"] = _objMotorIns.VIPCustomer;
-                
-                
+
+
                 _dt.Rows.Add(_dr);
 
                 return _dt;
@@ -392,44 +392,44 @@ namespace MotorApp.Utilities
             try
             {
                 DataTable _dt = new DataTable();
-                _dt.Columns.Add("DraftNo",typeof(string));
-                _dt.Columns.Add("PolicyNo",typeof(string));
-                _dt.Columns.Add("IssueDate",typeof(DateTime));
-                _dt.Columns.Add("Branch",typeof(string));
-                _dt.Columns.Add("PolicyStartDate",typeof(DateTime));
-                _dt.Columns.Add("PolicyEndDate",typeof(DateTime));
-                _dt.Columns.Add("NoofYears",typeof(int));
-                _dt.Columns.Add("Marketer",typeof(string));
-                _dt.Columns.Add("Broker_AgentCode",typeof(string));
-                _dt.Columns.Add("IssueFrom",typeof(string));
-                _dt.Columns.Add("SpecialDiscount",typeof(string));
-                _dt.Columns.Add("Amount",typeof(long));
-                _dt.Columns.Add("AssuredName",typeof(string));
-                _dt.Columns.Add("AssuredName_Arabic",typeof(string));
-                _dt.Columns.Add("CivilID",typeof(long));
-                _dt.Columns.Add("PostBox",typeof(long));
-                _dt.Columns.Add("PostalCode",typeof(long));
-                _dt.Columns.Add("City",typeof(string));
-                _dt.Columns.Add("ResPhoneNo",typeof(long));
-                _dt.Columns.Add("OfficePhoneNo",typeof(long));
-                _dt.Columns.Add("MobileNo",typeof(long));
-                _dt.Columns.Add("HelperProfession",typeof(string));
-                _dt.Columns.Add("Gender",typeof(string));
-                _dt.Columns.Add("DateofBirth",typeof(DateTime));
-                _dt.Columns.Add("Age",typeof(int));
-                _dt.Columns.Add("PassportNo",typeof(long));
-                _dt.Columns.Add("Nationality",typeof(string));
-                _dt.Columns.Add("MazayaCard",typeof(string));
-                _dt.Columns.Add("SameasHouseMaidAddress",typeof(string));
-                _dt.Columns.Add("Sponsor_ProposerName",typeof(string));
-                _dt.Columns.Add("SponsorPostBox",typeof(long));
-                _dt.Columns.Add("SponsorPostalCode",typeof(long));
-                _dt.Columns.Add("SponsorCity",typeof(string));
-                _dt.Columns.Add("SponsorMobileNo",typeof(long));
-                _dt.Columns.Add("SponsorOfficePhone",typeof(long));
-                _dt.Columns.Add("SponsorNationality",typeof(string));
-                _dt.Columns.Add("VIPCustomer",typeof(string));
-                _dt.Columns.Add("Email",typeof(string));
+                _dt.Columns.Add("DraftNo", typeof(string));
+                _dt.Columns.Add("PolicyNo", typeof(string));
+                _dt.Columns.Add("IssueDate", typeof(DateTime));
+                _dt.Columns.Add("Branch", typeof(string));
+                _dt.Columns.Add("PolicyStartDate", typeof(DateTime));
+                _dt.Columns.Add("PolicyEndDate", typeof(DateTime));
+                _dt.Columns.Add("NoofYears", typeof(int));
+                _dt.Columns.Add("Marketer", typeof(string));
+                _dt.Columns.Add("Broker_AgentCode", typeof(string));
+                _dt.Columns.Add("IssueFrom", typeof(string));
+                _dt.Columns.Add("SpecialDiscount", typeof(string));
+                _dt.Columns.Add("Amount", typeof(long));
+                _dt.Columns.Add("AssuredName", typeof(string));
+                _dt.Columns.Add("AssuredName_Arabic", typeof(string));
+                _dt.Columns.Add("CivilID", typeof(long));
+                _dt.Columns.Add("PostBox", typeof(long));
+                _dt.Columns.Add("PostalCode", typeof(long));
+                _dt.Columns.Add("City", typeof(string));
+                _dt.Columns.Add("ResPhoneNo", typeof(long));
+                _dt.Columns.Add("OfficePhoneNo", typeof(long));
+                _dt.Columns.Add("MobileNo", typeof(long));
+                _dt.Columns.Add("HelperProfession", typeof(string));
+                _dt.Columns.Add("Gender", typeof(string));
+                _dt.Columns.Add("DateofBirth", typeof(DateTime));
+                _dt.Columns.Add("Age", typeof(int));
+                _dt.Columns.Add("PassportNo", typeof(long));
+                _dt.Columns.Add("Nationality", typeof(string));
+                _dt.Columns.Add("MazayaCard", typeof(string));
+                _dt.Columns.Add("SameasHouseMaidAddress", typeof(string));
+                _dt.Columns.Add("Sponsor_ProposerName", typeof(string));
+                _dt.Columns.Add("SponsorPostBox", typeof(long));
+                _dt.Columns.Add("SponsorPostalCode", typeof(long));
+                _dt.Columns.Add("SponsorCity", typeof(string));
+                _dt.Columns.Add("SponsorMobileNo", typeof(long));
+                _dt.Columns.Add("SponsorOfficePhone", typeof(long));
+                _dt.Columns.Add("SponsorNationality", typeof(string));
+                _dt.Columns.Add("VIPCustomer", typeof(string));
+                _dt.Columns.Add("Email", typeof(string));
 
                 DataRow _dr;
                 _dr = _dt.NewRow();
@@ -483,7 +483,7 @@ namespace MotorApp.Utilities
             {
                 throw ex;
             }
-            
+
         }
         public DataTable ConvertIns(Insurance _objMotorIns)
         {
@@ -517,6 +517,7 @@ namespace MotorApp.Utilities
                 _dt.Columns.Add("CustomerCode", typeof(string));
                 _dt.Columns.Add("Charges", typeof(long));
                 _dt.Columns.Add("InsType", typeof(string));
+                _dt.Columns.Add("ProducerName", typeof(string));
 
                 DataRow _dr;
                 _dr = _dt.NewRow();
@@ -548,6 +549,7 @@ namespace MotorApp.Utilities
                 _dr["CustomerCode"] = _objMotorIns.CustomerCode;
                 _dr["Charges"] = _objMotorIns.Charges;
                 _dr["InsType"] = _objMotorIns.InsType;
+                _dr["ProducerName"] = _objMotorIns.ProducerName;
 
 
                 _dt.Rows.Add(_dr);
@@ -560,5 +562,37 @@ namespace MotorApp.Utilities
                 throw ex;
             }
         }
+        //public DataTable ConvertNewInsBulkUpload( lstIns)
+        //{
+        //    DataTable _dt = new DataTable();
+        //    _dt.Columns.Add("UserId", typeof(int));
+        //    _dt.Columns.Add("ProductId", typeof(long));
+        //    _dt.Columns.Add("ProductName", typeof(string));
+        //    _dt.Columns.Add("ProductPrice", typeof(long));
+        //    _dt.Columns.Add("Quantity", typeof(int));
+        //    _dt.Columns.Add("StartDate", typeof(DateTime));
+        //    _dt.Columns.Add("EndDate", typeof(DateTime));
+        //    _dt.Columns.Add("TotalAmount", typeof(long));
+        //    _dt.Columns.Add("AmountPaid", typeof(long));
+        //    _dt.Columns.Add("SubscriptionType", typeof(string));
+
+        //    DataRow _dr;
+        //    foreach (ProductSubscription item in _lstProdSubscription)
+        //    {
+        //        _dr = _dt.NewRow();
+        //        _dr["UserId"] = item.UserId;
+        //        _dr["ProductId"] = item.ProductId;
+        //        _dr["ProductName"] = item.ProductName;
+        //        _dr["ProductPrice"] = item.ProductPrice;
+        //        _dr["Quantity"] = item.Quantity;
+        //        _dr["StartDate"] = item.StartDate.ToString("yyyy/MM/dd");
+        //        _dr["EndDate"] = item.EndDate.ToString("yyyy/MM/dd");
+        //        _dr["TotalAmount"] = item.TotalAmount;
+        //        _dr["AmountPaid"] = item.AmountPaid;
+        //        _dr["SubscriptionType"] = item.SubscriptionType;
+        //        _dt.Rows.Add(_dr);
+        //    }
+        //    return _dt;
+        //}
     }
 }

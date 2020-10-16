@@ -61,6 +61,8 @@ namespace MotorApp.BusinessEntities
         public long Charges { get; set; }
         [Display(Name = "Insurance Type")]
         public string InsType { get; set; }
+        [Display(Name = "Producer Name")]
+        public string ProducerName { get; set; }
         public InssType InsuranceType { get; set; }
 
 

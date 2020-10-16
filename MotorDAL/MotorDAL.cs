@@ -16,6 +16,7 @@ namespace MotorApp.DAL
         public long BulkUploadMotor(string Extension, string filePath, int reqFrom, out int rowsCnt, out string fileMismatchErr)
         {
             long returnCode = -1;
+            reqFrom = 0;
             string conString = string.Empty;
             string sheetName = string.Empty;
             string sp_name = string.Empty;
@@ -41,6 +42,10 @@ namespace MotorApp.DAL
             {
                 sp_name = "SP_DomesticBulkUpload";
 
+            }
+            else
+            {
+                sp_name = "SP_InsBulkUpload";
             }
             try
             {
@@ -92,8 +97,8 @@ namespace MotorApp.DAL
                 {
                     IsFileMatch = true;
                 }
-                if (IsFileMatch)
-                {
+                //if (IsFileMatch)
+                //{
                     using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
                     {
                         con.Open();
@@ -110,7 +115,8 @@ namespace MotorApp.DAL
                             };
                             SqlParameter UDTparam = new SqlParameter
                             {
-                                ParameterName = "@UDT_MotorBulkUpload",
+                                //ParameterName = "@UDT_MotorBulkUpload",
+                                ParameterName = "@UDT_NewInsSave",
                                 Size = -1,
                                 Value = dt
                             };
@@ -119,11 +125,11 @@ namespace MotorApp.DAL
                         }
 
                     }
-                }
-                else
-                {
-                    fileMismatchErr = "File which you trying to upload is incorrect.!";
-                }
+                //}
+                //else
+                //{
+                //    fileMismatchErr = "File which you trying to upload is incorrect.!";
+                //}
 
             }
             catch (Exception ex)
@@ -1222,7 +1228,7 @@ namespace MotorApp.DAL
             }
             return returnCode;
         }
-        public long GetBIDasbBoard(out List<BIDashBoard> lstBIDashBoard )
+        public long GetBIDasbBoard(out List<BIDashBoard> lstBIDashBoard)
         {
             long returnCode = -1;
             lstBIDashBoard = new List<BIDashBoard>();
@@ -1254,14 +1260,14 @@ namespace MotorApp.DAL
                         if (ds.Tables[0].Rows.Count > 0)
                         {
                             lstBIDashBoard = (from DataRow dr in ds.Tables[0].Rows
-                                             select new BIDashBoard()
-                                             {
-                                                 CalenderId = Convert.ToInt32(dr["CalenderId"]),
-                                                 Renewed = Convert.ToInt32(dr["Renewed"]),
-                                                 Available = Convert.ToInt32(dr["Available"]),
-                                                 MonthName = dr["MonthName"].ToString(),
-                                                 BusinessType = dr["BusinessType"].ToString(),
-                                             }).ToList();
+                                              select new BIDashBoard()
+                                              {
+                                                  CalenderId = Convert.ToInt32(dr["CalenderId"]),
+                                                  Renewed = Convert.ToInt32(dr["Renewed"]),
+                                                  Available = Convert.ToInt32(dr["Available"]),
+                                                  MonthName = dr["MonthName"].ToString(),
+                                                  BusinessType = dr["BusinessType"].ToString(),
+                                              }).ToList();
                         }
                     }
                 }
@@ -1316,6 +1322,87 @@ namespace MotorApp.DAL
                         }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return returnCode;
+        }
+        public DataSet GetBIDasbBoardYearWise(string BusinessType)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = "SP_GetBIDashBoardYearWise"
+                    };
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+                    cmd.Parameters.AddWithValue("@BusinessType", BusinessType);
+
+                    SqlDataAdapter sdaAdapter = new SqlDataAdapter
+                    {
+                        SelectCommand = cmd
+                    };
+                    sdaAdapter.Fill(ds);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return ds;
+        }
+        public long GetSProducerDB(out List<BIDashBoard> lstBIDashBoard,string BusinessType,string ProducerName)
+        {
+            long returnCode = -1;
+            lstBIDashBoard = new List<BIDashBoard>();
+            try
+            {
+                DataSet ds = new DataSet();
+
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = "SP_GetSpecificBIDB"
+                    };
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+                    cmd.Parameters.AddWithValue("@BusinessType", BusinessType);
+                    cmd.Parameters.AddWithValue("@ProducerName", ProducerName);
+
+                    SqlDataAdapter sdaAdapter = new SqlDataAdapter
+                    {
+                        SelectCommand = cmd
+                    };
+                    sdaAdapter.Fill(ds);
+                    //ds.Tables[0].Rows.Count;
+
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        lstBIDashBoard = (from DataRow dr in ds.Tables[0].Rows
+                                          select new BIDashBoard()
+                                          {
+                                              CalenderId = Convert.ToInt32(dr["CalenderId"]),
+                                              Renewed = Convert.ToInt32(dr["Renewed"]),
+                                              Available = Convert.ToInt32(dr["Available"]),
+                                              MonthName = dr["MonthName"].ToString(),
+
+                                          }).ToList();
+                    }
+                }
+
             }
             catch (Exception ex)
             {

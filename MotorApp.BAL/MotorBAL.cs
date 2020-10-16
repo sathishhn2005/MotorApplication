@@ -6,6 +6,7 @@ using MotorApp.Utilities;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Caching;
+using System.Data;
 
 namespace MotorApp.BAL
 {
@@ -465,6 +466,49 @@ namespace MotorApp.BAL
                 try
                 {
                     returnCode = objMotorAppDAL.GetBIDasbBoardPF(out lstBIDashBoard);
+                    transactionScope.Complete();
+                    transactionScope.Dispose();
+
+                }
+                catch (Exception ex)
+                {
+                    transactionScope.Dispose();
+                    throw ex;
+                }
+
+                return returnCode;
+            }
+        }
+        public DataSet GetYearWiseDashBoard(string BussType)
+        {
+            DataSet ds = new DataSet();
+            using (TransactionScope transactionScope = new TransactionScope())
+            {
+                try
+                {
+                    ds = objMotorAppDAL.GetBIDasbBoardYearWise(BussType);
+                    transactionScope.Complete();
+                    transactionScope.Dispose();
+
+                }
+                catch (Exception ex)
+                {
+                    transactionScope.Dispose();
+                    throw ex;
+                }
+
+                return ds;
+            }
+        }
+        public long GetSProducerDBChart(out List<BIDashBoard> lstBIDashBoard, string BusinessType, string ProducerName)
+        {
+            long returnCode = -1;
+
+            using (TransactionScope transactionScope = new TransactionScope())
+            {
+                try
+                {
+                    returnCode = objMotorAppDAL.GetSProducerDB(out lstBIDashBoard,BusinessType,ProducerName);
                     transactionScope.Complete();
                     transactionScope.Dispose();
 
