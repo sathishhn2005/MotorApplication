@@ -4139,3 +4139,14 @@ body.sidebar-toggled footer.sticky-footer {
     color: #f3d238;
     font-weight: bold;
 }
+
+.primay-color {
+    color: #213991;
+    font-weight: bold;
+}
+.btn-circle{
+    border-radius: 50%;
+}
+.btn-large {
+    padding: 0.875rem 1.15rem;
+}

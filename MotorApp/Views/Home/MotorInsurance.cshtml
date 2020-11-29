@@ -1,5 +1,4 @@
 ﻿@model MotorApp.BusinessEntities.Insurance
-
 @{
     ViewBag.Title = "MotorInsurance";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -27,210 +26,177 @@
                     <div class="col-lg-12 mb-4">
                         <div class="card">
                             <div class="card-body">
-                                <div id="smartwizard">
-                                    <ul class="nav">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#step-1">
-                                                <strong>Step 1</strong> <br>Policy Details
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#step-2">
-                                                <strong>Step 2</strong> <br>Coverage Details
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#step-3">
-                                                <strong>Step 3</strong> <br>Vehicle Informations
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link " href="#step-4">
-                                                <strong>Step 4</strong> <br>Assured Informations
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content">
-                                        <form id="MotorForm">
-                                            <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
-                                                <div class="col-12">
-                                                    <div class="form-group row">
-                                                        @Html.LabelFor(model => model.DivisionCode, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                        <div class="col-md-5">
-                                                            @Html.EditorFor(model => model.DivisionCode, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        @Html.LabelFor(model => model.DivisionName, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                        <div class="col-md-5">
-                                                            @Html.EditorFor(model => model.DivisionName, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        @Html.LabelFor(model => model.ProductCode, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                        <div class="col-md-5">
-                                                            @Html.EditorFor(model => model.ProductCode, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        @Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                        <div class="col-md-5">
-                                                            @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        @Html.LabelFor(model => model.BusinessType, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                        <div class="col-md-5">
-                                                            @Html.EditorFor(model => model.BusinessType, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        @Html.LabelFor(model => model.PolicyNo, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                        <div class="col-md-5">
-                                                            @Html.EditorFor(model => model.PolicyNo, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        @Html.LabelFor(model => model.AssuredName, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                        <div class="col-md-5">
-                                                            @Html.EditorFor(model => model.AssuredName, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        @Html.LabelFor(model => model.AssuredMobile, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                        <div class="col-md-5">
-                                                            @Html.EditorFor(model => model.AssuredMobile, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                        <div class="col-md-5">
-                                                            @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        @Html.LabelFor(model => model.SourceCode, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                        <div class="col-md-5">
-                                                            @Html.EditorFor(model => model.SourceCode, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        @Html.LabelFor(model => model.SourceName, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                        <div class="col-md-5">
-                                                            @Html.EditorFor(model => model.SourceName, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        @Html.LabelFor(model => model.CustomerCategory, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                        <div class="col-md-5">
-                                                            @Html.EditorFor(model => model.CustomerCategory, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        @Html.LabelFor(model => model.PolicyFromDate, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                        <div class="col-md-5">
-                                                            @*@Html.EditorFor(model => model.PolicyFromDate, "{0:yyyy-MM-dd}", new { htmlAttributes = new { type = "date" , @class = "form-control form-control-sm" } })*@
-                                                            @Html.TextBoxFor(model => model.PolicyFromDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
-
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        @Html.LabelFor(model => model.PolicyToDate, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                        <div class="col-md-5">
-                                                            @Html.TextBoxFor(model => model.PolicyToDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
-
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        @Html.LabelFor(model => model.GrossPremium, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                        <div class="col-md-5">
-                                                            @Html.EditorFor(model => model.GrossPremium, new { htmlAttributes = new { type = "number", @class = "form-control form-control-sm" } })
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        @Html.LabelFor(model => model.RevisedSumInsured, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                        <div class="col-md-5">
-                                                            @Html.EditorFor(model => model.RevisedSumInsured, new { htmlAttributes = new { type = "number", @class = "form-control form-control-sm" } })
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        @Html.LabelFor(model => model.RenewalPremium, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                        <div class="col-md-5">
-                                                            @Html.EditorFor(model => model.RenewalPremium, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        @Html.LabelFor(model => model.MarketingExecutive, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                        <div class="col-md-5">
-                                                            @Html.EditorFor(model => model.MarketingExecutive, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        @Html.LabelFor(model => model.Remarks, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                        <div class="col-md-5">
-                                                            @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                        <div class="col-md-5">
-                                                            @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        @Html.LabelFor(model => model.CustomerCode, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                        <div class="col-md-5">
-                                                            @Html.EditorFor(model => model.CustomerCode, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        @Html.LabelFor(model => model.Charges, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                        <div class="col-md-5">
-                                                            @Html.EditorFor(model => model.Charges, new { htmlAttributes = new { type = "number", @class = "form-control form-control-sm" } })
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        @Html.LabelFor(model => model.InsType, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                        <div class="col-md-5">
-                                                            @Html.EditorFor(model => model.InsType, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                        </div>
-                                                    </div>
-
-                                                    @*<div class="form-group row">
-                                                            @Html.LabelFor(model => model.InsType, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                            <div class="col-md-5">
-                                                                @Html.DropDownListFor(m => m.InsuranceType,new SelectList(Enum.GetValues(),"Select Insurance Type")
-                                                            </div>
-                                                        </div>*@
-
+                                <form id="MotorForm">
+                                    <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
+                                        <div class="col-12">
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.DivisionCode, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    @Html.EditorFor(model => model.DivisionCode, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
                                                 </div>
                                             </div>
-
-                                        </form>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.DivisionName, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    @Html.EditorFor(model => model.DivisionName, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.ProductCode, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    @Html.EditorFor(model => model.ProductCode, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.BusinessType, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    @Html.EditorFor(model => model.BusinessType, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.PolicyNo, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    @Html.EditorFor(model => model.PolicyNo, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.AssuredName, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    @Html.EditorFor(model => model.AssuredName, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.AssuredMobile, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    @Html.EditorFor(model => model.AssuredMobile, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.SourceCode, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    @Html.EditorFor(model => model.SourceCode, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.SourceName, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    @Html.EditorFor(model => model.SourceName, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.CustomerCategory, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    @Html.EditorFor(model => model.CustomerCategory, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.PolicyFromDate, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    @*@Html.EditorFor(model => model.PolicyFromDate, "{0:yyyy-MM-dd}", new { htmlAttributes = new { type = "date" , @class = "form-control form-control-sm" } })*@
+                                                    @Html.TextBoxFor(model => model.PolicyFromDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.PolicyToDate, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    @Html.TextBoxFor(model => model.PolicyToDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.GrossPremium, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    @Html.EditorFor(model => model.GrossPremium, new { htmlAttributes = new { type = "number", @class = "form-control form-control-sm" } })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.RevisedSumInsured, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    @Html.EditorFor(model => model.RevisedSumInsured, new { htmlAttributes = new { type = "number", @class = "form-control form-control-sm" } })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.RenewalPremium, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    @Html.EditorFor(model => model.RenewalPremium, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.MarketingExecutive, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    @Html.EditorFor(model => model.MarketingExecutive, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.Remarks, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                                </div>
+                                            </div>
+                                            @*<div class="form-group row">
+                                                    @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                    <div class="col-md-5">
+                                                        @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                                    </div>
+                                                </div>*@
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    <select class="form-control form-control-sm" name="Status" id="Status">
+                                                        <option value="1">Lost</option>
+                                                        <option value="2">Renewed</option>
+                                                        <option value="3">Under process</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.CustomerCode, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    @Html.EditorFor(model => model.CustomerCode, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.Charges, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    @Html.EditorFor(model => model.Charges, new { htmlAttributes = new { type = "number", @class = "form-control form-control-sm" } })
+                                                </div>
+                                            </div>
+                                            @*<div class="form-group row">
+                                                    @Html.LabelFor(model => model.InsType, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                    <div class="col-md-5">
+                                                        @Html.EditorFor(model => model.InsType, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                                    </div>
+                                                </div>*@
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.InsType, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    <select class="form-control form-control-sm" name="InsType" id="Instype">
+                                                        <option value="1">Travel</option>
+                                                        <option value="2">Motor</option>
+                                                        <option value="3">Individual</option>
+                                                        <option value="4">Domestic</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
-                            <div class="card-footer"></div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="button" class="btn btn-secondary btn-sm waves-effect">Close</button>
+                                <button type="button" id="btnFinish" class="btn btn-primary btn-sm waves-effect waves-light">Submit</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -244,9 +210,7 @@
     $(document).ready(function () {
 
         //Toolbar extra buttons
-        var btnFinish = $('<button></button>').text('Finish')
-            .addClass('btn btn-info btn-sm')
-            .on('click', function () {
+        $('#btnFinish').on('click', function () {
                 var formData = $('#MotorForm').serialize();
                 $.ajax({
 
@@ -261,7 +225,7 @@
                         }
                     },
                     error: function () {
-                        // $("#lblMessage").html('Error while Registring the Company!.');
+                        alert('Record Could not be saved!');
                     }
                 })
             }
@@ -272,18 +236,7 @@
             .on('click', function () { $('#smartwizard').smartWizard("reset"); });
 
         // Smart Wizard
-        $('#smartwizard').smartWizard({
-            selected: 0,
-            theme: 'dots', // default, arrows, dots, progress
-            // darkMode: true,
-            transition: {
-                animation: 'slide-horizontal', // Effect on navigation, none/fade/slide-horizontal/slide-vertical/slide-swing
-            },
-            toolbarSettings: {
-                toolbarPosition: 'bottom', // both bottom
-                toolbarExtraButtons: [btnFinish, btnCancel]
-            }
-        });
+        
     });
 
 </script>

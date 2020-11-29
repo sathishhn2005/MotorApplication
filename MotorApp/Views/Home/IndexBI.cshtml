@@ -1,5 +1,13 @@
 ﻿@model IEnumerable<MotorApp.BusinessEntities.BIDashBoard>
 @{ ViewBag.Title = "BI Dashboard"; }
+<div class="d-sm-flex align-items-center justify-content-between mb-2">
+    <h1 class="h3 mb-0 text-gray-800">BI Dashboard</h1>
+
+    <ol class="breadcrumb my-2">
+        <li class="breadcrumb-item"><a href="./">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">BI Dashboard</li>
+    </ol>
+</div>
 <div class="row mt-3">
     <div class="col-xl-6 col-lg-6">
         <div class="card mb-4">
@@ -116,6 +124,12 @@
     </div>
 </div>
 <script>
+    var BrokerMorris;
+    var AgentMorris;
+    var DirectMorris;
+    var BranchMorris;
+    var SPBarAData = [];
+    var SPBarBData = [];
 
     $('#branch').change(function () {
         GetYearWiseReport('Branch');
@@ -126,7 +140,7 @@
             GetYearWiseReport('Broker');
         } else {
             $(this).attr('value', 'false');
-            setTimeout();
+            loadBroker();
         }
 
     });
@@ -136,7 +150,7 @@
             GetYearWiseReport('Agent');
         } else {
             $(this).attr('value', 'false');
-            setTimeout();
+            loadAgent();
         }
 
     });
@@ -146,7 +160,7 @@
             GetYearWiseReport('Direct');
         } else {
             $(this).attr('value', 'false');
-            setTimeout();
+            loadDirect();
         }
 
     });
@@ -156,7 +170,7 @@
             GetYearWiseReport('Branch');
         } else {
             $(this).attr('value', 'false');
-            setTimeout();
+            loadBranch();
         }
 
     });
@@ -173,6 +187,14 @@
                 console.log(Result);
                 var res = JSON.parse(Result.lst);
                 console.log(res);
+                if (BussType == 'Broker')
+                    BrokerMorris.setData(res.item);
+                else if (BussType == 'Agent')
+                    AgentMorris.setData(res.item);
+                else if (BussType == 'Direct')
+                    DirectMorris.setData(res.item);
+                else if (BussType == 'Branch')
+                    BranchMorris.setData(res.item);
 
             },
             error: function (Result) {
@@ -181,6 +203,28 @@
         });
     }
     setTimeout(function () {
+        loadBroker();
+        loadAgent();
+        loadDirect();
+        loadBranch();
+    }, 100);
+    function loadBroker() {
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: "GetBIChartBoard",
+            data: "{}",
+            dataType: "json",
+            success: function (Result) {
+                chartDataBroker = Result.brokerList;
+                BrokerMorris.setData(chartDataBroker);
+            },
+            error: function (Result) {
+                alert("Error");
+            }
+        });
+    }
+    function loadAgent() {
         $.ajax({
             type: "GET",
             contentType: "application/json; charset=utf-8",
@@ -189,73 +233,94 @@
             dataType: "json",
             success: function (Result) {
                 chartDataAgent = Result.agentList;
-                chartDataBroker = Result.brokerList;
-                chartDataDirect = Result.directList;
-                chartDataBranch = Result.branchList;
-
-                Morris.Bar({
-                    element: 'BrokerRenewed',
-                    data: chartDataBroker,
-                    xkey: 'y',
-                    ykeys: ['a', 'b'],
-                    labels: ['Policies Renewed', 'Available Policies'],
-                    gridLineColor: '#eef0f2',
-                    barSizeRatio: 0.4,
-                    xLabelAngle: 45,
-                    resize: true,
-                    hideHover: 'auto',
-                    barColors: ['#4dc9f6', '#f67019']
-                });
-                Morris.Bar({
-                    element: 'DirectRenewed',
-                    data: chartDataDirect,
-                    xkey: 'y',
-                    ykeys: ['a', 'b'],
-                    labels: ['Policies Renewed', 'Available Policies'],
-                    gridLineColor: '#eef0f2',
-                    barSizeRatio: 0.4,
-                    xLabelAngle: 45,
-                    resize: true,
-                    hideHover: 'auto',
-                    barColors: ['#acc236', '#166a8f']
-                });
-                Morris.Bar({
-                    element: 'BranchRenewed',
-                    data: chartDataBranch,
-                    xkey: 'y',
-                    ykeys: ['a', 'b'],
-                    labels: ['Policies Renewed', 'Available Policies'],
-                    gridLineColor: '#eef0f2',
-                    barSizeRatio: 0.4,
-                    xLabelAngle: 45,
-                    resize: true,
-                    hideHover: 'auto',
-                    barColors: ['#00a950', '#58595b']
-                });
-                Morris.Bar({
-                    element: 'AgentsRenewed',
-                    data: chartDataAgent,
-                    xkey: 'y',
-                    ykeys: ['a', 'b'],
-                    labels: ['Policies Renewed', 'Available Policies'],
-                    gridLineColor: '#eef0f2',
-                    barSizeRatio: 0.4,
-                    xLabelAngle: 45,
-                    resize: true,
-                    hideHover: 'auto',
-                    barColors: ['#f53794', '#537bc4']
-                });
+                AgentMorris.setData(chartDataAgent);
             },
             error: function (Result) {
                 alert("Error");
             }
         });
-
-
-
-
-    }, 100);
+    }
+    function loadDirect() {
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: "GetBIChartBoard",
+            data: "{}",
+            dataType: "json",
+            success: function (Result) {
+                chartDataDirect = Result.directList;
+                DirectMorris.setData(chartDataDirect);
+            },
+            error: function (Result) {
+                alert("Error");
+            }
+        });
+    }
+    function loadBranch() {
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: "GetBIChartBoard",
+            data: "{}",
+            dataType: "json",
+            success: function (Result) {
+                chartDataBranch = Result.branchList;
+                BranchMorris.setData(chartDataBranch);
+            },
+            error: function (Result) {
+                alert("Error");
+            }
+        });
+    }
     window.onload = function () {
+        BrokerMorris = Morris.Bar({
+            element: 'BrokerRenewed',
+            xkey: 'y',
+            ykeys: ['a', 'b'],
+            labels: ['Policies Renewed', 'Available Policies'],
+            gridLineColor: '#eef0f2',
+            barSizeRatio: 0.4,
+            xLabelAngle: 45,
+            resize: true,
+            hideHover: 'auto',
+            barColors: ['#4dc9f6', '#f67019']
+        });
+        AgentMorris = Morris.Bar({
+            element: 'AgentsRenewed',
+            xkey: 'y',
+            ykeys: ['a', 'b'],
+            labels: ['Policies Renewed', 'Available Policies'],
+            gridLineColor: '#eef0f2',
+            barSizeRatio: 0.4,
+            xLabelAngle: 45,
+            resize: true,
+            hideHover: 'auto',
+            barColors: ['#4dc9f6', '#f67019']
+        });
+        DirectMorris = Morris.Bar({
+            element: 'DirectRenewed',
+            xkey: 'y',
+            ykeys: ['a', 'b'],
+            labels: ['Policies Renewed', 'Available Policies'],
+            gridLineColor: '#eef0f2',
+            barSizeRatio: 0.4,
+            xLabelAngle: 45,
+            resize: true,
+            hideHover: 'auto',
+            barColors: ['#4dc9f6', '#f67019']
+        });
+        BranchMorris = Morris.Bar({
+            element: 'BranchRenewed',
+            xkey: 'y',
+            ykeys: ['a', 'b'],
+            labels: ['Policies Renewed', 'Available Policies'],
+            gridLineColor: '#eef0f2',
+            barSizeRatio: 0.4,
+            xLabelAngle: 45,
+            resize: true,
+            hideHover: 'auto',
+            barColors: ['#4dc9f6', '#f67019']
+        });
         $.ajax({
             type: "GET",
             contentType: "application/json; charset=utf-8",
@@ -264,6 +329,7 @@
             dataType: "json",
             success: function (Result) {
                 var Brokr = [];
+                var PPMonth = [];
                 var Agnt = [];
                 var Branc = [];
                 var DirSale = [];
@@ -275,6 +341,11 @@
                 jQuery.each(Result.Broker, function (key, value) {
 
                     Brokr.push(value.b);
+                    //write some code here to build the table? I'm just guessing
+                });
+                jQuery.each(Result.Broker, function (key, value) {
+
+                    PPMonth.push(value.y);
                     //write some code here to build the table? I'm just guessing
                 });
                 jQuery.each(Result.Direct, function (key, value) {
@@ -290,7 +361,7 @@
                 var myLine = new Chart(document.getElementById('ProducerPerformance'), {
                     type: 'line',
                     data: {
-                        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                        labels: PPMonth,
                         datasets: [{
                             label: 'Broker',
                             backgroundColor: '#8549ba',
@@ -365,63 +436,37 @@
             }
         });
 
-
-        var spBarChart = new Chart(document.getElementById("SpecificProducer"), {
-            "type": "bar",
-            "data": {
-                "labels": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-                "datasets": [{
-                    "label": 'Renewed',
-                    "backgroundColor": '#E65A26',
-                    "borderColor": '#E65A26',
-                    "borderWidth": 1,
-                    "data": [
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor()
-                    ]
-                }, {
-                    "label": 'Available',
-                    "backgroundColor": '#537bc4',
-                    "borderColor": '#537bc4',
-                    "borderWidth": 1,
-                    "data": [
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor(),
-                        randomScalingFactor()
-                    ]
-                }]
-
-            },
-            "options": {
-                "scales": {
-                    "yAxes": [{
-                        "ticks": {
-                            "beginAtZero": true
-                        }
+        function initspMorris(SPBarAData, SPBarBData) {
+            var spBarChart = new Chart(document.getElementById("SpecificProducer"), {
+                "type": "bar",
+                "data": {
+                    "labels": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                    "datasets": [{
+                        "label": 'Renewed',
+                        "backgroundColor": '#E65A26',
+                        "borderColor": '#E65A26',
+                        "borderWidth": 1,
+                        "data": SPBarAData,
+                    }, {
+                        "label": 'Available',
+                        "backgroundColor": '#537bc4',
+                        "borderColor": '#537bc4',
+                        "borderWidth": 1,
+                        "data": SPBarBData,
                     }]
+
+                },
+                "options": {
+                    "scales": {
+                        "yAxes": [{
+                            "ticks": {
+                                "beginAtZero": true
+                            }
+                        }]
+                    }
                 }
-            }
-        });
+            });
+        }
         document.getElementById('randomizeData').addEventListener('click', function () {
             var BussType = $("#ddlRole").val();
             var ProducerName = $("#ddlProducer").val();
@@ -434,14 +479,23 @@
                 success: function (Result) {
                     //console.log(Result.lst);
                     var res = Result.lst;
-                    //console.log(res);
-                    spBarChart.data.datasets.forEach(function (res) {
-                        dataset.res = dataset.data.map(function () {
-                            return randomScalingFactor();
-                        });
+                    var SPBarAData = []; jQuery.each(res, function (key, value) {
 
+                        SPBarAData.push(value.a);
                     });
-                    spBarChart.update();
+                    var SPBarBData = []; jQuery.each(res, function (key, value) {
+
+                        SPBarBData.push(value.b);
+                    });
+                    initspMorris(SPBarAData, SPBarBData);
+                    //console.log(res);
+                    //spBarChart.data.datasets.forEach(function (res) {
+                    //    dataset.res = dataset.data.map(function () {
+                    //        return randomScalingFactor();
+                    //    });
+
+                    //});
+                    //spBarChart.update();
                 },
                 error: function (Result) {
                     alert("Error");
@@ -457,3 +511,4 @@
         });
     };
 </script>
+@*SP_GetUserInsInfo*@

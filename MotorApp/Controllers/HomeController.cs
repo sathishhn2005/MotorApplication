@@ -33,6 +33,7 @@ namespace MotorApp.Controllers
         static long RoleId = 0;
         static int TypeId = 0;
         dynamic lstInput;
+        static bool IsUserLogin;
 
         public HomeController()
         {
@@ -52,88 +53,96 @@ namespace MotorApp.Controllers
         MotorBAL objMotorBAL = new MotorBAL();
         public ActionResult Index()
         {
-
-            string uname = Request.Form["ddlProducer"];
-            TypeId = 1;
-            if (string.IsNullOrEmpty(uname) || uname.Equals("Admin"))
+            //  IsUserLogin = true;
+            int IsLoggedIn = IsUserLoggedIn();
+            if (IsLoggedIn > 0)
             {
-                if (TempData["Input"] != null)
+                string uname = Request.Form["ddlProducer"];
+                TypeId = 1;
+                if (string.IsNullOrEmpty(uname) || uname.Equals("Admin"))
                 {
-                    lstInput = TempData["Input"];
+                    if (TempData["Input"] != null)
+                    {
+                        lstInput = TempData["Input"];
+                    }
+                    long returnCode = objMotorBAL.GetUserInsInfo(lstInput, out lstInfo);
+                    //long returnCode = objMotorBAL.GetMIDashBoard(lstInput, out lstInfo);
+                    ViewBag.RoleId = RoleId;
+
+                    ViewBag.TNPYear = lstInfo.TNPYear;
+                    ViewBag.TNPUnderProcessYear = lstInfo.TNPUnderProcessYear;
+                    ViewBag.TNPLostYear = lstInfo.TNPLostYear;
+                    ViewBag.TNPRenewedYear = lstInfo.TNPRenewedYear;
+                    ViewBag.PercentageRenewedYear = lstInfo.PercentageRenewedYear;
+
+                    ViewBag.TNPMonth = lstInfo.TNPMonth;
+                    ViewBag.TNPLostMonth = lstInfo.TNPLostMonth;
+                    ViewBag.TNPUnderProcessMonth = lstInfo.TNPUnderProcessMonth;
+                    ViewBag.TNPRenewedMonth = lstInfo.TNPRenewedMonth;
+                    ViewBag.PercentageRenewedMonth = lstInfo.PercentageRenewedMonth;
+
+                    ViewBag.TNPYearPremium = lstInfo.TNPYearPremium;
+                    ViewBag.TNPUPYearPremium = lstInfo.TNPUPYearPremium;
+                    ViewBag.TNPLostYearPremium = lstInfo.TNPLostYearPremium;
+                    ViewBag.TNPRenewedYearPremium = lstInfo.TNPRenewedYearPremium;
+                    ViewBag.PercentPremiumRenewedYear = lstInfo.PercentPremiumRenewedYear;
+
+                    ViewBag.TNPMonthPremium = lstInfo.TNPMonthPremium;
+                    ViewBag.TNPLostMonthPremium = lstInfo.TNPLostMonthPremium;
+                    ViewBag.TNPUPMonthPremium = lstInfo.TNPUPMonthPremium;
+                    ViewBag.TNPRenewedMonthPremium = lstInfo.TNPRenewedMonthPremium;
+                    ViewBag.PercentPremiumRenewedMonth = lstInfo.PercentPremiumRenewedMonth;
+
+
+                    //ViewBag.TotPoltoBeRenewed =  lstInfo.TotPoltoBeRenewed;
+                    //ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
+                    //ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
+                    //ViewBag.PolicyLost = lstInfo.PolicyLost;
+                    ViewBag.UserName = "";
+
+                    if (lstInfo != null)
+                    {
+                        U_Name = lstInfo.UserName;
+                        //    ViewBag.UserName = U_Name;
+                    }
+                    if (!returnCode.Equals(1))
+                    {
+
+                        return RedirectToAction("Login");
+                    }
+                    return View(lstInfo);
                 }
-                long returnCode = objMotorBAL.GetUserInsInfo(lstInput, out lstInfo);
-                //long returnCode = objMotorBAL.GetMIDashBoard(lstInput, out lstInfo);
-                ViewBag.RoleId = RoleId;
-
-                ViewBag.TNPYear = lstInfo.TNPYear;
-                ViewBag.TNPUnderProcessYear = lstInfo.TNPUnderProcessYear;
-                ViewBag.TNPLostYear = lstInfo.TNPLostYear;
-                ViewBag.TNPRenewedYear = lstInfo.TNPRenewedYear;
-                ViewBag.PercentageRenewedYear = lstInfo.PercentageRenewedYear;
-
-                ViewBag.TNPMonth = lstInfo.TNPMonth;
-                ViewBag.TNPLostMonth = lstInfo.TNPLostMonth;
-                ViewBag.TNPUnderProcessMonth = lstInfo.TNPUnderProcessMonth;
-                ViewBag.TNPRenewedMonth = lstInfo.TNPRenewedMonth;
-                ViewBag.PercentageRenewedMonth = lstInfo.PercentageRenewedMonth;
-
-                ViewBag.TNPYearPremium = lstInfo.TNPYearPremium;
-                ViewBag.TNPUPYearPremium = lstInfo.TNPUPYearPremium;
-                ViewBag.TNPLostYearPremium = lstInfo.TNPLostYearPremium;
-                ViewBag.TNPRenewedYearPremium = lstInfo.TNPRenewedYearPremium;
-                ViewBag.PercentPremiumRenewedYear = lstInfo.PercentPremiumRenewedYear;
-
-                ViewBag.TNPMonthPremium = lstInfo.TNPMonthPremium;
-                ViewBag.TNPLostMonthPremium = lstInfo.TNPLostMonthPremium;
-                ViewBag.TNPUPMonthPremium = lstInfo.TNPUPMonthPremium;
-                ViewBag.TNPRenewedMonthPremium = lstInfo.TNPRenewedMonthPremium;
-                ViewBag.PercentPremiumRenewedMonth = lstInfo.PercentPremiumRenewedMonth;
-
-
-                //ViewBag.TotPoltoBeRenewed =  lstInfo.TotPoltoBeRenewed;
-                //ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
-                //ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
-                //ViewBag.PolicyLost = lstInfo.PolicyLost;
-                ViewBag.UserName = "";
-
-                if (lstInfo != null)
+                else
                 {
-                    U_Name = lstInfo.UserName;
-                    //    ViewBag.UserName = U_Name;
-                }
-                if (!returnCode.Equals(1))
-                {
+                    long returnCode = objMotorBAL.GetUserReport(uname, out lstInfo);
+                    ViewBag.RoleId = RoleId;
 
-                    return RedirectToAction("Login");
+                    ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
+                    ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
+                    ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
+                    ViewBag.PolicyLost = lstInfo.PolicyLost;
+                    return View(lstInfo);
                 }
-                return View(lstInfo);
             }
             else
             {
-                long returnCode = objMotorBAL.GetUserReport(uname, out lstInfo);
-                ViewBag.RoleId = RoleId;
-
-                ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
-                ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
-                ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
-                ViewBag.PolicyLost = lstInfo.PolicyLost;
-                return View(lstInfo);
+                return RedirectToAction("Login");
             }
         }
         public ActionResult IndexBI()
         {
-            ViewBag.RoleId = RoleId;
-            //List<BIDashBoard> lstBIDB = new List<BIDashBoard>();
-            //try
-            //{
-            //    long returnCode = objMotorBAL.GetBIDB(out lstBIDB);
-            //}
-            //catch (Exception ex)
-            //{
+            int IsLoggedIn = IsUserLoggedIn();
+            if (IsLoggedIn > 0)
+            {
+                ViewBag.RoleId = RoleId;
 
-            //    throw;
-            //}
-            return View();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+
         }
 
         [HttpGet]
@@ -170,50 +179,68 @@ namespace MotorApp.Controllers
         [HttpGet]
         public ActionResult MasterDatabase(Insurance objMotorModel)
         {
-            ViewBag.RoleId = RoleId;
-
-            string PolicyNo = objMotorModel.PolicyNo ?? "";
-            string divisionName = objMotorModel.DivisionName ?? "";
-            string AssuredName = objMotorModel.AssuredName ?? "";
-            string productName = objMotorModel.ProductName ?? "";
-            string instype = objMotorModel.InsType ?? "";
-
-            List<Insurance> lst = new List<Insurance>();
-
-            if (!string.IsNullOrEmpty(PolicyNo) || !string.IsNullOrEmpty(divisionName) || !string.IsNullOrEmpty(productName) || !string.IsNullOrEmpty(AssuredName) || !string.IsNullOrEmpty(instype))
-
+            int IsLoggedIn = IsUserLoggedIn();
+            if (IsLoggedIn > 0)
             {
-                if (RoleId.Equals(1))
-                    lst = lstNewIns.Where(x => x.PolicyNo == PolicyNo || x.DivisionName == divisionName ||
-                                      x.AssuredName == AssuredName || x.ProductName == productName || x.InsType == instype).OrderBy(x => x.InsuranceID).ToList();
+
+                ViewBag.RoleId = RoleId;
+
+                string PolicyNo = objMotorModel.PolicyNo ?? "";
+                string divisionName = objMotorModel.DivisionName ?? "";
+                string AssuredName = objMotorModel.AssuredName ?? "";
+                string productName = objMotorModel.ProductName ?? "";
+                string instype = objMotorModel.InsType ?? "";
+
+                List<Insurance> lst = new List<Insurance>();
+
+                if (!string.IsNullOrEmpty(PolicyNo) || !string.IsNullOrEmpty(divisionName) || !string.IsNullOrEmpty(productName) || !string.IsNullOrEmpty(AssuredName) || !string.IsNullOrEmpty(instype))
+
+                {
+                    if (RoleId.Equals(1))
+                        lst = lstNewIns.Where(x => x.PolicyNo == PolicyNo || x.DivisionName == divisionName ||
+                                          x.AssuredName == AssuredName || x.ProductName == productName || x.InsType == instype).OrderBy(x => x.InsuranceID).ToList();
+                    else
+                        lst = lstNewIns.Where(x => x.PolicyNo == PolicyNo || x.DivisionName == divisionName ||
+                                      x.ProductName == productName || x.AssuredName == AssuredName || x.InsType == instype).OrderBy(x => x.InsuranceID).ToList();
+
+                    return View(lst);
+                }
+                else if (RoleId.Equals(1))
+                    return View(lstNewIns);
+
+                else if (lstNewIns != null)
+                    return View(lstNewIns.Where(x => x.InsType == "Motor").OrderBy(x => x.InsuranceID));
                 else
-                    lst = lstNewIns.Where(x => x.PolicyNo == PolicyNo || x.DivisionName == divisionName ||
-                                  x.ProductName == productName || x.AssuredName == AssuredName || x.InsType == instype).OrderBy(x => x.InsuranceID).ToList();
+                    return RedirectToAction("Login");
 
-                return View(lst);
             }
-            else if (RoleId.Equals(1))
-                return View(lstNewIns);
-
             else
-                return View(lstNewIns.Where(x => x.InsType == "Motor").OrderBy(x => x.InsuranceID));
-
-
+            {
+                return RedirectToAction("Login");
+            }
             //return View(lstNewIns.Where(x => x.InsType == "Motor").OrderBy(x => x.InsuranceID));
 
         }
         public ActionResult MasterDatabase()
         {
-
-            ViewBag.RoleId = RoleId;
-            if (RoleId.Equals(1))
-                return View(motorModel);
-            //query.Where(s => s.AgentCode_BrokerCode == lstInfo.UserName).FirstOrDefault();
-            //return View(motorModel);
-            if (!string.IsNullOrEmpty(U_Name))
-                return View(motorModel.Where(x => x.AgentCode == U_Name).OrderBy(x => x.MotorId));
+            int IsLoggedIn = IsUserLoggedIn();
+            if (IsLoggedIn > 0)
+            {
+                ViewBag.RoleId = RoleId;
+                if (RoleId.Equals(1))
+                    return View(motorModel);
+                //query.Where(s => s.AgentCode_BrokerCode == lstInfo.UserName).FirstOrDefault();
+                //return View(motorModel);
+                if (!string.IsNullOrEmpty(U_Name))
+                    return View(motorModel.Where(x => x.AgentCode == U_Name).OrderBy(x => x.MotorId));
+                else
+                    return View(motorModel);
+            }
             else
-                return View(motorModel);
+            {
+                return RedirectToAction("Login");
+            }
+
         }
         [HttpGet]
         public ActionResult MasterTravel(TravelModel objTravelModel)
@@ -351,6 +378,8 @@ namespace MotorApp.Controllers
         }
         public ActionResult Login()
         {
+            // TempData["Input"] = null;
+            IsUserLogin = false;
             if (TempData["IsExists"] == null)
                 TempData["IsExists"] = "";
             if (!string.IsNullOrEmpty(TempData["IsExists"].ToString()))
@@ -374,6 +403,7 @@ namespace MotorApp.Controllers
                         ViewBag.RoleId = RoleId;
                         lstInput = objModels;
                         TempData["Input"] = lstInput;
+                        IsUserLogin = true;
                         return RedirectToAction("Index");
                     }
                     else
@@ -646,12 +676,21 @@ namespace MotorApp.Controllers
         [HttpGet]
         public ActionResult Edit(int MotorId)
         {
-            ViewBag.RoleId = RoleId;
-            IList<Insurance> motorList = new List<Insurance>();
-            motorList = lstNewIns;
-            var std = motorList.Where(s => s.InsuranceID == MotorId).FirstOrDefault();
+            int IsLoggedIn = IsUserLoggedIn();
+            if (IsLoggedIn > 0)
+            {
+                ViewBag.RoleId = RoleId;
+                IList<Insurance> motorList = new List<Insurance>();
+                motorList = lstNewIns;
+                var std = motorList.Where(s => s.InsuranceID == MotorId).FirstOrDefault();
 
-            return View("MotorInsurance", std);
+                return View("MotorInsurance", std);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+
         }
         [HttpGet]
         public ActionResult EditModal(int InsId)
@@ -801,93 +840,126 @@ namespace MotorApp.Controllers
         }
         public ActionResult MotorDB()
         {
-
-            if (TempData["Input"] != null)
+            int IsLoggedIn = IsUserLoggedIn();
+            if (IsLoggedIn > 0)
             {
-                lstInput = TempData["Input"];
+                if (TempData["Input"] != null)
+                {
+                    lstInput = TempData["Input"];
+                }
+
+                long returnCode = objMotorBAL.UserMDB(U_Name, 1, out lstInfo);
+                ViewBag.RoleId = RoleId;
+                TypeId = 1;
+                AssignDataToViewBag(lstInfo);
+                ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
+                ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
+                ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
+                ViewBag.PolicyLost = lstInfo.PolicyLost;
+                if (!returnCode.Equals(1))
+                {
+
+                    return RedirectToAction("Login");
+                }
+                return View("Index", lstInfo);
             }
-
-            long returnCode = objMotorBAL.UserMDB(U_Name, 1, out lstInfo);
-            ViewBag.RoleId = RoleId;
-            TypeId = 1;
-            AssignDataToViewBag(lstInfo);
-            ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
-            ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
-            ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
-            ViewBag.PolicyLost = lstInfo.PolicyLost;
-            if (!returnCode.Equals(1))
+            else
             {
-
                 return RedirectToAction("Login");
             }
-            return View("Index", lstInfo);
+
         }
         public ActionResult TravelDB()
         {
-
-            if (TempData["Input"] != null)
+            int IsLoggedIn = IsUserLoggedIn();
+            if (IsLoggedIn > 0)
             {
-                lstInput = TempData["Input"];
+                if (TempData["Input"] != null)
+                {
+                    lstInput = TempData["Input"];
+                }
+                long returnCode = objMotorBAL.UserMDB(U_Name, 2, out lstInfo);
+                TypeId = 2;
+                AssignDataToViewBag(lstInfo);
+                ViewBag.RoleId = RoleId;
+                ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
+                ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
+                ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
+                ViewBag.PolicyLost = lstInfo.PolicyLost;
+                if (!returnCode.Equals(1))
+                {
+
+                    return RedirectToAction("Login");
+                }
+                return View("Index", lstInfo);
             }
-            long returnCode = objMotorBAL.UserMDB(U_Name, 2, out lstInfo);
-            TypeId = 2;
-            AssignDataToViewBag(lstInfo);
-            ViewBag.RoleId = RoleId;
-            ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
-            ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
-            ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
-            ViewBag.PolicyLost = lstInfo.PolicyLost;
-            if (!returnCode.Equals(1))
+            else
             {
-
                 return RedirectToAction("Login");
             }
-            return View("Index", lstInfo);
+
+            
         }
         public ActionResult IndividualDB()
         {
-
-            if (TempData["Input"] != null)
+            int IsLoggedIn = IsUserLoggedIn();
+            if (IsLoggedIn > 0)
             {
-                lstInput = TempData["Input"];
+                if (TempData["Input"] != null)
+                {
+                    lstInput = TempData["Input"];
+                }
+                long returnCode = objMotorBAL.UserMDB(U_Name, 3, out lstInfo);
+                ViewBag.RoleId = RoleId;
+                TypeId = 3;
+                AssignDataToViewBag(lstInfo);
+                ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
+                ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
+                ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
+                ViewBag.PolicyLost = lstInfo.PolicyLost;
+                if (!returnCode.Equals(1))
+                {
+
+                    return RedirectToAction("Login");
+                }
+                return View("Index", lstInfo);
             }
-            long returnCode = objMotorBAL.UserMDB(U_Name, 3, out lstInfo);
-            ViewBag.RoleId = RoleId;
-            TypeId = 3;
-            AssignDataToViewBag(lstInfo);
-            ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
-            ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
-            ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
-            ViewBag.PolicyLost = lstInfo.PolicyLost;
-            if (!returnCode.Equals(1))
+            else
             {
-
                 return RedirectToAction("Login");
             }
-            return View("Index", lstInfo);
+           
         }
         public ActionResult DomesticDB()
         {
-
-            if (TempData["Input"] != null)
+            int IsLoggedIn = IsUserLoggedIn();
+            if (IsLoggedIn > 0)
             {
-                lstInput = TempData["Input"];
+                if (TempData["Input"] != null)
+                {
+                    lstInput = TempData["Input"];
+                }
+                long returnCode = objMotorBAL.UserMDB(U_Name, 4, out lstInfo);
+                ViewBag.RoleId = RoleId;
+                TypeId = 4;
+                AssignDataToViewBag(lstInfo);
+                ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
+                ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
+                ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
+                ViewBag.PolicyLost = lstInfo.PolicyLost;
+
+                if (!returnCode.Equals(1))
+                {
+
+                    return RedirectToAction("Login");
+                }
+                return View("Index", lstInfo);
             }
-            long returnCode = objMotorBAL.UserMDB(U_Name, 4, out lstInfo);
-            ViewBag.RoleId = RoleId;
-            TypeId = 4;
-            AssignDataToViewBag(lstInfo);
-            ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
-            ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
-            ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
-            ViewBag.PolicyLost = lstInfo.PolicyLost;
-
-            if (!returnCode.Equals(1))
+            else
             {
-
                 return RedirectToAction("Login");
             }
-            return View("Index", lstInfo);
+           
         }
         public JsonResult GetProducerInfo(string RoleId)
         {
@@ -1063,6 +1135,23 @@ namespace MotorApp.Controllers
             }, JsonRequestBehavior.AllowGet);
 
 
+        }
+        private int IsUserLoggedIn()
+        {
+            int i = 0;
+            try
+            {
+                if (IsUserLogin)
+                {
+                    i = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return i;
         }
     }
 

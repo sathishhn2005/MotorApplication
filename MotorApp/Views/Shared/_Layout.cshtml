@@ -15,6 +15,7 @@
     <link href="~/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="~/css/ruang-admin.css" rel="stylesheet" />
     <link href="~/vendor/smart_wizard/css/smart_wizard_all.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.22/r-2.2.6/datatables.min.css" />
     <script src="~/vendor/jquery/jquery.js"></script>
     @*@Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")*@
@@ -37,19 +38,19 @@
             </div>
             @if (ViewBag.RoleId == 1)
             {
-                <li class="nav-item ">
-                    <a class="nav-link" href="index">
-                        <i class="fas fa-fw fa-star"></i>
-                        <span>Admin Dashboard</span>
-                    </a>
-                </li>
-            }
+            <li class="nav-item ">
+                <a class="nav-link" href="index">
+                    <i class="fas fa-fw fa-star"></i>
+                    <span>MIS Dashboard</span>
+                </a>
+            </li>
             <li class="nav-item ">
                 <a class="nav-link" href="indexBI">
                     <i class="fas fa-fw fa-star"></i>
                     <span>BI Dashboard</span>
                 </a>
             </li>
+            }
             <li class="nav-item ">
                 <a class="nav-link" href="MotorDB">
                     <i class="fas fa-fw fa-car"></i>
@@ -81,27 +82,27 @@
             <li class="nav-item">
                 <a class="nav-link" href="MasterDatabase">
                     <i class="fas fa-fw fa-car"></i>
-                    <span>Motor Insurance Masters</span>
+                    <span>Masters Page</span>
                 </a>
             </li>
             @*<li class="nav-item">
-                <a class="nav-link" href="MasterTravel">
-                    <i class="fas fa-fw fa-user"></i>
-                    <span>Travel Insurance Masters</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="MasterIndividual">
-                    <i class="fas fa-fw fa-plane"></i>
-                    <span>Individual Insurance Masters</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="MasterDomestic">
-                    <i class="fas fa-fw fa-users"></i>
-                    <span>Domestic Insurance Masters</span>
-                </a>
-            </li>*@
+                    <a class="nav-link" href="MasterTravel">
+                        <i class="fas fa-fw fa-user"></i>
+                        <span>Travel Insurance Masters</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="MasterIndividual">
+                        <i class="fas fa-fw fa-plane"></i>
+                        <span>Individual Insurance Masters</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="MasterDomestic">
+                        <i class="fas fa-fw fa-users"></i>
+                        <span>Domestic Insurance Masters</span>
+                    </a>
+                </li>*@
             <li class="nav-item hide">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
                    aria-expanded="true" aria-controls="collapseBootstrap">
@@ -293,10 +294,10 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
                                 @*<img class="img-profile rounded-circle" src="~/img/boy.png" style="max-width: 60px">*@
-                                <span class="ml-2 d-none d-lg-inline text-white font-16" ">Welcome, <b>User</b></span>
+                                <span class="ml-2 d-none d-lg-inline text-white font-16">Welcome, <b>User</b></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                @*<a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -308,7 +309,7 @@
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Activity Log
                                 </a>
-                                <div class="dropdown-divider"></div>
+                                <div class="dropdown-divider"></div>*@
                                 <a class="dropdown-item" href="login">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
@@ -372,113 +373,11 @@
     <script src="~/vendor/pekeUpload/SimpleAjaxUploader.js"></script>
     <script src="~/vendor/smart_wizard/js/jquery.smartWizard.js"></script>
     <script src="~/vendor/Bootstrap-Checkbox/bootstrap4-toggle.js"></script>
-    <script>
-        var chartData = [];
-        !function ($) {
-            "use strict";
-
-            var Dashboard = function () {
-            };
-
-
-
-            //creates Donut chart
-            Dashboard.prototype.createDonutChart = function (element, data, colors) {
-                Morris.Donut({
-                    element: element,
-                    data: data,
-                    resize: true,
-                    colors: colors
-                });
-            },
-                //creates Bar chart
-                //Dashboard.prototype.createBarChart = function (element, data, xkey, ykeys, labels, lineColors) {
-                //    Morris.Bar({
-                //        element: element,
-                //        data: data,
-                //        xkey: xkey,
-                //        ykeys: ykeys,
-                //        labels: labels,
-                //        gridLineColor: '#eef0f2',
-                //        barSizeRatio: 0.4,
-                //        resize: true,
-                //        hideHover: 'auto',
-                //        barColors: lineColors
-                //    });
-                //},
-                Dashboard.prototype.init = function () {
-
-                    $.ajax({
-                        type: "GET",
-                        contentType: "application/json; charset=utf-8",
-                        url: "GetRevenueByYear",
-                        data: "{}",
-                        dataType: "json",
-                        success: function (Result) {
-                            chartData = Result.list;
-                            Morris.Bar({
-                                element: 'morris-bar-example',
-                                data: chartData,
-                                xkey: 'y',
-                                ykeys: ['a', 'b', 'c'],
-                                labels: ['Lost Policies', 'Policy yet to Renew', 'Pending Policies'],
-                                gridLineColor: '#eef0f2',
-                                barSizeRatio: 0.4,
-                                xLabelAngle: 45,
-                                resize: true,
-                                hideHover: 'auto',
-                                barColors: ['#30419b', '#02c58d', '#ffa426']
-                            });
-                        },
-                        error: function (Result) {
-                            alert("Error");
-                        }
-                    });
-
-
-                //this.createBarChart('morris-bar-example', chartData, 'y', ['a', 'b'], ['Series A', 'Series B'], ['#30419b', '#02c58d']);
-
-                    //creating donut chart
-
-                    @*var $donutData = [
-                        { label: "Total Policies to be renewed (2020)", value: @ViewBag.TotPoltoBeRenewed },
-                        { label: "Policies renewed", value:  @ViewBag.NoOfPoRenewed },
-                        { label: "Policies Lost", value:  @ViewBag.PolicyLost }
-                    ];*@
-                
-                var $donutData = [
-                        { label: "Total Policies to be renewed (2020)", value: @ViewBag.TNPYear },
-                        { label: "Policies renewed", value:  @ViewBag.TNPRenewedYear },
-                        { label: "Policies Lost", value:   @ViewBag.TNPLostYear }
-                    ];
-                this.createDonutChart('morris-donut-example', $donutData, ['#fcbe2d', '#30419b', '#02c58d']);
-                var $monthlypolicy = [
-                    { label: "Total Available ", value: @ViewBag.TNPMonth },
-                    { label: "Renewed", value:  @ViewBag.TNPRenewedMonth },
-                    { label: "Under Process ", value:  @ViewBag.TNPUnderProcessMonth },
-                    { label: "Lost ", value:  @ViewBag.TNPLostMonth}
-                    ];
-                this.createDonutChart('monthly-policy', $monthlypolicy, ['#6777EF', '#66bb6a', '#ffa426', '#fc544b']);
-                var $yearlypolicy = [
-                    { label: "Total Available ", value: @ViewBag.TNPYear },
-                    { label: "Renewed", value: @ViewBag.TNPRenewedYear },
-                    { label: "Under Process ", value: @ViewBag.TNPUnderProcessYear },
-                    { label: "Lost ", value: @ViewBag.TNPLostYear }
-                ];
-                this.createDonutChart('yearly-policy', $yearlypolicy, ['#6777EF', '#66bb6a', '#ffa426', '#fc544b']);
-                },
-                //init
-                $.Dashboard = new Dashboard, $.Dashboard.Constructor = Dashboard
-        }(window.jQuery),
-
-            //initializing
-            function ($) {
-                "use strict";
-                $.Dashboard.init();
-            }(window.jQuery);
-    </script>
-
-
-
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.22/r-2.2.6/datatables.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
 </body>
 </html>
