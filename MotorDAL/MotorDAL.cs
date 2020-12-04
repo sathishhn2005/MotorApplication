@@ -99,32 +99,32 @@ namespace MotorApp.DAL
                 }
                 //if (IsFileMatch)
                 //{
-                    using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    if (dt.Rows.Count > 0)
                     {
-                        con.Open();
-                        if (dt.Rows.Count > 0)
+                        rowsCnt = dt.Rows.Count;
+                        SqlCommand cmd;
+                        cmd = new SqlCommand
                         {
-                            rowsCnt = dt.Rows.Count;
-                            SqlCommand cmd;
-                            cmd = new SqlCommand
-                            {
-                                CommandText = sp_name,// "SP_MotorBulkUpload",
-                                CommandTimeout = 180,
-                                Connection = con,
-                                CommandType = CommandType.StoredProcedure
-                            };
-                            SqlParameter UDTparam = new SqlParameter
-                            {
-                                //ParameterName = "@UDT_MotorBulkUpload",
-                                ParameterName = "@UDT_NewInsSave",
-                                Size = -1,
-                                Value = dt
-                            };
-                            cmd.Parameters.Add(UDTparam);
-                            returnCode = cmd.ExecuteNonQuery();
-                        }
-
+                            CommandText = sp_name,// "SP_MotorBulkUpload",
+                            CommandTimeout = 180,
+                            Connection = con,
+                            CommandType = CommandType.StoredProcedure
+                        };
+                        SqlParameter UDTparam = new SqlParameter
+                        {
+                            //ParameterName = "@UDT_MotorBulkUpload",
+                            ParameterName = "@UDT_NewInsSave",
+                            Size = -1,
+                            Value = dt
+                        };
+                        cmd.Parameters.Add(UDTparam);
+                        returnCode = cmd.ExecuteNonQuery();
                     }
+
+                }
                 //}
                 //else
                 //{
@@ -1159,25 +1159,76 @@ namespace MotorApp.DAL
                 using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
                 {
                     con.Open();
+
                     dt = objUtility.ConvertIns(obj);
                     if (dt.Rows.Count > 0)
                     {
                         SqlCommand cmd;
-                        cmd = new SqlCommand
+                        if (obj.InsuranceID.Equals(0))
                         {
-                            CommandText = "SP_NewInsSave",
-                            CommandTimeout = 180,
-                            Connection = con,
-                            CommandType = CommandType.StoredProcedure
-                        };
-                        SqlParameter UDTparam = new SqlParameter
+                            cmd = new SqlCommand
+                            {
+                                CommandText = "SP_NewInsSave",
+                                CommandTimeout = 180,
+                                Connection = con,
+                                CommandType = CommandType.StoredProcedure
+                            };
+                            SqlParameter UDTparam = new SqlParameter
+                            {
+                                ParameterName = "@UDT_NewInsSave",
+                                Size = -1,
+                                Value = dt
+                            };
+                            SqlParameter param = new SqlParameter
+                            {
+                                ParameterName = "@Return",
+                                Direction = ParameterDirection.Output,
+                                SqlDbType = SqlDbType.Int
+                            };
+                            cmd.Parameters.Add(UDTparam);
+                            cmd.Parameters.Add(param);
+
+                            cmd.ExecuteNonQuery();
+                            if (cmd.Parameters["@Return"].Value != DBNull.Value)
+                            {
+                                returnCode = Convert.ToInt64(cmd.Parameters["@Return"].Value);
+                            }
+                            else
+                                returnCode = 0;
+                        }
+                        else if (obj.InsuranceID > 0)
                         {
-                            ParameterName = "@UDT_NewInsSave",
-                            Size = -1,
-                            Value = dt
-                        };
-                        cmd.Parameters.Add(UDTparam);
-                        returnCode = cmd.ExecuteNonQuery();
+                            cmd = new SqlCommand
+                            {
+                                CommandText = "SP_NewInsUpdate",
+                                CommandTimeout = 180,
+                                Connection = con,
+                                CommandType = CommandType.StoredProcedure
+                            };
+                            SqlParameter UDTparam = new SqlParameter
+                            {
+                                ParameterName = "@UDT_NewInsSave",
+                                Size = -1,
+                                Value = dt
+                            };
+                            SqlParameter param = new SqlParameter
+                            {
+                                ParameterName = "@Return",
+                                Direction = ParameterDirection.Output,
+                                SqlDbType = SqlDbType.Int
+                            };
+                            cmd.Parameters.Add(UDTparam);
+                            cmd.Parameters.Add(param);
+
+                            cmd.ExecuteNonQuery();
+                            if (cmd.Parameters["@Return"].Value != DBNull.Value)
+                            {
+                                returnCode = Convert.ToInt64(cmd.Parameters["@Return"].Value);
+                            }
+                            else
+                                returnCode = 0;
+                        }
+
                     }
 
                 }
@@ -1361,7 +1412,7 @@ namespace MotorApp.DAL
             }
             return ds;
         }
-        public long GetSProducerDB(out List<BIDashBoard> lstBIDashBoard,string BusinessType,string ProducerName)
+        public long GetSProducerDB(out List<BIDashBoard> lstBIDashBoard, string BusinessType, string ProducerName)
         {
             long returnCode = -1;
             lstBIDashBoard = new List<BIDashBoard>();
@@ -1408,6 +1459,85 @@ namespace MotorApp.DAL
             {
 
                 throw;
+            }
+            return returnCode;
+        }
+        public long GetSearchIns(long RoleId, string PolicyNo, string DivisionName, string AssuredName, string ProductName, string Status,out List<Insurance> lstNewIns)
+        {
+            long returnCode = -1;
+           
+            lstNewIns = new List<Insurance>();
+
+            try
+            {
+                DataSet ds = new DataSet();
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = "SP_GetSearch"
+                    };
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+                    
+                    cmd.Parameters.AddWithValue("@RoleId", RoleId);
+                    cmd.Parameters.AddWithValue("@PolicyNo", PolicyNo);
+                    cmd.Parameters.AddWithValue("@DivisionName", DivisionName);
+                    cmd.Parameters.AddWithValue("@AssuredName", AssuredName);
+                    cmd.Parameters.AddWithValue("@ProductName", ProductName);
+                    cmd.Parameters.AddWithValue("@Status", Status);
+
+
+                    SqlDataAdapter sdaAdapter = new SqlDataAdapter
+                    {
+                        SelectCommand = cmd
+                    };
+                    sdaAdapter.Fill(ds);
+                    
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        lstNewIns = (from DataRow dr in ds.Tables[0].Rows
+                                     select new Insurance()
+                                     {
+                                         InsuranceID = Convert.ToInt64(dr["InsuranceID"]),
+                                         DivisionName = dr["DivisionName"].ToString(),
+                                         ProductCode = dr["ProductCode"].ToString(),
+                                         ProductName = dr["ProductName"].ToString(),
+                                         BusinessType = dr["BusinessType"].ToString(),
+
+                                         PolicyNo = dr["PolicyNo"].ToString(),
+                                         AssuredName = dr["AssuredName"].ToString(),
+                                         AssuredMobile = dr["AssuredMobile"].ToString(),
+                                         CustomerName = dr["CustomerName"].ToString(),
+                                         SourceCode = dr["SourceCode"].ToString(),
+
+                                         SourceName = dr["SourceName"].ToString(),
+                                         CustomerCategory = dr["CustomerCategory"].ToString(),
+                                         PolicyFromDate = Convert.ToDateTime(dr["PolicyFromDate"]),
+                                         PolicyToDate = Convert.ToDateTime(dr["PolicyToDate"]),
+                                         GrossPremium = Convert.ToInt64(dr["GrossPremium"]),
+
+                                         DivisionCode = dr["DivnCode"].ToString(),
+                                         CustomerCode = dr["CustomerCode"].ToString(),
+                                         Charges = Convert.ToInt64(dr["Charges"]),
+                                         Status = dr["Status"].ToString(),
+                                         InsType = dr["InsType"].ToString(),
+
+                                         RevisedSumInsured = Convert.ToInt64(dr["RevisedSumInsured"]),
+                                         RenewalPremium = Convert.ToInt64(dr["RenewalPremium"]),
+                                         MarketingExecutive = dr["MarketingExecutive"].ToString(),
+                                         Remarks = dr["Remarks"].ToString(),
+
+                                     }).ToList();
+                    }
+                    returnCode = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
             return returnCode;
         }

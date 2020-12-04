@@ -190,6 +190,7 @@ namespace MotorApp.Controllers
                 string AssuredName = objMotorModel.AssuredName ?? "";
                 string productName = objMotorModel.ProductName ?? "";
                 string instype = objMotorModel.InsType ?? "";
+                string Status = objMotorModel.Status ?? "";
 
                 List<Insurance> lst = new List<Insurance>();
 
@@ -197,16 +198,27 @@ namespace MotorApp.Controllers
 
                 {
                     if (RoleId.Equals(1))
-                        lst = lstNewIns.Where(x => x.PolicyNo == PolicyNo || x.DivisionName == divisionName ||
-                                          x.AssuredName == AssuredName || x.ProductName == productName || x.InsType == instype).OrderBy(x => x.InsuranceID).ToList();
+                    {
+                        long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, out lst);
+                        //if (lstNewIns.Count > 0)
+                        //{
+                        //    lst = lstNewIns.Where(x => x.PolicyNo == PolicyNo.Trim() || x.DivisionName == divisionName.Trim() ||
+                        //                      x.AssuredName == AssuredName.Trim() || x.ProductName == productName.Trim() || x.InsType == instype.Trim()).OrderBy(x => x.InsuranceID).ToList();
+                        //}
+                    }
                     else
-                        lst = lstNewIns.Where(x => x.PolicyNo == PolicyNo || x.DivisionName == divisionName ||
-                                      x.ProductName == productName || x.AssuredName == AssuredName || x.InsType == instype).OrderBy(x => x.InsuranceID).ToList();
+                    {
+                        long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, out lst);
+                    }
 
                     return View(lst);
                 }
                 else if (RoleId.Equals(1))
-                    return View(lstNewIns);
+                {
+                    long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, out lst);
+                    return View(lst);
+                }
+
 
                 else if (lstNewIns != null)
                     return View(lstNewIns.Where(x => x.InsType == "Motor").OrderBy(x => x.InsuranceID));
@@ -550,10 +562,19 @@ namespace MotorApp.Controllers
           }*/
         public ActionResult MotorInsurance()
         {
-            ViewBag.UserName = U_Name;
-            ViewBag.RoleId = RoleId;
-            //ViewBag.lstProducerMaster = lstProducerCodeMaster;
-            return View();
+            int IsLoggedIn = IsUserLoggedIn();
+            if (IsLoggedIn > 0)
+            {
+                ViewBag.UserName = U_Name;
+                ViewBag.RoleId = RoleId;
+                //ViewBag.lstProducerMaster = lstProducerCodeMaster;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+
         }
         [HttpPost]
         public long InsertMotorIns(MotorModel model)
@@ -898,7 +919,7 @@ namespace MotorApp.Controllers
                 return RedirectToAction("Login");
             }
 
-            
+
         }
         public ActionResult IndividualDB()
         {
@@ -928,7 +949,7 @@ namespace MotorApp.Controllers
             {
                 return RedirectToAction("Login");
             }
-           
+
         }
         public ActionResult DomesticDB()
         {
@@ -959,7 +980,7 @@ namespace MotorApp.Controllers
             {
                 return RedirectToAction("Login");
             }
-           
+
         }
         public JsonResult GetProducerInfo(string RoleId)
         {
@@ -1003,10 +1024,18 @@ namespace MotorApp.Controllers
         [HttpPost]
         public long InsertNewInsur(Insurance model)
         {
-            long returnCode = 1;
+            long returnCode = -1;
             try
             {
                 returnCode = objMotorBAL.SaveNewIns(model);
+                if (model.InsuranceID > 0 && returnCode > 0)
+                {
+                    returnCode = 2;
+                }
+                if (model.InsuranceID.Equals(0) && returnCode > 0)
+                {
+                    returnCode = 1;
+                }
             }
             catch (Exception ex)
             {

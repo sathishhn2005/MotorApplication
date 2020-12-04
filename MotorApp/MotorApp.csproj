@@ -168,11 +168,8 @@
     <Content Include="js\ruang-admin.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="MasterUploads\MotorBulkUpload.xlsx" />
-    <Content Include="MasterUploads\DomesticBulkUpload.xlsx" />
-    <Content Include="MasterUploads\IndividualBulkUpload.xlsx" />
-    <Content Include="MasterUploads\TravelBulkUpload.xlsx" />
     <Content Include="img\logo\logo.ai" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1940,13 +1937,6 @@
     <Content Include="vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="vendor\jquery\jquery.min.map" />
     <Content Include="vendor\jquery\jquery.slim.min.map" />
-    <Content Include="Uploads\Copy of DomesticBulkUpload.xlsx" />
-    <Content Include="Uploads\DomesticBulkUpload.xlsx" />
-    <Content Include="Uploads\IndividualBulkUpload.xlsx" />
-    <Content Include="Uploads\IndividualBulkUpload1.xlsx" />
-    <Content Include="Uploads\MotorBulkUpload - Copy.xlsx" />
-    <Content Include="Uploads\MotorBulkUpload.xlsx" />
-    <Content Include="Uploads\TravelBulkUpload.xlsx" />
     <Content Include="Views\Home\MotorInsurance.cshtml" />
     <Content Include="Views\Home\InsertTravelIns.cshtml" />
     <Content Include="Views\Home\InsertIndividualIns.cshtml" />

@@ -522,5 +522,27 @@ namespace MotorApp.BAL
                 return returnCode;
             }
         }
+        public long GetSearchData(long RoleId, string PolicyNo, string DivisionName, string AssuredName, string ProductName, string Status, out List<Insurance> lstNewIns)
+        {
+            long returnCode = -1;
+
+            using (TransactionScope transactionScope = new TransactionScope())
+            {
+                try
+                {
+                    returnCode = objMotorAppDAL.GetSearchIns(RoleId, PolicyNo, DivisionName, AssuredName, ProductName, Status, out lstNewIns);
+                    transactionScope.Complete();
+                    transactionScope.Dispose();
+
+                }
+                catch (Exception ex)
+                {
+                    transactionScope.Dispose();
+                    throw ex;
+                }
+
+                return returnCode;
+            }
+        }
     }
 }

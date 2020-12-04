@@ -9,6 +9,8 @@ namespace MotorApp.BusinessEntities
 {
     public class Insurance
     {
+        
+
         public long InsuranceID { get; set; }
 
         [Display(Name = "Division Code")]
@@ -38,8 +40,11 @@ namespace MotorApp.BusinessEntities
         [Display(Name = "Customer Category")]
         public string CustomerCategory { get; set; }
         [Display(Name = "Policy From Date")]
+        [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy}")]
+
         public DateTime PolicyFromDate { get; set; }
         [Display(Name = "Policy To Date")]
+        [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy}")]
         public DateTime PolicyToDate { get; set; }
         [Display(Name = "Gross Premium")]
         public long GrossPremium { get; set; }
@@ -64,8 +69,7 @@ namespace MotorApp.BusinessEntities
         [Display(Name = "Producer Name")]
         public string ProducerName { get; set; }
         public InssType InsuranceType { get; set; }
-
-
+        
     }
     public enum InssType
     {
@@ -74,4 +78,5 @@ namespace MotorApp.BusinessEntities
         Domestic,
         Individual
     }
+    
 }

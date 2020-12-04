@@ -1,9 +1,54 @@
-﻿@model MotorApp.BusinessEntities.Insurance
+﻿@using MotorApp.Models;
+@model MotorApp.BusinessEntities.Insurance
 @{
     ViewBag.Title = "MotorInsurance";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
+@{
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    listItems.Add(new SelectListItem
+    {
+        Text = "Lost",
+        Value = "Lost"
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "Renewed",
+        Value = "Renewed",
+        Selected = true
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "Under Process",
+        Value = "Under Process"
+    });
+}
+@{
+    List<SelectListItem> lstInsType = new List<SelectListItem>();
+    lstInsType.Add(new SelectListItem
+    {
+        Text = "Travel",
+        Value = "Travel"
+    });
+    lstInsType.Add(new SelectListItem
+    {
+        Text = "Motor",
+        Value = "Motor",
+        Selected = true
+    });
+    lstInsType.Add(new SelectListItem
+    {
+        Text = "Individual",
+        Value = "Individual"
+    });
+    lstInsType.Add(new SelectListItem
+    {
+        Text = "Domestic",
+        Value = "Domestic"
+    });
+}
+
 @*@using (Html.BeginForm("InsertMotorIns", "Home", FormMethod.Post))
     {*@
 <div id="wrapper">
@@ -29,6 +74,14 @@
                                 <form id="MotorForm">
                                     <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
                                         <div class="col-12">
+                                            <div class="form-group row hide">
+                                                @*@Html.LabelFor(model => model.InsuranceID, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                    <div class="col-md-5">
+                                                        @Html.EditorFor(model => model.InsuranceID, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                                    </div>*@
+                                                @Html.HiddenFor(model => model.InsuranceID)
+
+                                            </div>
                                             <div class="form-group row">
                                                 @Html.LabelFor(model => model.DivisionCode, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
                                                 <div class="col-md-5">
@@ -61,9 +114,21 @@
                                             </div>
                                             <div class="form-group row">
                                                 @Html.LabelFor(model => model.PolicyNo, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                <div class="col-md-5">
-                                                    @Html.EditorFor(model => model.PolicyNo, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                </div>
+                                                @if (Model != null)
+                                                {
+                                                    if (Model.InsuranceID > 0)
+                                                    {
+                                                        <div class="col-md-5">
+                                                            @Html.EditorFor(model => model.PolicyNo, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="col-md-5">
+                                                            @Html.EditorFor(model => model.PolicyNo, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                                        </div>
+                                                    }
+                                                }
                                             </div>
                                             <div class="form-group row">
                                                 @Html.LabelFor(model => model.AssuredName, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
@@ -153,11 +218,13 @@
                                             <div class="form-group row">
                                                 @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
                                                 <div class="col-md-5">
-                                                    <select class="form-control form-control-sm" name="Status" id="Status">
-                                                        <option value="1">Lost</option>
-                                                        <option value="2">Renewed</option>
-                                                        <option value="3">Under process</option>
-                                                    </select>
+                                                    @*<select class="form-control form-control-sm" name="Status" id="Status">
+                                                            <option value="Lost">Lost</option>
+                                                            <option value="Renewed">Renewed</option>
+                                                            <option value="Under process">Under process</option>
+                                                        </select>*@
+                                                    @Html.DropDownListFor(model => model.Status, listItems, "-- Select Status --", new { @class = "form-control form-control-sm" })
+
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -181,12 +248,14 @@
                                             <div class="form-group row">
                                                 @Html.LabelFor(model => model.InsType, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
                                                 <div class="col-md-5">
-                                                    <select class="form-control form-control-sm" name="InsType" id="Instype">
-                                                        <option value="1">Travel</option>
-                                                        <option value="2">Motor</option>
-                                                        <option value="3">Individual</option>
-                                                        <option value="4">Domestic</option>
-                                                    </select>
+                                                    @*<select class="form-control form-control-sm" name="InsType" id="Instype">
+                                                            <option value="Travel">Travel</option>
+                                                            <option value="Motor">Motor</option>
+                                                            <option value="Individual">Individual</option>
+                                                            <option value="Domestic">Domestic</option>
+                                                        </select>*@
+                                                    @Html.DropDownListFor(model => model.InsType, lstInsType, "-- Select InsType --", new { @class = "form-control form-control-sm" })
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -194,7 +263,9 @@
                                 </form>
                             </div>
                             <div class="modal-footer justify-content-center">
-                                <button type="button" class="btn btn-secondary btn-sm waves-effect">Close</button>
+
+
+                                <button type="button" id="btnClose" class="btn btn-secondary btn-sm waves-effect">Close</button>
                                 <button type="button" id="btnFinish" class="btn btn-primary btn-sm waves-effect waves-light">Submit</button>
                             </div>
                         </div>
@@ -211,32 +282,44 @@
 
         //Toolbar extra buttons
         $('#btnFinish').on('click', function () {
-                var formData = $('#MotorForm').serialize();
-                $.ajax({
+            var formData = $('#MotorForm').serialize();
+            $.ajax({
 
-                    type: "POST",
-                    url: "/Home/InsertNewInsur",
-                    dataType: "json",
-                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                    data: formData,
-                    success: function (res) {
-                        if (res > 0) {
-                            alert('Record saved successully!');
-                        }
-                    },
-                    error: function () {
+                type: "POST",
+                url: "/Home/InsertNewInsur",
+                dataType: "json",
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                data: formData,
+                success: function (res) {
+                    if (res == 1) {
+                        alert('Record saved successully!');
+                    }
+                    else if (res == 2) {
+                        alert('Record updated successully!');
+                    }
+                    else if (res == 0) {
+                        alert('Record Already Exists');
+                    }
+                    else {
                         alert('Record Could not be saved!');
                     }
-                })
-            }
-            );
+                },
+                error: function () {
+                    alert('Record Could not be saved!');
+                }
+            })
+        });
 
-        var btnCancel = $('<button></button>').text('Cancel')
-            .addClass('btn btn-danger btn-sm')
-            .on('click', function () { $('#smartwizard').smartWizard("reset"); });
+        $('#btnClose').on('click', function () {
+            window.location.href = "/Home/MasterDatabase" //in your case, /employee/empl
+
+        });
+        //var btnCancel = $('<button></button>').text('Cancel')
+        //    .addClass('btn btn-danger btn-sm')
+        //    .on('click', function () { $('#smartwizard').smartWizard("reset"); });
 
         // Smart Wizard
-        
+
     });
 
 </script>
