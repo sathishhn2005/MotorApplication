@@ -453,55 +453,63 @@ namespace MotorApp.Controllers
                     HttpPostedFileBase file = Request.Files[0];
                     string fname; string alert = string.Empty; ;
                     int rowsCnt = 0;
+                   // string fileMismatchErr = string.Empty ;
                     fname = file.FileName;
-
-
-                    string path = Server.MapPath("~/Uploads/");
-                    filePath = path + Path.GetFileName(file.FileName);
-                    string extension = Path.GetExtension(file.FileName);
-                    file.SaveAs(filePath);
-                    // Returns message that successfully uploaded  
-                    if (extension.Equals(".xls") || extension.Equals(".xlsx"))
+                    if (fname.Equals("NewBulkUpload.xlsx"))
                     {
 
-                        long returnCode = objMotorBAL.BulkUploadMotor(extension, filePath, reqFrom, out rowsCnt, out string fileMismatchErr);
-                        if (returnCode.Equals(0))
+                        string path = Server.MapPath("~/Uploads/");
+                        filePath = path + Path.GetFileName(file.FileName);
+                        string extension = Path.GetExtension(file.FileName);
+                        file.SaveAs(filePath);
+                        // Returns message that successfully uploaded  
+                        if (extension.Equals(".xls") || extension.Equals(".xlsx"))
                         {
-                            alert = "All the Records already exists. Try uploading new data.";
-                            textAlert = "same";
-                        }
-                        else if (returnCode > 0)
-                        {
-                            alert = "File Uploaded Successfully!";
-                            textAlert = "success";
-                        }
 
-                        if (string.IsNullOrEmpty(fileMismatchErr))
-                            //return Json(alert + Environment.NewLine + "'Total No.of rows in spreadsheet: '" + rowsCnt + "''" + Environment.NewLine + "'Total No.of rows Inserted: '" + returnCode + "'");
-                            return Json(textAlert);
+                            long returnCode = objMotorBAL.BulkUploadMotor(extension, filePath, reqFrom, out rowsCnt, out string fileMismatchErr);
+                            if (returnCode.Equals(0))
+                            {
+                                alert = "All the Records already exists. Try uploading new data.";
+                                textAlert = "same";
+                            }
+                            else if (returnCode > 0)
+                            {
+                                alert = "File Uploaded Successfully!";
+                                textAlert = "success";
+                            }
+
+                            if (string.IsNullOrEmpty(fileMismatchErr))
+                                //return Json(alert + Environment.NewLine + "'Total No.of rows in spreadsheet: '" + rowsCnt + "''" + Environment.NewLine + "'Total No.of rows Inserted: '" + returnCode + "'");
+                                return Json(textAlert);
+                            else
+                            {
+                                if (reqFrom.Equals(1))
+                                    //return Json("Error.!" + Environment.NewLine + fileMismatchErr + Environment.NewLine + "File Doesn't belongs to Motor Policy");
+                                    return Json(reqFrom);
+                                if (reqFrom.Equals(2))
+                                    //return Json("Error.!" + Environment.NewLine + fileMismatchErr + Environment.NewLine + "File Doesn't belongs to Travel Policy");
+                                    return Json(reqFrom);
+                                if (reqFrom.Equals(3))
+                                    // return Json("Error.!" + Environment.NewLine + fileMismatchErr + Environment.NewLine + "File Doesn't belongs to Individual Policy");
+                                    return Json(reqFrom);
+                                if (reqFrom.Equals(4))
+                                    //return Json("Error.!" + Environment.NewLine + fileMismatchErr + Environment.NewLine + "File Doesn't belongs to Domestic Policy");
+                                    return Json(reqFrom);
+                                else
+                                    return Json("Error occurred.");
+                            }
+
+
+                        }
                         else
                         {
-                            if (reqFrom.Equals(1))
-                                //return Json("Error.!" + Environment.NewLine + fileMismatchErr + Environment.NewLine + "File Doesn't belongs to Motor Policy");
-                                return Json(reqFrom);
-                            if (reqFrom.Equals(2))
-                                //return Json("Error.!" + Environment.NewLine + fileMismatchErr + Environment.NewLine + "File Doesn't belongs to Travel Policy");
-                                return Json(reqFrom);
-                            if (reqFrom.Equals(3))
-                                // return Json("Error.!" + Environment.NewLine + fileMismatchErr + Environment.NewLine + "File Doesn't belongs to Individual Policy");
-                                return Json(reqFrom);
-                            if (reqFrom.Equals(4))
-                                //return Json("Error.!" + Environment.NewLine + fileMismatchErr + Environment.NewLine + "File Doesn't belongs to Domestic Policy");
-                                return Json(reqFrom);
-                            else
-                                return Json("Error occurred.");
+                            return Json("Incorrect file.! Please upload the file with the extension (.xls,xlsx)");
                         }
-
-
                     }
                     else
                     {
-                        return Json("Incorrect file.! Please upload the file with the extension (.xls,xlsx)");
+                        reqFrom = -3;
+                        return Json(reqFrom);
                     }
 
                 }
@@ -828,7 +836,7 @@ namespace MotorApp.Controllers
         {
             try
             {
-                ModelState.Clear();
+               // ModelState.Clear();
 
                 string PolicyNo = Request["PolicyNo"].ToString();
                 List<MotorModel> lst = new List<MotorModel>();

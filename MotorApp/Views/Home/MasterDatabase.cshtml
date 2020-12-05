@@ -1,6 +1,24 @@
 ﻿@model IEnumerable<MotorApp.BusinessEntities.Insurance>
 @using MotorApp.BusinessEntities;
 @{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+@{
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    listItems.Add(new SelectListItem
+    {
+        Text = "Lost",
+        Value = "Lost"
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "Renewed",
+        Value = "Renewed"
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "Under Process",
+        Value = "Under Process"
+    });
+}
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Master Motor</h1>
     <ol class="breadcrumb my-2">
@@ -23,24 +41,29 @@
                         @using (Html.BeginForm("MasterDatabase", "Home", FormMethod.Get))
                         {
                             <div class="col-2">
-                                <input class="form-control form-control-sm  mb-3" name="PolicyNo" type="text" placeholder="Policy No">
+                                @*<input class="form-control form-control-sm  mb-3" name="PolicyNo" type="text" placeholder="Policy No">*@
+                                @Html.TextBox("PolicyNo", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Policy No" })
                             </div>
                             <div class="col-2">
-                                <input class="form-control form-control-sm  mb-3" name="DivisionName" type="text" placeholder="Division Name">
+                                @*<input class="form-control form-control-sm  mb-3" name="DivisionName" type="text" placeholder="Division Name">*@
+                                @Html.TextBox("DivisionName", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Division Name" })
                             </div>
                             <div class="col-2">
-                                <input class="form-control form-control-sm  mb-3" name="AssuredName" type="text" placeholder="Assured Name">
+                                @*<input class="form-control form-control-sm  mb-3" name="AssuredName" type="text" placeholder="Assured Name">*@
+                                @Html.TextBox("AssuredName", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Assured Name" })
                             </div>
                             <div class="col-2">
-                                <input class="form-control form-control-sm  mb-3" name="ProductName" type="text" placeholder="Product Name">
+                                @*<input class="form-control form-control-sm  mb-3" name="ProductName" type="text" placeholder="Product Name">*@
+                                @Html.TextBox("ProductName", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Product Name" })
                             </div>
                             <div class="col-2">
-                                <select class="form-control form-control-sm" name="Status" id="Status">
-                                    <option value="">-Select-</option>
-                                    <option value="Lost">Lost</option>
-                                    <option value="Renewed">Renewed</option>
-                                    <option value="Under process">Under Process</option>
-                                </select>
+                                @*<select class="form-control form-control-sm" name="Status" id="Status">
+                                        <option value="">-Select-</option>
+                                        <option value="Lost">Lost</option>
+                                        <option value="Renewed">Renewed</option>
+                                        <option value="Under process">Under Process</option>
+                                    </select>*@
+                                @Html.DropDownList("Status", listItems, "-- Select Status --", new { @class = "form-control form-control-sm" })
                             </div>
                             <div class="col-2 text-center">
                                 @*
@@ -50,6 +73,8 @@
                                     <i class="fas fa-search fa-sm"></i> Search
                                     </button>*@
                                 <input class="btn btn-primary btn-sm" type="submit" value="Search" />
+                                @*<input type="button" value="Submit" id="btnsubmit" onclick="submitForm()">*@
+
                                 <button type="button" id="btnClear" class="btn btn-secondary btn-sm waves-effect">Clear</button>
                             </div>
                         }
@@ -76,7 +101,7 @@
                             data-target="#uploadBulk">
                         <i class="fas fa-upload fa-sm"></i> Bulk Upload Policy
                     </button>
-                    
+
                 </div>
             </div>
             <div class="card-body">
@@ -381,7 +406,7 @@
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title mt-0" id="uploadBulkLabel">Upload Bulk Datas</h5>
+                <h5 class="modal-title mt-0" id="uploadBulkLabel">Upload Bulk Policies</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -390,7 +415,7 @@
                 <div class="row">
                     <div class="col-10 mx-auto">
                         <div class="text-right">
-                            <a href="~/MasterUploads/MotorBulkUpload.xlsx" class="btn btn-dark btn-sm" download>
+                            <a href="~/MasterUploads/NewBulkUpload.xlsx" class="btn btn-dark btn-sm" download>
                                 <i class="fas fa-download fa-sm"></i> Download Sample format
                             </a>
                         </div>
@@ -401,8 +426,8 @@
                             @*
                                 <input type="file" name="postedFile" id="fileUploadMotor" accept=".xls,.xlsx" />
                                 <input type="hidden" id="txtMotorMaster" name="txtMotorMaster" value="1">*@
-                            <input type="hidden" name="fileuploader-list-files" value="[]">
-                            <input type="file" name="files[]" multiple="multiple" style="position: absolute; z-index: -9999; height: 0px; width: 0px; padding: 0px; margin: 0px; line-height: 0; outline: 0px; border: 0px; opacity: 0;">
+                            <input type="hidden" id="uploadFilesInptHdn" name="fileuploader-list-files" value="[]">
+                            <input type="file" id="uploadFilesInpt" name="files[]" multiple="multiple" style="position: absolute; z-index: -9999; height: 0px; width: 0px; padding: 0px; margin: 0px; line-height: 0; outline: 0px; border: 0px; opacity: 0;">
                             <div class="fileuploader-input">
                                 <div class="fileuploader-input-inner">
                                     <div class="fileuploader-icon-main"></div>
@@ -472,6 +497,21 @@
 </div>
 <script>
     $(document).ready(function () {
+        function submitForm() {
+
+        }
+        $('#btnSubmit').on('click', function () {
+            // Get the first form with the name
+            // Usually the form name is not repeated
+            // but duplicate names are possible in HTML
+            // Therefore to work around the issue, enforce the correct index
+            var frm = document.getElementsByName('MotorForm')[0];
+            frm.submit(); // Submit the form
+            frm.reset();  // Reset all form data
+            return false; // Prevent page refresh
+            alert('test');
+
+        });
         $('#btnClear').on('click', function () {
             window.location.href = "/Home/MasterDatabase" //in your case, /employee/empl
 
@@ -509,6 +549,13 @@
                                 icon: 'error',
                                 title: 'Oops...',
                                 text: "File Doesn't belongs to Motor Policy",
+                            });
+                        }
+                        if (result == -3) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: "File which you trying to upload is incorrect.!",
                             });
                         }
                         if (result == "success") {
@@ -549,10 +596,12 @@
         });
         $('.fileuploader-input').click(function () {
             $("#fileUploadMotor").click();
+
         });
         $('#clearFiles').click(function () {
             $("#fileContainer").hide();
             $('#fileUploadMotor').val('');
+            $("#btnUpload").attr("disabled", "disabled");
         });
         $('#clearFiles').hover(
             function () {
@@ -570,7 +619,9 @@
             $("#fileName").html(fileName);
             fileSize = (fileSize / 1024).toFixed(2);
             $("#fileSize").html(fileSize + " KB");
-
+            //if (document.getElementById("fileUploadMotor").files.length == 0) {
+            $("#btnUpload").removeAttr("disabled", "disabled");
+            //}
             //alert('The file "' + fileName + '" has been selected.');
         });
     });
@@ -705,33 +756,33 @@
             })
         });
     });
-    $(document).ready(function () {
-        $("#PolicyNo").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#tblMotor tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-        $("#EndorsementNo").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#tblMotor tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-        $("#AssuredName").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#tblMotor tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-        $("#MobileNo").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#tblMotor tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
+  //  $(document).ready(function () {
+        //$("#PolicyNo").on("keyup", function () {
+        //    var value = $(this).val().toLowerCase();
+        //    $("#tblMotor tr").filter(function () {
+        //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        //    });
+        //});
+        //$("#EndorsementNo").on("keyup", function () {
+        //    var value = $(this).val().toLowerCase();
+        //    $("#tblMotor tr").filter(function () {
+        //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        //    });
+        //});
+        //$("#AssuredName").on("keyup", function () {
+        //    var value = $(this).val().toLowerCase();
+        //    $("#tblMotor tr").filter(function () {
+        //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        //    });
+        //});
+        //$("#MobileNo").on("keyup", function () {
+        //    var value = $(this).val().toLowerCase();
+        //    $("#tblMotor tr").filter(function () {
+        //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        //    });
+        //});
 
-    });
+   // });
     window.onload = function () {
         var btn = document.getElementById('uploadBtn'),
             progressBar = document.getElementById('progressBar'),
@@ -743,7 +794,7 @@
 
         // Create FormData object
         var fileData = new FormData();
-
+        $("#btnUpload").attr("disabled", "disabled");
         // Looping over all files and add it to FormData object
         for (var i = 0; i < files.length; i++) {
             fileData.append(files[i].name, files[i]);
@@ -752,8 +803,20 @@
             dom: 'Bfrtip',
             buttons: {
                 buttons: [
-                    { extend: 'csv', className: 'btn btn-sm btn-primary' },
-                    { extend: 'pdf', className: 'btn btn-sm btn-primary' }
+                    {
+                        extend: 'csv',
+                        className: 'btn btn-sm btn-primary',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5]
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        className: 'btn btn-sm btn-primary',
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5]
+                        }
+                    }
                 ]
             }
         });
@@ -776,6 +839,7 @@
                 btn.innerHTML = 'Uploading...'; // change button text to "Uploading..."
             },
             onComplete: function (filename, response) {
+
                 btn.innerHTML = 'Choose Another File';
                 progressOuter.style.display = 'none'; // hide progress bar when upload is completed
 
