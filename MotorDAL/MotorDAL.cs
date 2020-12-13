@@ -468,6 +468,7 @@ namespace MotorApp.DAL
                                          RenewalPremium = Convert.ToInt64(dr["RenewalPremium"]),
                                          MarketingExecutive = dr["MarketingExecutive"].ToString(),
                                          Remarks = dr["Remarks"].ToString(),
+                                         ProducerName = dr["ProducerName"].ToString(),
 
                                      }).ToList();
                     }
@@ -881,12 +882,27 @@ namespace MotorApp.DAL
                         Connection = con,
                         CommandType = CommandType.StoredProcedure
                     };
-                    cmd.Parameters.AddWithValue("@Password", "1234");
+                    cmd.Parameters.AddWithValue("@Password", obj.Password);
                     cmd.Parameters.AddWithValue("@RoleId", obj.Role);
                     cmd.Parameters.AddWithValue("@UserName", obj.UserName);
 
+                    SqlParameter param = new SqlParameter
+                    {
+                        ParameterName = "@Return",
+                        Direction = ParameterDirection.Output,
+                        SqlDbType = SqlDbType.Int
+                    };
+                    //cmd.Parameters.Add(UDTparam);
+                    cmd.Parameters.Add(param);
 
-                    returnCode = cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery();
+                    if (cmd.Parameters["@Return"].Value != DBNull.Value)
+                    {
+                        returnCode = Convert.ToInt64(cmd.Parameters["@Return"].Value);
+                    }
+                    else
+                        // returnCode = 0;
+                        returnCode = 0;// cmd.ExecuteNonQuery();
 
 
                 }
@@ -1462,10 +1478,10 @@ namespace MotorApp.DAL
             }
             return returnCode;
         }
-        public long GetSearchIns(long RoleId, string PolicyNo, string DivisionName, string AssuredName, string ProductName, string Status,out List<Insurance> lstNewIns)
+        public long GetSearchIns(long RoleId, string PolicyNo, string DivisionName, string AssuredName, string ProductName, string Status, out List<Insurance> lstNewIns)
         {
             long returnCode = -1;
-           
+
             lstNewIns = new List<Insurance>();
 
             try
@@ -1481,7 +1497,7 @@ namespace MotorApp.DAL
 
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Connection = con;
-                    
+
                     cmd.Parameters.AddWithValue("@RoleId", RoleId);
                     cmd.Parameters.AddWithValue("@PolicyNo", PolicyNo);
                     cmd.Parameters.AddWithValue("@DivisionName", DivisionName);
@@ -1495,7 +1511,7 @@ namespace MotorApp.DAL
                         SelectCommand = cmd
                     };
                     sdaAdapter.Fill(ds);
-                    
+
                     if (ds.Tables[0].Rows.Count > 0)
                     {
                         lstNewIns = (from DataRow dr in ds.Tables[0].Rows
@@ -1540,6 +1556,51 @@ namespace MotorApp.DAL
                 throw ex;
             }
             return returnCode;
+        }
+        public List<Users> GetUserList(string BussType)
+        {
+            List<Users> lst = new List<Users>();
+            try
+            {
+                DataSet ds = new DataSet();
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = "SP_GetUserList"
+                    };
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+                    cmd.Parameters.AddWithValue("@BusinessType", BussType);
+
+                    SqlDataAdapter sdaAdapter = new SqlDataAdapter
+                    {
+                        SelectCommand = cmd
+                    };
+                    sdaAdapter.Fill(ds);
+
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        lst = (from DataRow dr in ds.Tables[0].Rows
+                               select new Users()
+                               {
+                                   UserId = (long)dr["UserId"],
+                                   UserName = dr["UserName"].ToString(),
+                                   Password = dr["Password"].ToString(),
+                                   RoleId = (long)dr["RoleId"],
+                                   RoleName = dr["RoleName"].ToString(),
+                               }).ToList();
+                    }
+                    cmd.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return lst;
         }
     }
 }

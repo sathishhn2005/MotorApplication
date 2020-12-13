@@ -453,7 +453,7 @@ namespace MotorApp.Controllers
                     HttpPostedFileBase file = Request.Files[0];
                     string fname; string alert = string.Empty; ;
                     int rowsCnt = 0;
-                   // string fileMismatchErr = string.Empty ;
+                    // string fileMismatchErr = string.Empty ;
                     fname = file.FileName;
                     if (fname.Equals("NewBulkUpload.xlsx"))
                     {
@@ -712,6 +712,36 @@ namespace MotorApp.Controllers
                 IList<Insurance> motorList = new List<Insurance>();
                 motorList = lstNewIns;
                 var std = motorList.Where(s => s.InsuranceID == MotorId).FirstOrDefault();
+                string BT = string.Empty;
+                BT = std.BusinessType;
+                string usr = std.ProducerName;
+                List<Users> lstUsers = objMotorBAL.GetListOfUsers(BT);
+                List<SelectListItem> lstUserList = new List<SelectListItem>();
+                foreach (var item in lstUsers)
+                {
+                    if (usr.Equals(item.UserName))
+                    {
+                        lstUserList.Add(
+                             new SelectListItem
+                             {
+                                 Text = item.UserName,
+                                 Value = item.UserName,
+                                 Selected = true
+                             });
+
+                    }
+                    else
+                    {
+                        lstUserList.Add(
+                         new SelectListItem
+                         {
+                             Text = item.UserName,
+                             Value = item.UserName,
+                             
+                         });
+                    }
+                }
+                ViewBag.ListOfUsers = lstUserList;
 
                 return View("MotorInsurance", std);
             }
@@ -836,7 +866,7 @@ namespace MotorApp.Controllers
         {
             try
             {
-               // ModelState.Clear();
+                // ModelState.Clear();
 
                 string PolicyNo = Request["PolicyNo"].ToString();
                 List<MotorModel> lst = new List<MotorModel>();
@@ -1189,6 +1219,25 @@ namespace MotorApp.Controllers
                 throw ex;
             }
             return i;
+        }
+        public JsonResult GetUserList(string BusinessType)
+        {
+            try
+            {
+                List<Users> lst = new List<Users>();
+                lst = objMotorBAL.GetListOfUsers(BusinessType);
+
+                return Json(new
+                {
+                    list = lst
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
         }
     }
 

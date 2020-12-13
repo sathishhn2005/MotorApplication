@@ -69,6 +69,8 @@ namespace MotorApp.BusinessEntities
         [Display(Name = "Producer Name")]
         public string ProducerName { get; set; }
         public InssType InsuranceType { get; set; }
+
+
         
     }
     public enum InssType

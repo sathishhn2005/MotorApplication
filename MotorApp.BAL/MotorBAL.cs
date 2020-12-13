@@ -544,5 +544,27 @@ namespace MotorApp.BAL
                 return returnCode;
             }
         }
+        public List<Users> GetListOfUsers(string BT)
+        {
+            List<Users> lst = new List<Users>();
+            using (TransactionScope transactionScope = new TransactionScope())
+            {
+                try
+                {
+
+                    lst = objMotorAppDAL.GetUserList(BT);
+                    transactionScope.Complete();
+                    transactionScope.Dispose();
+
+                }
+                catch (Exception ex)
+                {
+                    transactionScope.Dispose();
+                    throw ex;
+                }
+
+                return lst;
+            }
+        }
     }
 }
