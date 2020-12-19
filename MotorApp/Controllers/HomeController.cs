@@ -221,7 +221,8 @@ namespace MotorApp.Controllers
 
 
                 else if (lstNewIns != null)
-                    return View(lstNewIns.Where(x => x.InsType == "Motor").OrderBy(x => x.InsuranceID));
+                    return View(lstNewIns.Where(x => x.ProducerName == U_Name).OrderBy(x => x.InsuranceID));
+              //  return View(lstNewIns.Where(x => x.InsType == "Motor").OrderBy(x => x.InsuranceID));
                 else
                     return RedirectToAction("Login");
 
