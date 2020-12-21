@@ -13,7 +13,7 @@ namespace MotorApp.DAL
     {
         Utility objUtility = new Utility();
 
-        public long BulkUploadMotor(string Extension, string filePath, int reqFrom, out int rowsCnt, out string fileMismatchErr)
+        public long BulkUploadMotor(string Extension, string filePath, int reqFrom, out int rowsCnt, out string fileMismatchErr,string UserName)
         {
             long returnCode = -1;
             reqFrom = 0;
@@ -120,6 +120,7 @@ namespace MotorApp.DAL
                             Size = -1,
                             Value = dt
                         };
+                        cmd.Parameters.AddWithValue("@UserName", UserName);
                         cmd.Parameters.Add(UDTparam);
                         returnCode = cmd.ExecuteNonQuery();
                     }
@@ -468,7 +469,7 @@ namespace MotorApp.DAL
                                          RenewalPremium = Convert.ToInt64(dr["RenewalPremium"]),
                                          MarketingExecutive = dr["MarketingExecutive"].ToString(),
                                          Remarks = dr["Remarks"].ToString(),
-                                         ProducerName = dr["ProducerName"].ToString(),
+                                         ProducerName = dr["ProducerName"].ToString()
 
                                      }).ToList();
                     }
@@ -1165,11 +1166,11 @@ namespace MotorApp.DAL
             }
             return lst;
         }
-        public long SaveInsu(Insurance obj)
+        public long SaveInsu(Insurance obj,string Uname,out string U)
         {
             long returnCode = -1;
             DataTable dt = new DataTable();
-
+            U = Uname;
             try
             {
                 using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
@@ -1201,6 +1202,7 @@ namespace MotorApp.DAL
                                 Direction = ParameterDirection.Output,
                                 SqlDbType = SqlDbType.Int
                             };
+                            cmd.Parameters.AddWithValue("@UserName", Uname);
                             cmd.Parameters.Add(UDTparam);
                             cmd.Parameters.Add(param);
 
@@ -1233,6 +1235,7 @@ namespace MotorApp.DAL
                                 Direction = ParameterDirection.Output,
                                 SqlDbType = SqlDbType.Int
                             };
+                            cmd.Parameters.AddWithValue("@UserName", Uname);
                             cmd.Parameters.Add(UDTparam);
                             cmd.Parameters.Add(param);
 
@@ -1244,7 +1247,7 @@ namespace MotorApp.DAL
                             else
                                 returnCode = 0;
                         }
-
+                        
                     }
 
                 }
