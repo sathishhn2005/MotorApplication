@@ -10,7 +10,7 @@ namespace MotorApp.BusinessEntities
     public class Insurance
     {
         
-
+        public string UserName { get; set; }
         public long InsuranceID { get; set; }
 
         [Display(Name = "Division Code")]

@@ -90,19 +90,22 @@
                     <input type="file" name="postedFile" id="fileUploadMotor" accept=".xls,.xlsx" />
                     <input type="hidden" id="txtMotorMaster" name="txtMotorMaster" value="1">
                     @*
-                        <button type="submit" id="btnUpload" class="btn btn-success btn-sm waves-effect">Upload Data</button>*@
+            <button type="submit" id="btnUpload" class="btn btn-success btn-sm waves-effect">Upload Data</button>*@
                 </div>
-                <div>
-                    <a class="btn btn-primary btn-sm mx-1" href="MotorInsurance#step-1">
-                        <i class="fas fa-user-plus fa-sm"></i> Add
-                        Single Policy
-                    </a>
-                    <button class="btn btn-primary btn-sm mx-1" type="button" data-toggle="modal" data-backdrop="static"
-                            data-target="#uploadBulk">
-                        <i class="fas fa-upload fa-sm"></i> Bulk Upload Policy
-                    </button>
+                @if (ViewBag.RoleId == 1)
+                {
+                    <div>
+                        <a class="btn btn-primary btn-sm mx-1" href="MotorInsurance#step-1">
+                            <i class="fas fa-user-plus fa-sm"></i> Add
+                            Single Policy
+                        </a>
+                        <button class="btn btn-primary btn-sm mx-1" type="button" data-toggle="modal" data-backdrop="static"
+                                data-target="#uploadBulk">
+                            <i class="fas fa-upload fa-sm"></i> Bulk Upload Policy
+                        </button>
 
-                </div>
+                    </div>
+                }
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -115,7 +118,10 @@
                                 <th>Policy Start Date</th>
                                 <th>Policy End Date</th>
                                 <th>Status</th>
-                                <th>Actions</th>
+                                @if (ViewBag.RoleId == 1)
+                                {
+                                    <th>Actions</th>
+                                }
                             </tr>
                         </thead>
                         @if (Model.Count() == 0)
@@ -154,17 +160,19 @@
                                             <span class="badge badge-info"></span>
                                         }
                                     </td>
-
-                                    <td class="d-flex flex-row align-items-center justify-content-between">
-                                        <i class="fas fa-phone pointer" aria-hidden="true" data-toggle="modal"
-                                           data-target="#myModal" onclick="renewal(@item.InsuranceID)"></i>
-                                        @*
-                                            <i class="fas fa-eye pointer" aria-hidden="true" data-toggle="modal"
-                                               data-target="#myModal"></i>*@
-                                        <a href="Edit?MotorID=@item.InsuranceID">
-                                            <i class="fas fa-pencil-alt pointer" aria-hidden="true"></i>
-                                        </a>
-                                    </td>
+                                    @if (ViewBag.RoleId == 1)
+                                    {
+                                        <td class="d-flex flex-row align-items-center justify-content-between">
+                                            <i class="fas fa-phone pointer" aria-hidden="true" data-toggle="modal"
+                                               data-target="#myModal" onclick="renewal(@item.InsuranceID)"></i>
+                                            @*
+                                                <i class="fas fa-eye pointer" aria-hidden="true" data-toggle="modal"
+                                                   data-target="#myModal"></i>*@
+                                            <a href="Edit?MotorID=@item.InsuranceID">
+                                                <i class="fas fa-pencil-alt pointer" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
+                                    }
                                 </tr>
                             }
                         }
@@ -756,33 +764,33 @@
             })
         });
     });
-  //  $(document).ready(function () {
-        //$("#PolicyNo").on("keyup", function () {
-        //    var value = $(this).val().toLowerCase();
-        //    $("#tblMotor tr").filter(function () {
-        //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        //    });
-        //});
-        //$("#EndorsementNo").on("keyup", function () {
-        //    var value = $(this).val().toLowerCase();
-        //    $("#tblMotor tr").filter(function () {
-        //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        //    });
-        //});
-        //$("#AssuredName").on("keyup", function () {
-        //    var value = $(this).val().toLowerCase();
-        //    $("#tblMotor tr").filter(function () {
-        //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        //    });
-        //});
-        //$("#MobileNo").on("keyup", function () {
-        //    var value = $(this).val().toLowerCase();
-        //    $("#tblMotor tr").filter(function () {
-        //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        //    });
-        //});
+    //  $(document).ready(function () {
+    //$("#PolicyNo").on("keyup", function () {
+    //    var value = $(this).val().toLowerCase();
+    //    $("#tblMotor tr").filter(function () {
+    //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    //    });
+    //});
+    //$("#EndorsementNo").on("keyup", function () {
+    //    var value = $(this).val().toLowerCase();
+    //    $("#tblMotor tr").filter(function () {
+    //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    //    });
+    //});
+    //$("#AssuredName").on("keyup", function () {
+    //    var value = $(this).val().toLowerCase();
+    //    $("#tblMotor tr").filter(function () {
+    //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    //    });
+    //});
+    //$("#MobileNo").on("keyup", function () {
+    //    var value = $(this).val().toLowerCase();
+    //    $("#tblMotor tr").filter(function () {
+    //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    //    });
+    //});
 
-   // });
+    // });
     window.onload = function () {
         var btn = document.getElementById('uploadBtn'),
             progressBar = document.getElementById('progressBar'),

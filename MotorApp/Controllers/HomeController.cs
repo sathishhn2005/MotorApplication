@@ -98,12 +98,12 @@ namespace MotorApp.Controllers
                     //ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
                     //ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
                     //ViewBag.PolicyLost = lstInfo.PolicyLost;
-                    ViewBag.UserName = "";
-
+                    ViewBag.UserName = lstInfo.UserName;
+                    TempData["un"] = lstInfo.UserName;
                     if (lstInfo != null)
                     {
                         U_Name = lstInfo.UserName;
-                        //    ViewBag.UserName = U_Name;
+                        ViewBag.UserName = U_Name;
                     }
                     if (!returnCode.Equals(1))
                     {
@@ -221,7 +221,8 @@ namespace MotorApp.Controllers
 
 
                 else if (lstNewIns != null)
-                    return View(lstNewIns.Where(x => x.InsType == "Motor").OrderBy(x => x.InsuranceID));
+                    return View(lstNewIns.Where(x => x.ProducerName == U_Name).OrderBy(x => x.InsuranceID));
+
                 else
                     return RedirectToAction("Login");
 
@@ -230,7 +231,7 @@ namespace MotorApp.Controllers
             {
                 return RedirectToAction("Login");
             }
-            //return View(lstNewIns.Where(x => x.InsType == "Motor").OrderBy(x => x.InsuranceID));
+
 
         }
         public ActionResult MasterDatabase()
@@ -465,8 +466,12 @@ namespace MotorApp.Controllers
                         // Returns message that successfully uploaded  
                         if (extension.Equals(".xls") || extension.Equals(".xlsx"))
                         {
-
-                            long returnCode = objMotorBAL.BulkUploadMotor(extension, filePath, reqFrom, out rowsCnt, out string fileMismatchErr);
+                            string UN = TempData["un"].ToString();
+                            if (string.IsNullOrEmpty(UN))
+                            {
+                                UN = "Admin";
+                            }
+                            long returnCode = objMotorBAL.BulkUploadMotor(extension, filePath, reqFrom, out rowsCnt, out string fileMismatchErr, UN);
                             if (returnCode.Equals(0))
                             {
                                 alert = "All the Records already exists. Try uploading new data.";
@@ -737,7 +742,11 @@ namespace MotorApp.Controllers
                          {
                              Text = item.UserName,
                              Value = item.UserName,
+<<<<<<< Updated upstream
                              
+=======
+
+>>>>>>> Stashed changes
                          });
                     }
                 }
@@ -1065,14 +1074,29 @@ namespace MotorApp.Controllers
             long returnCode = -1;
             try
             {
-                returnCode = objMotorBAL.SaveNewIns(model);
+                string UN = string.Empty;
+
+
+                if (TempData["un"] == null)
+                {
+                    UN = "Admin";
+                    //UN = lstInfo.UserName;
+                }
+                else
+                {
+                    UN = TempData["un"].ToString() ?? "";
+
+                }
+                returnCode = objMotorBAL.SaveNewIns(model, UN, out string u);
                 if (model.InsuranceID > 0 && returnCode > 0)
                 {
                     returnCode = 2;
+                    TempData["un"] = u;
                 }
                 if (model.InsuranceID.Equals(0) && returnCode > 0)
                 {
                     returnCode = 1;
+                    TempData["un"] = u;
                 }
             }
             catch (Exception ex)

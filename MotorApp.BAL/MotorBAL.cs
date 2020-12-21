@@ -13,7 +13,7 @@ namespace MotorApp.BAL
     public class MotorBAL
     {
         MotorDAL objMotorAppDAL = new MotorDAL();
-        public long BulkUploadMotor(string Extension, string filePath, int reqFrom, out int rowsCnt, out string fileMismatchErr)
+        public long BulkUploadMotor(string Extension, string filePath, int reqFrom, out int rowsCnt, out string fileMismatchErr,string UserName)
         {
             long returnCode = -1;
             rowsCnt = 0;
@@ -22,7 +22,7 @@ namespace MotorApp.BAL
                 try
                 {
 
-                    returnCode = objMotorAppDAL.BulkUploadMotor(Extension, filePath, reqFrom, out rowsCnt, out fileMismatchErr);
+                    returnCode = objMotorAppDAL.BulkUploadMotor(Extension, filePath, reqFrom, out rowsCnt, out fileMismatchErr,UserName);
                     transactionScope.Complete();
                     transactionScope.Dispose();
 
@@ -391,7 +391,7 @@ namespace MotorApp.BAL
                 return returnCode;
             }
         }
-        public long SaveNewIns(Insurance objMotorModal)
+        public long SaveNewIns(Insurance objMotorModal,string Uname,out string u)
         {
             long returnCode = -1;
 
@@ -399,7 +399,7 @@ namespace MotorApp.BAL
             {
                 try
                 {
-                    returnCode = objMotorAppDAL.SaveInsu(objMotorModal);
+                    returnCode = objMotorAppDAL.SaveInsu(objMotorModal, Uname,out u);
                     transactionScope.Complete();
                     transactionScope.Dispose();
 
