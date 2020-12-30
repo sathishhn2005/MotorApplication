@@ -28,28 +28,29 @@
         <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 @*<div class="sidebar-brand-icon">
-                        <img src="~/img/logo/logoMI.png">
-                    </div>*@
+                <img src="~/img/logo/logoMI.png">
+            </div>*@
                 <div class="sidebar-brand-text mx-2">Motor <span class="logo-sub">Renet</span></div>
             </a>
             <hr class="sidebar-divider mb-3 mt-0" />
             <div class="sidebar-heading">
                 Dashboard
             </div>
-            @if (ViewBag.RoleId == 1)
-            {
+
             <li class="nav-item ">
                 <a class="nav-link" href="index">
                     <i class="fas fa-fw fa-star"></i>
                     <span>MIS Dashboard</span>
                 </a>
             </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="indexBI">
-                    <i class="fas fa-fw fa-star"></i>
-                    <span>BI Dashboard</span>
-                </a>
-            </li>
+            @if (ViewBag.RoleId == 1)
+            {
+                <li class="nav-item ">
+                    <a class="nav-link" href="indexBI">
+                        <i class="fas fa-fw fa-star"></i>
+                        <span>BI Dashboard</span>
+                    </a>
+                </li>
             }
             <li class="nav-item ">
                 <a class="nav-link" href="MotorDB">
@@ -77,32 +78,32 @@
             </li>
             <hr class="sidebar-divider">
             <div class="sidebar-heading">
-                Masters
+                
             </div>
             <li class="nav-item">
                 <a class="nav-link" href="MasterDatabase">
                     <i class="fas fa-fw fa-car"></i>
-                    <span>Masters Page</span>
+                    <span>Transcation</span>
                 </a>
             </li>
             @*<li class="nav-item">
-                    <a class="nav-link" href="MasterTravel">
-                        <i class="fas fa-fw fa-user"></i>
-                        <span>Travel Insurance Masters</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="MasterIndividual">
-                        <i class="fas fa-fw fa-plane"></i>
-                        <span>Individual Insurance Masters</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="MasterDomestic">
-                        <i class="fas fa-fw fa-users"></i>
-                        <span>Domestic Insurance Masters</span>
-                    </a>
-                </li>*@
+            <a class="nav-link" href="MasterTravel">
+                <i class="fas fa-fw fa-user"></i>
+                <span>Travel Insurance Masters</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="MasterIndividual">
+                <i class="fas fa-fw fa-plane"></i>
+                <span>Individual Insurance Masters</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="MasterDomestic">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Domestic Insurance Masters</span>
+            </a>
+        </li>*@
             <li class="nav-item hide">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
                    aria-expanded="true" aria-controls="collapseBootstrap">
@@ -294,7 +295,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
                                 @*<img class="img-profile rounded-circle" src="~/img/boy.png" style="max-width: 60px">*@
-                                @*<span class="ml-2 d-none d-lg-inline text-white font-16">Welcome <b>@ViewBag.UserName</b></span>*@
+                                <span class="ml-2 d-none d-lg-inline text-white font-16">Welcome <b>@ViewBag.UserName</b></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 @*<a class="dropdown-item" href="#">

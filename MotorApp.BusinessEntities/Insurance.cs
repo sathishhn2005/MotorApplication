@@ -12,9 +12,11 @@ namespace MotorApp.BusinessEntities
         
         public string UserName { get; set; }
         public long InsuranceID { get; set; }
-
         [Display(Name = "Division Code")]
         public string DivisionCode { get; set; }
+
+        [Display(Name = "Description")]
+        public string Description { get; set; }
         [Display(Name = "Division Name")]
         public string DivisionName { get; set; }
         [Display(Name = "Product Code")]

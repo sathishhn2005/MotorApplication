@@ -135,7 +135,7 @@ namespace MotorApp.Controllers
             if (IsLoggedIn > 0)
             {
                 ViewBag.RoleId = RoleId;
-
+                ViewBag.UserName = U_Name;
                 return View();
             }
             else
@@ -150,7 +150,7 @@ namespace MotorApp.Controllers
         {
             List<DashBoard> lst = new List<DashBoard>();
             List<DataPoint> dataPoints = new List<DataPoint>();
-            dataPoints = objMotorBAL.GetBarChart(TypeId);
+            dataPoints = objMotorBAL.GetBarChart(TypeId, U_Name);
 
             ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
 
@@ -191,15 +191,16 @@ namespace MotorApp.Controllers
                 string productName = objMotorModel.ProductName ?? "";
                 string instype = objMotorModel.InsType ?? "";
                 string Status = objMotorModel.Status ?? "";
-
+                ViewBag.UserName = U_Name;
                 List<Insurance> lst = new List<Insurance>();
 
-                if (!string.IsNullOrEmpty(PolicyNo) || !string.IsNullOrEmpty(divisionName) || !string.IsNullOrEmpty(productName) || !string.IsNullOrEmpty(AssuredName) || !string.IsNullOrEmpty(instype))
+                if (!string.IsNullOrEmpty(PolicyNo) || !string.IsNullOrEmpty(divisionName) || !string.IsNullOrEmpty(productName) || !string.IsNullOrEmpty(AssuredName)
+                    || !string.IsNullOrEmpty(Status))
 
                 {
                     if (RoleId.Equals(1))
                     {
-                        long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, out lst);
+                        long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, U_Name, out lst);
                         //if (lstNewIns.Count > 0)
                         //{
                         //    lst = lstNewIns.Where(x => x.PolicyNo == PolicyNo.Trim() || x.DivisionName == divisionName.Trim() ||
@@ -208,14 +209,14 @@ namespace MotorApp.Controllers
                     }
                     else
                     {
-                        long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, out lst);
+                        long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, U_Name, out lst);
                     }
 
                     return View(lst);
                 }
                 else if (RoleId.Equals(1))
                 {
-                    long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, out lst);
+                    long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, U_Name, out lst);
                     return View(lst);
                 }
 
@@ -466,7 +467,15 @@ namespace MotorApp.Controllers
                         // Returns message that successfully uploaded  
                         if (extension.Equals(".xls") || extension.Equals(".xlsx"))
                         {
-                            string UN = TempData["un"].ToString();
+                            string UN = string.Empty;
+                            if (TempData["un"] == null)
+                            {
+                                UN = "Admin";
+                            }
+                            else
+                            {
+                                UN = TempData["un"].ToString() ?? "";
+                            }
                             if (string.IsNullOrEmpty(UN))
                             {
                                 UN = "Admin";
@@ -476,11 +485,13 @@ namespace MotorApp.Controllers
                             {
                                 alert = "All the Records already exists. Try uploading new data.";
                                 textAlert = "same";
+                                TempData["un"] = UN;
                             }
                             else if (returnCode > 0)
                             {
                                 alert = "File Uploaded Successfully!";
                                 textAlert = "success";
+                                TempData["un"] = UN;
                             }
 
                             if (string.IsNullOrEmpty(fileMismatchErr))
@@ -613,7 +624,7 @@ namespace MotorApp.Controllers
             {
                 if (model.RevisedSumInsured > 0 && model.GrossPremium > 0 && model.RenewalPremium > 0 && model.InsuranceID > 0)
                 {
-                    returnCode = objMotorBAL.UpdateNewIns(model);
+                    returnCode = objMotorBAL.UpdateNewIns(model,U_Name);
                     //  returnCode = objMotorBAL.SaveNewIns(model);
                 }
                 else
@@ -714,6 +725,7 @@ namespace MotorApp.Controllers
             if (IsLoggedIn > 0)
             {
                 ViewBag.RoleId = RoleId;
+                ViewBag.UserName = U_Name;
                 IList<Insurance> motorList = new List<Insurance>();
                 motorList = lstNewIns;
                 var std = motorList.Where(s => s.InsuranceID == MotorId).FirstOrDefault();
@@ -742,11 +754,7 @@ namespace MotorApp.Controllers
                          {
                              Text = item.UserName,
                              Value = item.UserName,
-<<<<<<< Updated upstream
-                             
-=======
 
->>>>>>> Stashed changes
                          });
                     }
                 }
@@ -924,6 +932,7 @@ namespace MotorApp.Controllers
                 ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
                 ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
                 ViewBag.PolicyLost = lstInfo.PolicyLost;
+                ViewBag.UserName = lstInfo.UserName;
                 if (!returnCode.Equals(1))
                 {
 
@@ -954,6 +963,7 @@ namespace MotorApp.Controllers
                 ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
                 ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
                 ViewBag.PolicyLost = lstInfo.PolicyLost;
+                ViewBag.UserName = lstInfo.UserName;
                 if (!returnCode.Equals(1))
                 {
 
@@ -985,6 +995,7 @@ namespace MotorApp.Controllers
                 ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
                 ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
                 ViewBag.PolicyLost = lstInfo.PolicyLost;
+                ViewBag.UserName = lstInfo.UserName;
                 if (!returnCode.Equals(1))
                 {
 
@@ -1015,6 +1026,7 @@ namespace MotorApp.Controllers
                 ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
                 ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
                 ViewBag.PolicyLost = lstInfo.PolicyLost;
+                ViewBag.UserName = lstInfo.UserName;
 
                 if (!returnCode.Equals(1))
                 {

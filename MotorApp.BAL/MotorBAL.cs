@@ -341,7 +341,7 @@ namespace MotorApp.BAL
                 return returnCode;
             }
         }
-        public List<DataPoint> GetBarChart(int flag)
+        public List<DataPoint> GetBarChart(int flag, string uname)
         {
 
             List<DataPoint> lst = new List<DataPoint>();
@@ -349,7 +349,7 @@ namespace MotorApp.BAL
             {
                 try
                 {
-                    lst = objMotorAppDAL.GetDBBarchart(flag);
+                    lst = objMotorAppDAL.GetDBBarchart(flag, uname);
 
                     transactionScope.Complete();
                     transactionScope.Dispose();
@@ -413,7 +413,7 @@ namespace MotorApp.BAL
                 return returnCode;
             }
         }
-        public long UpdateNewIns(Insurance objMotorModal)
+        public long UpdateNewIns(Insurance objMotorModal,string uname)
         {
             long returnCode = -1;
 
@@ -421,7 +421,7 @@ namespace MotorApp.BAL
             {
                 try
                 {
-                    returnCode = objMotorAppDAL.NewInsUpdate(objMotorModal);
+                    returnCode = objMotorAppDAL.NewInsUpdate(objMotorModal, uname);
                     transactionScope.Complete();
                     transactionScope.Dispose();
 
@@ -522,7 +522,7 @@ namespace MotorApp.BAL
                 return returnCode;
             }
         }
-        public long GetSearchData(long RoleId, string PolicyNo, string DivisionName, string AssuredName, string ProductName, string Status, out List<Insurance> lstNewIns)
+        public long GetSearchData(long RoleId, string PolicyNo, string DivisionName, string AssuredName, string ProductName, string Status, string Uname, out List<Insurance> lstNewIns)
         {
             long returnCode = -1;
 
@@ -530,7 +530,7 @@ namespace MotorApp.BAL
             {
                 try
                 {
-                    returnCode = objMotorAppDAL.GetSearchIns(RoleId, PolicyNo, DivisionName, AssuredName, ProductName, Status, out lstNewIns);
+                    returnCode = objMotorAppDAL.GetSearchIns(RoleId, PolicyNo, DivisionName, AssuredName, ProductName, Status, Uname, out lstNewIns);
                     transactionScope.Complete();
                     transactionScope.Dispose();
 

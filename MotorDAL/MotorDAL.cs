@@ -469,12 +469,8 @@ namespace MotorApp.DAL
                                          RenewalPremium = Convert.ToInt64(dr["RenewalPremium"]),
                                          MarketingExecutive = dr["MarketingExecutive"].ToString(),
                                          Remarks = dr["Remarks"].ToString(),
-<<<<<<< Updated upstream
                                          ProducerName = dr["ProducerName"].ToString(),
-=======
-                                         ProducerName = dr["ProducerName"].ToString()
->>>>>>> Stashed changes
-
+                                         Description = dr["Description"].ToString(),
                                      }).ToList();
                     }
                     returnCode = 1;
@@ -1124,7 +1120,7 @@ namespace MotorApp.DAL
             }
             return lst;
         }
-        public List<DataPoint> GetDBBarchart(int flag)
+        public List<DataPoint> GetDBBarchart(int flag,string uname)
         {
             List<DataPoint> lst = new List<DataPoint>();
             try
@@ -1141,6 +1137,7 @@ namespace MotorApp.DAL
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Connection = con;
                     cmd.Parameters.AddWithValue("@flag", flag);
+                    cmd.Parameters.AddWithValue("@UserName", uname);
 
                     SqlDataAdapter sdaAdapter = new SqlDataAdapter
                     {
@@ -1263,7 +1260,7 @@ namespace MotorApp.DAL
             }
             return returnCode;
         }
-        public long NewInsUpdate(Insurance objMotorModel)
+        public long NewInsUpdate(Insurance objMotorModel, string uname)
         {
             long returnCode = -1;
             DataTable dt = new DataTable();
@@ -1282,13 +1279,14 @@ namespace MotorApp.DAL
                         CommandType = CommandType.StoredProcedure
                     };
 
-                    cmd.Parameters.AddWithValue("@CustomerCode", objMotorModel.CustomerCode ?? "");
-                    cmd.Parameters.AddWithValue("@CustomerName", objMotorModel.CustomerName ?? "");
+
                     cmd.Parameters.AddWithValue("@PremiumAmount", objMotorModel.RenewalPremium);
                     cmd.Parameters.AddWithValue("@RivisedSI", objMotorModel.RevisedSumInsured);
                     cmd.Parameters.AddWithValue("@InsId", objMotorModel.InsuranceID);
                     cmd.Parameters.AddWithValue("@GrossPremium", objMotorModel.GrossPremium);
                     cmd.Parameters.AddWithValue("@Status", objMotorModel.Status ?? "");
+                    cmd.Parameters.AddWithValue("@Description", objMotorModel.Description ?? "");
+                    cmd.Parameters.AddWithValue("@UserName", uname ?? "");
 
                     returnCode = cmd.ExecuteNonQuery();
 
@@ -1485,7 +1483,7 @@ namespace MotorApp.DAL
             }
             return returnCode;
         }
-        public long GetSearchIns(long RoleId, string PolicyNo, string DivisionName, string AssuredName, string ProductName, string Status, out List<Insurance> lstNewIns)
+        public long GetSearchIns(long RoleId, string PolicyNo, string DivisionName, string AssuredName, string ProductName, string Status,string Uname, out List<Insurance> lstNewIns)
         {
             long returnCode = -1;
 
@@ -1511,6 +1509,7 @@ namespace MotorApp.DAL
                     cmd.Parameters.AddWithValue("@AssuredName", AssuredName);
                     cmd.Parameters.AddWithValue("@ProductName", ProductName);
                     cmd.Parameters.AddWithValue("@Status", Status);
+                    cmd.Parameters.AddWithValue("@ProducerName", Uname);
 
 
                     SqlDataAdapter sdaAdapter = new SqlDataAdapter

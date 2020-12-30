@@ -90,7 +90,7 @@
                     <input type="file" name="postedFile" id="fileUploadMotor" accept=".xls,.xlsx" />
                     <input type="hidden" id="txtMotorMaster" name="txtMotorMaster" value="1">
                     @*
-            <button type="submit" id="btnUpload" class="btn btn-success btn-sm waves-effect">Upload Data</button>*@
+                        <button type="submit" id="btnUpload" class="btn btn-success btn-sm waves-effect">Upload Data</button>*@
                 </div>
                 @if (ViewBag.RoleId == 1)
                 {
@@ -118,10 +118,9 @@
                                 <th>Policy Start Date</th>
                                 <th>Policy End Date</th>
                                 <th>Status</th>
-                                @if (ViewBag.RoleId == 1)
-                                {
-                                    <th>Actions</th>
-                                }
+
+                                <th>Actions</th>
+
                             </tr>
                         </thead>
                         @if (Model.Count() == 0)
@@ -160,19 +159,18 @@
                                             <span class="badge badge-info"></span>
                                         }
                                     </td>
-                                    @if (ViewBag.RoleId == 1)
-                                    {
-                                        <td class="d-flex flex-row align-items-center justify-content-between">
-                                            <i class="fas fa-phone pointer" aria-hidden="true" data-toggle="modal"
-                                               data-target="#myModal" onclick="renewal(@item.InsuranceID)"></i>
-                                            @*
-                                                <i class="fas fa-eye pointer" aria-hidden="true" data-toggle="modal"
-                                                   data-target="#myModal"></i>*@
+                                    <td class="d-flex flex-row align-items-center justify-content-between">
+                                        <i class="fas fa-eye pointer" aria-hidden="true" data-toggle="modal"
+                                           data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="renewal(@item.InsuranceID)"></i>
+                                        @if (ViewBag.RoleId == 1)
+                                        {
+
                                             <a href="Edit?MotorID=@item.InsuranceID">
                                                 <i class="fas fa-pencil-alt pointer" aria-hidden="true"></i>
                                             </a>
-                                        </td>
-                                    }
+                                        }
+                                    </td>
+
                                 </tr>
                             }
                         }
@@ -201,73 +199,73 @@
                                 <input type="hidden" name="InsuranceID" id="InsuranceID">
                                 <label for="inputEmail3" class="col-3 col-form-label">Division Code</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="DivisionCode" required id="DivisionCode">
+                                    <input type="text" class="form-control form-control-sm" readonly name="DivisionCode" required id="txtDivisionCode">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Division Name</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="DivisionName" required id="DivisionName">
+                                    <input type="text" class="form-control form-control-sm" readonly name="DivisionName" required id="txtDivisionName">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Product Code</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="ProductCode" required id="ProductCode">
+                                    <input type="text" class="form-control form-control-sm" readonly name="ProductCode" required id="txtProductCode">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Product Name</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="ProductName" required id="ProductName">
+                                    <input type="text" class="form-control form-control-sm" readonly name="ProductName" required id="txtProductName">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Business Type</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="BusinessType" required id="BusinessType">
+                                    <input type="text" class="form-control form-control-sm" readonly name="BusinessType" required id="txtBusinessType">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Policy No</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="PolicyNo" required id="PolicyNo">
+                                    <input type="text" class="form-control form-control-sm" readonly name="PolicyNo" required id="txtPolicyNo">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Assured Name</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="AssuredName" required id="AssuredName">
+                                    <input type="text" class="form-control form-control-sm" readonly name="AssuredName" required id="txtAssuredName">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Assured Mobile</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="AssuredMobile" required id="AssuredMobile">
+                                    <input type="text" class="form-control form-control-sm" readonly name="AssuredMobile" required id="txtAssuredMobile">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Customer Name</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="CustomerName" required id="CustomerName">
+                                    <input type="text" class="form-control form-control-sm" readonly name="CustomerName" required id="txtCustomerName">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Source Code</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="SourceCode" required id="SourceCode">
+                                    <input type="text" class="form-control form-control-sm" readonly name="SourceCode" required id="txtSourceCode">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Source Name</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="SourceName" required id="SourceName">
+                                    <input type="text" class="form-control form-control-sm" readonly name="SourceName" required id="txtSourceName">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Customer Category</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="CustomerCategory" required id="CustomerCategory">
+                                    <input type="text" class="form-control form-control-sm" readonly name="CustomerCategory" required id="txtCustomerCategory">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
@@ -289,7 +287,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">₹</span>
                                         </div>
-                                        <input type="number" class="form-control form-control-sm" name="GrossPremium" required id="GrossPremium">
+                                        <input type="number" class="form-control form-control-sm" name="GrossPremium" required id="txtGrossPremium">
                                     </div>
                                 </div>
                             </div>
@@ -300,7 +298,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">₹</span>
                                         </div>
-                                        <input type="number" class="form-control form-control-sm" name="RevisedSumInsured" required id="RevisedSumInsured">
+                                        <input type="number" class="form-control form-control-sm" name="RevisedSumInsured" required id="txtRevisedSumInsured">
                                     </div>
                                 </div>
                             </div>
@@ -311,55 +309,61 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">₹</span>
                                         </div>
-                                        <input type="number" class="form-control form-control-sm" name="RenewalPremium" required id="RenewalPremium">
+                                        <input type="number" class="form-control form-control-sm" name="RenewalPremium" required id="txtRenewalPremium">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Marketing Executive</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="MarketingExecutive" required id="MarketingExecutive">
+                                    <input type="text" class="form-control form-control-sm" readonly name="MarketingExecutive" required id="txtMarketingExecutive">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Remarks</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="Remarks" required id="Remarks">
+                                    <input type="text" class="form-control form-control-sm" readonly name="Remarks" required id="txtRemarks">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Customer Code</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="CustomerCode" required id="CustomerCode">
+                                    <input type="text" class="form-control form-control-sm" readonly name="CustomerCode" required id="txtCustomerCode">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Charges</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="Charges" required id="Charges">
+                                    <input type="text" class="form-control form-control-sm" readonly name="Charges" required id="txtCharges">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Insurance Type</label>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="InsuranceType" required id="InsuranceType">
+                                    <input type="text" class="form-control form-control-sm" readonly name="InsuranceType" required id="txtInsuranceType">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">Status</label>
                                 <div class="col-9">
-                                    <select class="form-control form-control-sm" id="Status" name="Status" required="required">
-                                        <option disabled selected> -- select an option -- </option>
+                                    <select class="form-control form-control-sm" id="txtStatus" name="Status" required="required">
+                                        <option disabled selected> -- Select an option -- </option>
                                         <option>Renewed</option>
                                         <option>Lost</option>
-                                        <option>Under process</option>
+                                        <option>Under Process</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
                                 <label for="Description13" class="col-3 col-form-label">Description</label>
                                 <div class="col-9">
-                                    <textarea type="text" class="form-control form-control-sm" rows="3" name="Description" required id="Description13"></textarea>
+                                    <textarea type="text" class="form-control form-control-sm" rows="3" name="Description" required id="txtDescription"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3 col-md-offset-4">
+                                <div class="justify-content-center">
+                                    <button type="button" data-dismiss="modal" class="btn btn-secondary btn-sm waves-effect">Close</button>
+                                    <button type="button" id="btnRenewal" class="btn btn-primary btn-sm waves-effect waves-light">Submit</button>
                                 </div>
                             </div>
                         </form>
@@ -397,13 +401,11 @@
                         </textarea>
                             </div>
                         </div>
+                       
                     </div>
                 </div>
             </div>
-            <div class="justify-content-center">
-                <button type="button" class="btn btn-secondary btn-sm waves-effect">Close</button>
-                <button type="button" id="btnRenewal" class="btn btn-primary btn-sm waves-effect waves-light">Submit</button>
-            </div>
+           
         </div>
         <!-- /.modal-content -->
     </div>
@@ -634,7 +636,7 @@
         });
     });
     function renewal(MotorId) {
-
+        
         // $('#myModal').modal('show');
         Id = MotorId;
         $.ajax({
@@ -657,47 +659,66 @@
                 //$('#CustomerName').val(data.CustomerName)
                 //$('#Status').val(data.Status)
                 $('#InsuranceID').val(data.InsuranceID);
-                $('#DivisionCode').val(data.DivisionCode);
-                $('#DivisionName').val(data.DivisionName);
-                $('#ProductCode').val(data.ProductCode);
-                $('#ProductName').val(data.ProductName);
+                $('#txtDivisionCode').val(data.DivisionCode);
+                $('#txtDivisionName').val(data.DivisionName);
+                $('#txtProductCode').val(data.ProductCode);
+                $('#txtProductName').val(data.ProductName);
 
-                $('#BusinessType').val(data.BusinessType);
+                $('#txtBusinessType').val(data.BusinessType);
 
-                $('#PolicyNo').val(data.PolicyNo);
+                $('#txtPolicyNo').val(data.PolicyNo);
 
-                $('#AssuredName').val(data.AssuredName);
+                $('#txtAssuredName').val(data.AssuredName);
 
-                $('#AssuredMobile').val(data.AssuredMobile);
+                $('#txtAssuredMobile').val(data.AssuredMobile);
 
-                $('#CustomerName').val(data.CustomerName);
+                $('#txtCustomerName').val(data.CustomerName);
 
-                $('#SourceCode').val(data.SourceCode);
+                $('#txtSourceCode').val(data.SourceCode);
 
-                $('#SourceName').val(data.SourceName);
+                $('#txtSourceName').val(data.SourceName);
 
-                $('#CustomerCategory').val(data.CustomerCategory);
+                $('#txtCustomerCategory').val(data.CustomerCategory);
 
                 value = new Date(parseInt(data.PolicyFromDate.replace("/Date(", "").replace(")/", ""), 10));
-                Fromvalue = value.toDateString()
-                $('#PolicyFromDate').val(Fromvalue);
+                //Fromvalue = value.toDateString()
+                Fromvalue = value.toISOString();
+
+                //var Str =
+                //    ("00" + (value.getDate())).slice(-2)
+                //    + "-" + ("00" + value.getMonth()+1).slice(-2)
+                //    + "-" + value.getFullYear();
+                var Str =
+
+                    ("00" + value.getDate()).slice(-2)
+                    + "-" + ("00" + (value.getMonth() + 1)).slice(-2)
+                    + "-" + value.getFullYear()
+
+                $('#PolicyFromDate').val(Str);
 
                 valuee = new Date(parseInt(data.PolicyToDate.replace("/Date(", "").replace(")/", ""), 10));
-                Tovalue = valuee.toDateString()
-                $('#PolicyToDate').val(Tovalue);
+                //Tovalue = valuee.toDateString()
+                var ToStr =
+                    ("00" + valuee.getDate()).slice(-2)
+                    + "-" + ("00" + (valuee.getMonth() + 1)).slice(-2)
+                    + "-" + valuee.getFullYear()
+                $('#PolicyToDate').val(ToStr);
 
-                $('#GrossPremium').val(data.GrossPremium);
+                $('#txtGrossPremium').val(data.GrossPremium);
 
-                $('#RevisedSumInsured').val(data.RevisedSumInsured);
+                $('#txtRevisedSumInsured').val(data.RevisedSumInsured);
 
-                $('#RenewalPremium').val(data.RenewalPremium);
+                $('#txtRenewalPremium').val(data.RenewalPremium);
 
-                $('#MarketingExecutive').val(data.MarketingExecutive);
+                $('#txtMarketingExecutive').val(data.MarketingExecutive);
 
-                $('#Remarks').val(data.Remarks);
-                $('#CustomerCode').val(data.CustomerCode);
-                $('#Charges').val(data.Charges);
-                $('#InsuranceType').val(data.InsType);
+                $('#txtRemarks').val(data.Remarks);
+                $('#txtCustomerCode').val(data.CustomerCode);
+                $('#txtCharges').val(data.Charges);
+                $('#txtInsuranceType').val(data.InsType);
+                $('#txtStatus').val(data.Status);
+                $('#txtDescription').val(data.Description);
+                
 
                 // $('#myModal').html(data); // This should be an empty div where you can inject your new html (the partial view)
             }
@@ -815,14 +836,14 @@
                         extend: 'csv',
                         className: 'btn btn-sm btn-primary',
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5]
+                            columns: [0, 1, 2, 3, 4, 5]
                         }
                     },
                     {
                         extend: 'pdf',
                         className: 'btn btn-sm btn-primary',
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5]
+                            columns: [0, 1, 2, 3, 4, 5]
                         }
                     }
                 ]
