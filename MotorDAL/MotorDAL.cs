@@ -13,7 +13,7 @@ namespace MotorApp.DAL
     {
         Utility objUtility = new Utility();
 
-        public long BulkUploadMotor(string Extension, string filePath, int reqFrom, out int rowsCnt, out string fileMismatchErr,string UserName)
+        public long BulkUploadMotor(string Extension, string filePath, int reqFrom, out int rowsCnt, out string fileMismatchErr, string UserName)
         {
             long returnCode = -1;
             reqFrom = 0;
@@ -471,6 +471,8 @@ namespace MotorApp.DAL
                                          Remarks = dr["Remarks"].ToString(),
                                          ProducerName = dr["ProducerName"].ToString(),
                                          Description = dr["Description"].ToString(),
+                                         CallBackDate = Convert.ToDateTime(dr["CallBackDate"]),
+                                         RenewalSumAssured = Convert.ToDecimal(dr["RenewalSumAssured"]),
                                      }).ToList();
                     }
                     returnCode = 1;
@@ -1120,7 +1122,7 @@ namespace MotorApp.DAL
             }
             return lst;
         }
-        public List<DataPoint> GetDBBarchart(int flag,string uname)
+        public List<DataPoint> GetDBBarchart(int flag, string uname)
         {
             List<DataPoint> lst = new List<DataPoint>();
             try
@@ -1167,7 +1169,7 @@ namespace MotorApp.DAL
             }
             return lst;
         }
-        public long SaveInsu(Insurance obj,string Uname,out string U)
+        public long SaveInsu(Insurance obj, string Uname, out string U)
         {
             long returnCode = -1;
             DataTable dt = new DataTable();
@@ -1248,7 +1250,7 @@ namespace MotorApp.DAL
                             else
                                 returnCode = 0;
                         }
-                        
+
                     }
 
                 }
@@ -1287,7 +1289,8 @@ namespace MotorApp.DAL
                     cmd.Parameters.AddWithValue("@Status", objMotorModel.Status ?? "");
                     cmd.Parameters.AddWithValue("@Description", objMotorModel.Description ?? "");
                     cmd.Parameters.AddWithValue("@UserName", uname ?? "");
-
+                    cmd.Parameters.AddWithValue("@CallBackDate", objMotorModel.CallBackDate);
+                    cmd.Parameters.AddWithValue("@RenewalSumAssured", objMotorModel.RenewalSumAssured);
                     returnCode = cmd.ExecuteNonQuery();
 
 
@@ -1483,7 +1486,52 @@ namespace MotorApp.DAL
             }
             return returnCode;
         }
-        public long GetSearchIns(long RoleId, string PolicyNo, string DivisionName, string AssuredName, string ProductName, string Status,string Uname, out List<Insurance> lstNewIns)
+
+        public long GetCalBackInfo(long RoleId, string Uname, out List<Insurance> lstNewIns)
+        {
+            long returnCode = -1;
+
+            lstNewIns = new List<Insurance>();
+
+            try
+            {
+                DataSet ds = new DataSet();
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = "SP_GetCallBackDetails"
+                    };
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+
+                    cmd.Parameters.AddWithValue("@RoleId", RoleId);
+                    
+                    cmd.Parameters.AddWithValue("@ProducerName", Uname);
+
+
+                    SqlDataAdapter sdaAdapter = new SqlDataAdapter
+                    {
+                        SelectCommand = cmd
+                    };
+                    sdaAdapter.Fill(ds);
+
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        DTtoListConverter.ConvertTo(ds.Tables[0], out lstNewIns);
+                    }
+                    returnCode = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return returnCode;
+        }
+        public long GetSearchIns(long RoleId, string PolicyNo, string DivisionName, string AssuredName, string ProductName, string Status, string Uname, out List<Insurance> lstNewIns)
         {
             long returnCode = -1;
 

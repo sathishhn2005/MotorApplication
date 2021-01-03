@@ -280,8 +280,42 @@
                                     <input type="text" class="form-control form-control-sm" readonly name="PolicyToDate" required id="PolicyToDate">
                                 </div>
                             </div>
+
+                            @*<div class="form-group row mb-3">
+                                    <label for="inputEmail3" class="col-3 col-form-label">Expired Gross Premium</label>
+                                    <div class="col-9">
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <sp
+                                +an class="input-group-text" id="basic-addon1">₹</span>
+                                            </div>
+                                            <input type="number" class="form-control form-control-sm" name="GrossPremium" required id="txtGrossPremium">
+                                        </div>
+                                    </div>
+                                </div>*@
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Gross Premium</label>
+                                <label for="inputEmail3" class="col-3 col-form-label">Expired SumInsured</label>
+                                <div class="col-9">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">₹</span>
+                                        </div>
+                                        @if (Model != null)
+                                        {
+                                            if (ViewBag.RoleId == 1)
+                                            {
+                                                <input type="number" class="form-control form-control-sm" onkeyup="CalcRenewalAdmin()" name="RevisedSumInsured" id="txtRevisedSumInsured">
+                                            }
+                                            else
+                                            {
+                                                <input type="number" class="form-control form-control-sm" readonly name="RevisedSumInsured" id="txtRevisedSumInsured">
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Expired Premium</label>
                                 <div class="col-9">
                                     <div class="input-group input-group-sm">
                                         <div class="input-group-prepend">
@@ -292,13 +326,37 @@
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Revised SumInsured</label>
+                                <label for="inputEmail3" class="col-3 col-form-label">Renewal Sum Assured</label>
                                 <div class="col-9">
                                     <div class="input-group input-group-sm">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">₹</span>
                                         </div>
-                                        <input type="number" class="form-control form-control-sm" name="RevisedSumInsured" required id="txtRevisedSumInsured">
+                                        @if (Model != null)
+                                        {
+                                            if (ViewBag.RoleId == 1)
+                                            {
+                                                <input type="number" class="form-control form-control-sm" name="RenewalSumAssured" required id="txtRenewalSumAssured">
+                                            }
+                                            else
+                                            {
+                                                <input type="number" class="form-control form-control-sm" readonly name="RenewalSumAssured" required id="txtRenewalSumAssured">
+                                                <select onchange="CalcRenewalSA()" class="form-control form-control-sm" id="SumAssuredPercentage" name="SumAssuredPercentage">
+                                                    <option disabled selected> -- Select % -- </option>
+                                                    <option>-1</option>
+                                                    <option>-2</option>
+                                                    <option>-3</option>
+                                                    <option>-4</option>
+                                                    <option>-5</option>
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                    <option>5</option>
+
+                                                </select>
+                                            }
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -341,6 +399,12 @@
                                 <label for="inputEmail3" class="col-3 col-form-label">Insurance Type</label>
                                 <div class="col-9">
                                     <input type="text" class="form-control form-control-sm" readonly name="InsuranceType" required id="txtInsuranceType">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">CallBack Date</label>
+                                <div class="col-9">
+                                    <input type="date" class="form-control form-control-sm" name="CallBackDate" id="txtCallBackDate">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
@@ -401,11 +465,11 @@
                         </textarea>
                             </div>
                         </div>
-                       
+
                     </div>
                 </div>
             </div>
-           
+
         </div>
         <!-- /.modal-content -->
     </div>
@@ -506,7 +570,9 @@
     <!-- /.modal-dialog -->
 </div>
 <script>
+
     $(document).ready(function () {
+        const SARenewalCanstant = 0;
         function submitForm() {
 
         }
@@ -636,7 +702,7 @@
         });
     });
     function renewal(MotorId) {
-        
+
         // $('#myModal').modal('show');
         Id = MotorId;
         $.ajax({
@@ -716,10 +782,20 @@
                 $('#txtCustomerCode').val(data.CustomerCode);
                 $('#txtCharges').val(data.Charges);
                 $('#txtInsuranceType').val(data.InsType);
+                // $('#txtCallBackDate').val(data.CallBackDate);
                 $('#txtStatus').val(data.Status);
                 $('#txtDescription').val(data.Description);
-                
+                $('#txtRenewalSumAssured').val(data.RenewalSumAssured);
 
+                SARenewalCanstant = data.RenewalSumAssured;
+
+                var callBackValue = new Date(parseInt(data.CallBackDate.replace("/Date(", "").replace(")/", ""), 10));
+                //Tovalue = valuee.toDateString()
+                var ToStrCB =
+                    ("00" + callBackValue.getDate()).slice(-2)
+                    + "-" + ("00" + (callBackValue.getMonth() + 1)).slice(-2)
+                    + "-" + callBackValue.getFullYear()
+                $('#txtCallBackDate').val(ToStrCB);
                 // $('#myModal').html(data); // This should be an empty div where you can inject your new html (the partial view)
             }
         });
@@ -896,7 +972,54 @@
         });
 
     };
+    //var valueInString = "2383";
+    //var num = parseFloat(valueInString);
+    //var val = num - (num * .35);
+    //console.log(val);
 
+    function CalcRenewalSA() {
+
+        var perc = "";
+        var SAP = $('#SumAssuredPercentage').val();
+        if (SAP > 0) {
+            // var RenewalSA = parseInt($('#txtRenewalSumAssured').val());
+            var RenewalSA = SARenewalCanstant;
+            if (isNaN(RenewalSA)) {
+                alert('Please provide value in Number');
+            } else {
+                perc = ((RenewalSA / 100) * SAP).toFixed(2);
+            }
+            var total = RenewalSA + parseFloat(perc);
+            $('#txtRenewalSumAssured').val(total);
+        }
+        else if (SAP < 0) {
+            // var RenewalSA = parseInt($('#txtRenewalSumAssured').val());
+            var RenewalSA = SARenewalCanstant;
+            if (isNaN(RenewalSA)) {
+                alert('Please provide value in Number');
+            } else {
+                //perc = ((RenewalSA / 100) * SAP).toFixed(2);
+                perc = -(RenewalSA * SAP / 100);
+            }
+            console.log(perc);
+            var total = RenewalSA - parseFloat(perc);
+            $('#txtRenewalSumAssured').val(total);
+        }
+
+    }
+    function CalcRenewalAdmin() {
+        //  alert('tst');
+        //  $('#RenewalSumAssured')
+        var perc = 0;
+        var RSA = parseInt($('#txtRevisedSumInsured').val());
+        if (isNaN(RSA)) {
+            alert('Please provide value in Number');
+        } else {
+            perc = ((RSA / 100) * 15).toFixed(2);
+        }
+        var total = RSA + parseFloat(perc);
+        $('#txtRenewalSumAssured').val(total);
+    }
 
 
 </script>

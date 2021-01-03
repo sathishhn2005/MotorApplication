@@ -58,13 +58,14 @@ namespace MotorApp.Controllers
             if (IsLoggedIn > 0)
             {
                 string uname = Request.Form["ddlProducer"];
-                TypeId = 1;
+                TypeId = 5;
                 if (string.IsNullOrEmpty(uname) || uname.Equals("Admin"))
                 {
                     if (TempData["Input"] != null)
                     {
                         lstInput = TempData["Input"];
                     }
+
                     long returnCode = objMotorBAL.GetUserInsInfo(lstInput, out lstInfo);
                     //long returnCode = objMotorBAL.GetMIDashBoard(lstInput, out lstInfo);
                     ViewBag.RoleId = RoleId;
@@ -233,6 +234,24 @@ namespace MotorApp.Controllers
                 return RedirectToAction("Login");
             }
 
+
+        }
+
+        [HttpGet]
+        public ActionResult CallBack(Insurance objMotorModel)
+        {
+            int IsLoggedIn = IsUserLoggedIn();
+            if (IsLoggedIn > 0)
+            {
+                ViewBag.UserName = U_Name;
+                List<Insurance> lst = new List<Insurance>();
+                long returnCode = objMotorBAL.GetCallBackDetails(RoleId, U_Name, out lst);
+                return View(lst);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
 
         }
         public ActionResult MasterDatabase()
@@ -624,7 +643,7 @@ namespace MotorApp.Controllers
             {
                 if (model.RevisedSumInsured > 0 && model.GrossPremium > 0 && model.RenewalPremium > 0 && model.InsuranceID > 0)
                 {
-                    returnCode = objMotorBAL.UpdateNewIns(model,U_Name);
+                    returnCode = objMotorBAL.UpdateNewIns(model, U_Name);
                     //  returnCode = objMotorBAL.SaveNewIns(model);
                 }
                 else

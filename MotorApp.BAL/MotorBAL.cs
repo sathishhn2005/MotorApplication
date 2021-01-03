@@ -544,6 +544,29 @@ namespace MotorApp.BAL
                 return returnCode;
             }
         }
+        public long GetCallBackDetails(long RoleId, string Uname, out List<Insurance> lstNewIns)
+        {
+            long returnCode = -1;
+
+            using (TransactionScope transactionScope = new TransactionScope())
+            {
+                try
+                {
+                    
+                       returnCode = objMotorAppDAL.GetCalBackInfo(RoleId, Uname, out lstNewIns);
+                    transactionScope.Complete();
+                    transactionScope.Dispose();
+
+                }
+                catch (Exception ex)
+                {
+                    transactionScope.Dispose();
+                    throw ex;
+                }
+
+                return returnCode;
+            }
+        }
         public List<Users> GetListOfUsers(string BT)
         {
             List<Users> lst = new List<Users>();
