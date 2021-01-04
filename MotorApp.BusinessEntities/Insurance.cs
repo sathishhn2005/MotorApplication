@@ -49,7 +49,7 @@ namespace MotorApp.BusinessEntities
         [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy}")]
         public DateTime PolicyToDate { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy hh:mm:ss}")]
         public DateTime CallBackDate { get; set; }
 
         [Display(Name = "Gross Premium")]

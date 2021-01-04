@@ -29,6 +29,7 @@
                                 <th>Description</th>
                                 <th>Call Back Date</th>
                                 <th>Status</th>
+                                <th>Action</th>
 
                             </tr>
                         </thead>
@@ -69,6 +70,11 @@
                                             <span class="badge badge-info"></span>
                                         }
                                     </td>
+                                    <td class="d-flex flex-row align-items-center justify-content-between">
+                                        <i class="fas fa-eye pointer" aria-hidden="true" data-toggle="modal"
+                                           data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="renewal(@item.InsuranceID)"></i>
+                                       
+                                    </td>
 
 
                                 </tr>
@@ -82,3 +88,420 @@
     </div>
 </div>
 
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myModalLabel">Premium Sheet</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-5 mx-auto">
+                        <form id="formRenewal" class="form-horizontal">
+                            <div class="form-group row mb-3">
+                                <input type="hidden" name="InsuranceID" id="InsuranceID">
+                                <label for="inputEmail3" class="col-3 col-form-label">Division Code</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" readonly name="DivisionCode" required id="txtDivisionCode">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Division Name</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" readonly name="DivisionName" required id="txtDivisionName">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Product Code</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" readonly name="ProductCode" required id="txtProductCode">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Product Name</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" readonly name="ProductName" required id="txtProductName">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Business Type</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" readonly name="BusinessType" required id="txtBusinessType">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Policy No</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" readonly name="PolicyNo" required id="txtPolicyNo">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Assured Name</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" readonly name="AssuredName" required id="txtAssuredName">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Assured Mobile</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" readonly name="AssuredMobile" required id="txtAssuredMobile">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Customer Name</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" readonly name="CustomerName" required id="txtCustomerName">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Source Code</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" readonly name="SourceCode" required id="txtSourceCode">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Source Name</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" readonly name="SourceName" required id="txtSourceName">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Customer Category</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" readonly name="CustomerCategory" required id="txtCustomerCategory">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Policy From Date</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" readonly name="PolicyFromDate" required id="PolicyFromDate">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Policy To Date</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" readonly name="PolicyToDate" required id="PolicyToDate">
+                                </div>
+                            </div>
+
+                            @*<div class="form-group row mb-3">
+                                    <label for="inputEmail3" class="col-3 col-form-label">Expired Gross Premium</label>
+                                    <div class="col-9">
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <sp
+                                +an class="input-group-text" id="basic-addon1">₹</span>
+                                            </div>
+                                            <input type="number" class="form-control form-control-sm" name="GrossPremium" required id="txtGrossPremium">
+                                        </div>
+                                    </div>
+                                </div>*@
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Expired SumInsured</label>
+                                <div class="col-9">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">₹</span>
+                                        </div>
+                                        @if (Model != null)
+                                        {
+                                            if (ViewBag.RoleId == 1)
+                                            {
+                                                <input type="number" class="form-control form-control-sm" onkeyup="CalcRenewalAdmin()" name="RevisedSumInsured" id="txtRevisedSumInsured">
+                                            }
+                                            else
+                                            {
+                                                <input type="number" class="form-control form-control-sm" readonly name="RevisedSumInsured" id="txtRevisedSumInsured">
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Expired Premium</label>
+                                <div class="col-9">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">₹</span>
+                                        </div>
+                                        <input type="number" class="form-control form-control-sm" name="GrossPremium" required id="txtGrossPremium">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Renewal Sum Assured</label>
+                                <div class="col-9">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">₹</span>
+                                        </div>
+                                        @if (Model != null)
+                                        {
+                                            if (ViewBag.RoleId == 1)
+                                            {
+                                                <input type="number" class="form-control form-control-sm" name="RenewalSumAssured" required id="txtRenewalSumAssured">
+                                            }
+                                            else
+                                            {
+                                                <input type="number" class="form-control form-control-sm" readonly name="RenewalSumAssured" required id="txtRenewalSumAssured">
+                                                <select onchange="CalcRenewalSA()" class="form-control form-control-sm" id="SumAssuredPercentage" name="SumAssuredPercentage">
+                                                    <option disabled selected> -- Select % -- </option>
+                                                    <option>-1</option>
+                                                    <option>-2</option>
+                                                    <option>-3</option>
+                                                    <option>-4</option>
+                                                    <option>-5</option>
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                    <option>5</option>
+
+                                                </select>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Renewal Premium</label>
+                                <div class="col-9">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">₹</span>
+                                        </div>
+                                        <input type="number" class="form-control form-control-sm" name="RenewalPremium" required id="txtRenewalPremium">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Marketing Executive</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" readonly name="MarketingExecutive" required id="txtMarketingExecutive">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Remarks</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" readonly name="Remarks" required id="txtRemarks">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Customer Code</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" readonly name="CustomerCode" required id="txtCustomerCode">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Charges</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" readonly name="Charges" required id="txtCharges">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Insurance Type</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" readonly name="InsuranceType" required id="txtInsuranceType">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">CallBack Date</label>
+                                <div class="col-9">
+                                    <input type="datetime-local" class="form-control form-control-sm" name="CallBackDate" id="txtCallBackDate">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label">Status</label>
+                                <div class="col-9">
+                                    <select class="form-control form-control-sm" id="txtStatus" name="Status" required="required">
+                                        <option disabled selected> -- Select an option -- </option>
+                                        <option>Renewed</option>
+                                        <option>Lost</option>
+                                        <option>Under Process</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="Description13" class="col-3 col-form-label">Description</label>
+                                <div class="col-9">
+                                    <textarea type="text" class="form-control form-control-sm" rows="3" name="Description" required id="txtDescription"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3 col-md-offset-4">
+                                <div class="justify-content-center">
+                                    <button type="button" data-dismiss="modal" class="btn btn-secondary btn-sm waves-effect">Close</button>
+                                    <button type="button" id="btnRenewal" class="btn btn-primary btn-sm waves-effect waves-light">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-5 mx-auto">
+                        <div>
+                            <h4 class="primay-color mt-3 ">Call Details:</h4>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center call-section mb-5 mt-3">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png" class="rounded-circle" alt="Cinque Terre" height="60">
+                            <div>
+                                <h4 class="my-0 primay-color">(319) 555-0115</h4>
+                                <small class="text-muted font-13">Call to Alrene Fisher</small>
+                            </div>
+                            <div>
+                                <i class="fa fa-microphone font-20 text-muted mr-2 pointer"></i>
+                                <i class="fa fa-history font-20 text-muted ml-2 pointer"></i>
+                            </div>
+                            <button type="button" class="btn btn-success btn-circle btn-xl btn-large pointer">
+                                <i class="fa fa-phone"></i>
+                            </button>
+                        </div>
+                        <div>
+                            <h6 class="primay-color">Alrene Fisher Details:</h6>
+                        </div>
+                        <div class="text-muted mb-4 ">Voicemain</div>
+                        <audio controls preload="metadata" style=" width:100%;">
+                            <source src="" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="NotesContainer" class="control-label text-muted mt-4">Alrene Fisher Notes</label>
+                                <textarea class="form-control form-control-sm" id="NotesContainer" rows="10" placeholder="Notes">Alrene Fisher requested a call back on Tomorrow Morning 10:30 AM.
+                        </textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<script>
+    const SARenewalCanstant = 0;
+    function renewal(MotorId) {
+
+        // $('#myModal').modal('show');
+        Id = MotorId;
+        $.ajax({
+            url: '/Home/EditModal/?InsId=' + MotorId, // The method name + paramater
+            success: function (data) {
+
+
+                $('#InsuranceID').val(data.InsuranceID);
+                $('#txtDivisionCode').val(data.DivisionCode);
+                $('#txtDivisionName').val(data.DivisionName);
+                $('#txtProductCode').val(data.ProductCode);
+                $('#txtProductName').val(data.ProductName);
+
+                $('#txtBusinessType').val(data.BusinessType);
+
+                $('#txtPolicyNo').val(data.PolicyNo);
+
+                $('#txtAssuredName').val(data.AssuredName);
+
+                $('#txtAssuredMobile').val(data.AssuredMobile);
+
+                $('#txtCustomerName').val(data.CustomerName);
+
+                $('#txtSourceCode').val(data.SourceCode);
+
+                $('#txtSourceName').val(data.SourceName);
+
+                $('#txtCustomerCategory').val(data.CustomerCategory);
+
+                value = new Date(parseInt(data.PolicyFromDate.replace("/Date(", "").replace(")/", ""), 10));
+                //Fromvalue = value.toDateString()
+                Fromvalue = value.toISOString();
+
+                //var Str =
+                //    ("00" + (value.getDate())).slice(-2)
+                //    + "-" + ("00" + value.getMonth()+1).slice(-2)
+                //    + "-" + value.getFullYear();
+                var Str =
+
+                    ("00" + value.getDate()).slice(-2)
+                    + "-" + ("00" + (value.getMonth() + 1)).slice(-2)
+                    + "-" + value.getFullYear()
+
+                $('#PolicyFromDate').val(Str);
+
+                valuee = new Date(parseInt(data.PolicyToDate.replace("/Date(", "").replace(")/", ""), 10));
+                //Tovalue = valuee.toDateString()
+                var ToStr =
+                    ("00" + valuee.getDate()).slice(-2)
+                    + "-" + ("00" + (valuee.getMonth() + 1)).slice(-2)
+                    + "-" + valuee.getFullYear()
+                $('#PolicyToDate').val(ToStr);
+
+                $('#txtGrossPremium').val(data.GrossPremium);
+
+                $('#txtRevisedSumInsured').val(data.RevisedSumInsured);
+
+                $('#txtRenewalPremium').val(data.RenewalPremium);
+
+                $('#txtMarketingExecutive').val(data.MarketingExecutive);
+
+                $('#txtRemarks').val(data.Remarks);
+                $('#txtCustomerCode').val(data.CustomerCode);
+                $('#txtCharges').val(data.Charges);
+                $('#txtInsuranceType').val(data.InsType);
+                // $('#txtCallBackDate').val(data.CallBackDate);
+                $('#txtStatus').val(data.Status);
+                $('#txtDescription').val(data.Description);
+                $('#txtRenewalSumAssured').val(data.RenewalSumAssured);
+
+                SARenewalCanstant = data.RenewalSumAssured;
+
+                var callBackValue = new Date(parseInt(data.CallBackDate.replace("/Date(", "").replace(")/", ""), 10));
+                //Tovalue = valuee.toDateString()
+                var ToStrCB =
+                    ("00" + callBackValue.getDate()).slice(-2)
+                    + "-" + ("00" + (callBackValue.getMonth() + 1)).slice(-2)
+                    + "-" + callBackValue.getFullYear()
+                $('#txtCallBackDate').val(ToStrCB);
+                // $('#myModal').html(data); // This should be an empty div where you can inject your new html (the partial view)
+            }
+        });
+    }
+    $(document).ready(function () {
+        $('#btnRenewal').on('click', function () {
+            var renewalData = $('#formRenewal').serialize();
+            $.ajax({
+
+                type: "POST",
+                url: "/Home/UpdateMotorIns",
+                dataType: "json",
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                data: renewalData,
+                success: function (res) {
+                    if (res > 0) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '',
+                            text: "Data Submitted Successfully.",
+                        })
+                    }
+                    else if (res == -2) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: '',
+                            text: "Please provide all mandatory fields.",
+                        })
+                        //alert('Please provide all mandatory fields')
+                        return false;
+                    }
+                    $('#formRenewal').reset();
+                },
+                error: function () {
+                    // $("#lblMessage").html('Error while Registring the Company!.');
+                    $('#formRenewal').reset();
+                }
+            })
+        });
+    });
+</script>
