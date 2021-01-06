@@ -19,7 +19,7 @@
 
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="tblMotor" class="table align-items-center table-flush">
+                    <table id="tblCallBack" class="table align-items-center table-flush">
                         <thead>
                             <tr>
                                 <th>Assured Name</th>
@@ -382,7 +382,67 @@
     <!-- /.modal-dialog -->
 </div>
 <script>
-    const SARenewalCanstant = 0;
+    $(document).ready(function () {
+        const SARenewalCanstant = 0;
+        
+        $(document).ready(function () {
+            $('#btnRenewal').on('click', function () {
+                var renewalData = $('#formRenewal').serialize();
+                $.ajax({
+
+                    type: "POST",
+                    url: "/Home/UpdateMotorIns",
+                    dataType: "json",
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    data: renewalData,
+                    success: function (res) {
+                        if (res > 0) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: '',
+                                text: "Data Submitted Successfully.",
+                            })
+                        }
+                        else if (res == -2) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: '',
+                                text: "Please provide all mandatory fields.",
+                            })
+                            //alert('Please provide all mandatory fields')
+                            return false;
+                        }
+                        $('#formRenewal').reset();
+                    },
+                    error: function () {
+                        // $("#lblMessage").html('Error while Registring the Company!.');
+                        $('#formRenewal').reset();
+                    }
+                })
+            });
+        });
+        $('#tblCallBack').DataTable({
+            dom: 'Bfrtip',
+            buttons: {
+                buttons: [
+                    {
+                        extend: 'csv',
+                        className: 'btn btn-sm btn-primary',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5]
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        className: 'btn btn-sm btn-primary',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5]
+                        }
+                    }
+                ]
+            }
+        });
+    });
     function renewal(MotorId) {
 
         // $('#myModal').modal('show');
@@ -468,40 +528,4 @@
             }
         });
     }
-    $(document).ready(function () {
-        $('#btnRenewal').on('click', function () {
-            var renewalData = $('#formRenewal').serialize();
-            $.ajax({
-
-                type: "POST",
-                url: "/Home/UpdateMotorIns",
-                dataType: "json",
-                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                data: renewalData,
-                success: function (res) {
-                    if (res > 0) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: '',
-                            text: "Data Submitted Successfully.",
-                        })
-                    }
-                    else if (res == -2) {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: '',
-                            text: "Please provide all mandatory fields.",
-                        })
-                        //alert('Please provide all mandatory fields')
-                        return false;
-                    }
-                    $('#formRenewal').reset();
-                },
-                error: function () {
-                    // $("#lblMessage").html('Error while Registring the Company!.');
-                    $('#formRenewal').reset();
-                }
-            })
-        });
-    });
 </script>
