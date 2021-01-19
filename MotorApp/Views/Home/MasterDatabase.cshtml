@@ -404,7 +404,7 @@
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label">CallBack Date</label>
                                 <div class="col-9">
-                                    <input type="date" class="form-control form-control-sm" name="CallBackDate" id="txtCallBackDate">
+                                    <input type="datetime-local" class="form-control form-control-sm" name="CallBackDate" id="txtCallBackDate">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
@@ -708,22 +708,7 @@
         $.ajax({
             url: '/Home/EditModal/?InsId=' + MotorId, // The method name + paramater
             success: function (data) {
-
-                //$('#VehicleType').val(data.VehicleType)
-                //$('#VehicleMake').val(data.MakeModel)
-                //$('#RegistrationNo').val(data.RegistrationNo)
-                //$('#VehicleYear').val(data.YearofManufacture)
-                //$('#EngineNo').val(data.EngineNo)
-                //$('#ChassisNo').val(data.ChassisNo)
-                //$('#NoofPassengers').val(data.SeatingCapacity)
-                //$('#GEO').val(data.GeographicalArea)
-                //$('#Mid').val(data.MotorId)
-                //$('#SumInsured').val(data.SumInsured)
-                //$('#PremiumAmount').val(data.PremiumAmount)
-                //$('#RivisedSI').val(data.RivisedSI)
-                //$('#CustomerCode').val(data.CustomerCode)
-                //$('#CustomerName').val(data.CustomerName)
-                //$('#Status').val(data.Status)
+                
                 $('#InsuranceID').val(data.InsuranceID);
                 $('#txtDivisionCode').val(data.DivisionCode);
                 $('#txtDivisionName').val(data.DivisionName);
@@ -861,33 +846,7 @@
             })
         });
     });
-    //  $(document).ready(function () {
-    //$("#PolicyNo").on("keyup", function () {
-    //    var value = $(this).val().toLowerCase();
-    //    $("#tblMotor tr").filter(function () {
-    //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    //    });
-    //});
-    //$("#EndorsementNo").on("keyup", function () {
-    //    var value = $(this).val().toLowerCase();
-    //    $("#tblMotor tr").filter(function () {
-    //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    //    });
-    //});
-    //$("#AssuredName").on("keyup", function () {
-    //    var value = $(this).val().toLowerCase();
-    //    $("#tblMotor tr").filter(function () {
-    //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    //    });
-    //});
-    //$("#MobileNo").on("keyup", function () {
-    //    var value = $(this).val().toLowerCase();
-    //    $("#tblMotor tr").filter(function () {
-    //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    //    });
-    //});
 
-    // });
     window.onload = function () {
         var btn = document.getElementById('uploadBtn'),
             progressBar = document.getElementById('progressBar'),
@@ -972,11 +931,7 @@
         });
 
     };
-    //var valueInString = "2383";
-    //var num = parseFloat(valueInString);
-    //var val = num - (num * .35);
-    //console.log(val);
-
+    
     function CalcRenewalSA() {
 
         var perc = "";
@@ -1017,7 +972,7 @@
         } else {
             perc = ((RSA / 100) * 15).toFixed(2);
         }
-        var total = RSA + parseFloat(perc);
+        var total = RSA - parseFloat(perc);
         $('#txtRenewalSumAssured').val(total);
     }
 
