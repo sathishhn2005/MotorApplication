@@ -972,7 +972,7 @@
         } else {
             perc = ((RSA / 100) * 15).toFixed(2);
         }
-        var total = RSA + parseFloat(perc);
+        var total = RSA - parseFloat(perc);
         $('#txtRenewalSumAssured').val(total);
     }
 

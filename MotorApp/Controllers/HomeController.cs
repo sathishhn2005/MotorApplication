@@ -1294,6 +1294,36 @@ namespace MotorApp.Controllers
             }
 
         }
+        public JsonResult GetUserListBIDashBoard(string BusinessType)
+        {
+            try
+            {
+                List<Users> lst = new List<Users>();
+                lst = objMotorBAL.GetListOfUsers(BusinessType);
+                List<SelectListItem> lstUserList = new List<SelectListItem>();
+                foreach (var item in lst)
+                {
+                    lstUserList.Add(
+                            new SelectListItem
+                            {
+                                Text = item.UserName,
+                                Value = item.UserName,
+                                Selected = true
+                            });
+                }
+                ViewBag.ListOfUsers = lstUserList;
+                return Json(new
+                {
+                    list = lst
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
     }
 
 }
