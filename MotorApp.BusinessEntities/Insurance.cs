@@ -10,11 +10,13 @@ namespace MotorApp.BusinessEntities
     public class Insurance
     {
         
-
+        public string UserName { get; set; }
         public long InsuranceID { get; set; }
-
         [Display(Name = "Division Code")]
         public string DivisionCode { get; set; }
+
+        [Display(Name = "Description")]
+        public string Description { get; set; }
         [Display(Name = "Division Name")]
         public string DivisionName { get; set; }
         [Display(Name = "Product Code")]
@@ -46,6 +48,10 @@ namespace MotorApp.BusinessEntities
         [Display(Name = "Policy To Date")]
         [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy}")]
         public DateTime PolicyToDate { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy hh:mm:ss}")]
+        public DateTime CallBackDate { get; set; }
+
         [Display(Name = "Gross Premium")]
         public long GrossPremium { get; set; }
 
@@ -59,7 +65,10 @@ namespace MotorApp.BusinessEntities
         public string Remarks { get; set; }
         [Display(Name = "Status")]
         public string Status { get; set; }
-
+        [Display(Name = "SumAssuredPercentage")]
+        public decimal SumAssuredPercentage { get; set; }
+        [Display(Name = "RenewalSumAssured")]
+        public decimal RenewalSumAssured { get; set; }
         [Display(Name = "Customer Code")]
         public string CustomerCode { get; set; }
         [Display(Name = "Charges")]

@@ -1,5 +1,35 @@
-﻿@model IEnumerable<MotorApp.BusinessEntities.BIDashBoard>
+﻿@*@model IEnumerable<MotorApp.BusinessEntities.BIDashBoard>*@
+@model MotorApp.BusinessEntities.Insurance
 @{ ViewBag.Title = "BI Dashboard"; }
+@{
+    List<SelectListItem> lstBT = new List<SelectListItem>();
+    lstBT.Add(new SelectListItem
+    {
+        Text = "Admin",
+        Value = "Admin"
+    });
+    lstBT.Add(new SelectListItem
+    {
+        Text = "Agent",
+        Value = "Agent"
+
+    });
+    lstBT.Add(new SelectListItem
+    {
+        Text = "Broker",
+        Value = "Broker"
+    });
+    lstBT.Add(new SelectListItem
+    {
+        Text = "Branches",
+        Value = "Branches"
+    });
+    lstBT.Add(new SelectListItem
+    {
+        Text = "DirectSales",
+        Value = "DirectSales"
+    });
+}
 <div class="d-sm-flex align-items-center justify-content-between mb-2">
     <h1 class="h3 mb-0 text-gray-800">BI Dashboard</h1>
 
@@ -8,6 +38,15 @@
         <li class="breadcrumb-item active" aria-current="page">BI Dashboard</li>
     </ol>
 </div>
+@*<div class="form-group row">
+
+    <div class="col-md-2 my-4 text-center">
+
+        <input type="button" id="btnSearchBIDB" onclick="GetBIDashBoardUserData()" value="Search" class="btn btn-primary btn-sm" />
+    </div>
+
+</div>*@
+
 <div class="row mt-3">
     <div class="col-xl-6 col-lg-6">
         <div class="card mb-4">
@@ -76,7 +115,7 @@
     <div class="col-xl-12 col-lg-12">
         <div class="card mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Producer's Performance </h6>
+                <h6 class="m-0 font-weight-bold text-primary">Producer Performance </h6>
                 @*<div class="">
                         <label class="font-weight-bold mr-2">Yearly</label>
                         <input type="checkbox" data-toggle="toggle" data-size="xs">
@@ -85,43 +124,59 @@
             <div class="card-body">
                 <canvas id="ProducerPerformance" height="100"></canvas>
             </div>
-        </div>
+        </div>0
     </div>
-    @*<div class="col-xl-12 col-lg-12">
+    <div class="col-xl-12 col-lg-12">
         <div class="card mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Specific Producer's Chart </h6>
+                <h6 class="m-0 font-weight-bold text-primary">Individual Producer Chart</h6>
                 <div class="flex-grow-1">
                     <form class="form-inline  d-flex flex-row align-items-center justify-content-around">
                         <label for="cars" class="col-form-label">Choose Role</label>
-                        <select id="ddlRole" class="form-control form-control-sm col-md-3">
-                            <option>--Select--</option>
-                            <option>Broker</option>
-                            <option>Agent</option>
-                            <option>Direct</option>
-                            <option>Branch</option>
+                        <select id="ddlRole" onchange="javascript:GetUsers(this.value);" class="form-control form-control-sm col-md-3">
+                            <option value="0">--Select--</option>
+                            <option value="Broker">Broker</option>
+                            <option value="Agent">Agent</option>
+                            <option value="DirectSales">Direct Sales</option>
+                            <option value="Branches">Branches</option>
                         </select>
+
+                        @*<div class="col-md-4">
+                                <label class="col-form-label text-right font-bold">Business Type</label>
+                                @Html.DropDownListFor(model => model.BusinessType, lstBT, "-- Select BusinessType --",
+                               new { @class = "form-control form-control-sm", @onchange = "javascript:GetUsers(this.value);" })
+
+                            </div>*@
+                        @*<div class="col-md-4">
+                                <label class="col-form-label text-right font-bold">Users</label>
+                                <select id="Users" name="Users" class="form-control form-control-sm">
+                                    <option value="0">-Select-</option>
+                                </select>
+                            </div>*@
                         <label for="cars" class="col-form-label">Choose Producer</label>
-                        <select id="ddlProducer" class="form-control form-control-sm col-md-3">
+                        <select id="Users" name="Users" class="form-control form-control-sm">
+                            <option value="0">-Select-</option>
+                        </select>
+                        @*<select id="ddlProducer" class="form-control form-control-sm col-md-3">
                             <option>--Select--</option>
                             <option>BA001</option>
                             <option>BA818</option>
                             <option>BA237</option>
                             <option>BA233</option>
-                        </select>
+                        </select>*@
                         <button type="button" id="randomizeData" class="btn btn-primary btn-sm">Search</button>
                     </form>
                 </div>
-                @*<div class="">
-                        <label class="font-weight-bold mr-2">Yearly</label>
-                        <input type="checkbox" data-toggle="toggle" data-size="xs">
-                    </div>
+                <div class="">
+                    <label class="font-weight-bold mr-2">Yearly</label>
+                    <input type="checkbox" data-toggle="toggle" data-size="xs">
+                </div>
             </div>
             <div class="card-body">
                 <canvas id="SpecificProducer" height="100"></canvas>
             </div>
         </div>
-    </div>*@
+    </div>
 </div>
 <script>
     var BrokerMorris;
@@ -132,7 +187,7 @@
     var SPBarBData = [];
 
     $('#branch').change(function () {
-        GetYearWiseReport('Branch');
+        GetYearWiseReport('Branches');
     });
     $("#broker").on('change', function () {
         if ($(this).is(':checked')) {
@@ -167,7 +222,7 @@
     $("#branch").on('change', function () {
         if ($(this).is(':checked')) {
             $(this).attr('value', 'true');
-            GetYearWiseReport('Branch');
+            GetYearWiseReport('Branches');
         } else {
             $(this).attr('value', 'false');
             loadBranch();
@@ -193,7 +248,7 @@
                     AgentMorris.setData(res.item);
                 else if (BussType == 'Direct')
                     DirectMorris.setData(res.item);
-                else if (BussType == 'Branch')
+                else if (BussType == 'Branches')
                     BranchMorris.setData(res.item);
 
             },
@@ -469,7 +524,7 @@
         }
         document.getElementById('randomizeData').addEventListener('click', function () {
             var BussType = $("#ddlRole").val();
-            var ProducerName = $("#ddlProducer").val();
+            var ProducerName = $("#Users").val();
             $.ajax({
                 type: "GET",
                 contentType: "application/json; charset=utf-8",
@@ -510,5 +565,56 @@
             //spBarChart.update();
         });
     };
+    function GetUsers(BT) {
+        var procemessage = "<option value='0'> Please wait...</option>";
+        $("#Users").html(procemessage).show();
+        var url = "/Home/GetUserListBIDashBoard/";
+
+        $.ajax({
+            url: url,
+            data: { BusinessType: BT },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var lst = data.list
+                var markup = "<option value='0'>Select Users</option>";
+                for (var x = 0; x < lst.length; x++) {
+                    markup += "<option value=" + lst[x].UserName + ">" + lst[x].UserName + "</option>";
+                }
+                $("#Users").html(markup).show();
+
+
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
+    function GetBIDashBoardUserData() {
+        var BussType = $('#BusinessType').val();
+        var Users = $('#Users').val();
+        $.ajax({
+            url: url,
+            data: { UserName: Users },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var lst = data.list
+                var markup = "<option value='0'>Select Users</option>";
+                for (var x = 0; x < lst.length; x++) {
+                    markup += "<option value=" + lst[x].UserName + ">" + lst[x].UserName + "</option>";
+                }
+                $("#Users").html(markup).show();
+
+
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+
+    }
 </script>
 @*SP_GetUserInsInfo*@

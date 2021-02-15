@@ -169,6 +169,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="img\logo\logo.ai" />
+    <Content Include="MasterUploads\NewBulkUpload.xlsx" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -1946,10 +1947,10 @@
     <Content Include="Views\Home\UserLogin.cshtml" />
     <Content Include="Views\Home\IndexBI.cshtml" />
     <Content Include="Views\Shared\_Add.cshtml" />
+    <Content Include="Views\Home\CallBack.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="MasterUploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -17,5 +17,6 @@ namespace MotorApp.BusinessEntities
 
         public int Available { get; set; }
         public string BusinessType { get; set; }
+        
     }
 }
