@@ -103,6 +103,7 @@
                         <form id="formRenewal" class="form-horizontal">
                             <div class="form-group row mb-3">
                                 <input type="hidden" name="InsuranceID" id="InsuranceID">
+                                <input type="hidden" name="Flag" id="Flag">
                                 <label for="inputEmail3" class="col-3 col-form-label">Division Code</label>
                                 <div class="col-9">
                                     <input type="text" class="form-control form-control-sm" readonly name="DivisionCode" required id="txtDivisionCode">
@@ -387,15 +388,11 @@
         
         $(document).ready(function () {
             $('#btnRenewal').on('click', function () {
-                if ($('#txtCallBackDate').val() == "" || $('#txtCallBackDate').val() == "") {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: '',
-                        text: "Please provide call back date.",
-                    })
-                    return false;
+                if ($('#txtCallBackDate').val() == "" && $('#txtStatus').val() == "Under Process") {
+                    $('#Flag').val("1");
                 }
                 var renewalData = $('#formRenewal').serialize();
+                
                 $.ajax({
 
                     type: "POST",

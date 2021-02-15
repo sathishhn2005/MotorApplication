@@ -36,6 +36,7 @@ namespace MotorApp.BusinessEntities
         public string CustomerName { get; set; }
         [Display(Name = "Source Code")]
         public string SourceCode { get; set; }
+        
 
         [Display(Name = "Source Name")]
         public string SourceName { get; set; }
@@ -79,8 +80,8 @@ namespace MotorApp.BusinessEntities
         public string ProducerName { get; set; }
         public InssType InsuranceType { get; set; }
 
+        public int Flag { get; set; }
 
-        
     }
     public enum InssType
     {

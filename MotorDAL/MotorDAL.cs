@@ -1289,8 +1289,11 @@ namespace MotorApp.DAL
                     cmd.Parameters.AddWithValue("@Status", objMotorModel.Status ?? "");
                     cmd.Parameters.AddWithValue("@Description", objMotorModel.Description ?? "");
                     cmd.Parameters.AddWithValue("@UserName", uname ?? "");
-                    cmd.Parameters.AddWithValue("@CallBackDate", objMotorModel.CallBackDate);
+                    //cmd.Parameters.AddWithValue("@CallBackDate", objMotorModel.CallBackDate);
+                    cmd.Parameters.Add("@CallBackDate", SqlDbType.DateTime2).Value = objMotorModel.CallBackDate; //<- as example
+
                     cmd.Parameters.AddWithValue("@RenewalSumAssured", objMotorModel.RenewalSumAssured);
+                    cmd.Parameters.AddWithValue("@Flag", objMotorModel.Flag);
                     returnCode = cmd.ExecuteNonQuery();
 
 
@@ -1508,7 +1511,7 @@ namespace MotorApp.DAL
                     cmd.Connection = con;
 
                     cmd.Parameters.AddWithValue("@RoleId", RoleId);
-                    
+
                     cmd.Parameters.AddWithValue("@ProducerName", Uname);
 
 
