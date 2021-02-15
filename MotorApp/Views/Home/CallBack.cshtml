@@ -387,6 +387,14 @@
         
         $(document).ready(function () {
             $('#btnRenewal').on('click', function () {
+                if ($('#txtCallBackDate').val() == "" || $('#txtCallBackDate').val() == "") {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: '',
+                        text: "Please provide call back date.",
+                    })
+                    return false;
+                }
                 var renewalData = $('#formRenewal').serialize();
                 $.ajax({
 
