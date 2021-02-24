@@ -22,23 +22,29 @@ namespace MotorApp.Controllers
         private List<DomesticModel> domesModel;
         private List<ProducerCodeMaster> lstProducerCodeMaster;
         private List<Insurance> lstNewIns;
-        private DashBoard lstInfo;
+        private DashBoard lstInfo = new DashBoard();
         string IsExists = string.Empty;
         static string U_Name = string.Empty;
+        static List<int> Year;
         static long RoleId = 0;
         static int TypeId = 0;
         dynamic lstInput;
         static bool IsUserLogin;
 
-        public HomeController()
-        {
-            if (!string.IsNullOrEmpty(U_Name))
-            {
-                long returnCode = objMotorBAL.GetMasterViews(out motorModel, out travelModel, out indiviModel, out domesModel, out lstProducerCodeMaster, out lstNewIns);
-            }
+        //public HomeController()
+        //{
+        //    if (!string.IsNullOrEmpty(U_Name))
+        //    {
+        //        long returnCode = objMotorBAL.GetMasterViews(out motorModel, out travelModel, out indiviModel, out domesModel, out lstProducerCodeMaster, out lstNewIns);
+        //        if (lstNewIns != null)
+        //        {
+        //            lstInfo.lstYears = lstNewIns.Where(p => p.PolicyToDate != null).Select(p => p.PolicyToDate.Year).Distinct().
+        //                AsEnumerable().Select(x => new DateTime(x, 1, 1).Year).ToList();
+        //        }
+        //    }
 
 
-        }
+        //}
 
         public IEnumerable<SelectListItem> lstProItems
         {
@@ -89,7 +95,24 @@ namespace MotorApp.Controllers
                     ViewBag.TNPRenewedMonthPremium = lstInfo.TNPRenewedMonthPremium;
                     ViewBag.PercentPremiumRenewedMonth = lstInfo.PercentPremiumRenewedMonth;
 
+                    if (lstNewIns != null)
+                    {
+                        lstInfo.lstYears = lstNewIns.Where(p => p.PolicyToDate != null).Select(p => p.PolicyToDate.Year).Distinct().
+                            AsEnumerable().Select(x => new DateTime(x, 1, 1).Year).ToList();
+                        
+                        Year = lstInfo.lstYears;
+                    }
+                    else
+                    {
+                        returnCode = objMotorBAL.GetMasterViews(out motorModel, out travelModel, out indiviModel, out domesModel, out lstProducerCodeMaster, out lstNewIns);
+                        if (lstNewIns != null)
+                        {
+                            lstInfo.lstYears = lstNewIns.Where(p => p.PolicyToDate != null).Select(p => p.PolicyToDate.Year).Distinct().
+                                AsEnumerable().Select(x => new DateTime(x, 1, 1).Year).ToList();
+                            Year = lstInfo.lstYears;
+                        }
 
+                    }
                     //ViewBag.TotPoltoBeRenewed =  lstInfo.TotPoltoBeRenewed;
                     //ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
                     //ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
@@ -221,7 +244,7 @@ namespace MotorApp.Controllers
                     return View(lstNewIns.Where(x => x.ProducerName == U_Name).OrderBy(x => x.InsuranceID));
 
                 else
-                    return RedirectToAction("Login");
+                    return View(lst);
 
             }
             else
@@ -947,6 +970,9 @@ namespace MotorApp.Controllers
                 ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
                 ViewBag.PolicyLost = lstInfo.PolicyLost;
                 ViewBag.UserName = lstInfo.UserName;
+                lstInfo.lstYears = Year;
+                
+
                 if (!returnCode.Equals(1))
                 {
 
@@ -978,6 +1004,8 @@ namespace MotorApp.Controllers
                 ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
                 ViewBag.PolicyLost = lstInfo.PolicyLost;
                 ViewBag.UserName = lstInfo.UserName;
+                lstInfo.lstYears = Year;
+                
                 if (!returnCode.Equals(1))
                 {
 
@@ -991,6 +1019,40 @@ namespace MotorApp.Controllers
             }
 
 
+        }
+        public JsonResult GetSpecificYearWiseReport(int Years)
+        {
+            try
+            {
+                int IsLoggedIn = IsUserLoggedIn();
+                //if (IsLoggedIn > 0)
+                //{
+                if (TempData["Input"] != null)
+                {
+                    lstInput = TempData["Input"];
+                }
+
+                long returnCode = objMotorBAL.GetInfoYearWise(lstInput, Years, out lstInfo);
+
+                AssignDataToViewBag(lstInfo);
+                ViewBag.RoleId = RoleId;
+                ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
+                ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
+                ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
+                ViewBag.PolicyLost = lstInfo.PolicyLost;
+                ViewBag.UserName = lstInfo.UserName;
+
+                return Json(new
+                {
+                    list = lstInfo
+                }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
         public ActionResult IndividualDB()
         {
@@ -1010,6 +1072,7 @@ namespace MotorApp.Controllers
                 ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
                 ViewBag.PolicyLost = lstInfo.PolicyLost;
                 ViewBag.UserName = lstInfo.UserName;
+                lstInfo.lstYears = Year;
                 if (!returnCode.Equals(1))
                 {
 
@@ -1041,7 +1104,7 @@ namespace MotorApp.Controllers
                 ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
                 ViewBag.PolicyLost = lstInfo.PolicyLost;
                 ViewBag.UserName = lstInfo.UserName;
-
+                lstInfo.lstYears = Year;
                 if (!returnCode.Equals(1))
                 {
 

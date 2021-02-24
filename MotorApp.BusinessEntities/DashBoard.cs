@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace MotorApp.BusinessEntities
 {
-   public class DashBoard
+    public class DashBoard
     {
-        
+
         public int TotPoltoBeRenewed { get; set; }
 
         public int TotPolforRenewal { get; set; }
@@ -47,6 +47,7 @@ namespace MotorApp.BusinessEntities
         public long TNPLostMonthPremium { get; set; }
         public long TNPUPMonthPremium { get; set; }
         public long TNPRenewedMonthPremium { get; set; }
+        public List<int> lstYears { get; set; }
         public decimal PercentPremiumRenewedMonth { get; set; }
 
 

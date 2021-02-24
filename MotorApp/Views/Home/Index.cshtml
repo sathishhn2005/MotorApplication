@@ -2,6 +2,26 @@
 @using MotorApp.BAL;
 @using MotorApp.BusinessEntities;
 @{ ViewBag.Title = "Home Page"; }
+@{List<SelectListItem> lstYear = new List<SelectListItem>(); }
+@if (Model != null)
+{
+
+    lstYear = new List<SelectListItem>();
+    if (Model.lstYears != null)
+    {
+        foreach (var item in Model.lstYears)
+        {
+            lstYear.Add(new SelectListItem
+            {
+                Text = item.ToString(),
+                Value = item.ToString()
+            });
+        }
+    }
+
+}
+
+
 @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @name = "Form1" }))
 {
 <div class="d-sm-flex align-items-center justify-content-between mb-2">
@@ -13,9 +33,9 @@
     <div class="col-md-2">
 
         @Html.DropDownList("Role",
-                           new SelectList(Enum.GetValues(typeof(MotorInsRoles))),
-                           "Select Role",
-                           new { @class = "form-control form-control-sm" })
+                                                              new SelectList(Enum.GetValues(typeof(MotorInsRoles))),
+                                                              "Select Role",
+                                                              new { @class = "form-control form-control-sm" })
     </div>
     <label for="cars">Choose Producer</label>
     <div class="col-md-2">
@@ -37,7 +57,7 @@
                     <div class="col-md-7">
                         <div>
                             <h4 class="content-color-primary my-0 ">Policy Report - Monthly</h4>
-                            <p class="content-color-secondary text-xs">This Month | Updated 1 min ago</p>
+                            
                             <div class="d-flex justify-content-between">
                                 <div class=" mb-0  text-gray-800 w-100">
                                     @if (Model != null)
@@ -83,32 +103,41 @@
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col-md-7">
-                        <div>
-                            <h4 class="content-color-primary my-0 ">Policy Report - Yearly</h4>
-                            <p class="content-color-secondary text-xs">This Year | Updated 1 min ago</p>
+                        @if (Model != null)
+                        {
+
+            <h4 class="content-color-primary my-0 ">
+                Policy Report - Yearly
+
+
+                @Html.DropDownListFor(model => model.lstYears, lstYear, "-- Select Year --",
+                                             new { @class = "form-control form-control-sm", @onchange = "javascript:GetSpecificYearWR(this.value);" })
+
+            </h4>
+
+
                             <div class="d-flex justify-content-between">
-                                @if (Model != null)
-                                {
-                    <div class=" mb-0  text-gray-800 w-100">
-                        <div class="d-flex justify-content-between">
-                            <label class="font-14">Total Available (No. of Policies) </label>
-                            <label class="text-primary font-weight-bold font-14 ">@Model.TNPYear</label>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <label class="font-14">Renewed (No of Policies)</label>
-                            <label class="text-success font-weight-bold font-14">@Model.TNPRenewedYear</label>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <label class="font-14">Under Process (No. of Policies)</label>
-                            <label class="text-warning font-weight-bold font-14">@Model.TNPUnderProcessYear</label>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <label class="font-14">Lost (No. of Policies)</label>
-                            <label class="text-danger font-weight-bold font-14">@Model.TNPLostYear</label>
-                        </div>
-                    </div>}
-                            </div>
-                        </div>
+
+                                <div class=" mb-0  text-gray-800 w-100">
+                                    <div class="d-flex justify-content-between">
+                                        <label class="font-14">Total Available (No. of Policies) </label>
+                                        <label id="lblTNPYear" class="text-primary font-weight-bold font-14 ">@Model.TNPYear</label>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <label class="font-14">Renewed (No of Policies)</label>
+                                        <label id="lblTNPRenewedYear" class="text-success font-weight-bold font-14">@Model.TNPRenewedYear</label>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <label class="font-14">Under Process (No. of Policies)</label>
+                                        <label id="lblTNPUnderProcessYear" class="text-warning font-weight-bold font-14">@Model.TNPUnderProcessYear</label>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <label class="font-14">Lost (No. of Policies)</label>
+                                        <label id="lblTNPLostYear" class="text-danger font-weight-bold font-14">@Model.TNPLostYear</label>
+                                    </div>
+                                </div>
+
+                            </div>}
                     </div>
                     <div class="col-md-5">
                         <div id="yearly-policy" class="morris-charts" style="height: 200px;width: 100%"></div>
@@ -117,7 +146,7 @@
                 @if (Model != null)
                 {
     <div class="mt-2 mb-0 text-muted ">
-        <span class="text-success mr-2 font-14"><i class="fa fa-arrow-up"></i> @Model.PercentageRenewedYear  %</span>
+        <span id="lblPercentageRenewedYear" class="text-success mr-2 font-14"><i class="fa fa-arrow-up"></i> @Model.PercentageRenewedYear  %</span>
         <span class="font-14">Progress since last year</span>
     </div>}
             </div>
@@ -131,7 +160,7 @@
                     <div class="col-md-7">
                         <div>
                             <h4 class="content-color-primary my-0 ">Premium Report - Monthly</h4>
-                            <p class="content-color-secondary text-xs">This Month | Updated 1 min ago</p>
+                            
                             <div class="d-flex justify-content-between">
                                 <div class=" mb-0  text-gray-800 w-100">
                                     @if (Model != null)
@@ -177,26 +206,26 @@
                     <div class="col-md-7">
                         <div>
                             <h4 class="content-color-primary my-0 ">Premium Report - Yearly</h4>
-                            <p class="content-color-secondary text-xs">This Year | Updated 1 min ago</p>
+                            
                             <div class="d-flex justify-content-between">
                                 <div class=" mb-0  text-gray-800 w-100">
                                     @if (Model != null)
                                     {
                         <div class="d-flex justify-content-between">
                             <label class="font-14">Renewal Premium available </label>
-                            <label class="text-primary font-weight-bold font-14 ">OMR @Model.TNPYearPremium</label>
+                            <label id="lblTNPYearPremium" class="text-primary font-weight-bold font-14 ">OMR @Model.TNPYearPremium</label>
                         </div>
                                         <div class="d-flex justify-content-between">
                                             <label class="font-14">Renewed </label>
-                                            <label class="text-success font-weight-bold font-14">OMR @Model.TNPRenewedYearPremium</label>
+                                            <label id="lblTNPRenewedYearPremium" class="text-success font-weight-bold font-14">OMR @Model.TNPRenewedYearPremium</label>
                                         </div>
                                                         <div class="d-flex justify-content-between">
                                                             <label class="font-14">Under Process </label>
-                                                            <label class="text-warning font-weight-bold font-14">OMR @Model.TNPUPYearPremium</label>
+                                                            <label id="lblTNPUPYearPremium" class="text-warning font-weight-bold font-14">OMR @Model.TNPUPYearPremium</label>
                                                         </div>
                                                                         <div class="d-flex justify-content-between">
                                                                             <label class="font-14">Lost </label>
-                                                                            <label class="text-danger font-weight-bold font-14">OMR @Model.TNPLostYearPremium</label>
+                                                                            <label id="lblTNPLostYearPremium" class="text-danger font-weight-bold font-14">OMR @Model.TNPLostYearPremium</label>
                                                                         </div>}
                                 </div>
                             </div>
@@ -209,7 +238,7 @@
                 @if (Model != null)
                 {
     <div class="mt-2 mb-0 text-muted ">
-        <span class="text-success mr-2 font-14"><i class="fa fa-arrow-up"></i>@Model.PercentPremiumRenewedYear  %</span>
+        <span id="lblPercentPremiumRenewedYear" class="text-success mr-2 font-14"><i class="fa fa-arrow-up"></i>@Model.PercentPremiumRenewedYear  %</span>
         <span class="font-14">Progress since last year</span>
     </div>}
             </div>
@@ -229,7 +258,7 @@
             <div class="row align-items-center">
                 <div class="col ">
                     <div class="text-xs font-weight-bold text-uppercase mb-1">
-                        Total Policies to be renewed 
+                        Total Policies to be renewed
                     </div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">
                         @Model.TNPRenewedYear
@@ -600,9 +629,41 @@
             </div>
         </div>
     </div>
-</div>
-<!--Row-->
+</div> <!--Row-->
 <script type="text/javascript">
+    function GetSpecificYearWR(Year) {
+
+        if (Year == "") {
+            var dt = new Date();
+            Year = dt.getFullYear();
+        }
+        var url = "/Home/GetSpecificYearWiseReport/";
+
+        $.ajax({
+            url: url,
+            data: { Years: Year },
+            cache: false,
+            type: "GET",
+            success: function (data) {
+                document.getElementById('lblTNPYear').innerHTML = data.list.TNPYear;
+                document.getElementById('lblTNPRenewedYear').innerHTML = data.list.TNPRenewedYear;
+                document.getElementById('lblTNPUnderProcessYear').innerHTML = data.list.TNPUnderProcessYear;
+                document.getElementById('lblTNPLostYear').innerHTML = data.list.TNPLostYear;
+                document.getElementById('lblPercentageRenewedYear').innerHTML = data.list.PercentageRenewedYear;
+                document.getElementById('lblTNPYearPremium').innerHTML = data.list.TNPYearPremium;
+                document.getElementById('lblTNPRenewedYearPremium').innerHTML = data.list.TNPRenewedYearPremium;
+                document.getElementById('lblTNPUPYearPremium').innerHTML = data.list.TNPUPYearPremium;
+                document.getElementById('lblTNPLostYearPremium').innerHTML = data.list.TNPLostYearPremium;
+                document.getElementById('lblPercentPremiumRenewedYear').innerHTML = data.list.PercentPremiumRenewedYear;
+
+
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
     $(document).ready(function () {
         $("#Role").on("change", function () {
             var RoleId = $('#Role').val();

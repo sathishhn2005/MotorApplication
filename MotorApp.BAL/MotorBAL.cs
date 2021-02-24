@@ -589,5 +589,36 @@ namespace MotorApp.BAL
                 return lst;
             }
         }
+        public long GetInfoYearWise(dynamic lstInput, int Years, out DashBoard lstInfo)
+        {
+            long returnCode = -1;
+            lstInfo = new DashBoard();
+            using (TransactionScope transactionScope = new TransactionScope())
+            {
+                try
+                {
+                    if (HttpContext.Current.Cache["InputData"].ToString() != "" && HttpContext.Current.Cache["InputData"] != null)
+                    {
+                        if (lstInput == null)
+                            lstInput = (dynamic)HttpContext.Current.Cache["InputData"];
+                        returnCode = objMotorAppDAL.GetYearwiseReport(lstInput, Years, out lstInfo);
+                    }
+                    else
+                    {
+                        returnCode = objMotorAppDAL.GetYearwiseReport(lstInput, Years, out lstInfo);
+                        HttpContext.Current.Cache.Insert("InputData", lstInput);
+                    }
+                    transactionScope.Complete();
+                    transactionScope.Dispose();
+
+                }
+                catch (Exception ex)
+                {
+                    transactionScope.Dispose();
+                }
+
+                return returnCode;
+            }
+        }
     }
 }
