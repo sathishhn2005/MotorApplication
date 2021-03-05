@@ -22,6 +22,7 @@ namespace MotorApp.Models
 
         public long RoleId { get; set; }
         public string RoleName { get; set; }
+        public string SubRoleType { get; set; }
         public MotorInsRoles Role { get; set; }
     }
     public enum MotorInsRoles

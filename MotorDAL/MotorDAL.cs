@@ -615,6 +615,7 @@ namespace MotorApp.DAL
                     cmd.Parameters.AddWithValue("@Password", obj.Password);
                     cmd.Parameters.AddWithValue("@RoleId", obj.Role);
                     cmd.Parameters.AddWithValue("@UserName", obj.UserName);
+                    cmd.Parameters.AddWithValue("@SubRoleType", obj.SubRoleType);
 
                     SqlParameter param = new SqlParameter
                     {
@@ -1460,6 +1461,56 @@ namespace MotorApp.DAL
             catch (Exception ex)
             {
                 throw ex;
+            }
+            return returnCode;
+        }
+
+        public long BulkUpdateInsuranceStatus( string InsuranceStatusJson,long Loginid,string UserName,string FileType,out string ErrorMsg)
+        {
+            long returnCode = -1;
+            ErrorMsg = string.Empty;
+            //DataTable dt = new DataTable();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+
+                    SqlCommand  cmd = new SqlCommand
+                            {
+                                CommandText = "pBulkUpdateInsuranceStatus",
+                                CommandTimeout = 180,
+                                Connection = con,
+                                CommandType = CommandType.StoredProcedure
+                            };
+
+                    cmd.Parameters.AddWithValue("@InsuranceStatusJson", InsuranceStatusJson);
+                    cmd.Parameters.AddWithValue("@Loginid", Loginid);
+                    cmd.Parameters.AddWithValue("@UserName", UserName);
+                    cmd.Parameters.AddWithValue("@FileType", FileType);
+
+                    SqlParameter param = new SqlParameter
+                    {
+                        ParameterName = "@ErrorMsg",
+                        Direction = ParameterDirection.Output,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Size = 4000,
+                    };
+                    cmd.Parameters.Add(param);
+
+                    returnCode =cmd.ExecuteNonQuery();
+
+                    if (cmd.Parameters["@ErrorMsg"].Value != DBNull.Value)
+                    {
+                        ErrorMsg = cmd.Parameters["@ErrorMsg"].Value.ToString();
+                    }
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                throw ;
             }
             return returnCode;
         }

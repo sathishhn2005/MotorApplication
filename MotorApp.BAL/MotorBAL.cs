@@ -13,7 +13,7 @@ namespace MotorApp.BAL
     public class MotorBAL
     {
         MotorDAL objMotorAppDAL = new MotorDAL();
-        public long BulkUploadMotor(string Extension, string filePath, int reqFrom, out int rowsCnt, out string fileMismatchErr,string UserName)
+        public long BulkUploadMotor(string Extension, string filePath, int reqFrom, out int rowsCnt, out string fileMismatchErr, string UserName)
         {
             long returnCode = -1;
             rowsCnt = 0;
@@ -22,7 +22,7 @@ namespace MotorApp.BAL
                 try
                 {
 
-                    returnCode = objMotorAppDAL.BulkUploadMotor(Extension, filePath, reqFrom, out rowsCnt, out fileMismatchErr,UserName);
+                    returnCode = objMotorAppDAL.BulkUploadMotor(Extension, filePath, reqFrom, out rowsCnt, out fileMismatchErr, UserName);
                     transactionScope.Complete();
                     transactionScope.Dispose();
 
@@ -391,7 +391,7 @@ namespace MotorApp.BAL
                 return returnCode;
             }
         }
-        public long SaveNewIns(Insurance objMotorModal,string Uname,out string u)
+        public long SaveNewIns(Insurance objMotorModal, string Uname, out string u)
         {
             long returnCode = -1;
 
@@ -399,7 +399,7 @@ namespace MotorApp.BAL
             {
                 try
                 {
-                    returnCode = objMotorAppDAL.SaveInsu(objMotorModal, Uname,out u);
+                    returnCode = objMotorAppDAL.SaveInsu(objMotorModal, Uname, out u);
                     transactionScope.Complete();
                     transactionScope.Dispose();
 
@@ -413,7 +413,7 @@ namespace MotorApp.BAL
                 return returnCode;
             }
         }
-        public long UpdateNewIns(Insurance objMotorModal,string uname)
+        public long UpdateNewIns(Insurance objMotorModal, string uname)
         {
             long returnCode = -1;
 
@@ -508,7 +508,7 @@ namespace MotorApp.BAL
             {
                 try
                 {
-                    returnCode = objMotorAppDAL.GetSProducerDB(out lstBIDashBoard,BusinessType,ProducerName);
+                    returnCode = objMotorAppDAL.GetSProducerDB(out lstBIDashBoard, BusinessType, ProducerName);
                     transactionScope.Complete();
                     transactionScope.Dispose();
 
@@ -526,23 +526,23 @@ namespace MotorApp.BAL
         {
             long returnCode = -1;
 
-            using (TransactionScope transactionScope = new TransactionScope())
+            //using (TransactionScope transactionScope = new TransactionScope())
+            //{
+            try
             {
-                try
-                {
-                    returnCode = objMotorAppDAL.GetSearchIns(RoleId, PolicyNo, DivisionName, AssuredName, ProductName, Status, Uname, out lstNewIns);
-                    transactionScope.Complete();
-                    transactionScope.Dispose();
+                returnCode = objMotorAppDAL.GetSearchIns(RoleId, PolicyNo, DivisionName, AssuredName, ProductName, Status, Uname, out lstNewIns);
+                // transactionScope.Complete();
+                //transactionScope.Dispose();
 
-                }
-                catch (Exception ex)
-                {
-                    transactionScope.Dispose();
-                    throw ex;
-                }
-
-                return returnCode;
             }
+            catch (Exception ex)
+            {
+                // transactionScope.Dispose();
+                throw ex;
+            }
+
+            return returnCode;
+            //}
         }
         public long GetCallBackDetails(long RoleId, string Uname, out List<Insurance> lstNewIns)
         {
@@ -552,8 +552,8 @@ namespace MotorApp.BAL
             {
                 try
                 {
-                    
-                       returnCode = objMotorAppDAL.GetCalBackInfo(RoleId, Uname, out lstNewIns);
+
+                    returnCode = objMotorAppDAL.GetCalBackInfo(RoleId, Uname, out lstNewIns);
                     transactionScope.Complete();
                     transactionScope.Dispose();
 
@@ -620,5 +620,29 @@ namespace MotorApp.BAL
                 return returnCode;
             }
         }
+
+        public long BulkUpdateInsuranceStatus(string InsuranceStatusJson, long Loginid, string UserName, string FileType, out string ErrorMsg)
+        {
+            long returnCode = -1;
+            ErrorMsg = string.Empty;
+
+            using (TransactionScope transactionScope = new TransactionScope())
+            {
+                try
+                {
+                    returnCode = objMotorAppDAL.BulkUpdateInsuranceStatus(InsuranceStatusJson, Loginid, UserName, FileType,out ErrorMsg);
+                    transactionScope.Complete();
+                    transactionScope.Dispose();
+
+                }
+                catch (Exception ex)
+                {
+                    transactionScope.Dispose();
+                }
+               
+            }
+            return returnCode;
+        }
+       
     }
 }

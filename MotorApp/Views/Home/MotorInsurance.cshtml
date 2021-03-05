@@ -107,9 +107,9 @@
                                         <div class="col-12">
                                             <div class="form-group row hide">
                                                 @*@Html.LabelFor(model => model.InsuranceID, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                    <div class="col-md-5">
-                                                        @Html.EditorFor(model => model.InsuranceID, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                    </div>*@
+            <div class="col-md-5">
+                @Html.EditorFor(model => model.InsuranceID, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+            </div>*@
                                                 @Html.HiddenFor(model => model.InsuranceID)
 
                                             </div>
@@ -138,11 +138,11 @@
                                                 </div>
                                             </div>
                                             @*<div class="form-group row">
-                                                    @Html.LabelFor(model => model.BusinessType, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                    <div class="col-md-5">
-                                                        @Html.EditorFor(model => model.BusinessType, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                    </div>
-                                                </div>*@
+            @Html.LabelFor(model => model.BusinessType, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+            <div class="col-md-5">
+                @Html.EditorFor(model => model.BusinessType, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+            </div>
+        </div>*@
                                             <div class="form-group row">
                                                 @Html.LabelFor(model => model.BusinessType, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
                                                 <div class="col-md-5">
@@ -150,6 +150,12 @@
                                                     @Html.DropDownListFor(model => model.BusinessType, lstBT, "-- Select BusinessType --",
                                                    new { @class = "form-control form-control-sm", @onchange = "javascript:GetUsers(this.value);" })
 
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                @Html.LabelFor(model => model.SourceCode, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    @Html.EditorFor(model => model.SourceCode, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -170,8 +176,9 @@
                                                         <select class="form-control form-control-sm" id="ProducerName" name="ProducerName"></select>
                                                     </div>
                                                 }
-                                                
+
                                             </div>
+
                                             <div class="form-group row">
                                                 @Html.LabelFor(model => model.PolicyNo, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
                                                 @if (Model != null)
@@ -271,19 +278,19 @@
                                                 </div>
                                             </div>
                                             @*<div class="form-group row">
-                                                    @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                    <div class="col-md-5">
-                                                        @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                    </div>
-                                                </div>*@
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+            <div class="col-md-5">
+                @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+            </div>
+        </div>*@
                                             <div class="form-group row">
                                                 @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
                                                 <div class="col-md-5">
                                                     @*<select class="form-control form-control-sm" name="Status" id="Status">
-                                                            <option value="Lost">Lost</option>
-                                                            <option value="Renewed">Renewed</option>
-                                                            <option value="Under process">Under process</option>
-                                                        </select>*@
+                    <option value="Lost">Lost</option>
+                    <option value="Renewed">Renewed</option>
+                    <option value="Under process">Under process</option>
+                </select>*@
                                                     @Html.DropDownListFor(model => model.Status, listItems, "-- Select Status --", new { @class = "form-control form-control-sm" })
 
                                                 </div>
@@ -301,20 +308,20 @@
                                                 </div>
                                             </div>
                                             @*<div class="form-group row">
-                                                    @Html.LabelFor(model => model.InsType, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                    <div class="col-md-5">
-                                                        @Html.EditorFor(model => model.InsType, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                    </div>
-                                                </div>*@
+            @Html.LabelFor(model => model.InsType, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+            <div class="col-md-5">
+                @Html.EditorFor(model => model.InsType, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+            </div>
+        </div>*@
                                             <div class="form-group row">
                                                 @Html.LabelFor(model => model.InsType, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
                                                 <div class="col-md-5">
                                                     @*<select class="form-control form-control-sm" name="InsType" id="Instype">
-                                                            <option value="Travel">Travel</option>
-                                                            <option value="Motor">Motor</option>
-                                                            <option value="Individual">Individual</option>
-                                                            <option value="Domestic">Domestic</option>
-                                                        </select>*@
+                    <option value="Travel">Travel</option>
+                    <option value="Motor">Motor</option>
+                    <option value="Individual">Individual</option>
+                    <option value="Domestic">Domestic</option>
+                </select>*@
                                                     @Html.DropDownListFor(model => model.InsType, lstInsType, "-- Select InsType --", new { @class = "form-control form-control-sm" })
 
                                                 </div>

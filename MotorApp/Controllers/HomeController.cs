@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Configuration;
 
 namespace MotorApp.Controllers
 {
@@ -764,7 +765,20 @@ namespace MotorApp.Controllers
                 ViewBag.RoleId = RoleId;
                 ViewBag.UserName = U_Name;
                 IList<Insurance> motorList = new List<Insurance>();
-                motorList = lstNewIns;
+                
+                if (lstNewIns != null)
+                {
+                    motorList = lstNewIns;
+                }
+                else
+                {
+                    long returnCode = objMotorBAL.GetMasterViews(out motorModel, out travelModel, out indiviModel, out domesModel, out lstProducerCodeMaster, out lstNewIns);
+                    if (lstNewIns != null)
+                    {
+                        motorList = lstNewIns;
+                    }
+
+                }
                 var std = motorList.Where(s => s.InsuranceID == MotorId).FirstOrDefault();
                 string BT = string.Empty;
                 BT = std.BusinessType;
@@ -1382,6 +1396,32 @@ namespace MotorApp.Controllers
             }
 
         }
+
+
+        [HttpPost]
+        public ActionResult BulkUpdateStatus(List<Insurance> lstMoter,string UploadType) 
+        {
+            long returnCode = -1;
+            string InsuranceStatusJson = string.Empty;
+            string ErrorMsg = string.Empty;
+
+            try
+            {
+                InsuranceStatusJson = JsonConvert.SerializeObject(lstMoter);
+                returnCode = new MotorBAL().BulkUpdateInsuranceStatus(InsuranceStatusJson, 1, "UserName", UploadType, out ErrorMsg);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return Json(ErrorMsg);
+        }
+       
+
+
+
     }
+
 
 }

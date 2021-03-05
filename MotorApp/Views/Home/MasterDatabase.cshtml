@@ -1,8 +1,7 @@
 ﻿@model IEnumerable<MotorApp.BusinessEntities.Insurance>
 @using MotorApp.BusinessEntities;
 @{ Layout = "~/Views/Shared/_Layout.cshtml"; }
-@{
-    List<SelectListItem> listItems = new List<SelectListItem>();
+@{ List<SelectListItem> listItems = new List<SelectListItem>();
     listItems.Add(new SelectListItem
     {
         Text = "Lost",
@@ -17,8 +16,8 @@
     {
         Text = "Under Process",
         Value = "Under Process"
-    });
-}
+    }); }
+
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Master Motor</h1>
     <ol class="breadcrumb my-2">
@@ -43,6 +42,7 @@
                             <div class="col-2">
                                 @*<input class="form-control form-control-sm  mb-3" name="PolicyNo" type="text" placeholder="Policy No">*@
                                 @Html.TextBox("PolicyNo", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Policy No" })
+
                             </div>
                             <div class="col-2">
                                 @*<input class="form-control form-control-sm  mb-3" name="DivisionName" type="text" placeholder="Division Name">*@
@@ -72,12 +72,11 @@
                                     <button class="btn btn-primary btn-sm" type="button">
                                     <i class="fas fa-search fa-sm"></i> Search
                                     </button>*@
-                                <input class="btn btn-primary btn-sm" type="submit" value="Search" />
+                                <input id="btnMotorSearch" class="btn btn-primary btn-sm" type="submit" value="Search" />
                                 @*<input type="button" value="Submit" id="btnsubmit" onclick="submitForm()">*@
 
                                 <button type="button" id="btnClear" class="btn btn-secondary btn-sm waves-effect">Clear</button>
-                            </div>
-                        }
+                            </div>}
                     </div>
                 </div>
             </form>
@@ -94,24 +93,77 @@
                 </div>
                 @if (ViewBag.RoleId == 1)
                 {
-                    <div>
-                        <a class="btn btn-primary btn-sm mx-1" href="MotorInsurance#step-1">
-                            <i class="fas fa-user-plus fa-sm"></i> Add
-                            Single Policy
-                        </a>
-                        <button class="btn btn-primary btn-sm mx-1" type="button" data-toggle="modal" data-backdrop="static"
-                                data-target="#uploadBulk">
-                            <i class="fas fa-upload fa-sm"></i> Bulk Upload Policy
-                        </button>
+                    <table>
+                        <tr>
+                            @*<td>
+                                <input type="file" id="fileUploadAssignTo" onchange="HideManuvalUpdateControl();" accept=".csv" />
+                                <input type="button" id="btnBulkAssignTo" class="btn btn-primary btn-sm mx-1" value="Upload AssignTo" onclick="csvFileUpload();" />
 
-                    </div>
+                            </td>*@
+                            <td>
+                                <input type="file" id="fileUploadMotorPolicies" onchange="HideManuvalUpdateControl();" accept=".csv" />
+                                <input type="button" id="uploadMotorPolicies" class="btn btn-primary btn-sm mx-1" value="Upload CSV File" onclick="csvFileUpload();" />
+
+                            </td>
+                            <td>
+                                <a class="btn btn-primary btn-sm mx-1" href="MotorInsurance#step-1">
+                                    <i class="fas fa-user-plus fa-sm"></i> Add
+                                    Single Policy
+                                </a>
+
+                            </td>
+                            <td>
+                                <button class="btn btn-primary btn-sm mx-1" type="button" data-toggle="modal" data-backdrop="static"
+                                        data-target="#uploadBulk">
+                                    <i class="fas fa-upload fa-sm"></i> Bulk Upload Policy
+                                </button>
+                            </td>
+                        </tr>
+
+                    </table>
                 }
+
             </div>
+            @if (ViewBag.RoleId == 1)
+            {
+
+                <table>
+
+                    <tr>
+                        <td width="20px"></td>
+                        <td id="tdUpdatecheckbox">
+                            <input type="checkbox" id="tblMotorRowall" onchange="clicktblMotorCheckBoxsStatus('','0','tbl',this,'')"> CheckAll
+                        </td>
+
+
+                        <td id="tdddlGrdStatus">
+                            <select class="form-control form-control-sm" id="ddlGrdStatus" name="Status" required="required" onchange="onchangeDDlBulkStatus();">
+                                <option disabled selected value="0"> -- Select an option -- </option>
+                                <option value="1">Renewed</option>
+                                <option value="2">Lost</option>
+                                <option value="3">Under Process</option>
+                            </select>
+                        </td>
+
+                        <td id="tdUpdateStatus">
+                            <button class="btn btn-primary btn-sm mx-1" type="button" id="btnManualUpdate" onclick="bulkUpdateStatus('Manual');">
+                                Update Status
+                            </button>
+                            <input type="button" id="btnresetCall" class="btn btn-secondary btn-sm waves-effect" value="Reset" onclick="resetCall();" />
+
+                            @*<hidden id="hdntblMotorValue" value=@Html.Raw(Json.Encode(Model))></hidden>*@
+                        </td>
+
+                    </tr>
+
+                </table>    }
+
             <div class="card-body">
                 <div class="table-responsive">
                     <table id="tblMotor" class="table align-items-center table-flush">
                         <thead>
                             <tr>
+                                <th>@*<input type="checkbox" id="tblMotorRowall" onchange="clicktblMotorCheckBoxsStatus('','0','tbl',this,'')">*@</th>
                                 <th>Policy No</th>
                                 <th>Division Name</th>
                                 <th>Insurance Type</th>
@@ -128,13 +180,18 @@
                             <tr>
                                 <td colspan="5"></td>
                             </tr>
-                        }
+ }
                         else
                         {
                             foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>@Html.DisplayFor(modelItem => item.PolicyNo)</td>
+                                    <td><input type="checkbox" id="tblMotorRow" onchange="clicktblMotorCheckBoxsStatus('@Html.DisplayFor(modelItem => item.PolicyNo)',@Html.DisplayFor(modelItem => item.InsuranceID),'tr',this,'@Html.DisplayFor(modelItem => item.Status)')"></td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PolicyNo)
+                                        @Html.HiddenFor(modelItem => item.InsuranceID)
+
+                                    </td>
                                     <td>@Html.DisplayFor(modelItem => item.DivisionName)</td>
                                     <td>@Html.DisplayFor(modelItem => item.InsType)</td>
                                     <td>@Html.DisplayFor(modelItem => item.PolicyFromDate)</td>
@@ -143,21 +200,17 @@
                                     <td>
                                         @if (item.Status.Equals("Renewed"))
                                         {
-                                            <span class="badge badge-success">@Html.DisplayFor(modelItem => item.Status)</span>
-                                        }
+                                            <span class="badge badge-success">@Html.DisplayFor(modelItem => item.Status)</span>}
 
                                         @if (item.Status.Equals("Lost"))
                                         {
-                                            <span class="badge badge-danger">@Html.DisplayFor(modelItem => item.Status)</span>
-                                        }
+                                            <span class="badge badge-danger">@Html.DisplayFor(modelItem => item.Status)</span>}
                                         @if (item.Status.Equals("Under Process"))
                                         {
-                                            <span class="badge badge-info">@Html.DisplayFor(modelItem => item.Status)</span>
-                                        }
+                                            <span class="badge badge-info">@Html.DisplayFor(modelItem => item.Status)</span>}
                                         @if (item.Status.Equals(""))
                                         {
-                                            <span class="badge badge-info"></span>
-                                        }
+                                            <span class="badge badge-info"></span>}
                                     </td>
                                     <td class="d-flex flex-row align-items-center justify-content-between">
                                         <i class="fas fa-eye pointer" aria-hidden="true" data-toggle="modal"
@@ -167,12 +220,11 @@
 
                                             <a href="Edit?MotorID=@item.InsuranceID">
                                                 <i class="fas fa-pencil-alt pointer" aria-hidden="true"></i>
-                                            </a>
-                                        }
+                                            </a>}
                                     </td>
 
                                 </tr>
-                            }
+}
                         }
                     </table>
                 </div>
@@ -304,12 +356,10 @@
                                         {
                                             if (ViewBag.RoleId == 1)
                                             {
-                                                <input type="number" class="form-control form-control-sm" onkeyup="CalcRenewalAdmin()" name="RevisedSumInsured" id="txtRevisedSumInsured">
-                                            }
+                                                <input type="number" class="form-control form-control-sm" onkeyup="CalcRenewalAdmin()" name="RevisedSumInsured" id="txtRevisedSumInsured"> }
                                             else
                                             {
-                                                <input type="number" class="form-control form-control-sm" readonly name="RevisedSumInsured" id="txtRevisedSumInsured">
-                                            }
+                                                <input type="number" class="form-control form-control-sm" readonly name="RevisedSumInsured" id="txtRevisedSumInsured">}
                                         }
                                     </div>
                                 </div>
@@ -336,8 +386,7 @@
                                         {
                                             if (ViewBag.RoleId == 1)
                                             {
-                                                <input type="number" class="form-control form-control-sm" name="RenewalSumAssured" required id="txtRenewalSumAssured">
-                                            }
+                                                <input type="number" class="form-control form-control-sm" name="RenewalSumAssured" required id="txtRenewalSumAssured"> }
                                             else
                                             {
                                                 <input type="number" class="form-control form-control-sm" readonly name="RenewalSumAssured" required id="txtRenewalSumAssured">
@@ -354,8 +403,7 @@
                                                     <option>4</option>
                                                     <option>5</option>
 
-                                                </select>
-                                            }
+                                                </select>}
                                         }
                                     </div>
                                 </div>
@@ -708,7 +756,7 @@
         $.ajax({
             url: '/Home/EditModal/?InsId=' + MotorId, // The method name + paramater
             success: function (data) {
-                
+
                 $('#InsuranceID').val(data.InsuranceID);
                 $('#txtDivisionCode').val(data.DivisionCode);
                 $('#txtDivisionName').val(data.DivisionName);
@@ -832,6 +880,8 @@
         });
     });
 
+    var lstMoter = [];
+
     $(document).ready(function () {
         $('#btnSearch').on('click', function () {
             var formData = $('#MotorForm').serialize();
@@ -853,24 +903,54 @@
                 }
             })
         });
+
+
+        $(".dataTables_paginate").on('click', function (event) {
+            //event.stopPropagation();
+            // event.stopImmediatePropagation();
+            //(... rest of your JS code)
+
+            if ($("#tblMotorRowall").prop("checked") == true) {
+                $("#tblMotorRowall").prop("checked", false);
+                // clicktblMotorCheckBoxsStatus('', '0', 'tbl', this, '');
+            }
+
+            //$($('.dataTables_paginate')[0].childNodes[0].childNodes).each(function (index, value) {
+
+
+            //    //var ClassList = $('.dataTables_paginate')[0].childNodes[0].childNodes[index].classList;
+            //    //for (i = 0; i  <= ClassList.length; i++) {
+            //    //    if (ClassList[i] == 'active') {
+            //    //        var PageId = $('.dataTables_paginate')[0].childNodes[0].childNodes[index].innerText;
+            //    //    }
+
+            //    //}
+            //    //alert(PageId);
+            //});
+
+
+            //alert('Page button');
+        });
+
+
     });
 
     window.onload = function () {
-        var btn = document.getElementById('uploadBtn'),
-            progressBar = document.getElementById('progressBar'),
-            progressOuter = document.getElementById('progressOuter'),
-            msgBox = document.getElementById('msgBox');
-        var fileUpload = $("#fileUploadMotor").get(0);
-        var files = fileUpload.files;
-        var files = fileUpload.files;
+        //var btn = document.getElementById('uploadBtn'),
+        //    progressBar = document.getElementById('progressBar'),
+        //    progressOuter = document.getElementById('progressOuter'),
+        //    msgBox = document.getElementById('msgBox');
+        //var fileUpload = $("#fileUploadMotor").get(0);
+        //var files = fileUpload.files;
+        //var files = fileUpload.files;
 
-        // Create FormData object
-        var fileData = new FormData();
-        $("#btnUpload").attr("disabled", "disabled");
-        // Looping over all files and add it to FormData object
-        for (var i = 0; i < files.length; i++) {
-            fileData.append(files[i].name, files[i]);
-        }
+        //// Create FormData object
+        //var fileData = new FormData();
+        //$("#btnUpload").attr("disabled", "disabled");
+        //// Looping over all files and add it to FormData object
+        //for (var i = 0; i < files.length; i++) {
+        //    fileData.append(files[i].name, files[i]);
+        //}
         $('#tblMotor').DataTable({
             dom: 'Bfrtip',
             buttons: {
@@ -879,67 +959,66 @@
                         extend: 'csv',
                         className: 'btn btn-sm btn-primary',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5]
+                            columns: [1, 2, 3, 4, 5, 6]
                         }
                     },
                     {
                         extend: 'pdf',
                         className: 'btn btn-sm btn-primary',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5]
+                            columns: [1, 2, 3, 4, 5, 6]
                         }
                     }
                 ]
             }
         });
         // Adding one more key to FormData object
-        fileData.append('txtMotorMaster', '1');
-        var uploader = new ss.SimpleUpload({
-            button: btn,
-            url: '/Home/UploadFiles',
-            multipart: true,
-            data: fileData,
-            hoverClass: 'hover',
-            focusClass: 'focus',
-            responseType: 'json',
-            startXHR: function () {
-                progressOuter.style.display = 'block'; // make progress bar visible
-                this.setProgressBar(progressBar);
-            },
-            onSubmit: function () {
-                msgBox.innerHTML = ''; // empty the message box
-                btn.innerHTML = 'Uploading...'; // change button text to "Uploading..."
-            },
-            onComplete: function (filename, response) {
+        //fileData.append('txtMotorMaster', '1');
+        //var uploader = new ss.SimpleUpload({
+        //    button: btn,
+        //    url: '/Home/UploadFiles',
+        //    multipart: true,
+        //    data: fileData,
+        //    hoverClass: 'hover',
+        //    focusClass: 'focus',
+        //    responseType: 'json',
+        //    startXHR: function () {
+        //        progressOuter.style.display = 'block'; // make progress bar visible
+        //        this.setProgressBar(progressBar);
+        //    },
+        //    onSubmit: function () {
+        //        msgBox.innerHTML = ''; // empty the message box
+        //        btn.innerHTML = 'Uploading...'; // change button text to "Uploading..."
+        //    },
+        //    onComplete: function (filename, response) {
 
-                btn.innerHTML = 'Choose Another File';
-                progressOuter.style.display = 'none'; // hide progress bar when upload is completed
+        //        btn.innerHTML = 'Choose Another File';
+        //        progressOuter.style.display = 'none'; // hide progress bar when upload is completed
 
-                if (!response) {
-                    msgBox.innerHTML = 'Unable to upload file';
-                    return;
-                }
+        //        if (!response) {
+        //            msgBox.innerHTML = 'Unable to upload file';
+        //            return;
+        //        }
 
-                if (response.success === true) {
-                    msgBox.innerHTML = '< strong > ' + escapeTags(filename) + '</strong > ' + ' successfully uploaded.';
+        //        if (response.success === true) {
+        //            msgBox.innerHTML = '< strong > ' + escapeTags(filename) + '</strong > ' + ' successfully uploaded.';
 
-                } else {
-                    if (response.msg) {
-                        msgBox.innerHTML = escapeTags(response.msg);
+        //        } else {
+        //            if (response.msg) {
+        //                msgBox.innerHTML = escapeTags(response.msg);
 
-                    } else {
-                        msgBox.innerHTML = 'An error occurred and the upload failed.';
-                    }
-                }
-            },
-            onError: function () {
-                progressOuter.style.display = 'none';
-                msgBox.innerHTML = 'Unable to upload file';
-            }
-        });
+        //            } else {
+        //                msgBox.innerHTML = 'An error occurred and the upload failed.';
+        //            }
+        //        }
+        //    },
+        //    onError: function () {
+        //        progressOuter.style.display = 'none';
+        //        msgBox.innerHTML = 'Unable to upload file';
+        //    }
+        //});
 
     };
-    
     function CalcRenewalSA() {
 
         var perc = "";
@@ -984,5 +1063,241 @@
         $('#txtRenewalSumAssured').val(total);
     }
 
+
+
+    function clicktblMotorCheckBoxsStatus(pPolicyNo, pInsuranceID, Type, objThis, pStatus) {
+
+
+        if ($("#ddlGrdStatus  option:selected").val() != "0") {
+
+            var valStatus = $("#ddlGrdStatus  option:selected").text();
+            var equalStatusPolicyNo = '';
+
+            if (Type == 'tbl') {
+
+                $('#tblMotor tbody tr ').each(function () {
+
+
+                    valInsuranceID = $(this).find("td").eq(1).find("input[type=hidden]")[0].value;
+                    valPolicyNo = $.trim($(this).find("td:eq(1)").text());
+                    rowStatus = $.trim($(this).find("td:eq(6)").text());
+
+                    if ($("#ddlGrdStatus  option:selected").text() != rowStatus) {
+                        if ($("#tblMotorRowall").prop("checked") == true) {
+
+                            if ($(this).find("td").eq(0).find("input[type=checkbox]").prop("checked") == false) {
+
+                                checkAndRemoveExistsRow(valPolicyNo, valInsuranceID, 'Manual');
+
+                                lstMoter.push({
+                                    InsuranceID: valInsuranceID,
+                                    PolicyNo: valPolicyNo,
+                                    Status: valStatus
+                                });
+
+
+                                $(this).find("td").eq(0).find("input[type=checkbox]").prop("checked", true);
+                            }
+                        }
+                        else {
+                            if ($(this).find("td").eq(0).find("input[type=checkbox]").prop("checked") == true) {
+                                checkAndRemoveExistsRow(valPolicyNo, valInsuranceID, 'Manual');
+                                $(this).find("td").eq(0).find("input[type=checkbox]").prop("checked", false);
+                            }
+                        }
+                    }
+                    else {
+                        equalStatusPolicyNo += valPolicyNo + " , ";
+                    }
+
+                });
+
+                if ($(objThis).prop("checked") == true && equalStatusPolicyNo != "") {
+                    alert(equalStatusPolicyNo + "This Policy status and Upadated status are same, Please check.");
+                }
+
+            }
+            else {
+
+                if ($("#ddlGrdStatus  option:selected").text() != pStatus) {
+                    valInsuranceID = $.trim(pInsuranceID);
+                    valPolicyNo = $.trim(pPolicyNo);
+
+                    checkAndRemoveExistsRow(valPolicyNo, valInsuranceID, 'Manual');
+
+                    if ($(objThis).prop("checked") == true) {
+                        lstMoter.push({
+                            InsuranceID: valInsuranceID,
+                            PolicyNo: valPolicyNo,
+                            Status: valStatus
+                        });
+                    }
+                } else {
+                    $(objThis).prop("checked", false);
+                    alert("Please check selected row status and Upadated status value are same");
+                    return;
+                }
+
+            }
+        }
+        else {
+            $(objThis).prop("checked", false);
+            $("#ddlGrdStatus").focus();
+            alert("Please select Update status");
+            return;
+        }
+    }
+
+    function checkAndRemoveExistsRow(pPolicyNo, pInsuranceID, UFType) {
+
+        index = lstMoter.findIndex(x => x.InsuranceID == pInsuranceID && x.PolicyNo == pPolicyNo);
+
+        if (UFType == 'Manual') {
+
+            if (index > -1) {
+                //delete lstMoter[index]
+                lstMoter.splice(index, 1);
+            };
+        }
+        else {
+            return index;
+        }
+
+
+    }
+
+    function bulkUpdateStatus(UType) {
+
+        if (lstMoter.length > 0) {
+            $.post('/Home/BulkUpdateStatus', { lstMoter: lstMoter, UploadType: UType },
+                function (returnedData) {
+                    alert(returnedData);
+                });
+
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/Home/BulkUpdateStatus",
+            //    contentType: "application/json; charset=utf-8",
+            //    dataType: "json",
+            //    //data: JSON.stringify(lstMoter),
+            //    success: function (response) {
+            //        alert("updated successfully");
+            //    },
+            //    failure: function (response) {
+            //        alert(response.responseText);
+            //    },
+            //    error: function (response) {
+            //        alert(response.responseText);
+            //    }
+            //});
+
+            $("#btnMotorSearch").click();
+        }
+        else {
+            if (UType == "Manual") {
+                alert("Please select at least any one row");
+                return;
+            }
+        }
+
+    }
+    function onchangeDDlBulkStatus() {
+        if (lstMoter.length > 0) {
+            if (confirm("Are sure you what change the staus")) {
+                lstMoter = [];
+                $("#btnMotorSearch").click();
+                //tblMotorRow
+                //find("input[type=checkbox]").prop("checked", false);
+
+            }
+        }
+
+        if ($("#tblMotorRowall").prop("checked") == true) {
+            $("#tblMotorRowall").prop("checked", false);
+        }
+
+
+    }
+
+    function csvFileUpload() {
+        lstMoter = [];
+        var rowCount = 0;
+        var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.csv|.txt)$/;
+        if (regex.test($("#fileUploadMotorPolicies").val().toLowerCase())) {
+            if (typeof (FileReader) != "undefined") {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+
+                    var rows = e.target.result.split('\r\n');
+
+                    if (rows.length > 1005) {
+                        alert("Upload file maximum limit 1000, Please check");
+                        return false;
+                    }
+
+
+                    for (var i = 0; i < rows.length; i++) {
+
+                        var cells = rows[i].split(",");
+
+                        if (cells.length == 6 && i > 0) {
+
+                            res = $.trim(cells[0].replace('""', '"'));
+
+                            index = checkAndRemoveExistsRow($.trim(cells[0].replace('""', '"')), 0, 'CsvFile');
+
+                            if (index > -1) {
+                                $('#fileUploadMotorPolicies').val("");
+                                alert("Policy No :" + $.trim(cells[0].replace('""', '"')) + " already exists, Please check");
+
+                                return;
+                            }
+                            lstMoter.push({
+                                InsuranceID: 0,
+                                PolicyNo: $.trim(cells[0].replace('""', '"')),
+                                DivisionName: $.trim(cells[1].replace('""', '"')),
+                                InsuranceType: $.trim(cells[2].replace('""', '"')),
+                                Status: $.trim(cells[5].replace('""', '"'))
+                            });
+
+                        }
+                        rowCount += 1;
+
+                    }
+
+                    if (rowCount == rows.length) {
+                        bulkUpdateStatus("CSVFileUpload");
+                    }
+
+                }
+                reader.readAsText($("#fileUploadMotorPolicies")[0].files[0]);
+            } else {
+                $('#fileUploadMotorPolicies').val("");
+                alert("This browser does not support HTML5.");
+            }
+        } else {
+            $('#fileUploadMotorPolicies').val("");
+
+            alert("Please upload a valid CSV file.");
+
+        }
+
+
+    }
+
+    function resetCall() {
+        $("#btnMotorSearch").click();
+    }
+    function HideManuvalUpdateControl() {
+
+        if ($("#btnManualUpdate") != null) {
+            //$("#uploadMotorPolicies").removeClass("hide");
+            //$("#btnManualUpdate").addClass("hide");
+            $("#btnManualUpdate").attr("disabled");
+            //$("#tdUpdatecheckbox").addClass("hide");
+            //$("#ddlGrdStatus").addClass("hide");
+        }
+
+    }
 
 </script>
