@@ -33,9 +33,9 @@
     <div class="col-md-2">
 
         @Html.DropDownList("Role",
-                                                              new SelectList(Enum.GetValues(typeof(MotorInsRoles))),
-                                                              "Select Role",
-                                                              new { @class = "form-control form-control-sm" })
+                                                                        new SelectList(Enum.GetValues(typeof(MotorInsRoles))),
+                                                                        "Select Role",
+                                                                        new { @class = "form-control form-control-sm" })
     </div>
     <label for="cars">Choose Producer</label>
     <div class="col-md-2">
@@ -53,11 +53,11 @@
     <div class="col-md-6 mb-4">
         <div class="card h-100">
             <div class="card-body">
-                <div class="row align-items-center">
+                <div class="row ">
                     <div class="col-md-7">
                         <div>
-                            <h4 class="content-color-primary my-0 ">Policy Report - Monthly</h4>
-                            
+                            <h4 class="content-color-primary my-0 mb-4">Policy Report - Monthly</h4>
+
                             <div class="d-flex justify-content-between">
                                 <div class=" mb-0  text-gray-800 w-100">
                                     @if (Model != null)
@@ -90,7 +90,7 @@
                 </div>
                 @if (Model != null)
                 {
-    <div class="mt-2 mb-0 text-muted ">
+    <div class="mt-2 mb-0 text-muted d-none">
         <span class="text-success mr-2 font-14"><i class="fa fa-arrow-up"></i> @Model.PercentageRenewedMonth %</span>
         <span class="font-14">Progress since last month</span>
     </div>}
@@ -101,19 +101,20 @@
     <div class="col-md-6 mb-4">
         <div class="card h-100">
             <div class="card-body">
-                <div class="row align-items-center">
+                <div class="row ">
                     <div class="col-md-7">
                         @if (Model != null)
                         {
-
-            <h4 class="content-color-primary my-0 ">
-                Policy Report - Yearly
-
-
-                @Html.DropDownListFor(model => model.lstYears, lstYear, "-- Select Year --",
-                                             new { @class = "form-control form-control-sm", @onchange = "javascript:GetSpecificYearWR(this.value);" })
-
-            </h4>
+                            <div class="d-flex justify-content-between mb-4">
+                                <div>
+                                    <h4 class="content-color-primary my-0 ">Policy Report - Yearly</h4>
+                                </div>
+                                <div>
+                                    @Html.DropDownListFor(model => model.lstYears, lstYear, "-- Select Year --",
+                                                            new { @class = "form-control form-control-sm", @onchange = "javascript:GetSpecificYearWR(this.value);" })
+                                </div>
+                            </div>
+            
 
 
                             <div class="d-flex justify-content-between">
@@ -145,7 +146,7 @@
                 </div>
                 @if (Model != null)
                 {
-    <div class="mt-2 mb-0 text-muted ">
+    <div class="mt-2 mb-0 text-muted d-none ">
         <span id="lblPercentageRenewedYear" class="text-success mr-2 font-14"><i class="fa fa-arrow-up"></i> @Model.PercentageRenewedYear  %</span>
         <span class="font-14">Progress since last year</span>
     </div>}
@@ -156,11 +157,11 @@
     <div class="col-md-6 mb-4">
         <div class="card h-100">
             <div class="card-body">
-                <div class="row align-items-center">
+                <div class="row ">
                     <div class="col-md-7">
                         <div>
-                            <h4 class="content-color-primary my-0 ">Premium Report - Monthly</h4>
-                            
+                            <h4 class="content-color-primary my-0 mb-5">Premium Report - Monthly</h4>
+
                             <div class="d-flex justify-content-between">
                                 <div class=" mb-0  text-gray-800 w-100">
                                     @if (Model != null)
@@ -186,13 +187,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-5 pt-5">
                         <canvas id="MonthlyPremiumChart" height="250"></canvas>
                     </div>
                 </div>
                 @if (Model != null)
                 {
-    <div class="mt-2 mb-0 text-muted ">
+    <div class="mt-2 mb-0 text-muted d-none">
         <span class="text-success mr-2 font-14"><i class="fa fa-arrow-up"></i>@Model.PercentPremiumRenewedMonth  %</span>
         <span class="font-14">Progress since last month</span>
     </div>}
@@ -202,11 +203,11 @@
     <div class="col-md-6 mb-4">
         <div class="card h-100">
             <div class="card-body">
-                <div class="row align-items-center">
+                <div class="row ">
                     <div class="col-md-7">
                         <div>
-                            <h4 class="content-color-primary my-0 ">Premium Report - Yearly</h4>
-                            
+                            <h4 class="content-color-primary my-0 mb-5">Premium Report - Yearly</h4>
+
                             <div class="d-flex justify-content-between">
                                 <div class=" mb-0  text-gray-800 w-100">
                                     @if (Model != null)
@@ -231,13 +232,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-5 pt-5">
                         <canvas id="YearlyPremiumChart" height="250"></canvas>
                     </div>
                 </div>
                 @if (Model != null)
                 {
-    <div class="mt-2 mb-0 text-muted ">
+    <div class="mt-2 mb-0 text-muted d-none">
         <span id="lblPercentPremiumRenewedYear" class="text-success mr-2 font-14"><i class="fa fa-arrow-up"></i>@Model.PercentPremiumRenewedYear  %</span>
         <span class="font-14">Progress since last year</span>
     </div>}

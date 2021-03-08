@@ -96,15 +96,10 @@
                     <table>
                         <tr>
                             @*<td>
-                                <input type="file" id="fileUploadAssignTo" onchange="HideManuvalUpdateControl();" accept=".csv" />
-                                <input type="button" id="btnBulkAssignTo" class="btn btn-primary btn-sm mx-1" value="Upload AssignTo" onclick="csvFileUpload();" />
+                                    <input type="file" id="fileUploadAssignTo" onchange="HideManuvalUpdateControl();" accept=".csv" />
+                                    <input type="button" id="btnBulkAssignTo" class="btn btn-primary btn-sm mx-1" value="Upload AssignTo" onclick="csvFileUpload();" />
 
-                            </td>*@
-                            <td>
-                                <input type="file" id="fileUploadMotorPolicies" onchange="HideManuvalUpdateControl();" accept=".csv" />
-                                <input type="button" id="uploadMotorPolicies" class="btn btn-primary btn-sm mx-1" value="Upload CSV File" onclick="csvFileUpload();" />
-
-                            </td>
+                                </td>*@
                             <td>
                                 <a class="btn btn-primary btn-sm mx-1" href="MotorInsurance#step-1">
                                     <i class="fas fa-user-plus fa-sm"></i> Add
@@ -120,46 +115,59 @@
                             </td>
                         </tr>
 
-                    </table>
-                }
+                    </table>}
 
             </div>
+
             @if (ViewBag.RoleId == 1)
             {
-
-                <table>
-
-                    <tr>
-                        <td width="20px"></td>
-                        <td id="tdUpdatecheckbox">
-                            <input type="checkbox" id="tblMotorRowall" onchange="clicktblMotorCheckBoxsStatus('','0','tbl',this,'')"> CheckAll
-                        </td>
+                <div class="card p-3 mx-3">
+                    <div class="d-flex justify-content-between">
 
 
-                        <td id="tdddlGrdStatus">
-                            <select class="form-control form-control-sm" id="ddlGrdStatus" name="Status" required="required" onchange="onchangeDDlBulkStatus();">
-                                <option disabled selected value="0"> -- Select an option -- </option>
-                                <option value="1">Renewed</option>
-                                <option value="2">Lost</option>
-                                <option value="3">Under Process</option>
-                            </select>
-                        </td>
+                        <div class="form-inline">
+                            <label class="col-form-label font-bold mr-3" for="fileUploadMotorPolicies">File Upload:</label>
+                            <input type="file" id="fileUploadMotorPolicies" onchange="HideManuvalUpdateControl();" accept=".csv" />
+                            <input type="button" id="uploadMotorPolicies" class="btn btn-primary btn-sm mx-1" value="Upload CSV File" onclick="csvFileUpload();" />
+                        </div>
+                        <div>
+                            <div class="d-flex justify-content-start">
+                                <div id="tdUpdatecheckbox" class="form-inline">
+                                    <label class="col-form-label font-bold mr-3" for="inlineFormInputName2">Bulk Select Option:</label>
+                                    <input type="checkbox" id="tblMotorRowall" class="form-check-input" onchange="clicktblMotorCheckBoxsStatus('','0','tbl',this,'')">
+                                    <label class="form-check-label" for="tblMotorRowall">
+                                        Select All
+                                    </label>
+                                </div>
+                                <div id="tdddlGrdStatus" class="form-inline mx-5">
+                                    <label class="col-form-label font-bold mr-3" for="ddlGrdStatus">Bulk Select Option:</label>
+                                    <select class="form-control form-control-sm" id="ddlGrdStatus" name="Status" required="required" onchange="onchangeDDlBulkStatus();">
+                                        <option disabled selected value="0"> -- Select an option -- </option>
+                                        <option value="1">Renewed</option>
+                                        <option value="2">Lost</option>
+                                        <option value="3">Under Process</option>
+                                    </select>
+                                </div>
 
-                        <td id="tdUpdateStatus">
-                            <button class="btn btn-primary btn-sm mx-1" type="button" id="btnManualUpdate" onclick="bulkUpdateStatus('Manual');">
-                                Update Status
-                            </button>
-                            <input type="button" id="btnresetCall" class="btn btn-secondary btn-sm waves-effect" value="Reset" onclick="resetCall();" />
+                                <div id="tdUpdateStatus">
+                                    <button class="btn btn-primary btn-sm mx-1" type="button" id="btnManualUpdate" onclick="bulkUpdateStatus('Manual');">
+                                        Update Status
+                                    </button>
+                                    <input type="button" id="btnresetCall" class="btn btn-secondary btn-sm waves-effect" value="Reset" onclick="resetCall();" />
 
-                            @*<hidden id="hdntblMotorValue" value=@Html.Raw(Json.Encode(Model))></hidden>*@
-                        </td>
+                                    @*<hidden id="hdntblMotorValue" value=@Html.Raw(Json.Encode(Model))></hidden>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                    </tr>
-
-                </table>    }
+            }
 
             <div class="card-body">
-                <div class="table-responsive">
+                <div class="table-responsive position-relative overflow-hidden">
+                    <div class="lds-ring-bg"><div class="lds-ring"><div></div><div></div><div></div><div></div></div></div>
+
                     <table id="tblMotor" class="table align-items-center table-flush">
                         <thead>
                             <tr>
@@ -180,7 +188,7 @@
                             <tr>
                                 <td colspan="5"></td>
                             </tr>
- }
+                        }
                         else
                         {
                             foreach (var item in Model)
@@ -224,7 +232,7 @@
                                     </td>
 
                                 </tr>
-}
+                            }
                         }
                     </table>
                 </div>
@@ -951,23 +959,35 @@
         //for (var i = 0; i < files.length; i++) {
         //    fileData.append(files[i].name, files[i]);
         //}
-        $('#tblMotor').DataTable({
+        var table = $('#tblMotor').DataTable({
             dom: 'Bfrtip',
+            "lengthMenu": [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, "All"]],
+            "pageLength": 100,
+            "language": {
+                "processing": '<i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(75, 183, 245);"></i>'
+            },
+            "drawCallback": function (settings) {
+                $(".lds-ring-bg").addClass('d-none');
+            },
             buttons: {
                 buttons: [
                     {
                         extend: 'csv',
-                        className: 'btn btn-sm btn-primary',
+                        className: 'btn-sm',
                         exportOptions: {
                             columns: [1, 2, 3, 4, 5, 6]
                         }
                     },
                     {
                         extend: 'pdf',
-                        className: 'btn btn-sm btn-primary',
+                        className: 'btn-sm',
                         exportOptions: {
                             columns: [1, 2, 3, 4, 5, 6]
                         }
+                    },
+                    {
+                        extend: 'pageLength',
+                        className: 'btn-sm',
                     }
                 ]
             }

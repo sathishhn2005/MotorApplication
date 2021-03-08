@@ -100,7 +100,7 @@ namespace MotorApp.Controllers
                     {
                         lstInfo.lstYears = lstNewIns.Where(p => p.PolicyToDate != null).Select(p => p.PolicyToDate.Year).Distinct().
                             AsEnumerable().Select(x => new DateTime(x, 1, 1).Year).ToList();
-                        
+
                         Year = lstInfo.lstYears;
                     }
                     else
@@ -765,7 +765,7 @@ namespace MotorApp.Controllers
                 ViewBag.RoleId = RoleId;
                 ViewBag.UserName = U_Name;
                 IList<Insurance> motorList = new List<Insurance>();
-                
+
                 if (lstNewIns != null)
                 {
                     motorList = lstNewIns;
@@ -823,16 +823,19 @@ namespace MotorApp.Controllers
         public ActionResult EditModal(int InsId)
         {
 
-            //IList<MotorModel> motorList = new List<MotorModel>();
-            //motorList = motorModel;
 
-            //var std = motorList.Where(s => s.MotorId == MotorId).FirstOrDefault();
             IList<Insurance> motorList = new List<Insurance>();
-            motorList = lstNewIns;
 
-            var std = motorList.Where(s => s.InsuranceID == InsId).FirstOrDefault();
+            long returnCode = objMotorBAL.GetMasterViews(out motorModel, out travelModel, out indiviModel, out domesModel, out lstProducerCodeMaster, out lstNewIns);
+            if (lstNewIns != null)
+            {
+                motorList = lstNewIns;
+                var std = motorList.Where(s => s.InsuranceID == InsId).FirstOrDefault();
+                return Json(std, JsonRequestBehavior.AllowGet);
+            }
 
-            return Json(std, JsonRequestBehavior.AllowGet);
+            return Json(null, JsonRequestBehavior.AllowGet);
+
         }
         /*Motor Single entry Edit/Add End*/
         /*Travel Single entry Edit/Add Start*/
@@ -985,7 +988,7 @@ namespace MotorApp.Controllers
                 ViewBag.PolicyLost = lstInfo.PolicyLost;
                 ViewBag.UserName = lstInfo.UserName;
                 lstInfo.lstYears = Year;
-                
+
 
                 if (!returnCode.Equals(1))
                 {
@@ -1019,7 +1022,7 @@ namespace MotorApp.Controllers
                 ViewBag.PolicyLost = lstInfo.PolicyLost;
                 ViewBag.UserName = lstInfo.UserName;
                 lstInfo.lstYears = Year;
-                
+
                 if (!returnCode.Equals(1))
                 {
 
@@ -1399,7 +1402,7 @@ namespace MotorApp.Controllers
 
 
         [HttpPost]
-        public ActionResult BulkUpdateStatus(List<Insurance> lstMoter,string UploadType) 
+        public ActionResult BulkUpdateStatus(List<Insurance> lstMoter, string UploadType)
         {
             long returnCode = -1;
             string InsuranceStatusJson = string.Empty;
@@ -1417,7 +1420,37 @@ namespace MotorApp.Controllers
 
             return Json(ErrorMsg);
         }
-       
+        public ActionResult UserRegister()
+        {
+            ViewBag.RoleId = RoleId;
+            return View();
+            
+        }
+        [HttpPost]
+        public ActionResult Register(LoginViewModel obj)
+        {
+            try
+            {
+                long returnCode = -1;
+                ViewBag.RoleId = RoleId;
+                if (!string.IsNullOrEmpty(obj.UserName) && !string.IsNullOrEmpty(obj.Role.ToString()))
+                {
+                    MotorBAL objBAL = new MotorBAL();
+                    returnCode = objBAL.RegisterUser(obj);
+
+                }
+                else
+                {
+                    returnCode = -2;
+                    return Json(new { msg = returnCode });
+                }
+                return Json(new { msg = returnCode });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
 
 
