@@ -11,6 +11,7 @@ namespace MotorApp.BusinessEntities
     {
         
         public string UserName { get; set; }
+        public string AssignTo { get; set; }
         public long InsuranceID { get; set; }
         [Display(Name = "Division Code")]
         public string DivisionCode { get; set; }

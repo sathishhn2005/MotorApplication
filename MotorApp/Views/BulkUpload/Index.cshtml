@@ -1,0 +1,217 @@
+﻿@model IEnumerable<MotorApp.BusinessEntities.Insurance>
+@using MotorApp.BusinessEntities;
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Motor Delegate</h1>
+    <ol class="breadcrumb my-2">
+        <li class="breadcrumb-item">
+            <a href="./">Home</a>
+        </li>
+        <li class="breadcrumb-item">Delegate</li>
+        <li class="breadcrumb-item active" aria-current="page">Motor Delegate</li>
+    </ol>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 mb-4">
+        <div class="card p-3 mx-3">
+            <div class="d-flex justify-content-between">
+                <div class="form-inline">
+                    <label class="col-form-label font-bold mr-3" for="fileUploadMotorPolicies">File Upload:</label>
+                    <input type="file" id="fileUploadMotorPolicies" onchange="HideManuvalUpdateControl();" accept=".csv" />
+                    <input type="button" id="uploadMotorPolicies" class="btn btn-primary btn-sm mx-1" value="Upload CSV File" onclick="csvFileUpload();" />
+                </div>
+
+            </div>
+        </div>
+        <div class="card mb-3">
+
+            <form id="formDelegate">
+
+                <div class="card-body">
+                    <div class="table-responsive position-relative overflow-hidden">
+                        <div class="lds-ring-bg"><div class="lds-ring"><div></div><div></div><div></div><div></div></div></div>
+
+                        <table id="tblMotor" class="table align-items-center table-flush">
+                            <thead>
+                                <tr>
+
+                                    <th>Policy No</th>
+                                    <th>Insurance Id</th>
+                                    <th>User Name</th>
+
+                                    <th>Policy Start Date</th>
+                                    <th>Policy End Date</th>
+
+                                </tr>
+                            </thead>
+                            @if (Model.Count() == 0)
+                            {
+                                <tr>
+                                    <td colspan="5"></td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PolicyNo)
+                                        </td>
+                                        <td>@Html.DisplayFor(modelItem => item.InsuranceID)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.ProducerName)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.PolicyFromDate)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.PolicyToDate)</td>
+
+
+
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer"></div>
+            </form>
+        </div>
+        <!-- Simple Tables -->
+
+    </div>
+</div>
+<script>
+
+    var lstMoter = [];
+
+
+    function bulkUpdateStatus(UType) {
+
+        if (lstMoter.length > 0) {
+            $.post('/BulkUpload/BulkUpdateStatus', { lstMoter: lstMoter, UploadType: UType },
+                function (returnedData) {
+                    alert(returnedData);
+                });
+        }
+    }
+
+    function csvFileUpload() {
+        lstMoter = [];
+        var rowCount = 0;
+        var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.csv|.txt)$/;
+        if (regex.test($("#fileUploadMotorPolicies").val().toLowerCase())) {
+            if (typeof (FileReader) != "undefined") {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+
+                    var rows = e.target.result.split('\r\n');
+
+                    //if (rows.length > 1005) {
+                    //    alert("Upload file maximum limit 1000, Please check");
+                    //    return false;
+                    //}
+
+
+                    for (var i = 0; i < rows.length; i++) {
+
+                        var cells = rows[i].split(",");
+
+                        if (cells.length == 4 && i > 0) {
+
+                            //res = $.trim(cells[0].replace('""', '"'));
+
+                            //index = checkAndRemoveExistsRow($.trim(cells[0].replace('""', '"')), 0, 'CsvFile');
+
+                            //if (index > -1) {
+                            //    $('#fileUploadMotorPolicies').val("");
+                            //    alert("Policy No :" + $.trim(cells[0].replace('""', '"')) + " already exists, Please check");
+
+                            //    return;
+                            //}
+                            lstMoter.push({
+                                
+                                PolicyNo: $.trim(cells[0].replace('""', '"')),
+                                InsuranceID: $.trim(cells[1].replace('""', '"')),
+                                ProducerName: $.trim(cells[2].replace('""', '"')),
+                                AssignTo: $.trim(cells[3].replace('""', '"'))
+                            });
+
+                        }
+                        rowCount += 1;
+
+                    }
+
+                    if (rowCount == rows.length) {
+                        bulkUpdateStatus("CSVFileUpload");
+                    }
+
+                }
+                reader.readAsText($("#fileUploadMotorPolicies")[0].files[0]);
+            } else {
+                $('#fileUploadMotorPolicies').val("");
+                alert("This browser does not support HTML5.");
+            }
+        } else {
+            $('#fileUploadMotorPolicies').val("");
+
+            alert("Please upload a valid CSV file.");
+
+        }
+
+
+    }
+
+    function HideManuvalUpdateControl() {
+
+        if ($("#btnManualUpdate") != null) {
+            //$("#uploadMotorPolicies").removeClass("hide");
+            //$("#btnManualUpdate").addClass("hide");
+            $("#btnManualUpdate").attr("disabled");
+            //$("#tdUpdatecheckbox").addClass("hide");
+            //$("#ddlGrdStatus").addClass("hide");
+        }
+
+    }
+    window.onload = function () {
+
+        //}
+        var table = $('#tblMotor').DataTable({
+            dom: 'Bfrtip',
+            "lengthMenu": [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, "All"]],
+            "pageLength": 100,
+            "language": {
+                "processing": '<i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(75, 183, 245);"></i>'
+            },
+            "drawCallback": function (settings) {
+                $(".lds-ring-bg").addClass('d-none');
+            },
+            buttons: {
+                buttons: [
+                    {
+                        extend: 'csv',
+                        className: 'btn-sm',
+                        exportOptions: {
+                            columns: [0, 1, 2, 'AssignTo']
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        className: 'btn-sm',
+                        exportOptions: {
+                            columns: [0, 1, 2, 'AssignTo']
+                        }
+                    },
+                    {
+                        extend: 'pageLength',
+                        className: 'btn-sm',
+                    }
+                ]
+            }
+        });
+
+
+    };
+
+</script>

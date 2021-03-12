@@ -643,6 +643,27 @@ namespace MotorApp.BAL
             }
             return returnCode;
         }
-       
+        public long GetDelegateData( out List<Insurance> lstNewIns)
+        {
+            long returnCode = -1;
+
+            using (TransactionScope transactionScope = new TransactionScope())
+            {
+                try
+                {
+                    returnCode = objMotorAppDAL.GetDelegateAssignToData(out lstNewIns);
+                    transactionScope.Complete();
+                    transactionScope.Dispose();
+
+                }
+                catch (Exception ex)
+                {
+                    transactionScope.Dispose();
+                    throw ex;
+                }
+
+                return returnCode;
+            }
+        }
     }
 }

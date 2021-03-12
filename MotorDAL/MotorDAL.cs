@@ -1465,25 +1465,33 @@ namespace MotorApp.DAL
             return returnCode;
         }
 
-        public long BulkUpdateInsuranceStatus( string InsuranceStatusJson,long Loginid,string UserName,string FileType,out string ErrorMsg)
+        public long BulkUpdateInsuranceStatus(string InsuranceStatusJson, long Loginid, string UserName, string FileType, out string ErrorMsg)
         {
             long returnCode = -1;
             ErrorMsg = string.Empty;
             //DataTable dt = new DataTable();
-
+            string sp_name = string.Empty;
+            if (Loginid.Equals(-1))
+            {
+                sp_name = "pBulkDelegateStatus";
+            }
+            else
+            {
+                sp_name = "pBulkUpdateInsuranceStatus";
+            }
             try
             {
                 using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
                 {
                     con.Open();
 
-                    SqlCommand  cmd = new SqlCommand
-                            {
-                                CommandText = "pBulkUpdateInsuranceStatus",
-                                CommandTimeout = 180,
-                                Connection = con,
-                                CommandType = CommandType.StoredProcedure
-                            };
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = sp_name,
+                        CommandTimeout = 180,
+                        Connection = con,
+                        CommandType = CommandType.StoredProcedure
+                    };
 
                     cmd.Parameters.AddWithValue("@InsuranceStatusJson", InsuranceStatusJson);
                     cmd.Parameters.AddWithValue("@Loginid", Loginid);
@@ -1499,18 +1507,61 @@ namespace MotorApp.DAL
                     };
                     cmd.Parameters.Add(param);
 
-                    returnCode =cmd.ExecuteNonQuery();
+                    returnCode = cmd.ExecuteNonQuery();
 
                     if (cmd.Parameters["@ErrorMsg"].Value != DBNull.Value)
                     {
                         ErrorMsg = cmd.Parameters["@ErrorMsg"].Value.ToString();
                     }
                 }
-                
+
             }
             catch (Exception ex)
             {
-                throw ;
+                throw;
+            }
+            return returnCode;
+        }
+        public long GetDelegateAssignToData(out List<Insurance> lstNewIns)
+        {
+            long returnCode = -1;
+
+            lstNewIns = new List<Insurance>();
+
+            try
+            {
+                DataSet ds = new DataSet();
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = "pGetDelegateData"
+                    };
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+
+
+                    SqlDataAdapter sdaAdapter = new SqlDataAdapter
+                    {
+                        SelectCommand = cmd
+                    };
+                    sdaAdapter.Fill(ds);
+                    //ds.Tables[0].Rows.Count;
+
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        DTtoListConverter.ConvertTo(ds.Tables[0], out lstNewIns);
+                    }
+
+
+                    returnCode = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
             return returnCode;
         }

@@ -17,7 +17,7 @@
     <link href="~/vendor/smart_wizard/css/smart_wizard_all.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.23/datatables.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.bootstrap4.min.css" />
-    
+
     <script src="~/vendor/jquery/jquery.js"></script>
     @*@Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")*@
@@ -30,8 +30,8 @@
         <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
                 @*<div class="sidebar-brand-icon">
-                        <img src="~/img/logo/logoMI.png">
-                    </div>*@
+                <img src="~/img/logo/logoMI.png">
+            </div>*@
                 <div class="sidebar-brand-text mx-2">Total<span class="logo-sub">Net</span></div>
             </a>
             <hr class="sidebar-divider mb-3 mt-0" />
@@ -47,33 +47,32 @@
             </li>
             @if (ViewBag.RoleId == 1)
             {
-<li class="nav-item ">
-    <a class="nav-link" href="indexBI">
-        <i class="fas fa-fw fa-star"></i>
-        <span>BI Dashboard</span>
-    </a>
-</li>
-}
+        <li class="nav-item ">
+            <a class="nav-link" href="indexBI">
+                <i class="fas fa-fw fa-star"></i>
+                <span>BI Dashboard</span>
+            </a>
+        </li>}
             <li class="nav-item ">
-                <a class="nav-link" href="MotorDB">
+                <a class="nav-link" href="/Home/MotorDB">
                     <i class="fas fa-fw fa-car"></i>
                     <span>Motor Policies</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="IndividualDB">
+                <a class="nav-link" href="/Home/IndividualDB">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Individual life Policies</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="TravelDB">
+                <a class="nav-link" href="/Home/TravelDB">
                     <i class="fas fa-fw fa-plane"></i>
                     <span>Travel Insurance Policies</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="DomesticDB">
+                <a class="nav-link" href="/Home/DomesticDB">
                     <i class="fas fa-fw fa-users"></i>
                     <span>Domestic Helper Policy</span>
                 </a>
@@ -83,13 +82,13 @@
 
             </div>
             <li class="nav-item">
-                <a class="nav-link" href="MasterDatabase">
+                <a class="nav-link" href="/Home/MasterDatabase">
                     <i class="fas fa-fw fa-car"></i>
                     <span>Transaction</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="CallBack">
+                <a class="nav-link" href="/Home/CallBack">
                     <i class="fas fa-fw fa-phone"></i>
                     <span>Call Back</span>
                 </a>
@@ -97,30 +96,35 @@
             @if (ViewBag.RoleId == 1)
             {
         <li class="nav-item">
-            <a class="nav-link" href="UserRegister">
+            <a class="nav-link" href="/Home/UserRegister">
                 <i class="fas fa-fw fa-user"></i>
                 <span>Register New User</span>
             </a>
-        </li> 
-        }
+        </li>            }
+            <li class="nav-item">
+                <a class="nav-link" href="/BulkUpload/Index">
+                    <i class="fas fa-fw fa-share"></i>
+                    <span>Delegate</span>
+                </a>
+            </li>
             @*<li class="nav-item">
-                    <a class="nav-link" href="MasterTravel">
-                        <i class="fas fa-fw fa-user"></i>
-                        <span>Travel Insurance Masters</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="MasterIndividual">
-                        <i class="fas fa-fw fa-plane"></i>
-                        <span>Individual Insurance Masters</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="MasterDomestic">
-                        <i class="fas fa-fw fa-users"></i>
-                        <span>Domestic Insurance Masters</span>
-                    </a>
-                </li>*@
+            <a class="nav-link" href="MasterTravel">
+                <i class="fas fa-fw fa-user"></i>
+                <span>Travel Insurance Masters</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="MasterIndividual">
+                <i class="fas fa-fw fa-plane"></i>
+                <span>Individual Insurance Masters</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="MasterDomestic">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Domestic Insurance Masters</span>
+            </a>
+        </li>*@
             <li class="nav-item hide">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
                    aria-expanded="true" aria-controls="collapseBootstrap">
@@ -328,7 +332,7 @@
                                         Activity Log
                                     </a>
                                     <div class="dropdown-divider"></div>*@
-                                <a class="dropdown-item" href="login">
+                                <a class="dropdown-item" href="/Home/Login">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
