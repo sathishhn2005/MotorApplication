@@ -484,25 +484,26 @@
                             </div>
 
                         </div>
-                        <div class="col-5 mx-auto">
-                           
-                            <div>
-                                <h4 class="primay-color mt-3 ">Call Details:</h4>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center call-section mb-5 mt-3">
-                               @* <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png" class="rounded-circle" alt="Cinque Terre" height="60">*@
-                                <div>
-                                    <h4 id="h1MobileNumber" class="my-0 primay-color"></h4>
-                                    @*<a id="h1MobileNumber" href="zoiper:9842802950"></a>*@
-                                    <small id="h1CustName" class="text-muted font-13"></small>
-                                </div>
-                                
-                            </div>
-                           
+                        <div class="col-6 mx-auto">
+
                             <div class="row">
                                 <div class="col-12">
-                                    <label id="lblNotesCustName" for="NotesContainer" class="control-label text-muted mt-4">Customer notes in Detail</label>
-                                    <textarea type="text" class="form-control form-control-sm" rows="10" name="Description" required id="txtDescription"></textarea>
+                                    <div class="">
+                                        <div class="card">
+                                            <div class="card-header"><div class="image text-center mt-2"> <img src="https://cdn.document360.io/e6158f83-d9fe-47bc-ab7f-2339b3e6f8b6/Images/Documentation/zoiper-logo.png" class="rounded" width="155"> </div></div><div class="card-body">
+                                                <div class="d-flex flex-column align-items-center text-center">
+                                                    <div class="">
+                                                        <h5 id="h1AssuredName">
+                                                        </h5>
+                                                        <p id="h1PolicyNumber" class="text-secondary mb-1"></p>
+                                                        <p id="h1PolicyFromToDate" class="text-muted mb-1"></p>
+                                                        <p id="h1MobileNumber" class="text-muted "></p>
+                                                       
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -612,7 +613,7 @@
     <!-- /.modal-dialog -->
 </div>
 <script>
-   
+
     $(document).ready(function () {
         const SARenewalCanstant = 0;
         function submitForm() {
@@ -763,15 +764,14 @@
 
                 $('#txtAssuredName').val(data.AssuredName);
 
+                
                 $('#txtAssuredMobile').val(data.AssuredMobile);
 
-                document.getElementById("h1MobileNumber").innerHTML = data.AssuredMobile;
-
+                document.getElementById("h1MobileNumber").innerHTML = 'Tel:' + data.AssuredMobile;
+                document.getElementById("h1PolicyNumber").innerHTML = 'Policy Number: ' + data.PolicyNo;
+                document.getElementById("h1AssuredName").innerHTML = data.AssuredName;
 
                 $('#txtCustomerName').val(data.CustomerName);
-                document.getElementById("h1CustName").innerHTML = data.CustomerName;
-
-
                 $('#txtSourceCode').val(data.SourceCode);
 
                 $('#txtSourceName').val(data.SourceName);
@@ -782,10 +782,6 @@
                 //Fromvalue = value.toDateString()
                 Fromvalue = value.toISOString();
 
-                //var Str =
-                //    ("00" + (value.getDate())).slice(-2)
-                //    + "-" + ("00" + value.getMonth()+1).slice(-2)
-                //    + "-" + value.getFullYear();
                 var Str =
 
                     ("00" + value.getDate()).slice(-2)
@@ -801,6 +797,7 @@
                     + "-" + ("00" + (valuee.getMonth() + 1)).slice(-2)
                     + "-" + valuee.getFullYear()
                 $('#PolicyToDate').val(ToStr);
+                document.getElementById("h1PolicyFromToDate").innerHTML ='Policy Date: '+ Str + ' To ' + ToStr;
 
                 $('#txtGrossPremium').val(data.GrossPremium);
 
@@ -1312,3 +1309,4 @@
     }
 
 </script>
+

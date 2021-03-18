@@ -833,7 +833,7 @@ namespace MotorApp.Controllers
                 var std = motorList.Where(s => s.InsuranceID == InsId).FirstOrDefault();
                 return Json(std, JsonRequestBehavior.AllowGet);
             }
-
+            
             return Json(null, JsonRequestBehavior.AllowGet);
 
         }
@@ -1225,8 +1225,8 @@ namespace MotorApp.Controllers
                               select new DataPoint()
                               {
                                   y = item.MonthName,
-                                  a = item.Available,
-                                  b = item.Renewed,
+                                  a = item.Renewed,
+                                  b = item.Available,
                                   BusinessType = item.BusinessType
                               }).ToList();
 
