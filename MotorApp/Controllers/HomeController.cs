@@ -61,6 +61,7 @@ namespace MotorApp.Controllers
             {
                 string uname = Request.Form["ddlProducer"];
                 TypeId = 5;
+                ViewBag.TypeId = TypeId;
                 if (string.IsNullOrEmpty(uname) || uname.Equals("Admin"))
                 {
                     if (TempData["Input"] != null)
@@ -1266,8 +1267,8 @@ namespace MotorApp.Controllers
                               select new DataPoint()
                               {
                                   y = item.MonthName,
-                                  a = item.Available,
-                                  b = item.Renewed,
+                                  a = item.Renewed,
+                                  b = item.Available,
                                   BusinessType = item.BusinessType
                               }).ToList();
 
@@ -1320,8 +1321,8 @@ namespace MotorApp.Controllers
                               select new DataPoint()
                               {
                                   y = item.MonthName,
-                                  a = item.Available,
-                                  b = item.Renewed,
+                                  a = item.Renewed,
+                                  b = item.Available,
 
                               }).ToList();
 

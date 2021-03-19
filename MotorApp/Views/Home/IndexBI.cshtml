@@ -141,36 +141,16 @@
                             <option value="Branches">Branches</option>
                         </select>
 
-                        @*<div class="col-md-4">
-                                <label class="col-form-label text-right font-bold">Business Type</label>
-                                @Html.DropDownListFor(model => model.BusinessType, lstBT, "-- Select BusinessType --",
-                               new { @class = "form-control form-control-sm", @onchange = "javascript:GetUsers(this.value);" })
-
-                            </div>*@
-                        @*<div class="col-md-4">
-                                <label class="col-form-label text-right font-bold">Users</label>
-                                <select id="Users" name="Users" class="form-control form-control-sm">
-                                    <option value="0">-Select-</option>
-                                </select>
-                            </div>*@
+                      
                         <label for="cars" class="col-form-label">Choose Producer</label>
                         <select id="Users" name="Users" class="form-control form-control-sm">
                             <option value="0">-Select-</option>
                         </select>
-                        @*<select id="ddlProducer" class="form-control form-control-sm col-md-3">
-                            <option>--Select--</option>
-                            <option>BA001</option>
-                            <option>BA818</option>
-                            <option>BA237</option>
-                            <option>BA233</option>
-                        </select>*@
+                      
                         <button type="button" id="randomizeData" class="btn btn-primary btn-sm">Search</button>
                     </form>
                 </div>
-                <div class="">
-                    <label class="font-weight-bold mr-2">Yearly</label>
-                    <input type="checkbox" data-toggle="toggle" data-size="xs">
-                </div>
+                
             </div>
             <div class="card-body">
                 <canvas id="SpecificProducer" height="100"></canvas>
