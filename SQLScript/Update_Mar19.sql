@@ -1,6 +1,6 @@
 USE [MotorIns]
 GO
-/****** Object:  UserDefinedTableType [dbo].[UDT_DomesticBulkUpload]    Script Date: 19-03-2021 00:09:07 ******/
+/****** Object:  UserDefinedTableType [dbo].[UDT_DomesticBulkUpload]    Script Date: 19-03-2021 17:08:00 ******/
 CREATE TYPE [dbo].[UDT_DomesticBulkUpload] AS TABLE(
 	[DraftNo] [nvarchar](50) NULL,
 	[PolicyNo] [nvarchar](50) NULL,
@@ -42,7 +42,7 @@ CREATE TYPE [dbo].[UDT_DomesticBulkUpload] AS TABLE(
 	[Email] [nvarchar](30) NULL
 )
 GO
-/****** Object:  UserDefinedTableType [dbo].[UDT_DomesticInsSave]    Script Date: 19-03-2021 00:09:07 ******/
+/****** Object:  UserDefinedTableType [dbo].[UDT_DomesticInsSave]    Script Date: 19-03-2021 17:08:00 ******/
 CREATE TYPE [dbo].[UDT_DomesticInsSave] AS TABLE(
 	[DraftNo] [nvarchar](50) NULL,
 	[PolicyNo] [nvarchar](50) NULL,
@@ -84,7 +84,7 @@ CREATE TYPE [dbo].[UDT_DomesticInsSave] AS TABLE(
 	[Email] [nvarchar](30) NULL
 )
 GO
-/****** Object:  UserDefinedTableType [dbo].[UDT_IndividualBulkUpload]    Script Date: 19-03-2021 00:09:07 ******/
+/****** Object:  UserDefinedTableType [dbo].[UDT_IndividualBulkUpload]    Script Date: 19-03-2021 17:08:00 ******/
 CREATE TYPE [dbo].[UDT_IndividualBulkUpload] AS TABLE(
 	[QuotationNo] [nvarchar](50) NULL,
 	[PolicyNo] [nvarchar](50) NULL,
@@ -136,7 +136,7 @@ CREATE TYPE [dbo].[UDT_IndividualBulkUpload] AS TABLE(
 	[AppointeeCivilIDNo] [nvarchar](50) NULL
 )
 GO
-/****** Object:  UserDefinedTableType [dbo].[UDT_IndividualInsSave]    Script Date: 19-03-2021 00:09:07 ******/
+/****** Object:  UserDefinedTableType [dbo].[UDT_IndividualInsSave]    Script Date: 19-03-2021 17:08:00 ******/
 CREATE TYPE [dbo].[UDT_IndividualInsSave] AS TABLE(
 	[QuotationNo] [nvarchar](50) NULL,
 	[PolicyNo] [nvarchar](50) NULL,
@@ -188,7 +188,7 @@ CREATE TYPE [dbo].[UDT_IndividualInsSave] AS TABLE(
 	[AppointeeCivilIDNo] [nvarchar](50) NULL
 )
 GO
-/****** Object:  UserDefinedTableType [dbo].[UDT_MotorBulkUpload]    Script Date: 19-03-2021 00:09:07 ******/
+/****** Object:  UserDefinedTableType [dbo].[UDT_MotorBulkUpload]    Script Date: 19-03-2021 17:08:00 ******/
 CREATE TYPE [dbo].[UDT_MotorBulkUpload] AS TABLE(
 	[IssueDate] [datetime] NULL,
 	[PolicyNo] [nvarchar](50) NULL,
@@ -242,7 +242,7 @@ CREATE TYPE [dbo].[UDT_MotorBulkUpload] AS TABLE(
 	[VIPCustomer] [nvarchar](20) NULL
 )
 GO
-/****** Object:  UserDefinedTableType [dbo].[UDT_MotorInsSave]    Script Date: 19-03-2021 00:09:07 ******/
+/****** Object:  UserDefinedTableType [dbo].[UDT_MotorInsSave]    Script Date: 19-03-2021 17:08:00 ******/
 CREATE TYPE [dbo].[UDT_MotorInsSave] AS TABLE(
 	[IssueDate] [datetime] NULL,
 	[PolicyNo] [nvarchar](50) NULL,
@@ -297,7 +297,7 @@ CREATE TYPE [dbo].[UDT_MotorInsSave] AS TABLE(
 	[VIPCustomer] [nvarchar](20) NULL
 )
 GO
-/****** Object:  UserDefinedTableType [dbo].[UDT_NewInsSave]    Script Date: 19-03-2021 00:09:07 ******/
+/****** Object:  UserDefinedTableType [dbo].[UDT_NewInsSave]    Script Date: 19-03-2021 17:08:00 ******/
 CREATE TYPE [dbo].[UDT_NewInsSave] AS TABLE(
 	[DivisionCode] [nvarchar](500) NULL,
 	[DivisionName] [nvarchar](500) NULL,
@@ -325,7 +325,7 @@ CREATE TYPE [dbo].[UDT_NewInsSave] AS TABLE(
 	[ProducerName] [nvarchar](50) NULL
 )
 GO
-/****** Object:  UserDefinedTableType [dbo].[UDT_TravelBulkUpload]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  UserDefinedTableType [dbo].[UDT_TravelBulkUpload]    Script Date: 19-03-2021 17:08:00 ******/
 CREATE TYPE [dbo].[UDT_TravelBulkUpload] AS TABLE(
 	[IssueDate] [datetime] NULL,
 	[PolicyNo] [nvarchar](50) NULL,
@@ -369,7 +369,7 @@ CREATE TYPE [dbo].[UDT_TravelBulkUpload] AS TABLE(
 	[ExtensionFamilyMember] [nvarchar](50) NULL
 )
 GO
-/****** Object:  UserDefinedTableType [dbo].[UDT_TravelInsSave]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  UserDefinedTableType [dbo].[UDT_TravelInsSave]    Script Date: 19-03-2021 17:08:00 ******/
 CREATE TYPE [dbo].[UDT_TravelInsSave] AS TABLE(
 	[IssueDate] [datetime] NULL,
 	[PolicyNo] [nvarchar](50) NULL,
@@ -413,7 +413,7 @@ CREATE TYPE [dbo].[UDT_TravelInsSave] AS TABLE(
 	[ExtensionFamilyMember] [nvarchar](50) NULL
 )
 GO
-/****** Object:  Table [dbo].[calendar]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  Table [dbo].[calendar]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -422,7 +422,7 @@ CREATE TABLE [dbo].[calendar](
 	[date] [datetime] NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TB_Calender]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  Table [dbo].[TB_Calender]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -436,7 +436,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TB_Domestic]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  Table [dbo].[TB_Domestic]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -497,7 +497,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TB_Individual]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  Table [dbo].[TB_Individual]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -568,7 +568,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TB_Insurance]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  Table [dbo].[TB_Insurance]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -610,7 +610,7 @@ CREATE TABLE [dbo].[TB_Insurance](
 	[RenewalSumAssured] [decimal](18, 2) NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TB_Motor]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  Table [dbo].[TB_Motor]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -686,7 +686,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TB_ProducerCodeMaster]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  Table [dbo].[TB_ProducerCodeMaster]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -703,7 +703,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TB_RoleMaster]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  Table [dbo].[TB_RoleMaster]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -717,7 +717,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TB_Travel]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  Table [dbo].[TB_Travel]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -780,7 +780,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TB_Users]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  Table [dbo].[TB_Users]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -802,7 +802,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TESTDB]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  Table [dbo].[TESTDB]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1030,45 +1030,45 @@ SET IDENTITY_INSERT [dbo].[TB_Individual] OFF
 GO
 SET IDENTITY_INSERT [dbo].[TB_Insurance] ON 
 GO
-INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (1, N'22 - General Accident', N'2209', N'Sathish', N'Branches', N'1186345', N'Mrs Maram Ali', N'9840359282', N'Cash Customers-Online', N'Code source', N'Source Name', N'Category ', CAST(N'2020-03-14T00:00:00.000' AS DateTime), CAST(N'2021-02-28T00:00:00.000' AS DateTime), 1000, 200, 255, N'MKT0001 - Direct', N'Remarks', N'01 - Head Office', N'CSHONL', 2000, N'Renewed', N'Travel', CAST(N'2021-03-17T09:07:13.330' AS DateTime), NULL, NULL, N'CSH001', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
+INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (1, N'22 - General Accident', N'2209', N'Sathish', N'Branches', N'1186345', N'Mrs Maram Ali', N'9.84036e+009', N'Cash Customers-Online', N'Code source', N'Source Name', N'Category ', CAST(N'2020-03-14T00:00:00.000' AS DateTime), CAST(N'2021-02-28T00:00:00.000' AS DateTime), 1000, 200, 255, N'MKT0001 - Direct', N'Remarks', N'01 - Head Office', N'CSHONL', 2000, N'Renewed', N'Travel', CAST(N'2021-03-19T12:54:13.157' AS DateTime), NULL, NULL, N'CSH001', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
 GO
-INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (2, N'25 - Motor', N'2510', N'NULL', N'DirectSales', N'1188508', N'ABDULLAH MARZOUQ AL SULAIMI', N'9840359255', N'Cash Customers-MGM Kiosk', N'NULL', N'NULL', N'NULL', CAST(N'2021-01-01T00:00:00.000' AS DateTime), CAST(N'2021-03-20T00:00:00.000' AS DateTime), 15000, 200, 20, N'MKT0039 - Abdul Hakeem AL Rashdi ', N'NULL', N'07 - MGM Kiosok', N'CSH007', 200, N'Renewed', N'Motor', CAST(N'2021-03-17T09:07:13.330' AS DateTime), NULL, NULL, N'SH004', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
+INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (2, N'25 - Motor', N'2510', N'NULL', N'Direct', N'1188508', N'ABDULLAH MARZOUQ AL SULAIMI', N'9.84035e+009', N'Cash Customers-MGM Kiosk', N'NULL', N'NULL', N'NULL', CAST(N'2021-01-01T00:00:00.000' AS DateTime), CAST(N'2021-03-20T00:00:00.000' AS DateTime), 15000, 200, 20, N'MKT0039 - Abdul Hakeem AL Rashdi ', N'NULL', N'07 - MGM Kiosok', N'CSH007', 200, N'Renewed', N'Motor', CAST(N'2021-03-19T12:54:13.157' AS DateTime), NULL, NULL, N'SH004', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
 GO
-INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (3, N'23 - Engineering', N'2301', N'NULL', N'Agent', N'P/004/01/15/2301/00061', N'M/s Al Turki Enterprises LLC', N'9840359255', N'RISK MANAGEMENT SERVICES', N'BA0001', N'RISK MANAGEMENT SERVICES', N'NULL', CAST(N'2020-03-16T00:00:00.000' AS DateTime), CAST(N'2021-03-15T00:00:00.000' AS DateTime), 34855, 16310341, 34855, N'MKT0002 - Intermediary', N'NULL', N'NULL', N'BA0001', 30, N'Renewed', N'Travel', CAST(N'2021-03-17T09:07:13.330' AS DateTime), NULL, NULL, N'BA0019', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
+INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (3, N'23 - Engineering', N'2301', N'NULL', N'Agent', N'P/004/01/15/2301/00061', N'M/s Al Turki Enterprises LLC', N'9.84035e+009', N'RISK MANAGEMENT SERVICES', N'BA0001', N'RISK MANAGEMENT SERVICES', N'NULL', CAST(N'2020-03-16T00:00:00.000' AS DateTime), CAST(N'2021-03-15T00:00:00.000' AS DateTime), 34855, 16310341, 34855, N'MKT0002 - Intermediary', N'NULL', N'NULL', N'BA0001', 30, N'Renewed', N'Travel', CAST(N'2021-03-19T12:54:13.157' AS DateTime), NULL, NULL, N'BA0019', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
 GO
-INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (4, N'23 - Engineering', N'2301', N'NULL', N'Agent', N'P/004/01/17/2301/00066', N'M/s.KLAAH AL MALADA TRAD& CONT AS CONTRACTOR', N'9840359255', N'GLOBAL UNITED INSURANCE SERVICES LLC', N'BA0090', N'GLOBAL UNITED INSURANCE SERVICES LLC', N'NULL', CAST(N'2020-03-17T00:00:00.000' AS DateTime), CAST(N'2021-03-30T00:00:00.000' AS DateTime), 2164, 1178712, 2164, N'MKT0002 - Intermediary', N'NULL', N'NULL', N'BA0090', 35, N'Lost', N'Travel', CAST(N'2021-03-17T09:07:13.330' AS DateTime), NULL, NULL, N'BA0019', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
+INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (4, N'23 - Engineering', N'2301', N'NULL', N'Agent', N'P/004/01/17/2301/00066', N'M/s.KLAAH AL MALADA TRAD& CONT AS CONTRACTOR', N'9.84034e+009', N'GLOBAL UNITED INSURANCE SERVICES LLC', N'BA0090', N'GLOBAL UNITED INSURANCE SERVICES LLC', N'NULL', CAST(N'2020-03-17T00:00:00.000' AS DateTime), CAST(N'2021-03-30T00:00:00.000' AS DateTime), 2164, 1178712, 2164, N'MKT0002 - Intermediary', N'NULL', N'NULL', N'BA0090', 35, N'Lost', N'Travel', CAST(N'2021-03-19T12:54:13.157' AS DateTime), NULL, NULL, N'BA0019', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
 GO
-INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (5, N'23 - Engineering', N'2302', N'NULL', N'Direct', N'P/004/01/17/2302/00021', N'Ms. Aqwat for Trading & Contracting as  Contractor and /or Mazoon Electricity Company SAOC as Principal  , and / or Consulting Engineers / Architects and / or their subcontractors for their respective rights and interests', N'9840359255', N'Cash Customers-HO', N'BA0082', N'NEW OMAN INSURANCE & REINSURANCE SERVICE', N'NULL', CAST(N'2020-03-19T00:00:00.000' AS DateTime), CAST(N'2021-03-10T00:00:00.000' AS DateTime), 1548, 1860000, 1548, N'MKT0001 - Direct', N'NULL', N'NULL', N'CSH001', 1, N'Renewed', N'Travel', CAST(N'2021-03-17T09:07:13.330' AS DateTime), NULL, NULL, N'SH001', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
+INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (5, N'23 - Engineering', N'2302', N'NULL', N'Direct', N'P/004/01/17/2302/00021', N'Ms. Aqwat for Trading & Contracting as  Contractor and /or Mazoon Electricity Company SAOC as Principal  , and / or Consulting Engineers / Architects and / or their subcontractors for their respective rights and interests', N'9.84034e+009', N'Cash Customers-HO', N'BA0082', N'NEW OMAN INSURANCE & REINSURANCE SERVICE', N'NULL', CAST(N'2020-03-19T00:00:00.000' AS DateTime), CAST(N'2021-03-10T00:00:00.000' AS DateTime), 1548, 1860000, 1548, N'MKT0001 - Direct', N'NULL', N'NULL', N'CSH001', 1, N'Renewed', N'Travel', CAST(N'2021-03-19T12:54:13.157' AS DateTime), NULL, NULL, N'SH001', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
 GO
-INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (6, N'23 - Engineering', N'2304', N'NULL', N'Direct', N'P/004/01/18/2304/00085', N'M/s. AL FAJER AL ARABIY LLC &/or AL OMANIYA FINANCIAL SERVICES SAOG &/or TAAGEER FINANCE', N'9840359280', N'AL FAJER AL ARABIY LLC', N'NULL', N'NULL', N'NULL', CAST(N'2020-03-30T00:00:00.000' AS DateTime), CAST(N'2019-03-13T00:00:00.000' AS DateTime), 1634, 387600, 1634, N'MKT0028 - Samar Samir Al Zidjali', N'NULL', N'NULL', N'CL0378', 27, N'Lost', N'Travel', CAST(N'2021-03-17T09:07:13.330' AS DateTime), NULL, NULL, N'SH001', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
+INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (6, N'23 - Engineering', N'2304', N'NULL', N'Direct', N'P/004/01/18/2304/00085', N'M/s. AL FAJER AL ARABIY LLC &/or AL OMANIYA FINANCIAL SERVICES SAOG &/or TAAGEER FINANCE', N'9.84033e+009', N'AL FAJER AL ARABIY LLC', N'NULL', N'NULL', N'NULL', CAST(N'2020-03-30T00:00:00.000' AS DateTime), CAST(N'2019-03-13T00:00:00.000' AS DateTime), 1634, 387600, 1634, N'MKT0028 - Samar Samir Al Zidjali', N'NULL', N'NULL', N'CL0378', 27, N'Lost', N'Travel', CAST(N'2021-03-19T12:54:13.157' AS DateTime), NULL, NULL, N'SH001', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
 GO
-INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (7, N'23 - Engineering', N'2304', N'NULL', N'Direct', N'P/004/01/18/2304/00212', N'M/S. Oman Airports Management Co.', N'9840359280', N'AXA INSURANCE plc.', N'NULL', N'NULL', N'NULL', CAST(N'2020-04-01T00:00:00.000' AS DateTime), CAST(N'2020-03-31T00:00:00.000' AS DateTime), 16113, 5503809, 16113, N'MKT0001 - Direct', N'NULL', N'NULL', N'IC0006', 0, N'Under Process', N'Travel', CAST(N'2021-03-17T09:07:13.330' AS DateTime), NULL, NULL, N'SH001', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
+INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (7, N'23 - Engineering', N'2304', N'NULL', N'Direct', N'P/004/01/18/2304/00212', N'M/S. Oman Airports Management Co.', N'9.84033e+009', N'AXA INSURANCE plc.', N'NULL', N'NULL', N'NULL', CAST(N'2020-04-01T00:00:00.000' AS DateTime), CAST(N'2020-03-31T00:00:00.000' AS DateTime), 16113, 5503809, 16113, N'MKT0001 - Direct', N'NULL', N'NULL', N'IC0006', 0, N'Under Process', N'Travel', CAST(N'2021-03-19T12:54:13.157' AS DateTime), NULL, NULL, N'SH001', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
 GO
-INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (8, N'24 - Liability', N'2402', N'NULL', N'Direct', N'P/004/01/18/2402/00255', N'M/S. Al Asriya Marbles', N'9840359280', N'OTE GROUP OF COMPANIES', N'NULL', N'NULL', N'NULL', CAST(N'2020-04-05T00:00:00.000' AS DateTime), CAST(N'2022-03-31T00:00:00.000' AS DateTime), 265, 358480, 265, N'MKT0001 - Direct', N'NULL', N'NULL', N'CL0350', 1, N'Lost', N'Travel', CAST(N'2021-03-17T09:07:13.330' AS DateTime), NULL, NULL, N'SH001', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
+INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (8, N'24 - Liability', N'2402', N'NULL', N'Direct', N'P/004/01/18/2402/00255', N'M/S. Al Asriya Marbles', N'9.84032e+009', N'OTE GROUP OF COMPANIES', N'NULL', N'NULL', N'NULL', CAST(N'2020-04-05T00:00:00.000' AS DateTime), CAST(N'2022-03-31T00:00:00.000' AS DateTime), 265, 358480, 265, N'MKT0001 - Direct', N'NULL', N'NULL', N'CL0350', 1, N'Lost', N'Travel', CAST(N'2021-03-19T12:54:13.157' AS DateTime), NULL, NULL, N'SH001', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
 GO
-INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (9, N'25 - Motor', N'2501', N'NULL', N'Agent', N'P/004/01/19/2501/01215', N'SALMA SAID RASHID AL MASHYAKHI', N'9840359280', N'ISI BROKER', N'BA0078', N'ISI BROKER', N'NULL', CAST(N'2021-08-30T00:00:00.000' AS DateTime), CAST(N'2019-03-06T00:00:00.000' AS DateTime), 130, 6000, 130, N'MKT0002 - Intermediary', N'NULL', N'NULL', N'BA0078', 2, N'Under Process', N'Motor', CAST(N'2021-03-17T09:07:13.330' AS DateTime), NULL, NULL, N'BA0022', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
+INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (9, N'25 - Motor', N'2501', N'NULL', N'Agent', N'P/004/01/19/2501/01215', N'SALMA SAID RASHID AL MASHYAKHI', N'9.84032e+009', N'ISI BROKER', N'BA0078', N'ISI BROKER', N'NULL', CAST(N'2021-08-30T00:00:00.000' AS DateTime), CAST(N'2019-03-06T00:00:00.000' AS DateTime), 130, 6000, 130, N'MKT0002 - Intermediary', N'NULL', N'NULL', N'BA0078', 2, N'Under Process', N'Motor', CAST(N'2021-03-19T12:54:13.157' AS DateTime), NULL, NULL, N'BA0022', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
 GO
-INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (10, N'25 - Motor', N'2501', N'NULL', N'Branches', N'P/004/01/19/2501/01259', N'M/s. Al Shorooqi for cement products', N'9840359280', N'SATA L.L.C', N'CL0289', N'SATA L.L.C', N'NULL', CAST(N'2020-03-14T00:00:00.000' AS DateTime), CAST(N'2021-12-13T00:00:00.000' AS DateTime), 2820, 93925, 2820, N'MKT0001 - Direct', N'NULL', N'NULL', N'CL0289', 52, N'Renewed', N'Motor', CAST(N'2021-03-17T09:07:13.330' AS DateTime), NULL, NULL, N'CSH001', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
+INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (10, N'25 - Motor', N'2501', N'NULL', N'Branches', N'P/004/01/19/2501/01259', N'M/s. Al Shorooqi for cement products', N'9.84031e+009', N'SATA L.L.C', N'CL0289', N'SATA L.L.C', N'NULL', CAST(N'2020-03-14T00:00:00.000' AS DateTime), CAST(N'2021-12-13T00:00:00.000' AS DateTime), 2820, 93925, 2820, N'MKT0001 - Direct', N'NULL', N'NULL', N'CL0289', 52, N'Renewed', N'Motor', CAST(N'2021-03-19T12:54:13.157' AS DateTime), NULL, NULL, N'CSH001', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
 GO
-INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (11, N'25 - Motor', N'2501', N'NULL', N'Branches', N'P/004/01/19/2501/01274', N'M/s. Al Shorooqi for cement products', N'9840359280', N'SATA L.L.C', N'CL0289', N'SATA L.L.C', N'NULL', CAST(N'2020-03-14T00:00:00.000' AS DateTime), CAST(N'2021-12-13T00:00:00.000' AS DateTime), 3259, 110543, 3259, N'MKT0001 - Direct', N'NULL', N'NULL', N'CL0289', 0, N'Renewed', N'Motor', CAST(N'2021-03-17T09:07:13.330' AS DateTime), NULL, NULL, N'CSH001', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
+INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (11, N'25 - Motor', N'2501', N'NULL', N'Branches', N'P/004/01/19/2501/01274', N'M/s. Al Shorooqi for cement products', N'9.84031e+009', N'SATA L.L.C', N'CL0289', N'SATA L.L.C', N'NULL', CAST(N'2020-03-14T00:00:00.000' AS DateTime), CAST(N'2021-12-13T00:00:00.000' AS DateTime), 3259, 110543, 3259, N'MKT0001 - Direct', N'NULL', N'NULL', N'CL0289', 0, N'Renewed', N'Motor', CAST(N'2021-03-19T12:54:13.157' AS DateTime), NULL, NULL, N'CSH001', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
 GO
-INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (12, N'25 - Motor', N'2501', N'NULL', N'Agent', N'P/004/01/19/2501/01783', N'MUHAMED NIYAS MAMMASRAYILLATH ABOO HANEEFA', N'9840359280', N'ISI BROKER', N'BA0078', N'ISI BROKER', N'NULL', CAST(N'2020-03-25T00:00:00.000' AS DateTime), CAST(N'2020-03-24T00:00:00.000' AS DateTime), 103, 4176, 103, N'MKT0002 - Intermediary', N'NULL', N'NULL', N'BA0078', 0, N'Lost', N'Motor', CAST(N'2021-03-17T09:07:13.330' AS DateTime), NULL, NULL, N'BA0023', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
+INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (12, N'25 - Motor', N'2501', N'NULL', N'Agent', N'P/004/01/19/2501/01783', N'MUHAMED NIYAS MAMMASRAYILLATH ABOO HANEEFA', N'9.8403e+009', N'ISI BROKER', N'BA0078', N'ISI BROKER', N'NULL', CAST(N'2020-03-25T00:00:00.000' AS DateTime), CAST(N'2020-03-24T00:00:00.000' AS DateTime), 103, 4176, 103, N'MKT0002 - Intermediary', N'NULL', N'NULL', N'BA0078', 0, N'Lost', N'Motor', CAST(N'2021-03-19T12:54:13.157' AS DateTime), NULL, NULL, N'BA0023', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
 GO
-INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (13, N'25 - Motor', N'2501', N'NULL', N'Agent', N'P/004/01/19/2501/01785', N'MOHAMMED KHAMIS  MUBARAK AL BALUSHI', N'9840359280', N'ISI BROKER', N'BA0078', N'ISI BROKER', N'NULL', CAST(N'2020-03-25T00:00:00.000' AS DateTime), CAST(N'2022-03-31T00:00:00.000' AS DateTime), 113, 2000, 113, N'MKT0002 - Intermediary', N'NULL', N'NULL', N'BA0078', 2, N'Under Process', N'Motor', CAST(N'2021-03-17T09:07:13.330' AS DateTime), NULL, NULL, N'BA0023', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
+INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (13, N'25 - Motor', N'2501', N'NULL', N'Agent', N'P/004/01/19/2501/01785', N'MOHAMMED KHAMIS  MUBARAK AL BALUSHI', N'9.8403e+009', N'ISI BROKER', N'BA0078', N'ISI BROKER', N'NULL', CAST(N'2020-03-25T00:00:00.000' AS DateTime), CAST(N'2022-03-31T00:00:00.000' AS DateTime), 113, 2000, 113, N'MKT0002 - Intermediary', N'NULL', N'NULL', N'BA0078', 2, N'Under Process', N'Motor', CAST(N'2021-03-19T12:54:13.157' AS DateTime), NULL, NULL, N'BA0023', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
 GO
-INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (14, N'25 - Motor', N'2593', N'NULL', N'Branches', N'P/004/01/19/2593/00001', N'M/s. Al Shorooqi for cement products', N'9840359280', N'SATA L.L.C', N'CL0289', N'SATA L.L.C', N'NULL', CAST(N'2020-03-14T00:00:00.000' AS DateTime), CAST(N'2021-12-13T00:00:00.000' AS DateTime), 1669, 58413, 1669, N'MKT0001 - Direct', N'NULL', N'NULL', N'CL0289', 30, N'Renewed', N'Motor', CAST(N'2021-03-17T09:07:13.330' AS DateTime), NULL, NULL, N'CSH001', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
+INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (14, N'25 - Motor', N'2593', N'NULL', N'Branches', N'P/004/01/19/2593/00001', N'M/s. Al Shorooqi for cement products', N'9.84029e+009', N'SATA L.L.C', N'CL0289', N'SATA L.L.C', N'NULL', CAST(N'2020-03-14T00:00:00.000' AS DateTime), CAST(N'2021-12-13T00:00:00.000' AS DateTime), 1669, 58413, 1669, N'MKT0001 - Direct', N'NULL', N'NULL', N'CL0289', 30, N'Renewed', N'Motor', CAST(N'2021-03-19T12:54:13.157' AS DateTime), NULL, NULL, N'CSH001', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
 GO
-INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (15, N'25 - Motor', N'2593', N'NULL', N'Branches', N'P/004/01/19/2593/00002', N'M/S.SAHL AL BEQA TRADING.', N'9840359280', N'SATA L.L.C', N'CL0289', N'SATA L.L.C', N'NULL', CAST(N'2020-03-14T00:00:00.000' AS DateTime), CAST(N'2021-12-13T00:00:00.000' AS DateTime), 932, 41000, 932, N'MKT0002 - Intermediary', N'NULL', N'NULL', N'CL0289', 17, N'Renewed', N'Motor', CAST(N'2021-03-17T09:07:13.330' AS DateTime), NULL, NULL, N'CSH001', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
+INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (15, N'25 - Motor', N'2593', N'NULL', N'Branches', N'P/004/01/19/2593/00002', N'M/S.SAHL AL BEQA TRADING.', N'9.84029e+009', N'SATA L.L.C', N'CL0289', N'SATA L.L.C', N'NULL', CAST(N'2020-03-14T00:00:00.000' AS DateTime), CAST(N'2021-12-13T00:00:00.000' AS DateTime), 932, 41000, 932, N'MKT0002 - Intermediary', N'NULL', N'NULL', N'CL0289', 17, N'Renewed', N'Motor', CAST(N'2021-03-19T12:54:13.157' AS DateTime), NULL, NULL, N'CSH001', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
 GO
-INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (16, N'25 - Motor', N'2510', N'NULL', N'Broker', N'P/004/03/19/2510/00682', N'ALI DARWISH ALI AL AJMI', N'9840359280', N'Ibn Al Shirawi Trading', N'BA0023', N'Ibn Al Shirawi Trading', N'NULL', CAST(N'2021-01-14T00:00:00.000' AS DateTime), CAST(N'2021-03-01T00:00:00.000' AS DateTime), 56, 0, 56, N'MKT0002 - Intermediary', N'NULL', N'NULL', N'BA0023', 1, N'Under Process', N'Motor', CAST(N'2021-03-17T09:07:13.330' AS DateTime), NULL, NULL, N'BA0002', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
+INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (16, N'25 - Motor', N'2510', N'NULL', N'Broker', N'P/004/03/19/2510/00682', N'ALI DARWISH ALI AL AJMI', N'9.84028e+009', N'Ibn Al Shirawi Trading', N'BA0023', N'Ibn Al Shirawi Trading', N'NULL', CAST(N'2021-01-14T00:00:00.000' AS DateTime), CAST(N'2021-03-01T00:00:00.000' AS DateTime), 56, 0, 56, N'MKT0002 - Intermediary', N'NULL', N'NULL', N'BA0023', 1, N'Under Process', N'Motor', CAST(N'2021-03-19T12:54:13.157' AS DateTime), NULL, NULL, N'BA0002', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
 GO
-INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (17, N'25 - Motor', N'2510', N'NULL', N'Broker', N'P/004/03/19/2510/00684', N'SHEIKHA SULAIMAN KHALIFA AL MAAMARI', N'9840359280', N'Ibn Al Shirawi Trading', N'BA0023', N'Ibn Al Shirawi Trading', N'NULL', CAST(N'2021-01-14T00:00:00.000' AS DateTime), CAST(N'2020-03-13T00:00:00.000' AS DateTime), 72, 0, 53, N'MKT0002 - Intermediary', N'NULL', N'NULL', N'BA0023', 0, N'Lost', N'Motor', CAST(N'2021-03-17T09:07:13.330' AS DateTime), NULL, NULL, N'BA0002', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
+INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (17, N'25 - Motor', N'2510', N'NULL', N'Broker', N'P/004/03/19/2510/00684', N'SHEIKHA SULAIMAN KHALIFA AL MAAMARI', N'9.84028e+009', N'Ibn Al Shirawi Trading', N'BA0023', N'Ibn Al Shirawi Trading', N'NULL', CAST(N'2021-01-14T00:00:00.000' AS DateTime), CAST(N'2020-03-13T00:00:00.000' AS DateTime), 72, 0, 53, N'MKT0002 - Intermediary', N'NULL', N'NULL', N'BA0023', 0, N'Lost', N'Motor', CAST(N'2021-03-19T12:54:13.157' AS DateTime), NULL, NULL, N'BA0002', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
 GO
-INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (18, N'25 - Motor', N'2510', N'NULL', N'Broker', N'P/004/03/19/2510/00687', N'MOHAMMED ALI RASHID AL MAMARI', N'9840359280', N'Ibn Al Shirawi Trading', N'BA0023', N'Ibn Al Shirawi Trading', N'NULL', CAST(N'2021-01-14T00:00:00.000' AS DateTime), CAST(N'2018-03-18T00:00:00.000' AS DateTime), 74, 0, 74, N'MKT0002 - Intermediary', N'NULL', N'NULL', N'BA0023', 1, N'Under Process', N'Motor', CAST(N'2021-03-17T09:07:13.330' AS DateTime), NULL, NULL, N'BA0002', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
+INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (18, N'25 - Motor', N'2510', N'NULL', N'Broker', N'P/004/03/19/2510/00687', N'MOHAMMED ALI RASHID AL MAMARI', N'9.84027e+009', N'Ibn Al Shirawi Trading', N'BA0023', N'Ibn Al Shirawi Trading', N'NULL', CAST(N'2021-01-14T00:00:00.000' AS DateTime), CAST(N'2018-03-18T00:00:00.000' AS DateTime), 74, 0, 74, N'MKT0002 - Intermediary', N'NULL', N'NULL', N'BA0023', 1, N'Under Process', N'Motor', CAST(N'2021-03-19T12:54:13.157' AS DateTime), NULL, NULL, N'BA0002', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
 GO
-INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (19, N'25 - Motor', N'2510', N'NULL', N'Broker', N'P/004/05/19/2510/00356', N'ZIYAD KARIM BAKHSH AHMED AL BALUSHI', N'9840359280', N'FUTURE SOLUTIONS COMPANY LLC', N'BA0099', N'FUTURE SOLUTIONS COMPANY LLC', N'NULL', CAST(N'2021-01-14T00:00:00.000' AS DateTime), CAST(N'2019-12-19T00:00:00.000' AS DateTime), 58, 100, 58, N'MKT0002 - Intermediary', N'NULL', N'NULL', N'BA0099', 1, N'Renewed', N'Motor', CAST(N'2021-03-17T09:07:13.330' AS DateTime), CAST(N'2021-03-19T00:05:58.060' AS DateTime), NULL, N'BA0003', N'sathish', N'Bulk Upload', N'sathish', N'', CAST(N'2021-03-27T04:10:00.000' AS DateTime), CAST(85.00 AS Decimal(18, 2)))
+INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (19, N'25 - Motor', N'2510', N'NULL', N'Broker', N'P/004/05/19/2510/00356', N'ZIYAD KARIM BAKHSH AHMED AL BALUSHI', N'9.84027e+009', N'FUTURE SOLUTIONS COMPANY LLC', N'BA0099', N'FUTURE SOLUTIONS COMPANY LLC', N'NULL', CAST(N'2021-01-14T00:00:00.000' AS DateTime), CAST(N'2019-12-19T00:00:00.000' AS DateTime), 58, 0, 58, N'MKT0002 - Intermediary', N'NULL', N'NULL', N'BA0099', 1, N'Renewed', N'Motor', CAST(N'2021-03-19T12:54:13.157' AS DateTime), NULL, NULL, N'BA0003', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
 GO
-INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (20, N'25 - Motor', N'2510', N'NULL', N'Broker', N'P/004/05/19/2510/00363', N'OMER KHALFAN SAED SULAIMAN AL-SAAIDI', N'9840359280', N'FUTURE SOLUTIONS COMPANY LLC', N'BA0099', N'FUTURE SOLUTIONS COMPANY LLC', N'NULL', CAST(N'2021-01-14T00:00:00.000' AS DateTime), CAST(N'2022-12-31T00:00:00.000' AS DateTime), 49, 0, 49, N'MKT0002 - Intermediary', N'NULL', N'NULL', N'BA0099', 0, N'Lost', N'Motor', CAST(N'2021-03-17T09:07:13.330' AS DateTime), NULL, NULL, N'BA0003', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
+INSERT [dbo].[TB_Insurance] ([InsuranceID], [DivisionName], [ProductCode], [ProductName], [BusinessType], [PolicyNO], [AssuredName], [AssuredMobile], [CustomerName], [SourceCode], [SourceName], [CustomerCategory], [PolicyFromDate], [PolicyToDate], [GrossPremium], [RevisedSumInsured], [RenewalPremium], [MarketingExecutive], [Remarks], [DivnCode], [CustomerCode], [Charges], [Status], [InsType], [CreatedAt], [ModifiedAt], [DivisionCode], [Producer], [CreatedBy], [EntryType], [ModifiedBy], [Description], [CallBackDate], [RenewalSumAssured]) VALUES (20, N'25 - Motor', N'2510', N'NULL', N'Broker', N'P/004/05/19/2510/00363', N'OMER KHALFAN SAED SULAIMAN AL-SAAIDI', N'9.84026e+009', N'FUTURE SOLUTIONS COMPANY LLC', N'BA0099', N'FUTURE SOLUTIONS COMPANY LLC', N'NULL', CAST(N'2021-01-14T00:00:00.000' AS DateTime), CAST(N'2022-12-31T00:00:00.000' AS DateTime), 49, 0, 49, N'MKT0002 - Intermediary', N'NULL', N'NULL', N'BA0099', 0, N'Lost', N'Motor', CAST(N'2021-03-19T12:54:13.157' AS DateTime), NULL, NULL, N'BA0003', N'sathish', N'Bulk Upload', NULL, NULL, NULL, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[TB_Insurance] OFF
 GO
@@ -1920,7 +1920,7 @@ INSERT [dbo].[TB_Users] ([UserId], [UserName], [Password], [RoleId], [RoleName],
 GO
 INSERT [dbo].[TB_Users] ([UserId], [UserName], [Password], [RoleId], [RoleName], [CreatedAt], [CreatedBy], [UpdatedAt], [UpdatedBy], [SubRoleType]) VALUES (181, N'SH016', N'1234', 5, N'Mr.Saif Al Said', CAST(N'2020-08-19T11:16:48.210' AS DateTime), N'SALES TEAM', NULL, NULL, NULL)
 GO
-INSERT [dbo].[TB_Users] ([UserId], [UserName], [Password], [RoleId], [RoleName], [CreatedAt], [CreatedBy], [UpdatedAt], [UpdatedBy], [SubRoleType]) VALUES (182, N'sathish', N'12', 1, N'Admin', CAST(N'2020-08-21T11:30:53.223' AS DateTime), N'SuperAdmin', NULL, NULL, NULL)
+INSERT [dbo].[TB_Users] ([UserId], [UserName], [Password], [RoleId], [RoleName], [CreatedAt], [CreatedBy], [UpdatedAt], [UpdatedBy], [SubRoleType]) VALUES (182, N'admin', N'admin', 1, N'Admin', CAST(N'2020-08-21T11:30:53.223' AS DateTime), N'SuperAdmin', NULL, NULL, NULL)
 GO
 INSERT [dbo].[TB_Users] ([UserId], [UserName], [Password], [RoleId], [RoleName], [CreatedAt], [CreatedBy], [UpdatedAt], [UpdatedBy], [SubRoleType]) VALUES (183, N'Branch05', N'test123', 4, N'BranchManager', CAST(N'2020-11-24T23:36:51.243' AS DateTime), NULL, NULL, NULL, NULL)
 GO
@@ -5964,7 +5964,7 @@ ALTER TABLE [dbo].[TB_Travel] ADD  DEFAULT (getdate()) FOR [CreatedAt]
 GO
 ALTER TABLE [dbo].[TB_Users] ADD  DEFAULT (getdate()) FOR [CreatedAt]
 GO
-/****** Object:  StoredProcedure [dbo].[pBulkDelegateStatus]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[pBulkDelegateStatus]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6013,7 +6013,7 @@ END
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[pBulkUpdateInsuranceStatus]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[pBulkUpdateInsuranceStatus]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6072,7 +6072,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[pGetDelegateData]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[pGetDelegateData]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6103,7 +6103,7 @@ From TB_Insurance order by InsuranceID desc
 end
 
 GO
-/****** Object:  StoredProcedure [dbo].[SP_DomesticBulkUpload]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_DomesticBulkUpload]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6131,7 +6131,7 @@ SponsorOfficePhone,SponsorNationality,VIPCustomer,Email
 FROM @UDT_MotorBulkUpload WHERE PolicyNo NOT IN (SELECT DISTINCT POLICYNO FROM TB_Domestic )
 end
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetBarChart]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetBarChart]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6255,7 +6255,7 @@ end
 end
 end
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetBIDashBoard]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetBIDashBoard]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6333,7 +6333,7 @@ END
 --END
 
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetBIDashBoard_bak]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetBIDashBoard_bak]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6377,7 +6377,7 @@ print @sql
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetBIDashBoardYearWise]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetBIDashBoardYearWise]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6390,21 +6390,21 @@ Calenderid int,
 MonthName nvarchar(50),
 Lost int,
 Renewed int,
-[Under process] int,
+[Under Process] int,
 Year int
 )
-insert into @tt(Year,Lost,Renewed,[Under process])
+insert into @tt(Year,Lost,Renewed,[Under Process])
 
-select * from (select Year(PolicyFromDate) Year,PolicyNo,IsNull(Status,'Under process') as Status from
+select * from (select Year(PolicyToDate) Year,PolicyNo,IsNull(Status,'Under Process') as Status from
 TB_Insurance M 
 
 
-where BusinessType=@BusinessType
+where BusinessType=@BusinessType --and year(policyToDate)=year(Getdate())
 ) t
 pivot
-(Count (PolicyNo) for Status in([Lost],[Renewed],[Under process])) as pivot_final_table 
+(Count (PolicyNo) for Status in([Lost],[Renewed],[Under Process])) as pivot_final_table 
 
-select Year as y,Renewed as a, sum(lost+Renewed+[Under process])  as b,@BusinessType as BusinessType from @tt  group by Lost,year,Renewed order by year
+select Year as y,Renewed as a, sum(lost+Renewed+[Under Process])  as b,@BusinessType as BusinessType from @tt  group by Lost,year,Renewed order by year
 
 --declare @tt table(
 --Calenderid int,
@@ -6434,7 +6434,7 @@ select Year as y,Renewed as a, sum(lost+Renewed+[Under process])  as b,@Business
 --END
 END
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetCallBackDetails]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetCallBackDetails]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6492,7 +6492,7 @@ end
 end
 
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetInsurance]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetInsurance]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6564,7 +6564,7 @@ select @TotPoltoBeRenewed as TotPoltoBeRenewed,@TotPolforRenewal as TotPolforRen
 END
 END
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetMastersView]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetMastersView]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6654,7 +6654,7 @@ From TB_Insurance order by InsuranceID desc
 end
 
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetMIDashBoard]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetMIDashBoard]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6715,7 +6715,7 @@ select  @TotalNoPoliciesYear as TNPYear , @TotalNoPolUnderProcessYear as TNPUnde
 @TotalNoPoliciesRenewedMonthPremium  as TNPRenewedMonthPremium,@TotalNPMonthPercentPremium as PercentPremiumRenewedMonth,@UserName as UserName
 end
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetPMDashBoard]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetPMDashBoard]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6732,7 +6732,7 @@ select distinct ProducerCodeId, U.UserName+' - '+PCM.ProducerName as ProducerNam
 Inner join TB_ProducerCodeMaster PCM on PCM.ProducerCode=U.UserName where u.RoleId=@RoleId
 end
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetProducerMaster]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetProducerMaster]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6754,7 +6754,7 @@ set @U_Name=@AgentCodeBrokerCode
 select ProducerCodeId,ProducerCode,ProducerName from tb_producercodemaster where ProducerCode=@U_Name
 end
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetSearch]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetSearch]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6818,7 +6818,7 @@ end
 end
 
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetSpecificBIDB]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetSpecificBIDB]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6899,7 +6899,7 @@ END
 --END
 
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetUserDomesticDB]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetUserDomesticDB]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -7112,7 +7112,7 @@ end
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetUserIndividualDB]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetUserIndividualDB]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -7324,7 +7324,7 @@ end
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetUserInsInfo]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetUserInsInfo]    Script Date: 19-03-2021 17:08:00 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -7541,7 +7541,7 @@ end
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetUserInsInfo_bak]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetUserInsInfo_bak]    Script Date: 19-03-2021 17:08:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -7959,7 +7959,7 @@ end
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetUserList]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetUserList]    Script Date: 19-03-2021 17:08:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -7976,7 +7976,7 @@ set @RoleId=(select RoleId from TB_RoleMaster where RoleName=@BusinessType)
 select UserId,UserName,Password,RoleId,RoleName from TB_Users where RoleId=@RoleId
 end
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetUserMDB]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetUserMDB]    Script Date: 19-03-2021 17:08:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -8186,7 +8186,7 @@ end
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetUserTravelDB]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetUserTravelDB]    Script Date: 19-03-2021 17:08:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -8402,7 +8402,7 @@ end
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetUserwiseInfo]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetUserwiseInfo]    Script Date: 19-03-2021 17:08:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -8673,7 +8673,7 @@ end
 end
 end
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetUserwiseReport]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetUserwiseReport]    Script Date: 19-03-2021 17:08:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -8794,7 +8794,7 @@ select @TotPoltoBeRenewed as TotPoltoBeRenewed,@TotPolforRenewal as TotPolforRen
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[SP_GetYearwisePolicyReport]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_GetYearwisePolicyReport]    Script Date: 19-03-2021 17:08:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -9018,7 +9018,7 @@ end
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[SP_IndividualBulkUpload]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_IndividualBulkUpload]    Script Date: 19-03-2021 17:08:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -9047,7 +9047,7 @@ FROM @UDT_MotorBulkUpload WHERE QuotationNo NOT IN (SELECT DISTINCT QuotationNo 
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[SP_InsBulkUpload]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_InsBulkUpload]    Script Date: 19-03-2021 17:08:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -9071,7 +9071,7 @@ PolicyToDate,GrossPremium,RevisedSumInsured,RenewalPremium,MarketingExecutive,Re
 		
 end
 GO
-/****** Object:  StoredProcedure [dbo].[SP_InsUpdate]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_InsUpdate]    Script Date: 19-03-2021 17:08:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -9105,7 +9105,7 @@ set @CallBackDate=null
         END 
   
 GO
-/****** Object:  StoredProcedure [dbo].[SP_MotorBulkUpload]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_MotorBulkUpload]    Script Date: 19-03-2021 17:08:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -9139,7 +9139,7 @@ FROM @UDT_MotorBulkUpload WHERE PolicyNo NOT IN (SELECT DISTINCT PolicyNo FROM T
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[SP_MotorDomesticSave]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_MotorDomesticSave]    Script Date: 19-03-2021 17:08:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -9293,7 +9293,7 @@ M.Email=UDT.Email
         END 
   END 
 GO
-/****** Object:  StoredProcedure [dbo].[SP_MotorIndividualSave]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_MotorIndividualSave]    Script Date: 19-03-2021 17:08:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -9389,7 +9389,7 @@ M.AppointeeCivilIDNo=UDT.AppointeeCivilIDNo
         END 
   END 
 GO
-/****** Object:  StoredProcedure [dbo].[SP_MotorInsSave]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_MotorInsSave]    Script Date: 19-03-2021 17:08:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -9579,7 +9579,7 @@ ELSE
         END 
   END 
 GO
-/****** Object:  StoredProcedure [dbo].[SP_MotorInsUpdate]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_MotorInsUpdate]    Script Date: 19-03-2021 17:08:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -9604,7 +9604,7 @@ AS
         END 
   
 GO
-/****** Object:  StoredProcedure [dbo].[SP_MotorTravelSave]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_MotorTravelSave]    Script Date: 19-03-2021 17:08:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -9761,7 +9761,7 @@ ELSE
         END 
   END 
 GO
-/****** Object:  StoredProcedure [dbo].[SP_NewInsSave]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_NewInsSave]    Script Date: 19-03-2021 17:08:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -9798,7 +9798,7 @@ PolicyToDate,GrossPremium,RevisedSumInsured,RenewalPremium,MarketingExecutive,Re
 
   END 
 GO
-/****** Object:  StoredProcedure [dbo].[SP_NewInsUpdate]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_NewInsUpdate]    Script Date: 19-03-2021 17:08:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -9848,7 +9848,7 @@ M.Producer=UDT.ProducerName,
 						   SET @Return=@@ROWCOUNT
         END 
 GO
-/****** Object:  StoredProcedure [dbo].[SP_RegisterUser]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_RegisterUser]    Script Date: 19-03-2021 17:08:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -9878,7 +9878,7 @@ end
 end
 
 GO
-/****** Object:  StoredProcedure [dbo].[SP_TravelBulkUpload]    Script Date: 19-03-2021 00:09:08 ******/
+/****** Object:  StoredProcedure [dbo].[SP_TravelBulkUpload]    Script Date: 19-03-2021 17:08:01 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
