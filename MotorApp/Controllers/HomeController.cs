@@ -10,6 +10,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Configuration;
+using MotorApp.Utilities;
 
 namespace MotorApp.Controllers
 {
@@ -212,30 +213,31 @@ namespace MotorApp.Controllers
                 string productName = objMotorModel.ProductName ?? "";
                 string instype = objMotorModel.InsType ?? "";
                 string Status = objMotorModel.Status ?? "";
+                DateTime PolicyFDate = objMotorModel.PolicyFromDate;
+                DateTime PolicyTDate = objMotorModel.PolicyToDate;
                 ViewBag.UserName = U_Name;
                 List<Insurance> lst = new List<Insurance>();
 
-                if (!string.IsNullOrEmpty(PolicyNo) || !string.IsNullOrEmpty(divisionName) || !string.IsNullOrEmpty(productName) || !string.IsNullOrEmpty(AssuredName)
-                    || !string.IsNullOrEmpty(Status))
+                if (!string.IsNullOrEmpty(PolicyNo) || PolicyFDate != null && PolicyFDate != null)
 
                 {
-                    if (RoleId.Equals(1))
+                    if (DateValidation.isValidDate(PolicyFDate.Day,PolicyFDate.Month,PolicyFDate.Year))
                     {
-                        long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, U_Name, out lst);
-                        //if (lstNewIns.Count > 0)
-                        //{
-                        //    lst = lstNewIns.Where(x => x.PolicyNo == PolicyNo.Trim() || x.DivisionName == divisionName.Trim() ||
-                        //                      x.AssuredName == AssuredName.Trim() || x.ProductName == productName.Trim() || x.InsType == instype.Trim()).OrderBy(x => x.InsuranceID).ToList();
-                        //}
+                        long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, U_Name, PolicyFDate, PolicyTDate, out lst);
                     }
-                    else
-                    {
-                        long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, U_Name, out lst);
-                    }
+                    //if (RoleId.Equals(1))
+                    //{
+                    //    long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, U_Name, PolicyFDate, PolicyTDate, out lst);
 
-                    return View(lst);
+                    //}
+                    //else
+                    //{
+                    //    long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, U_Name, out lst);
+                    //}
+
+                    //return View(lst);
                 }
-                else if (RoleId.Equals(1))
+               /* else if (RoleId.Equals(1))
                 {
                     long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, U_Name, out lst);
                     return View(lst);
@@ -246,7 +248,11 @@ namespace MotorApp.Controllers
                     return View(lstNewIns.Where(x => x.ProducerName == U_Name).OrderBy(x => x.InsuranceID));
 
                 else
-                    return View(lst);
+                {
+                    long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, U_Name, out lst);
+                }*/
+                return View(lst);
+
 
             }
             else

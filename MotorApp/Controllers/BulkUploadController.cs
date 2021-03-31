@@ -41,22 +41,29 @@ namespace MotorApp.Controllers
 
             return Json(ErrorMsg);
         }
-        //private int IsUserLoggedIn()
-        //{
-        //    int i = 0;
-        //    try
-        //    {
-        //        if (IsUserLogin)
-        //        {
-        //            i = 1;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
+        public ActionResult BulkUpload()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult BulkUpdate(List<Insurance> lstInsuranceBulkUpload, string UploadType)
+        {
+            long returnCode = -1;
+            string InsuranceStatusJson = string.Empty;
+            string ErrorMsg = string.Empty;
 
-        //        throw ex;
-        //    }
-        //    return i;
-        //}
+            try
+            {
+                InsuranceStatusJson = JsonConvert.SerializeObject(lstInsuranceBulkUpload);
+                returnCode = new MotorBAL().BulkUpdateInsurance(InsuranceStatusJson, -1, "Admin", UploadType, out ErrorMsg);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return Json(ErrorMsg);
+        }
+
     }
 }

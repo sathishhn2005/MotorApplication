@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewBag.Title = "BulkUpload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+    <div class="card p-3 mx-3">
+        <div class="d-flex justify-content-between">
+
+
+            <div class="form-inline">
+                <label class="col-form-label font-bold mr-3" for="fileUploadMotorPolicies">File Upload:</label>
+                <input type="file" id="fileUploadMotorPolicies" accept=".csv" />
+                <input type="button" id="uploadMotorPolicies" class="btn btn-primary btn-sm mx-1"
+                       value="Upload CSV File" onclick="csvFileUpload();" />
+            </div>
+           
+        </div>
+    </div>
+
+
+<script type="text/javascript">
+
+    function csvFileUpload() {
+        lstMoter = [];
+        var rowCount = 0;
+        var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.csv|.txt)$/;
+        if (regex.test($("#fileUploadMotorPolicies").val().toLowerCase())) {
+            if (typeof (FileReader) != "undefined") {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+
+                    var rows = e.target.result.split('\r\n');
+
+
+                    for (var i = 0; i < rows.length; i++) {
+
+                        var cells = rows[i].split(",");
+
+                        if (i > 0) {
+                           
+                            lstMoter.push({
+                                InsuranceID: 0,
+                                //DivisionCode: $.trim(cells[0].replace('""', '"')),
+                                //DivisionName: cells[1],// $.trim(cells[1].replace('""', '"')),
+                                //ProductCode: $.trim(cells[2].replace('""', '"')),
+                                //ProductName: $.trim(cells[3].replace('""', '"')),
+                                //CustomerType: $.trim(cells[4].replace('""', '"')),
+                                //PolicyNo: $.trim(cells[5].replace('""', '"')),
+                                //AssuredName: $.trim(cells[6].replace('""', '"')),
+                                //CustomerMobile: $.trim(cells[7].replace('""', '"')),
+                                //CustomerName: $.trim(cells[8].replace('""', '"')),
+                                //SourceCode: $.trim(cells[9].replace('""', '"')),
+                                //SourceName: $.trim(cells[10].replace('""', '"')),
+                                //CustomerCategory: $.trim(cells[11].replace('""', '"')),
+                                //PolicyFromDate: $.trim(cells[12].replace('""', '"')),
+                                //PolicyToDate: $.trim(cells[13].replace('""', '"')),
+                                //GrossPremium: $.trim(cells[14].replace('""', '"')),
+                                //ExpiredSumInsured: $.trim(cells[15].replace('""', '"')),
+                                //RenewalPremium: $.trim(cells[16].replace('""', '"')),
+                                //MarketingExecutive: $.trim(cells[17].replace('""', '"')),
+                                //Remarks: $.trim(cells[18].replace('""', '"')),
+                                //Status: $.trim(cells[19].replace('""', '"')),
+                                //CustomerCode: $.trim(cells[20].replace('""', '"')),
+                                //Charges: $.trim(cells[21].replace('""', '"')),
+                                //UserName: $.trim(cells[22].replace('""', '"')),
+                                DivisionCode: $.trim(cells[0].replace('""', '"')),
+                                DivisionName: cells[1],// $.trim(cells[1].replace('""', '"')),
+                                ProductCode: cells[2],
+                                ProductName: cells[3],
+                                CustomerType: cells[4],
+                                PolicyNo: cells[5],
+                                AssuredName: cells[6],
+                                CustomerMobile: cells[7],
+                                CustomerName: cells[8],
+                                SourceCode: cells[9],
+                                SourceName: cells[10],
+                                CustomerCategory: cells[11],
+                                PolicyFromDate: cells[12],
+                                PolicyToDate: cells[13],
+                                GrossPremium: cells[14],
+                                ExpiredSumInsured: cells[15],
+                                RenewalPremium: cells[16],
+                                MarketingExecutive: cells[17],
+                                Remarks: cells[18],
+                                Status: cells[19],
+                                CustomerCode: cells[20],
+                                Charges: cells[21],
+                                UserName: cells[22],
+
+                            });
+
+                        }
+                        rowCount += 1;
+
+                    }
+
+                    if (rowCount == rows.length) {
+                        bulkUpdateStatus("CSVFileUpload");
+                    }
+
+                }
+                reader.readAsText($("#fileUploadMotorPolicies")[0].files[0]);
+            } else {
+                $('#fileUploadMotorPolicies').val("");
+                alert("This browser does not support HTML5.");
+            }
+        } else {
+            $('#fileUploadMotorPolicies').val("");
+
+            alert("Please upload a valid CSV file.");
+
+        }
+
+
+    }
+    function bulkUpdateStatus(UType) {
+
+        if (lstMoter.length > 0) {
+            $.post('/BulkUpload/BulkUpdate', { lstMoter: lstMoter, UploadType: UType },
+                function (returnedData) {
+                    alert(returnedData);
+                });
+
+
+          //  $("#btnMotorSearch").click();
+        }
+        
+
+    }
+</script>

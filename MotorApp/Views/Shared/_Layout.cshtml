@@ -30,8 +30,8 @@
         <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
                 @*<div class="sidebar-brand-icon">
-                        <img src="~/img/logo/logoMI.png">
-                    </div>*@
+                <img src="~/img/logo/logoMI.png">
+            </div>*@
                 <div class="sidebar-brand-text mx-2">Total<span class="logo-sub">Net</span></div>
             </a>
             <hr class="sidebar-divider mb-3 mt-0" />
@@ -47,13 +47,12 @@
             </li>
             @if (ViewBag.RoleId == 1)
             {
-<li class="nav-item ">
-    <a class="nav-link" href="indexBI">
-        <i class="fas fa-fw fa-star"></i>
-        <span>BI Dashboard</span>
-    </a>
-</li>
-}
+        <li class="nav-item ">
+            <a class="nav-link" href="indexBI">
+                <i class="fas fa-fw fa-star"></i>
+                <span>BI Dashboard</span>
+            </a>
+        </li>}
             <li class="nav-item ">
                 <a class="nav-link" href="/Home/MotorDB">
                     <i class="fas fa-fw fa-car"></i>
@@ -108,23 +107,29 @@
                 </a>
             </li>
             @*<li class="nav-item">
-                    <a class="nav-link" href="MasterTravel">
-                        <i class="fas fa-fw fa-user"></i>
-                        <span>Travel Insurance Masters</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="MasterIndividual">
-                        <i class="fas fa-fw fa-plane"></i>
-                        <span>Individual Insurance Masters</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="MasterDomestic">
-                        <i class="fas fa-fw fa-users"></i>
-                        <span>Domestic Insurance Masters</span>
-                    </a>
-                </li>*@
+                <a class="nav-link" href="/BulkUpload/BulkUpload">
+                    <i class="fas fa-fw fa-mail-bulk"></i>
+                    <span>Bulk Upload</span>
+                </a>
+            </li>*@
+            @*<li class="nav-item">
+            <a class="nav-link" href="MasterTravel">
+                <i class="fas fa-fw fa-user"></i>
+                <span>Travel Insurance Masters</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="MasterIndividual">
+                <i class="fas fa-fw fa-plane"></i>
+                <span>Individual Insurance Masters</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="MasterDomestic">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Domestic Insurance Masters</span>
+            </a>
+        </li>*@
             <li class="nav-item hide">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
                    aria-expanded="true" aria-controls="collapseBootstrap">

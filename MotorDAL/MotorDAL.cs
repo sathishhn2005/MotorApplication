@@ -1262,7 +1262,7 @@ namespace MotorApp.DAL
             }
             return returnCode;
         }
-        public long GetSearchIns(long RoleId, string PolicyNo, string DivisionName, string AssuredName, string ProductName, string Status, string Uname, out List<Insurance> lstNewIns)
+        public long GetSearchIns(long RoleId, string PolicyNo, string DivisionName, string AssuredName, string ProductName, string Status, string Uname,DateTime PolicyFromDate, DateTime PolicyToDate, out List<Insurance> lstNewIns)
         {
             long returnCode = -1;
 
@@ -1289,6 +1289,8 @@ namespace MotorApp.DAL
                     cmd.Parameters.AddWithValue("@ProductName", ProductName);
                     cmd.Parameters.AddWithValue("@Status", Status);
                     cmd.Parameters.AddWithValue("@ProducerName", Uname);
+                    cmd.Parameters.AddWithValue("@PolicyFromDate", PolicyFromDate);
+                    cmd.Parameters.AddWithValue("@PolicyToDate", PolicyToDate);
 
 
                     SqlDataAdapter sdaAdapter = new SqlDataAdapter
@@ -1565,5 +1567,54 @@ namespace MotorApp.DAL
             }
             return returnCode;
         }
+        public long BulkUpdateInsurance(string InsuranceJson, long Loginid, string UserName, string FileType, out string ErrorMsg)
+        {
+            long returnCode = -1;
+            ErrorMsg = string.Empty;
+           
+            try
+            {
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = "pBulkUploadInsurance",
+                        CommandTimeout = 180,
+                        Connection = con,
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    cmd.Parameters.AddWithValue("@InsuranceJson", InsuranceJson);
+                    cmd.Parameters.AddWithValue("@Loginid", Loginid);
+                    cmd.Parameters.AddWithValue("@UserName", UserName);
+                    cmd.Parameters.AddWithValue("@FileType", FileType);
+
+                    SqlParameter param = new SqlParameter
+                    {
+                        ParameterName = "@ErrorMsg",
+                        Direction = ParameterDirection.Output,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Size = 4000,
+                    };
+                    cmd.Parameters.Add(param);
+
+                    returnCode = cmd.ExecuteNonQuery();
+
+                    if (cmd.Parameters["@ErrorMsg"].Value != DBNull.Value)
+                    {
+                        ErrorMsg = cmd.Parameters["@ErrorMsg"].Value.ToString();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return returnCode;
+        }
+
     }
 }

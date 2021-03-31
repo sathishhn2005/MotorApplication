@@ -9,7 +9,7 @@ namespace MotorApp.BusinessEntities
 {
     public class Insurance
     {
-        
+
         public string UserName { get; set; }
         public string AssignTo { get; set; }
         public long InsuranceID { get; set; }
@@ -37,7 +37,7 @@ namespace MotorApp.BusinessEntities
         public string CustomerName { get; set; }
         [Display(Name = "Source Code")]
         public string SourceCode { get; set; }
-        
+
 
         [Display(Name = "Source Name")]
         public string SourceName { get; set; }
@@ -67,6 +67,9 @@ namespace MotorApp.BusinessEntities
         public string Remarks { get; set; }
         [Display(Name = "Status")]
         public string Status { get; set; }
+
+        [Display(Name = "ExpiredSumInsured")]
+        public decimal ExpiredSumInsured { get; set; }
         [Display(Name = "SumAssuredPercentage")]
         public decimal SumAssuredPercentage { get; set; }
         [Display(Name = "RenewalSumAssured")]
@@ -91,5 +94,5 @@ namespace MotorApp.BusinessEntities
         Domestic,
         Individual
     }
-    
+
 }

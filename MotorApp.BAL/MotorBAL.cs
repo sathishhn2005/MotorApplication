@@ -522,15 +522,15 @@ namespace MotorApp.BAL
                 return returnCode;
             }
         }
-        public long GetSearchData(long RoleId, string PolicyNo, string DivisionName, string AssuredName, string ProductName, string Status, string Uname, out List<Insurance> lstNewIns)
+        public long GetSearchData(long RoleId, string PolicyNo, string DivisionName, string AssuredName, string ProductName, string Status, string Uname, DateTime PolicyFromDate, DateTime PolicyToDate, out List<Insurance> lstNewIns)
         {
             long returnCode = -1;
 
-            //using (TransactionScope transactionScope = new TransactionScope())
+            //using (TransactionScope transactionScope = new TransactionScope())DateTime PolicyFromDate, DateTime PolicyToDate,
             //{
             try
             {
-                returnCode = objMotorAppDAL.GetSearchIns(RoleId, PolicyNo, DivisionName, AssuredName, ProductName, Status, Uname, out lstNewIns);
+                returnCode = objMotorAppDAL.GetSearchIns(RoleId, PolicyNo, DivisionName, AssuredName, ProductName, Status, Uname, PolicyFromDate, PolicyToDate, out lstNewIns);
                 // transactionScope.Complete();
                 //transactionScope.Dispose();
 
@@ -640,6 +640,28 @@ namespace MotorApp.BAL
                     transactionScope.Dispose();
                 }
                
+            }
+            return returnCode;
+        }
+        public long BulkUpdateInsurance(string InsuranceJson, long Loginid, string UserName, string FileType, out string ErrorMsg)
+        {
+            long returnCode = -1;
+            ErrorMsg = string.Empty;
+
+            using (TransactionScope transactionScope = new TransactionScope())
+            {
+                try
+                {
+                    returnCode = objMotorAppDAL.BulkUpdateInsurance(InsuranceJson, Loginid, UserName, FileType, out ErrorMsg);
+                    transactionScope.Complete();
+                    transactionScope.Dispose();
+
+                }
+                catch (Exception ex)
+                {
+                    transactionScope.Dispose();
+                }
+
             }
             return returnCode;
         }
