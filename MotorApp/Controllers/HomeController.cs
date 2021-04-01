@@ -218,13 +218,11 @@ namespace MotorApp.Controllers
                 ViewBag.UserName = U_Name;
                 List<Insurance> lst = new List<Insurance>();
 
-                if (!string.IsNullOrEmpty(PolicyNo) || PolicyFDate != null && PolicyFDate != null)
+                if (!string.IsNullOrEmpty(PolicyNo) || DateValidation.isValidDate(PolicyFDate.Day, PolicyFDate.Month, PolicyFDate.Year) || !string.IsNullOrEmpty(Status))
 
                 {
-                    if (DateValidation.isValidDate(PolicyFDate.Day,PolicyFDate.Month,PolicyFDate.Year))
-                    {
-                        long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, U_Name, PolicyFDate, PolicyTDate, out lst);
-                    }
+                    long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, U_Name, PolicyFDate, PolicyTDate, out lst);
+                    
                     //if (RoleId.Equals(1))
                     //{
                     //    long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, U_Name, PolicyFDate, PolicyTDate, out lst);

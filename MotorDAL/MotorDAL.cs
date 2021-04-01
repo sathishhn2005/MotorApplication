@@ -1289,9 +1289,12 @@ namespace MotorApp.DAL
                     cmd.Parameters.AddWithValue("@ProductName", ProductName);
                     cmd.Parameters.AddWithValue("@Status", Status);
                     cmd.Parameters.AddWithValue("@ProducerName", Uname);
-                    cmd.Parameters.AddWithValue("@PolicyFromDate", PolicyFromDate);
-                    cmd.Parameters.AddWithValue("@PolicyToDate", PolicyToDate);
-
+                  //  cmd.Parameters.AddWithValue("@PolicyFromDate", PolicyFromDate);
+                  //  cmd.Parameters.AddWithValue("@PolicyToDate", PolicyToDate);
+                  //  SqlCommand cmd = new SqlCommand("insertsomeDate", conn);
+                    //cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@PolicyFromDate", SqlDbType.DateTime2).Value = PolicyFromDate;
+                    cmd.Parameters.Add("@PolicyToDate", SqlDbType.DateTime2).Value = PolicyToDate;
 
                     SqlDataAdapter sdaAdapter = new SqlDataAdapter
                     {
@@ -1301,39 +1304,7 @@ namespace MotorApp.DAL
 
                     if (ds.Tables[0].Rows.Count > 0)
                     {
-                        lstNewIns = (from DataRow dr in ds.Tables[0].Rows
-                                     select new Insurance()
-                                     {
-                                         InsuranceID = Convert.ToInt64(dr["InsuranceID"]),
-                                         DivisionName = dr["DivisionName"].ToString(),
-                                         ProductCode = dr["ProductCode"].ToString(),
-                                         ProductName = dr["ProductName"].ToString(),
-                                         BusinessType = dr["BusinessType"].ToString(),
-
-                                         PolicyNo = dr["PolicyNo"].ToString(),
-                                         AssuredName = dr["AssuredName"].ToString(),
-                                         AssuredMobile = dr["AssuredMobile"].ToString(),
-                                         CustomerName = dr["CustomerName"].ToString(),
-                                         SourceCode = dr["SourceCode"].ToString(),
-
-                                         SourceName = dr["SourceName"].ToString(),
-                                         CustomerCategory = dr["CustomerCategory"].ToString(),
-                                         PolicyFromDate = Convert.ToDateTime(dr["PolicyFromDate"]),
-                                         PolicyToDate = Convert.ToDateTime(dr["PolicyToDate"]),
-                                         GrossPremium = Convert.ToInt64(dr["GrossPremium"]),
-
-                                         DivisionCode = dr["DivnCode"].ToString(),
-                                         CustomerCode = dr["CustomerCode"].ToString(),
-                                         Charges = Convert.ToInt64(dr["Charges"]),
-                                         Status = dr["Status"].ToString(),
-                                         InsType = dr["InsType"].ToString(),
-
-                                         RevisedSumInsured = Convert.ToInt64(dr["RevisedSumInsured"]),
-                                         RenewalPremium = Convert.ToInt64(dr["RenewalPremium"]),
-                                         MarketingExecutive = dr["MarketingExecutive"].ToString(),
-                                         Remarks = dr["Remarks"].ToString(),
-
-                                     }).ToList();
+                        DTtoListConverter.ConvertTo(ds.Tables[0], out lstNewIns);
                     }
                     returnCode = 1;
                 }
