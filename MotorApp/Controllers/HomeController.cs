@@ -201,6 +201,8 @@ namespace MotorApp.Controllers
         [HttpGet]
         public ActionResult MasterDatabase(Insurance objMotorModel)
         {
+            string ProcedureName = string.Empty;
+
             int IsLoggedIn = IsUserLoggedIn();
             if (IsLoggedIn > 0)
             {
@@ -213,42 +215,19 @@ namespace MotorApp.Controllers
                 string productName = objMotorModel.ProductName ?? "";
                 string instype = objMotorModel.InsType ?? "";
                 string Status = objMotorModel.Status ?? "";
-                DateTime PolicyFDate = objMotorModel.PolicyFromDate;
-                DateTime PolicyTDate = objMotorModel.PolicyToDate;
+                DateTime PolicyFDate = objMotorModel.PolicyFromDate == Convert.ToDateTime("01-01-0001 12.00.00 AM") ? Convert.ToDateTime("01-01-1753 12.00.00 AM") : objMotorModel.PolicyFromDate;
+                DateTime PolicyTDate = objMotorModel.PolicyToDate == Convert.ToDateTime("01-01-0001 12.00.00 AM") ? Convert.ToDateTime("01-01-1753 12.00.00 AM") : objMotorModel.PolicyToDate;
                 ViewBag.UserName = U_Name;
                 List<Insurance> lst = new List<Insurance>();
 
+                ProcedureName = RoleId.Equals(1) ? objMotorModel.UserName : U_Name;
+
+
                 if (!string.IsNullOrEmpty(PolicyNo) || DateValidation.isValidDate(PolicyFDate.Day, PolicyFDate.Month, PolicyFDate.Year) || !string.IsNullOrEmpty(Status))
-
                 {
-                    long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, U_Name, PolicyFDate, PolicyTDate, out lst);
-                    
-                    //if (RoleId.Equals(1))
-                    //{
-                    //    long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, U_Name, PolicyFDate, PolicyTDate, out lst);
-
-                    //}
-                    //else
-                    //{
-                    //    long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, U_Name, out lst);
-                    //}
-
-                    //return View(lst);
-                }
-               /* else if (RoleId.Equals(1))
-                {
-                    long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, U_Name, out lst);
-                    return View(lst);
+                    long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, ProcedureName, PolicyFDate, PolicyTDate, out lst, 0, "");
                 }
 
-
-                else if (lstNewIns != null)
-                    return View(lstNewIns.Where(x => x.ProducerName == U_Name).OrderBy(x => x.InsuranceID));
-
-                else
-                {
-                    long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, U_Name, out lst);
-                }*/
                 return View(lst);
 
 
@@ -838,7 +817,7 @@ namespace MotorApp.Controllers
                 var std = motorList.Where(s => s.InsuranceID == InsId).FirstOrDefault();
                 return Json(std, JsonRequestBehavior.AllowGet);
             }
-            
+
             return Json(null, JsonRequestBehavior.AllowGet);
 
         }
@@ -1429,7 +1408,7 @@ namespace MotorApp.Controllers
         {
             ViewBag.RoleId = RoleId;
             return View();
-            
+
         }
         [HttpPost]
         public ActionResult Register(LoginViewModel obj)
@@ -1457,9 +1436,31 @@ namespace MotorApp.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult SearchUser(string Prefix)
+        {
+            long returnCode = -1;
+            MotorBAL objBAL = new MotorBAL();
+            List<Users> lstUser = new List<Users>();
 
+            returnCode = objBAL.GetAutocompleteUserList(Prefix, "", out lstUser);
+            return Json(lstUser, JsonRequestBehavior.AllowGet);
+
+
+        }
 
     }
 
 
+    //public class City
+    //{
+    //    public int Id { get; set; }
+    //    public string CityName { get; set; }
+
+    //}
+
+
 }
+
+
+

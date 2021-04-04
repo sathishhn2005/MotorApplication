@@ -522,7 +522,7 @@ namespace MotorApp.BAL
                 return returnCode;
             }
         }
-        public long GetSearchData(long RoleId, string PolicyNo, string DivisionName, string AssuredName, string ProductName, string Status, string Uname, DateTime PolicyFromDate, DateTime PolicyToDate, out List<Insurance> lstNewIns)
+        public long GetSearchData(long RoleId, string PolicyNo, string DivisionName, string AssuredName, string ProductName, string Status, string Uname, DateTime PolicyFromDate, DateTime PolicyToDate, out List<Insurance> lstNewIns, int PageNo, string PageType)
         {
             long returnCode = -1;
 
@@ -530,7 +530,7 @@ namespace MotorApp.BAL
             //{
             try
             {
-                returnCode = objMotorAppDAL.GetSearchIns(RoleId, PolicyNo, DivisionName, AssuredName, ProductName, Status, Uname, PolicyFromDate, PolicyToDate, out lstNewIns);
+                returnCode = objMotorAppDAL.GetSearchIns(RoleId, PolicyNo, DivisionName, AssuredName, ProductName, Status, Uname, PolicyFromDate, PolicyToDate, out lstNewIns, PageNo, PageType);
                 // transactionScope.Complete();
                 //transactionScope.Dispose();
 
@@ -630,7 +630,7 @@ namespace MotorApp.BAL
             {
                 try
                 {
-                    returnCode = objMotorAppDAL.BulkUpdateInsuranceStatus(InsuranceStatusJson, Loginid, UserName, FileType,out ErrorMsg);
+                    returnCode = objMotorAppDAL.BulkUpdateInsuranceStatus(InsuranceStatusJson, Loginid, UserName, FileType, out ErrorMsg);
                     transactionScope.Complete();
                     transactionScope.Dispose();
 
@@ -639,7 +639,7 @@ namespace MotorApp.BAL
                 {
                     transactionScope.Dispose();
                 }
-               
+
             }
             return returnCode;
         }
@@ -665,7 +665,7 @@ namespace MotorApp.BAL
             }
             return returnCode;
         }
-        public long GetDelegateData( out List<Insurance> lstNewIns)
+        public long GetDelegateData(out List<Insurance> lstNewIns)
         {
             long returnCode = -1;
 
@@ -686,6 +686,11 @@ namespace MotorApp.BAL
 
                 return returnCode;
             }
+        }
+
+        public long GetAutocompleteUserList(string Prefix, string PageType, out List<Users> lstUsers)
+        {
+            return objMotorAppDAL.GetAutocompleteUserList(Prefix, PageType, out lstUsers);
         }
     }
 }

@@ -18,6 +18,26 @@
         Value = "Under Process"
     }); }
 
+<style type="text/css">
+    .ui-autocomplete {
+        max-height: 100px;
+        overflow-y: auto;
+        /* prevent horizontal scrollbar */
+        overflow-x: hidden;
+    }
+    /* IE 6 doesn't support max-height
+* we use height instead, but this forces the menu to always be this tall
+*/
+    * html .ui-autocomplete {
+        height: 100px;
+    }
+
+    .fixed-height {
+        padding: 1px;
+        max-height: 200px;
+        overflow: auto;
+    }
+</style>
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Master Motor</h1>
     <ol class="breadcrumb my-2">
@@ -39,48 +59,52 @@
                     <div class="row">
                         @using (Html.BeginForm("MasterDatabase", "Home", FormMethod.Get))
                         {
-                            <div class="col-2">
-                                @*<input class="form-control form-control-sm  mb-3" name="PolicyNo" type="text" placeholder="Policy No">*@
-                                @Html.TextBox("PolicyNo", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Policy No" })
+                    <div class="col-2">
+                        @*<input class="form-control form-control-sm  mb-3" name="PolicyNo" type="text" placeholder="Policy No">*@
+                        @Html.TextBox("PolicyNo", "", new { @class = "form-control form-control-sm  mb-3", @onchange = "onchangPolicyNo();", PlaceHolder = "Policy No" })
 
-                            </div>
-                            <div class="col-2">
-                                @*<input class="form-control form-control-sm  mb-3" name="DivisionName" type="text" placeholder="Division Name">*@
-                                @*@Html.TextBox("DivisionName", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Division Name" })*@
-                                @Html.TextBox("PolicyFromDate", "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
-                            </div>
-                            <div class="col-2">
-                                @*<input class="form-control form-control-sm  mb-3" name="AssuredName" type="text" placeholder="Assured Name">*@
-                                @*@Html.TextBox("AssuredName", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Assured Name" })*@
-                                @Html.TextBox("PolicyToDate", "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
-                            </div>
-                            @*<div class="col-2">*@
-                                @*<input class="form-control form-control-sm  mb-3" name="ProductName" type="text" placeholder="Product Name">*@
-                                @*@Html.TextBox("ProductName", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Product Name" })*@
-                            @*</div>*@
-                            <div class="col-2">
-                                @*<select class="form-control form-control-sm" name="Status" id="Status">
-                                        <option value="">-Select-</option>
-                                        <option value="Lost">Lost</option>
-                                        <option value="Renewed">Renewed</option>
-                                        <option value="Under process">Under Process</option>
-                                    </select>*@
-                                @Html.DropDownList("Status", listItems, "-- Select Status --", new { @class = "form-control form-control-sm" })
-                            </div>
-                            <div class="col-2 text-center">
-                                @*
-                                    <a>Search</a>*@
-                                @*
-                                    <button class="btn btn-primary btn-sm" type="button">
-                                    <i class="fas fa-search fa-sm"></i> Search
-                                    </button>*@
-                                <input id="btnMotorSearch" class="btn btn-primary btn-sm" type="submit" value="Search" />
-                                @*<input type="button" value="Submit" id="btnsubmit" onclick="submitForm()">*@
-
-                                <button type="button" id="btnClear" class="btn btn-secondary btn-sm waves-effect">Clear</button>
-                            </div>}
                     </div>
-                </div>
+                                    <div class="col-2">
+                                        @*<input class="form-control form-control-sm  mb-3" name="DivisionName" type="text" placeholder="Division Name">*@
+                                        @*@Html.TextBox("DivisionName", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Division Name" })*@
+                                        @Html.TextBox("PolicyFromDate", "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
+                                    </div>
+                                                    <div class="col-2">
+                                                        @*<input class="form-control form-control-sm  mb-3" name="AssuredName" type="text" placeholder="Assured Name">*@
+                                                        @*@Html.TextBox("AssuredName", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Assured Name" })*@
+                                                        @Html.TextBox("PolicyToDate", "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
+                                                    </div> @*<div class="col-2">*@ @*<input class="form-control form-control-sm  mb-3" name="ProductName" type="text" placeholder="Product Name">*@ @*@Html.TextBox("ProductName", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Product Name" })*@ @*</div>*@
+                                                                    <div class="col-2">
+                                                                        @*<select class="form-control form-control-sm" name="Status" id="Status">
+                                                            <option value="">-Select-</option>
+                                                            <option value="Lost">Lost</option>
+                                                            <option value="Renewed">Renewed</option>
+                                                            <option value="Under process">Under Process</option>
+                                                        </select>*@
+                                                                        @Html.DropDownList("Status", listItems, "-- Select Status --", new { @class = "form-control form-control-sm" })
+                                                                    </div>
+                                                                    <div class="col-2">
+                                                                        @if (ViewBag.RoleId == 1)
+                                                                        {
+                                                                            <input type="text" class= "form-control form-control-sm" name="UserName"  id="txtUserName" placeholder="User Name"  />
+                                                                            
+                                                                        }
+                                                                        </div>
+
+                                                                                        <div class="col-2 text-center">
+                                                                                            @*
+                                                                            <a>Search</a>*@
+                                                                                            @*
+                                                                            <button class="btn btn-primary btn-sm" type="button">
+                                                                            <i class="fas fa-search fa-sm"></i> Search
+                                                                            </button>*@
+                                                                                            <input id="btnMotorSearch" class="btn btn-primary btn-sm" type="submit" value="Search" />
+                                                                                            @*<input type="button" value="Submit" id="btnsubmit" onclick="submitForm()">*@
+
+                                                                                            <button type="button" id="btnClear" class="btn btn-secondary btn-sm waves-effect">Clear</button>
+                                                                                        </div>}
+                                                                                    </div>
+                                                                                                </div>
             </form>
         </div>
         <!-- Simple Tables -->
@@ -844,14 +868,14 @@
 
     $(document).ready(function () {
         $('#btnRenewal').on('click', function () {
-            if ($('#txtCallBackDate').val() == "" || $('#txtCallBackDate').val() == "") {
-                Swal.fire({
-                    icon: 'warning',
-                    title: '',
-                    text: "Please provide call back date.",
-                })
-                return false;
-            }
+            //if ($('#txtCallBackDate').val() == "" || $('#txtCallBackDate').val() == "") {
+            //    Swal.fire({
+            //        icon: 'warning',
+            //        title: '',
+            //        text: "Please provide call back date.",
+            //    })
+            //    return false;
+            //}
             var renewalData = $('#formRenewal').serialize();
             $.ajax({
 
@@ -1328,5 +1352,36 @@
     //    //});
     //});
 
+    $(document).ready(function () {
+        $("#txtUserName").autocomplete({
+            maxShowItems: 10,
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Home/SearchUser",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.UserName, value: item.UserName };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+
+    function onchangPolicyNo() {
+
+        $("#PolicyFromDate").val('');
+        $("#PolicyToDate").val('');
+        $("#txtUserName").val('');
+        $("#Status option:contains(Select Status)").attr('selected', 'selected');
+
+    }
 </script>
 

@@ -1017,9 +1017,10 @@ namespace MotorApp.DAL
                     cmd.Parameters.AddWithValue("@Status", objMotorModel.Status ?? "");
                     cmd.Parameters.AddWithValue("@Description", objMotorModel.Description ?? "");
                     cmd.Parameters.AddWithValue("@UserName", uname ?? "");
-                    //cmd.Parameters.AddWithValue("@CallBackDate", objMotorModel.CallBackDate);
-                    cmd.Parameters.Add("@CallBackDate", SqlDbType.DateTime2).Value = objMotorModel.CallBackDate; //<- as example
-
+                    //cmd.Parameters.Add()
+                    //cmd.Parameters.Add("@CallBackDate", SqlDbType.DateTime2).Value = objMotorModel.CallBackDate; //<- as example
+                    DateTime CallBackDate = objMotorModel.CallBackDate == Convert.ToDateTime("01-01-0001 12.00.00 AM") ? Convert.ToDateTime("01-01-1753 12.00.00 AM") : objMotorModel.CallBackDate;
+                    cmd.Parameters.AddWithValue("@CallBackDate", CallBackDate);
                     cmd.Parameters.AddWithValue("@RenewalSumAssured", objMotorModel.RenewalSumAssured);
                     cmd.Parameters.AddWithValue("@Flag", objMotorModel.Flag);
                     returnCode = cmd.ExecuteNonQuery();
@@ -1262,7 +1263,10 @@ namespace MotorApp.DAL
             }
             return returnCode;
         }
-        public long GetSearchIns(long RoleId, string PolicyNo, string DivisionName, string AssuredName, string ProductName, string Status, string Uname,DateTime PolicyFromDate, DateTime PolicyToDate, out List<Insurance> lstNewIns)
+        public long GetSearchIns(long RoleId, string PolicyNo, string DivisionName, string AssuredName, string ProductName, string Status, 
+                string Uname,DateTime PolicyFromDate, DateTime PolicyToDate, out List<Insurance> lstNewIns
+            , int PageNo,string PageType
+            )
         {
             long returnCode = -1;
 
@@ -1276,8 +1280,8 @@ namespace MotorApp.DAL
                     con.Open();
                     SqlCommand cmd = new SqlCommand
                     {
-                        CommandText = "SP_GetSearch"
-                    };
+                        CommandText = "PGetSearchMasterMotor" //SP_GetSearch
+                };
 
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Connection = con;
@@ -1293,8 +1297,11 @@ namespace MotorApp.DAL
                   //  cmd.Parameters.AddWithValue("@PolicyToDate", PolicyToDate);
                   //  SqlCommand cmd = new SqlCommand("insertsomeDate", conn);
                     //cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@PolicyFromDate", SqlDbType.DateTime2).Value = PolicyFromDate;
-                    cmd.Parameters.Add("@PolicyToDate", SqlDbType.DateTime2).Value = PolicyToDate;
+                    cmd.Parameters.Add("@PolicyFromDate", SqlDbType.DateTime).Value = PolicyFromDate;
+                    cmd.Parameters.Add("@PolicyToDate", SqlDbType.DateTime).Value = PolicyToDate;
+                    cmd.Parameters.AddWithValue("@PageNo", PageNo);
+                    cmd.Parameters.AddWithValue("@PageType", PageType);
+
 
                     SqlDataAdapter sdaAdapter = new SqlDataAdapter
                     {
@@ -1583,6 +1590,52 @@ namespace MotorApp.DAL
             catch (Exception ex)
             {
                 throw;
+            }
+            return returnCode;
+        }
+
+        public long GetAutocompleteUserList(string Prefix,string PageType, out List<Users> lstUsers)
+        {
+            long returnCode = -1;
+
+            lstUsers = new List<Users>();
+
+            try
+            {
+                DataSet ds = new DataSet();
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = "pGetUserAutoComplete"
+                    };
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+
+                    cmd.Parameters.AddWithValue("@Prefix", Prefix);
+                    cmd.Parameters.AddWithValue("@Type", PageType);
+
+                    SqlDataAdapter sdaAdapter = new SqlDataAdapter
+                    {
+                        SelectCommand = cmd
+                    };
+                    sdaAdapter.Fill(ds);
+                    
+
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        DTtoListConverter.ConvertTo(ds.Tables[0], out lstUsers);
+                    }
+
+
+                    returnCode = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
             return returnCode;
         }
