@@ -201,7 +201,7 @@ namespace MotorApp.Controllers
         [HttpGet]
         public ActionResult MasterDatabase(Insurance objMotorModel)
         {
-            string ProcedureName = string.Empty;
+            string ProducerName = string.Empty;
 
             int IsLoggedIn = IsUserLoggedIn();
             if (IsLoggedIn > 0)
@@ -215,17 +215,20 @@ namespace MotorApp.Controllers
                 string productName = objMotorModel.ProductName ?? "";
                 string instype = objMotorModel.InsType ?? "";
                 string Status = objMotorModel.Status ?? "";
+               
                 DateTime PolicyFDate = objMotorModel.PolicyFromDate == Convert.ToDateTime("01-01-0001 12.00.00 AM") ? Convert.ToDateTime("01-01-1753 12.00.00 AM") : objMotorModel.PolicyFromDate;
                 DateTime PolicyTDate = objMotorModel.PolicyToDate == Convert.ToDateTime("01-01-0001 12.00.00 AM") ? Convert.ToDateTime("01-01-1753 12.00.00 AM") : objMotorModel.PolicyToDate;
                 ViewBag.UserName = U_Name;
                 List<Insurance> lst = new List<Insurance>();
 
-                ProcedureName = RoleId.Equals(1) ? objMotorModel.UserName : U_Name;
+                ProducerName = RoleId.Equals(1) ? objMotorModel.UserName : U_Name;
 
 
-                if (!string.IsNullOrEmpty(PolicyNo) || DateValidation.isValidDate(PolicyFDate.Day, PolicyFDate.Month, PolicyFDate.Year) || !string.IsNullOrEmpty(Status))
-                {
-                    long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, ProcedureName, PolicyFDate, PolicyTDate, out lst, 0, "");
+                if (!string.IsNullOrEmpty(PolicyNo) || DateValidation.isValidDate(PolicyFDate.Day, PolicyFDate.Month, PolicyFDate.Year) || !string.IsNullOrEmpty(Status)
+                    || !string.IsNullOrEmpty(ProducerName) || !string.IsNullOrEmpty(divisionName))
+
+                { 
+                    long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, ProducerName, PolicyFDate, PolicyTDate, out lst, 0, "");
                 }
 
                 return View(lst);
@@ -1444,6 +1447,18 @@ namespace MotorApp.Controllers
             List<Users> lstUser = new List<Users>();
 
             returnCode = objBAL.GetAutocompleteUserList(Prefix, "", out lstUser);
+            return Json(lstUser, JsonRequestBehavior.AllowGet);
+
+
+        }
+        [HttpPost]
+        public JsonResult BranchWiseSearch(string Prefix)
+        {
+            long returnCode = -1;
+            MotorBAL objBAL = new MotorBAL();
+            List<Users> lstUser = new List<Users>();
+
+            returnCode = objBAL.GetAutocompleteUserList(Prefix, "Branches", out lstUser);
             return Json(lstUser, JsonRequestBehavior.AllowGet);
 
 

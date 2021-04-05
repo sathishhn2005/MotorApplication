@@ -14,6 +14,11 @@
     });
     listItems.Add(new SelectListItem
     {
+        Text = "To Be Renewed",
+        Value = "To Be Renewed"
+    });
+    listItems.Add(new SelectListItem
+    {
         Text = "Under Process",
         Value = "Under Process"
     }); }
@@ -26,8 +31,8 @@
         overflow-x: hidden;
     }
     /* IE 6 doesn't support max-height
-* we use height instead, but this forces the menu to always be this tall
-*/
+    * we use height instead, but this forces the menu to always be this tall
+    */
     * html .ui-autocomplete {
         height: 100px;
     }
@@ -59,52 +64,60 @@
                     <div class="row">
                         @using (Html.BeginForm("MasterDatabase", "Home", FormMethod.Get))
                         {
-                    <div class="col-2">
-                        @*<input class="form-control form-control-sm  mb-3" name="PolicyNo" type="text" placeholder="Policy No">*@
-                        @Html.TextBox("PolicyNo", "", new { @class = "form-control form-control-sm  mb-3", @onchange = "onchangPolicyNo();", PlaceHolder = "Policy No" })
+                            <div class="col-2">
+                                @*<input class="form-control form-control-sm  mb-3" name="PolicyNo" type="text" placeholder="Policy No">*@
+                                @Html.TextBox("PolicyNo", "", new { @class = "form-control form-control-sm  mb-3", @onchange = "onchangPolicyNo();", PlaceHolder = "Policy No" })
 
+                            </div>
+                            <div class="col-2">
+                                @*<input class="form-control form-control-sm  mb-3" name="DivisionName" type="text" placeholder="Division Name">*@
+                                @*@Html.TextBox("DivisionName", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Division Name" })*@
+                                @Html.TextBox("PolicyFromDate", "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
+                            </div>
+                            <div class="col-2">
+                                @*<input class="form-control form-control-sm  mb-3" name="AssuredName" type="text" placeholder="Assured Name">*@
+                                @*@Html.TextBox("AssuredName", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Assured Name" })*@
+                                @Html.TextBox("PolicyToDate", "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
+                            </div> @*<div class="col-2">*@ @*<input class="form-control form-control-sm  mb-3" name="ProductName" type="text" placeholder="Product Name">*@ @*@Html.TextBox("ProductName", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Product Name" })*@ @*</div>*@
+                            <div class="col-2">
+                                @*<select class="form-control form-control-sm" name="Status" id="Status">
+                                        <option value="">-Select-</option>
+                                        <option value="Lost">Lost</option>
+                                        <option value="Renewed">Renewed</option>
+                                        <option value="Under process">Under Process</option>
+                                    </select>*@
+                                @Html.DropDownList("Status", listItems, "-- Select Status --", new { @class = "form-control form-control-sm" })
+                            </div>
+                            <div class="col-2">
+                                @if (ViewBag.RoleId == 1)
+                                {
+                                    <input type="text" class="form-control form-control-sm" name="UserName" id="txtUserName" placeholder="User Name" />
+
+                                }
+                            </div>
+                            <div class="col-2">
+                                @if (ViewBag.RoleId == 1)
+                                {
+                                    <input type="text" class="form-control form-control-sm" name="DivisionName" id="txtDivisionNam" placeholder="Branch Name" />
+
+                                }
+                            </div>
+
+                            <div class="col-2">
+                                @*
+                                    <a>Search</a>*@
+                                @*
+                                    <button class="btn btn-primary btn-sm" type="button">
+                                    <i class="fas fa-search fa-sm"></i> Search
+                                    </button>*@
+                                <input id="btnMotorSearch" class="btn btn-primary btn-sm" type="submit" value="Search" />
+                                @*<input type="button" value="Submit" id="btnsubmit" onclick="submitForm()">*@
+
+                                <button type="button" id="btnClear" class="btn btn-secondary btn-sm waves-effect">Clear</button>
+                            </div>
+                        }
                     </div>
-                                    <div class="col-2">
-                                        @*<input class="form-control form-control-sm  mb-3" name="DivisionName" type="text" placeholder="Division Name">*@
-                                        @*@Html.TextBox("DivisionName", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Division Name" })*@
-                                        @Html.TextBox("PolicyFromDate", "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
-                                    </div>
-                                                    <div class="col-2">
-                                                        @*<input class="form-control form-control-sm  mb-3" name="AssuredName" type="text" placeholder="Assured Name">*@
-                                                        @*@Html.TextBox("AssuredName", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Assured Name" })*@
-                                                        @Html.TextBox("PolicyToDate", "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
-                                                    </div> @*<div class="col-2">*@ @*<input class="form-control form-control-sm  mb-3" name="ProductName" type="text" placeholder="Product Name">*@ @*@Html.TextBox("ProductName", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Product Name" })*@ @*</div>*@
-                                                                    <div class="col-2">
-                                                                        @*<select class="form-control form-control-sm" name="Status" id="Status">
-                                                            <option value="">-Select-</option>
-                                                            <option value="Lost">Lost</option>
-                                                            <option value="Renewed">Renewed</option>
-                                                            <option value="Under process">Under Process</option>
-                                                        </select>*@
-                                                                        @Html.DropDownList("Status", listItems, "-- Select Status --", new { @class = "form-control form-control-sm" })
-                                                                    </div>
-                                                                    <div class="col-2">
-                                                                        @if (ViewBag.RoleId == 1)
-                                                                        {
-                                                                            <input type="text" class= "form-control form-control-sm" name="UserName"  id="txtUserName" placeholder="User Name"  />
-                                                                            
-                                                                        }
-                                                                        </div>
-
-                                                                                        <div class="col-2 text-center">
-                                                                                            @*
-                                                                            <a>Search</a>*@
-                                                                                            @*
-                                                                            <button class="btn btn-primary btn-sm" type="button">
-                                                                            <i class="fas fa-search fa-sm"></i> Search
-                                                                            </button>*@
-                                                                                            <input id="btnMotorSearch" class="btn btn-primary btn-sm" type="submit" value="Search" />
-                                                                                            @*<input type="button" value="Submit" id="btnsubmit" onclick="submitForm()">*@
-
-                                                                                            <button type="button" id="btnClear" class="btn btn-secondary btn-sm waves-effect">Clear</button>
-                                                                                        </div>}
-                                                                                    </div>
-                                                                                                </div>
+                </div>
             </form>
         </div>
         <!-- Simple Tables -->
@@ -241,10 +254,16 @@
                                             <span class="badge badge-danger">@Html.DisplayFor(modelItem => item.Status)</span>}
                                         @if (item.Status.Equals("Under Process"))
                                         {
-                                            <span class="badge badge-info">@Html.DisplayFor(modelItem => item.Status)</span>}
+                                            <span class="badge badge-info">@Html.DisplayFor(modelItem => item.Status)</span>
+                                        }
+                                        @if (item.Status.Equals("To Be Renewed"))
+                                        {
+                                            <span class="badge badge-dark">@Html.DisplayFor(modelItem => item.Status)</span>
+                                        }
                                         @if (item.Status.Equals(""))
                                         {
-                                            <span class="badge badge-info"></span>}
+                                            <span class="badge badge-info"></span>
+                                        }
                                     </td>
                                     <td class="d-flex flex-row align-items-center justify-content-between">
                                         <i class="fas fa-eye pointer" aria-hidden="true" data-toggle="modal"
@@ -356,17 +375,17 @@
                                 </div>
                             </div>
                             @*<div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Policy From Date</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="PolicyFromDate" required id="PolicyFromDate">
+                                    <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Policy From Date</label>
+                                    <div class="col-9">
+                                        <input type="text" class="form-control form-control-sm" readonly name="PolicyFromDate" required id="PolicyFromDate">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Policy To Date</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="PolicyToDate" required id="PolicyToDate">
-                                </div>
-                            </div>*@
+                                <div class="form-group row mb-3">
+                                    <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Policy To Date</label>
+                                    <div class="col-9">
+                                        <input type="text" class="form-control form-control-sm" readonly name="PolicyToDate" required id="PolicyToDate">
+                                    </div>
+                                </div>*@
 
                             @*<div class="form-group row mb-3">
                                     <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Expired Gross Premium</label>
@@ -497,6 +516,7 @@
                                     <select class="form-control form-control-sm" id="txtStatus" name="Status" required="required">
                                         <option disabled selected> -- Select an option -- </option>
                                         <option>Renewed</option>
+                                        <option>To Be Renewed</option>
                                         <option>Lost</option>
                                         <option>Under Process</option>
                                     </select>
@@ -525,7 +545,7 @@
                                                         <p id="h1PolicyNumber" class="text-secondary mb-1 font-16"></p>
                                                         <p id="h1PolicyFromToDate" class="text-muted mb-1 font-16"></p>
                                                         <p id="h1MobileNumber" class="text-muted font-16"></p>
-                                                        
+
 
                                                     </div>
                                                 </div>
@@ -792,7 +812,7 @@
 
                 $('#txtAssuredName').val(data.AssuredName);
 
-                
+
                 $('#txtAssuredMobile').val(data.AssuredMobile);
 
                 document.getElementById("h1MobileNumber").innerHTML = 'Tel:' + data.AssuredMobile;
@@ -825,7 +845,7 @@
                     + "-" + ("00" + (valuee.getMonth() + 1)).slice(-2)
                     + "-" + valuee.getFullYear()
                 $('#PolicyToDate').val(ToStr);
-                document.getElementById("h1PolicyFromToDate").innerHTML ='Policy Date: '+ Str + ' To ' + ToStr;
+                document.getElementById("h1PolicyFromToDate").innerHTML = 'Policy Date: ' + Str + ' To ' + ToStr;
 
                 $('#txtGrossPremium').val(data.GrossPremium);
 
@@ -1060,7 +1080,7 @@
         //        msgBox.innerHTML = 'Unable to upload file';
         //    }
         //});
-        
+
 
     };
     function CalcRenewalSA() {
@@ -1343,9 +1363,9 @@
         }
 
     }
-    
+
     //$(document).ready(function(){
-    //    //$('a[href^="zoiper:+968"]').each(function(){ 
+    //    //$('a[href^="zoiper:+968"]').each(function(){
     //    //    var oldNumber = $(this).attr("href"); // Get current url
     //    //    var newNumber = oldNumber.replace("zoiper:+968", "zoiper:0"); // Create new url
     //    //    $(this).attr("href", newNumber); // Set herf value
@@ -1373,8 +1393,32 @@
                 noResults: "", results: ""
             }
         });
-    })
 
+    })
+    $(document).ready(function () {
+        $("#txtDivisionNam").autocomplete({
+            maxShowItems: 10,
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Home/BranchWiseSearch",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.DivisionName, value: item.DivisionName };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+
+    })
+    
     function onchangPolicyNo() {
 
         $("#PolicyFromDate").val('');
