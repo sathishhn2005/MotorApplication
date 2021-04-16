@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace MotorApp.Utilities
 {
@@ -54,6 +55,15 @@ namespace MotorApp.Utilities
                 return (d <= 30);
 
             return true;
+        }
+
+        public static DateTime ConvertDateTimeFormatter(string Value,string Formatter) //Formatter => "MM/dd/yyyy HH:mm:ss", "MM-dd-yyyy HH:mm:ss", "MM.dd.yyyy HH:mm:ss"
+        {
+            CultureInfo provider = CultureInfo.InvariantCulture;        
+            DateTime dateTime14;
+            bool isSuccess6 = DateTime.TryParseExact(Value, new string[] { Formatter }, provider, DateTimeStyles.None, out dateTime14);
+            return dateTime14;
+
         }
     }
 }

@@ -645,25 +645,26 @@ namespace MotorApp.BAL
         }
         public long BulkUpdateInsurance(string InsuranceJson, long Loginid, string UserName, string FileType, out string ErrorMsg)
         {
-            long returnCode = -1;
-            ErrorMsg = string.Empty;
+            return objMotorAppDAL.BulkUpdateInsurance(InsuranceJson, Loginid, UserName, FileType, out ErrorMsg);
+            //long returnCode = -1;
+            //ErrorMsg = string.Empty;
 
-            using (TransactionScope transactionScope = new TransactionScope())
-            {
-                try
-                {
-                    returnCode = objMotorAppDAL.BulkUpdateInsurance(InsuranceJson, Loginid, UserName, FileType, out ErrorMsg);
-                    transactionScope.Complete();
-                    transactionScope.Dispose();
+            //using (TransactionScope transactionScope = new TransactionScope())
+            //{
+            //    try
+            //    {
+            //        returnCode = objMotorAppDAL.BulkUpdateInsurance(InsuranceJson, Loginid, UserName, FileType, out ErrorMsg);
+            //        transactionScope.Complete();
+            //        transactionScope.Dispose();
 
-                }
-                catch (Exception ex)
-                {
-                    transactionScope.Dispose();
-                }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        transactionScope.Dispose();
+            //    }
 
-            }
-            return returnCode;
+            //}
+            //return returnCode;
         }
         public long GetDelegateData(out List<Insurance> lstNewIns)
         {

@@ -44,13 +44,13 @@
     }
 </style>
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Master Motor</h1>
+    <h1 class="h3 mb-0 text-gray-800">Transactions</h1>
     <ol class="breadcrumb my-2">
         <li class="breadcrumb-item">
             <a href="./">Home</a>
         </li>
         <li class="breadcrumb-item">Masters</li>
-        <li class="breadcrumb-item active" aria-current="page">Master Motor</li>
+        @*<li class="breadcrumb-item active" aria-current="page">Master Motor</li>*@
     </ol>
 </div>
 <div class="row">
@@ -146,12 +146,12 @@
                                 </a>
 
                             </td>
-                            <td>
-                                <button class="btn btn-primary btn-sm mx-1" type="button" data-toggle="modal" data-backdrop="static"
-                                        data-target="#uploadBulk">
-                                    <i class="fas fa-upload fa-sm"></i> Bulk Upload Policy
-                                </button>
-                            </td>
+                            @*<td>
+                                    <button class="btn btn-primary btn-sm mx-1" type="button" data-toggle="modal" data-backdrop="static"
+                                            data-target="#uploadBulk">
+                                        <i class="fas fa-upload fa-sm"></i> Bulk Upload Policy
+                                    </button>
+                                </td>*@
                         </tr>
 
                     </table>}
@@ -374,37 +374,13 @@
                                     <input type="text" class="form-control form-control-sm" readonly name="CustomerCategory" required id="txtCustomerCategory">
                                 </div>
                             </div>
-                            @*<div class="form-group row mb-3">
-                                    <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Policy From Date</label>
-                                    <div class="col-9">
-                                        <input type="text" class="form-control form-control-sm" readonly name="PolicyFromDate" required id="PolicyFromDate">
-                                    </div>
-                                </div>
-                                <div class="form-group row mb-3">
-                                    <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Policy To Date</label>
-                                    <div class="col-9">
-                                        <input type="text" class="form-control form-control-sm" readonly name="PolicyToDate" required id="PolicyToDate">
-                                    </div>
-                                </div>*@
 
-                            @*<div class="form-group row mb-3">
-                                    <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Expired Gross Premium</label>
-                                    <div class="col-9">
-                                        <div class="input-group input-group-sm">
-                                            <div class="input-group-prepend">
-                                                <sp
-                                +an class="input-group-text" id="basic-addon1">₹</span>
-                                            </div>
-                                            <input type="number" class="form-control form-control-sm" name="GrossPremium" required id="txtGrossPremium">
-                                        </div>
-                                    </div>
-                                </div>*@
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Expired SumInsured</label>
                                 <div class="col-9">
                                     <div class="input-group input-group-sm">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">₹</span>
+                                            <span class="input-group-text" id="basic-addon1">ر.ع.</span>
                                         </div>
                                         @if (Model != null)
                                         {
@@ -423,7 +399,7 @@
                                 <div class="col-9">
                                     <div class="input-group input-group-sm">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">₹</span>
+                                            <span class="input-group-text" id="basic-addon1">ر.ع.</span>
                                         </div>
                                         <input type="number" class="form-control form-control-sm" name="GrossPremium" required id="txtGrossPremium">
                                     </div>
@@ -434,31 +410,33 @@
                                 <div class="col-9">
                                     <div class="input-group input-group-sm">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">₹</span>
+                                            <span class="input-group-text" id="basic-addon1">ر.ع.</span>
                                         </div>
-                                        @if (Model != null)
-                                        {
-                                            if (ViewBag.RoleId == 1)
+                                        <input type="number" class="form-control form-control-sm" name="RenewalSumAssured" id="txtRenewalSumAssured">
+                                        @*@if (Model != null)
                                             {
-                                                <input type="number" class="form-control form-control-sm" name="RenewalSumAssured" required id="txtRenewalSumAssured"> }
-                                            else
-                                            {
-                                                <input type="number" class="form-control form-control-sm" readonly name="RenewalSumAssured" required id="txtRenewalSumAssured">
-                                                <select onchange="CalcRenewalSA()" class="form-control form-control-sm" id="SumAssuredPercentage" name="SumAssuredPercentage">
-                                                    <option disabled selected> -- Select % -- </option>
-                                                    <option>-1</option>
-                                                    <option>-2</option>
-                                                    <option>-3</option>
-                                                    <option>-4</option>
-                                                    <option>-5</option>
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                    <option>4</option>
-                                                    <option>5</option>
+                                                if (ViewBag.RoleId == 1)
+                                                {
+                                                    <input type="number" class="form-control form-control-sm" name="RenewalSumAssured" required id="txtRenewalSumAssured"> }
+                                                else
+                                                {
+                                                    <input type="number" class="form-control form-control-sm" readonly name="RenewalSumAssured" required id="txtRenewalSumAssured">
+                                                    <select onchange="CalcRenewalSA()" class="form-control form-control-sm" id="SumAssuredPercentage" name="SumAssuredPercentage">
+                                                        <option disabled selected> -- Select % -- </option>
+                                                        <option>-1</option>
+                                                        <option>-2</option>
+                                                        <option>-3</option>
+                                                        <option>-4</option>
+                                                        <option>-5</option>
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                        <option>4</option>
+                                                        <option>5</option>
 
-                                                </select>}
-                                        }
+                                                    </select>
+                                                    }
+                                            }*@
                                     </div>
                                 </div>
                             </div>
@@ -467,7 +445,7 @@
                                 <div class="col-9">
                                     <div class="input-group input-group-sm">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">₹</span>
+                                            <span class="input-group-text" id="basic-addon1">ر.ع.</span>
                                         </div>
                                         <input type="number" class="form-control form-control-sm" name="RenewalPremium" required id="txtRenewalPremium">
                                     </div>
@@ -479,29 +457,60 @@
                                     <input type="text" class="form-control form-control-sm" readonly name="MarketingExecutive" required id="txtMarketingExecutive">
                                 </div>
                             </div>
-                            <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Remarks</label>
-                                <div class="col-9">
-                                    @*<input type="text" class="form-control form-control-sm" name="Remarks" required id="txtRemarks">*@
-                                    <textarea type="text" class="form-control form-control-sm" rows="3" name="Description" required id="txtRemarks"></textarea>
-                                </div>
-                            </div>
+
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Customer Code</label>
                                 <div class="col-9">
                                     <input type="text" class="form-control form-control-sm" readonly name="CustomerCode" required id="txtCustomerCode">
                                 </div>
                             </div>
-                            <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Charges</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="Charges" required id="txtCharges">
-                                </div>
-                            </div>
+                            @*<div class="form-group row mb-3">
+                                    <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Charges</label>
+                                    <div class="col-9">
+                                        <input type="text" class="form-control form-control-sm" readonly name="Charges" required id="txtCharges">
+                                    </div>
+                                </div>*@
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Insurance Type</label>
                                 <div class="col-9">
                                     <input type="text" class="form-control form-control-sm" readonly name="InsuranceType" required id="txtInsuranceType">
+                                </div>
+                            </div>
+
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Vehicle Type</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" readonly name="VehicleType" required id="txtVehicleType">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Vehicle Make</label>
+                                <div class="col-9">
+
+                                    <input type="text" class="form-control form-control-sm" readonly name="VehicleMake" required id="txtVehicleMake">
+
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">RegNo</label>
+                                <div class="col-9">
+
+                                    <input type="text" class="form-control form-control-sm" readonly name="RegNo" required id="txtRegNo">
+
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">ChassisNo</label>
+                                <div class="col-9">
+
+                                    <input type="text" class="form-control form-control-sm" readonly name="ChassisNo" required id="txtEngineNo">
+
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Vehicle Type</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" readonly name="VehicleType" required id="txtChassisNo">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
@@ -520,6 +529,13 @@
                                         <option>Lost</option>
                                         <option>Under Process</option>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Remarks</label>
+                                <div class="col-9">
+                                    @*<input type="text" class="form-control form-control-sm" name="Remarks" required id="txtRemarks">*@
+                                    <textarea type="text" class="form-control form-control-sm" rows="3" name="Description" required id="txtRemarks"></textarea>
                                 </div>
                             </div>
 
@@ -864,6 +880,13 @@
                 $('#txtDescription').val(data.Description);
                 $('#txtRenewalSumAssured').val(data.RenewalSumAssured);
 
+                //Vechile Information
+                $('#txtVehicleType').val(data.VehicleType);
+                $('#txtVehicleMake').val(data.VehicleMake);
+                $('#txtRegNo').val(data.RegNo);
+                $('#txtEngineNo').val(data.EngineNo);
+                $('#txtChassisNo').val(data.ChassisNo);
+
                 SARenewalCanstant = data.RenewalSumAssured;
 
                 var callBackValue = new Date(parseInt(data.CallBackDate.replace("/Date(", "").replace(")/", ""), 10));
@@ -888,14 +911,14 @@
 
     $(document).ready(function () {
         $('#btnRenewal').on('click', function () {
-            //if ($('#txtCallBackDate').val() == "" || $('#txtCallBackDate').val() == "") {
-            //    Swal.fire({
-            //        icon: 'warning',
-            //        title: '',
-            //        text: "Please provide call back date.",
-            //    })
-            //    return false;
-            //}
+            if ($('#txtRemarks').val() == "" || $('#txtRemarks').val() == "") {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '',
+                    text: "Please provide Remarks.",
+                })
+                return false;
+            }
             var renewalData = $('#formRenewal').serialize();
             $.ajax({
 
@@ -1418,7 +1441,7 @@
         });
 
     })
-    
+
     function onchangPolicyNo() {
 
         $("#PolicyFromDate").val('');
