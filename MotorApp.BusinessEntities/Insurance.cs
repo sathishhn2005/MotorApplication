@@ -68,6 +68,9 @@ namespace MotorApp.BusinessEntities
         [Display(Name = "Status")]
         public string Status { get; set; }
 
+        [Display(Name = "SumInsured")]
+        public decimal SumInsured { get; set; }
+
         [Display(Name = "ExpiredSumInsured")]
         public decimal ExpiredSumInsured { get; set; }
         [Display(Name = "SumAssuredPercentage")]
@@ -91,7 +94,7 @@ namespace MotorApp.BusinessEntities
         public string RegNo { get; set; }
         public string EngineNo { get; set; }
         public string ChassisNo { get; set; }
-        
+
     }
     public enum InssType
     {

@@ -19,37 +19,52 @@ namespace MotorApp.Controllers
     {
         MotorBAL objMotorBAL = new MotorBAL();
 
-        public ActionResult Index()
+        public ActionResult Index(Insurance objMotorModel)
         {
-            long returnCode = objMotorBAL.GetDelegateData(out List<Insurance> lstNewIns);
-            return View(lstNewIns);
+            string PolicyNo = objMotorModel.PolicyNo ?? "";
+            string CustCode = objMotorModel.CustomerCode ?? "";
+            string SourceCode = objMotorModel.SourceCode ?? "";
+
+            DateTime PolicyFDate = objMotorModel.PolicyFromDate == Convert.ToDateTime("01-01-0001 12.00.00 AM") ? Convert.ToDateTime("01-01-1753 12.00.00 AM") : objMotorModel.PolicyFromDate;
+            DateTime PolicyTDate = objMotorModel.PolicyToDate == Convert.ToDateTime("01-01-0001 12.00.00 AM") ? Convert.ToDateTime("01-01-1753 12.00.00 AM") : objMotorModel.PolicyToDate;
+
+            List<Insurance> lst = new List<Insurance>();
+
+            if (!string.IsNullOrEmpty(PolicyNo) || DateValidation.isValidDate(PolicyFDate.Day, PolicyFDate.Month, PolicyFDate.Year)
+                || !string.IsNullOrEmpty(CustCode) || !string.IsNullOrEmpty(SourceCode))
+
+            {
+                long returnCode = objMotorBAL.GetDelegateSearchData(PolicyNo, CustCode, SourceCode, PolicyFDate, PolicyTDate, out lst, 0, "");
+            }
+
+            return View(lst);
         }
-        //[HttpPost]
-        //public ActionResult BulkUpdateStatus(List<Insurance> lstMoter, string UploadType)
-        //{
-        //    long returnCode = -1;
-        //    string InsuranceStatusJson = string.Empty;
-        //    string ErrorMsg = string.Empty;
+        [HttpPost]
+        public ActionResult BulkUpdateStatus(List<Insurance> lstMoter, string UploadType)
+        {
+            long returnCode = -1;
+            string InsuranceStatusJson = string.Empty;
+            string ErrorMsg = string.Empty;
 
-        //    try
-        //    {
-        //        InsuranceStatusJson = JsonConvert.SerializeObject(lstMoter);
-        //        returnCode = new MotorBAL().BulkUpdateInsuranceStatus(InsuranceStatusJson, -1, "UserName", UploadType, out ErrorMsg);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw;
-        //    }
+            try
+            {
+                InsuranceStatusJson = JsonConvert.SerializeObject(lstMoter);
+                returnCode = new MotorBAL().BulkUpdateInsuranceStatus(InsuranceStatusJson, -1, "UserName", UploadType, out ErrorMsg);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
 
-        //    return Json(ErrorMsg);
-        //}
+            return Json(ErrorMsg);
+        }
         public ActionResult BulkUpload()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult BulkUpdate(HttpPostedFileBase CSVFile,string hdnMsgStatus)
+        public ActionResult BulkUpdate(HttpPostedFileBase CSVFile, string hdnMsgStatus)
         {
             long returnCode = -1;
             string InsuranceStatusJson = string.Empty;
@@ -58,11 +73,11 @@ namespace MotorApp.Controllers
             string _filePath = string.Empty;
             string _FileName = string.Empty;
             string _ConfigureFilePath = ConfigurationManager.AppSettings["BulkUploadCsvFilePath"].ToString();
-            
+
 
             try
             {
-                if (ModelState.IsValid && hdnMsgStatus=="Y")
+                if (ModelState.IsValid && hdnMsgStatus == "Y")
                 {
 
                     if (CSVFile.ContentLength > 0)
@@ -71,7 +86,7 @@ namespace MotorApp.Controllers
                         _filePath = Path.Combine(Server.MapPath(_ConfigureFilePath), Path.GetFileName(_FileName));
                         CSVFile.SaveAs(_filePath);
                     }
-                    
+
 
                     List<CsvFileBulkUplaod> lstValues = System.IO.File.ReadAllLines(_filePath)
                                               .Skip(1)
@@ -111,7 +126,7 @@ namespace MotorApp.Controllers
                     {
                         ViewBag.Message = "please contact Administrator";
                     }
-                   
+
 
 
 
@@ -165,6 +180,6 @@ namespace MotorApp.Controllers
             objCsvFileBulkUplaod.MarketingCode = values[24];
             return objCsvFileBulkUplaod;
         }
-
+       
     }
-    }
+}

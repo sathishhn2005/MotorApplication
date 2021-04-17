@@ -212,7 +212,7 @@
                             <tr>
                                 <th>@*<input type="checkbox" id="tblMotorRowall" onchange="clicktblMotorCheckBoxsStatus('','0','tbl',this,'')">*@</th>
                                 <th>Policy No</th>
-                                <th>Division Name</th>
+                                
                                 <th>Insurance Type</th>
                                 <th>Policy Start Date</th>
                                 <th>Policy End Date</th>
@@ -239,7 +239,7 @@
                                         @Html.HiddenFor(modelItem => item.InsuranceID)
 
                                     </td>
-                                    <td>@Html.DisplayFor(modelItem => item.DivisionName)</td>
+                                    
                                     <td>@Html.DisplayFor(modelItem => item.InsType)</td>
                                     <td>@Html.DisplayFor(modelItem => item.PolicyFromDate)</td>
                                     <td>@Html.DisplayFor(modelItem => item.PolicyToDate)</td>
@@ -308,12 +308,12 @@
                                     <input type="text" class="form-control form-control-sm" readonly name="DivisionCode" required id="txtDivisionCode">
                                 </div>
                             </div>
-                            <div class="form-group row mb-3">
+                            @*<div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Division Name</label>
                                 <div class="col-9">
                                     <input type="text" class="form-control form-control-sm" readonly name="DivisionName" required id="txtDivisionName">
                                 </div>
-                            </div>
+                            </div>*@
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Product Code</label>
                                 <div class="col-9">
@@ -376,26 +376,18 @@
                             </div>
 
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Expired SumInsured</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Sum Insured</label>
                                 <div class="col-9">
                                     <div class="input-group input-group-sm">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">ر.ع.</span>
                                         </div>
-                                        @if (Model != null)
-                                        {
-                                            if (ViewBag.RoleId == 1)
-                                            {
-                                                <input type="number" class="form-control form-control-sm" onkeyup="CalcRenewalAdmin()" name="RevisedSumInsured" id="txtRevisedSumInsured"> }
-                                            else
-                                            {
-                                                <input type="number" class="form-control form-control-sm" readonly name="RevisedSumInsured" id="txtRevisedSumInsured">}
-                                        }
+                                        <input type="number" class="form-control form-control-sm"  name="SumInsured" id="txtSumInsured"> 
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Expired Premium</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Gross Premium</label>
                                 <div class="col-9">
                                     <div class="input-group input-group-sm">
                                         <div class="input-group-prepend">
@@ -406,41 +398,18 @@
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Renewal Sum Assured</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Revised Sum Insured</label>
                                 <div class="col-9">
                                     <div class="input-group input-group-sm">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">ر.ع.</span>
                                         </div>
-                                        <input type="number" class="form-control form-control-sm" name="RenewalSumAssured" id="txtRenewalSumAssured">
-                                        @*@if (Model != null)
-                                            {
-                                                if (ViewBag.RoleId == 1)
-                                                {
-                                                    <input type="number" class="form-control form-control-sm" name="RenewalSumAssured" required id="txtRenewalSumAssured"> }
-                                                else
-                                                {
-                                                    <input type="number" class="form-control form-control-sm" readonly name="RenewalSumAssured" required id="txtRenewalSumAssured">
-                                                    <select onchange="CalcRenewalSA()" class="form-control form-control-sm" id="SumAssuredPercentage" name="SumAssuredPercentage">
-                                                        <option disabled selected> -- Select % -- </option>
-                                                        <option>-1</option>
-                                                        <option>-2</option>
-                                                        <option>-3</option>
-                                                        <option>-4</option>
-                                                        <option>-5</option>
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-
-                                                    </select>
-                                                    }
-                                            }*@
+                                        <input type="number" class="form-control form-control-sm" name="RevisedSumInsured" id="txtRevisedSumInsured">
+                                       
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group row mb-3">
+                            @*<div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Renewal Premium</label>
                                 <div class="col-9">
                                     <div class="input-group input-group-sm">
@@ -450,7 +419,7 @@
                                         <input type="number" class="form-control form-control-sm" name="RenewalPremium" required id="txtRenewalPremium">
                                     </div>
                                 </div>
-                            </div>
+                            </div>*@
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Marketing Executive</label>
                                 <div class="col-9">
@@ -520,7 +489,7 @@
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Status</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Status <span class="text-danger">*</span></label>
                                 <div class="col-9">
                                     <select class="form-control form-control-sm" id="txtStatus" name="Status" required="required">
                                         <option disabled selected> -- Select an option -- </option>
@@ -532,7 +501,7 @@
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Remarks</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Remarks <span class="text-danger">*</span></label>
                                 <div class="col-9">
                                     @*<input type="text" class="form-control form-control-sm" name="Remarks" required id="txtRemarks">*@
                                     <textarea type="text" class="form-control form-control-sm" rows="3" name="Description" required id="txtRemarks"></textarea>
@@ -863,11 +832,9 @@
                 $('#PolicyToDate').val(ToStr);
                 document.getElementById("h1PolicyFromToDate").innerHTML = 'Policy Date: ' + Str + ' To ' + ToStr;
 
+                $('#txtSumInsured').val(data.SumInsured);
                 $('#txtGrossPremium').val(data.GrossPremium);
-
-                $('#txtRevisedSumInsured').val(data.ExpiredSumInsured);
-
-                $('#txtRenewalPremium').val(data.RenewalPremium);
+                $('#txtRevisedSumInsured').val(data.RevisedSumInsured);
 
                 $('#txtMarketingExecutive').val(data.MarketingExecutive);
 
@@ -1429,7 +1396,7 @@
                     data: { Prefix: request.term },
                     success: function (data) {
                         response($.map(data, function (item) {
-                            return { label: item.DivisionName, value: item.DivisionName };
+                            return { label: item.DivisionCode, value: item.DivisionCode };
                         }))
 
                     }

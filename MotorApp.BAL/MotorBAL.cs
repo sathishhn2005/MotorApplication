@@ -544,6 +544,25 @@ namespace MotorApp.BAL
             return returnCode;
             //}
         }
+        public long GetDelegateSearchData(string PolicyNo, string CustCode, string SourceCode, DateTime PolicyFromDate, DateTime PolicyToDate, out List<Insurance> lstNewIns, int PageNo, string PageType)
+        {
+            long returnCode = -1;
+
+            try
+            {
+                returnCode = objMotorAppDAL.GetDelegateSearchIns(PolicyNo, CustCode, SourceCode, PolicyFromDate, PolicyToDate, out lstNewIns, PageNo, PageType);
+                
+
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
+
+            return returnCode;
+            //}
+        }
         public long GetCallBackDetails(long RoleId, string Uname, out List<Insurance> lstNewIns)
         {
             long returnCode = -1;

@@ -647,15 +647,15 @@ namespace MotorApp.Controllers
             long returnCode = 1;
             try
             {
-                if (model.RevisedSumInsured > 0 && model.GrossPremium > 0 && model.RenewalPremium > 0 && model.InsuranceID > 0)
-                {
+                //if (model.RevisedSumInsured > 0 && model.GrossPremium > 0 && model.RenewalPremium > 0 && model.InsuranceID > 0)
+                //{
                     returnCode = objMotorBAL.UpdateNewIns(model, U_Name);
                     //  returnCode = objMotorBAL.SaveNewIns(model);
-                }
-                else
-                {
-                    returnCode = -2;
-                }
+               // }
+                //else
+                //{
+                //    returnCode = -2;
+                //}
 
             }
             catch (Exception ex)

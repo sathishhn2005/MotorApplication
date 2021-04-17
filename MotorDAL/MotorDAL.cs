@@ -1010,7 +1010,7 @@ namespace MotorApp.DAL
                     };
 
 
-                    cmd.Parameters.AddWithValue("@PremiumAmount", objMotorModel.RenewalPremium);
+                    cmd.Parameters.AddWithValue("@PremiumAmount", objMotorModel.SumInsured);
                     cmd.Parameters.AddWithValue("@RivisedSI", objMotorModel.RevisedSumInsured);
                     cmd.Parameters.AddWithValue("@InsId", objMotorModel.InsuranceID);
                     cmd.Parameters.AddWithValue("@GrossPremium", objMotorModel.GrossPremium);
@@ -1066,15 +1066,16 @@ namespace MotorApp.DAL
 
                         if (ds.Tables[0].Rows.Count > 0)
                         {
-                            lstBIDashBoard = (from DataRow dr in ds.Tables[0].Rows
-                                              select new BIDashBoard()
-                                              {
-                                                  CalenderId = Convert.ToInt32(dr["CalenderId"]),
-                                                  Renewed = Convert.ToInt32(dr["Renewed"]),
-                                                  Available = Convert.ToInt32(dr["Available"]),
-                                                  MonthName = dr["MonthName"].ToString(),
-                                                  BusinessType = dr["BusinessType"].ToString(),
-                                              }).ToList();
+                            //lstBIDashBoard = (from DataRow dr in ds.Tables[0].Rows
+                            //                  select new BIDashBoard()
+                            //                  {
+                            //                      CalenderId = Convert.ToInt32(dr["CalenderId"]),
+                            //                      Renewed = Convert.ToInt32(dr["Renewed"]),
+                            //                      Available = Convert.ToInt32(dr["Available"]),
+                            //                      MonthName = dr["MonthName"].ToString(),
+                            //                      BusinessType = dr["BusinessType"].ToString(),
+                            //                  }).ToList();
+                            DTtoListConverter.ConvertTo(ds.Tables[0], out lstBIDashBoard);
                         }
                     }
                 }
@@ -1297,6 +1298,58 @@ namespace MotorApp.DAL
                   //  cmd.Parameters.AddWithValue("@PolicyToDate", PolicyToDate);
                   //  SqlCommand cmd = new SqlCommand("insertsomeDate", conn);
                     //cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@PolicyFromDate", SqlDbType.DateTime).Value = PolicyFromDate;
+                    cmd.Parameters.Add("@PolicyToDate", SqlDbType.DateTime).Value = PolicyToDate;
+                    cmd.Parameters.AddWithValue("@PageNo", PageNo);
+                    cmd.Parameters.AddWithValue("@PageType", PageType);
+
+
+                    SqlDataAdapter sdaAdapter = new SqlDataAdapter
+                    {
+                        SelectCommand = cmd
+                    };
+                    sdaAdapter.Fill(ds);
+
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        DTtoListConverter.ConvertTo(ds.Tables[0], out lstNewIns);
+                    }
+                    returnCode = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return returnCode;
+        }
+        public long GetDelegateSearchIns(string PolicyNo, string CustCode, string SourceCode,  DateTime PolicyFromDate, DateTime PolicyToDate, out List<Insurance> lstNewIns
+            , int PageNo, string PageType
+            )
+        {
+            long returnCode = -1;
+
+            lstNewIns = new List<Insurance>();
+
+            try
+            {
+                DataSet ds = new DataSet();
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = "PGetSearchDelegateMotor" //SP_GetSearch
+                    };
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+
+                    
+                    cmd.Parameters.AddWithValue("@PolicyNo", PolicyNo);
+                    cmd.Parameters.AddWithValue("@CustCode", CustCode);
+                    cmd.Parameters.AddWithValue("@SourceCode", SourceCode);
+                 
                     cmd.Parameters.Add("@PolicyFromDate", SqlDbType.DateTime).Value = PolicyFromDate;
                     cmd.Parameters.Add("@PolicyToDate", SqlDbType.DateTime).Value = PolicyToDate;
                     cmd.Parameters.AddWithValue("@PageNo", PageNo);
