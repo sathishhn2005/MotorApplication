@@ -126,7 +126,7 @@
             </div>
         </div>0
     </div>
-    <div class="col-xl-12 col-lg-12">
+    <div class="hide col-xl-12 col-lg-12">
         <div class="card mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">Individual Producer Chart</h6>
@@ -504,7 +504,7 @@
         }
         document.getElementById('randomizeData').addEventListener('click', function () {
             var BussType = $("#ddlRole").val();
-            var ProducerName = $("#Users").val();
+            var ProducerName = $("#Users option:selected").text();
             $.ajax({
                 type: "GET",
                 contentType: "application/json; charset=utf-8",

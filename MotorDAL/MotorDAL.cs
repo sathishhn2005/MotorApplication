@@ -1401,15 +1401,16 @@ namespace MotorApp.DAL
 
                     if (ds.Tables[0].Rows.Count > 0)
                     {
-                        lst = (from DataRow dr in ds.Tables[0].Rows
-                               select new Users()
-                               {
-                                   UserId = (long)dr["UserId"],
-                                   UserName = dr["UserName"].ToString(),
-                                   Password = dr["Password"].ToString(),
-                                   RoleId = (long)dr["RoleId"],
-                                   RoleName = dr["RoleName"].ToString(),
-                               }).ToList();
+                        //lst = (from DataRow dr in ds.Tables[0].Rows
+                        //       select new Users()
+                        //       {
+                        //           UserId = (long)dr["UserId"],
+                        //           UserName = dr["UserName"].ToString(),
+                        //           Password = dr["Password"].ToString(),
+                        //           RoleId = (long)dr["RoleId"],
+                        //           RoleName = dr["RoleName"].ToString(),
+                        //       }).ToList();
+                        DTtoListConverter.ConvertTo(ds.Tables[0], out lst);
                     }
                     cmd.Dispose();
                 }
