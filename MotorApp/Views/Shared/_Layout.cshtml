@@ -93,13 +93,15 @@
                     <span>Call Back</span>
                 </a>
             </li>
-
+            @if (ViewBag.RoleId == 1)
+            {
             <li class="nav-item">
                 <a class="nav-link" href="/Home/UserRegister">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Register New User</span>
                 </a>
-            </li>
+            </li> 
+            }
             <li class="nav-item">
                 <a class="nav-link" href="/BulkUpload/Index">
                     <i class="fas fa-fw fa-share"></i>

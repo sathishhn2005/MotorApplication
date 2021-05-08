@@ -38,7 +38,7 @@
 
 <script type="text/javascript">
 
-
+    var lstMoter = [];
     function csvFileUpload() {
       
         var rowCount = 0;
@@ -201,40 +201,59 @@
                                  
                                 if (cells[0] == "") {
                                     $('#fileUploadMotorPolicies').val('');
+                                    lstMoter = [];
                                     alert("Please check Row NO : " + RRC + " Division Code is empty");
                                     return false;
                                 }
 
                                 if (cells[1] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Product Code is empty");
                                     return false;
                                 }
 
                                 if (cells[2] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Class Name is empty");
                                     return false;
                                 }
 
                                 if (cells[3] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Product Name is empty");
                                     return false;
                                 }
 
                                 if (cells[4] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Policy Number is empty");
                                     return false;
                                 }
+                                else {
+                                    index = lstMoter.findIndex(x => $.trim(x.PolicyNo) == $.trim(cells[4]));
+
+                                    if (index > -1) {
+                                        lstMoter = [];
+                                        $('#fileUploadMotorPolicies').val('');
+                                        alert("Policy No :" + cells[4] + " already exists, Please check Row NO :" + RRC);
+                                        return false;
+                                    }
+                                }
+
                                 if (cells[5] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Insured Name is empty");
                                     return false;
                                 }
+                              
 
                                 if (cells[6] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Period From is empty");
                                     return false;
@@ -242,13 +261,14 @@
                                 else {
                                     //Datevalitation
                                     if (!isValidatedate(cells[6])) {
-
+                                        lstMoter = [];
                                         $('#fileUploadMotorPolicies').val('');
                                         alert("Please check Row NO : " + RRC + " Period From is not right date format");
                                         return false;
                                     }
                                 }
                                 if (cells[7] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Period To is empty");
                                     return false;
@@ -256,7 +276,7 @@
                                 else {
                                     //Datevalitation
                                     if (!isValidatedate(cells[7])) {
-
+                                        lstMoter = [];
                                         $('#fileUploadMotorPolicies').val('');
                                         alert("Please check Row NO : " + RRC + " Period To is not right date format");
                                         return false;
@@ -264,6 +284,7 @@
                                 }
 
                                 if (cells[8] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Customer Phone No is empty");
                                     return false;
@@ -272,56 +293,67 @@
                                     //if need PhoneNumber Valitation
                                 }
                                 if (cells[9] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Customer Type is empty");
                                     return false;
                                 }
                                 if (cells[10] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Customer Code is empty");
                                     return false;
                                 }                              
                                 if (cells[11] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Customer Name is empty");
                                     return false;
                                 }
                                 if (cells[12] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Source Code is empty");
                                     return false;
                                 }
                                 if (cells[13] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Source Name is empty");
                                     return false;
                                 }
                                 if (cells[14] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Vehicle Type is empty");
                                     return false;
                                 }
                                 if (cells[15] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Vehicle Make is empty");
                                     return false;
                                 }
                                 if (cells[16] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Reg No is empty");
                                     return false;
                                 }
                                 if (cells[17] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Engine No is empty");
                                     return false;
                                 }
                                 if (cells[18] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Chassis No is empty");
                                     return false;
                                 }
                                 if (cells[19] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Sum Insured is empty");
                                     return false;
@@ -329,12 +361,14 @@
                                 else {
                                     // Check Decimal valitation
                                     if (!isDecimal(cells[19])) {
+                                        lstMoter = [];
                                         $('#fileUploadMotorPolicies').val('');
                                         alert("Please check Row NO : " + RRC + " Sum Insured is not Decimal value");
                                         return false;
                                     }
                                 }
                                 if (cells[20] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Total Gross Premium is empty");
                                     return false;
@@ -342,23 +376,27 @@
                                 else {
                                     // Check Decimal valitation
                                     if (!isDecimal(cells[20])) {
+                                        lstMoter = [];
                                         $('#fileUploadMotorPolicies').val('');
                                         alert("Please check Row NO : " + RRC + " Total Gross Premium is not Decimal value");
                                         return false;
                                     }
                                 }
                                 if (cells[21] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Geo  is empty");
                                     return false;
                                 }
                                 if (cells[22] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Revised Sum Insured is empty");
                                     return false;
                                 } else {
                                     // Check Decimal valitation
                                     if (!isDecimal(cells[22])) {
+                                        lstMoter = [];
                                         $('#fileUploadMotorPolicies').val('');
                                         alert("Please check Row NO : " + RRC + " Revised Sum Insured is not Decimal value");
                                         return false;
@@ -366,6 +404,7 @@
                                 }
 
                                 if (cells[23] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Renewal Status is empty");
                                     return false;
@@ -373,16 +412,22 @@
                                
 
                                 if (cells[24] == "") {
+                                    lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Marketing Code is empty");
                                     return false;
                                 }
+
+                                lstMoter.push({                                   
+                                    PolicyNo: cells[4]                                   
+                                });
 
                             }
                             else {
 
                                 if (cells.length >1) {
                                     $('#fileUploadMotorPolicies').val('');
+                                    lstMoter = [];
                                     alert("Please check Row NO : " + RRC + " This row have comma simple or invalied Column length");
                                     return false;
                                 }

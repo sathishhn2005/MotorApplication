@@ -69,6 +69,7 @@ namespace MotorApp.Controllers
             long returnCode = -1;
             string InsuranceStatusJson = string.Empty;
             string ErrorMsg = string.Empty;
+            string ErrorMssage = string.Empty;
 
             string _filePath = string.Empty;
             string _FileName = string.Empty;
@@ -106,6 +107,12 @@ namespace MotorApp.Controllers
 
                                 InsuranceStatusJson = JsonConvert.SerializeObject(lstValueList[i]);
                                 returnCode = new MotorBAL().BulkUpdateInsurance(InsuranceStatusJson, -1, "Admin", "Bulk", out ErrorMsg);
+
+                                if (ErrorMsg != "Successfully")
+                                {
+                                    ErrorMssage = ErrorMssage+ErrorMsg;
+                                }
+
                             }
                             transactionScope.Complete();
                             transactionScope.Dispose();
@@ -119,7 +126,15 @@ namespace MotorApp.Controllers
                     }
                     if (returnCode != -1)
                     {
-                        ViewBag.Message = ErrorMsg;
+                        if (ErrorMssage == "Successfully")
+                        {
+                            ViewBag.Message = "Upload Successfully";
+                        }
+                        else {
+                            ViewBag.Message = "Upload Successfully, Please Check already exists Policy NOs : " + ErrorMssage;
+                        }
+
+                        //ViewBag.Message = ErrorMsg;
                         System.IO.File.Delete(_filePath);
                     }
                     else
