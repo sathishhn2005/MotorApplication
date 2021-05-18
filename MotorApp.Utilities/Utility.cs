@@ -506,10 +506,7 @@ namespace MotorApp.Utilities
                 _dt.Columns.Add("CustomerCategory", typeof(string));
                 _dt.Columns.Add("PolicyFromDate", typeof(DateTime));
                 _dt.Columns.Add("PolicyToDate", typeof(DateTime));
-                _dt.Columns.Add("GrossPremium", typeof(string));
 
-                _dt.Columns.Add("RevisedSumInsured", typeof(long));
-                _dt.Columns.Add("RenewalPremium", typeof(long));
                 _dt.Columns.Add("MarketingExecutive", typeof(string));
                 _dt.Columns.Add("Remarks", typeof(string));
                 _dt.Columns.Add("Status", typeof(string));
@@ -518,6 +515,12 @@ namespace MotorApp.Utilities
                 _dt.Columns.Add("Charges", typeof(long));
                 _dt.Columns.Add("InsType", typeof(string));
                 _dt.Columns.Add("ProducerName", typeof(string));
+
+                _dt.Columns.Add("SumInsured", typeof(decimal));
+                _dt.Columns.Add("RevisedSumInsured", typeof(decimal));
+                _dt.Columns.Add("GrossPremium", typeof(decimal));
+                _dt.Columns.Add("RevisedGrossPremium", typeof(decimal));
+
 
                 DataRow _dr;
                 _dr = _dt.NewRow();
@@ -537,20 +540,19 @@ namespace MotorApp.Utilities
                 _dr["CustomerCategory"] = _objMotorIns.CustomerCategory;
                 _dr["PolicyFromDate"] = _objMotorIns.PolicyFromDate;
                 _dr["PolicyToDate"] = _objMotorIns.PolicyToDate;
-                _dr["GrossPremium"] = _objMotorIns.GrossPremium;
-
-                _dr["RevisedSumInsured"] = _objMotorIns.RevisedSumInsured;
-                _dr["RenewalPremium"] = _objMotorIns.RenewalPremium;
                 _dr["MarketingExecutive"] = _objMotorIns.MarketingExecutive;
+                
                 _dr["Remarks"] = _objMotorIns.Remarks;
                 _dr["Status"] = _objMotorIns.Status;
-
-
                 _dr["CustomerCode"] = _objMotorIns.CustomerCode;
                 _dr["Charges"] = _objMotorIns.Charges;
                 _dr["InsType"] = _objMotorIns.InsType;
                 _dr["ProducerName"] = _objMotorIns.ProducerName;
-
+                
+                _dr["SumInsured"] = _objMotorIns.SumInsured;
+                _dr["RevisedSumInsured"] = _objMotorIns.RevisedSumInsured;
+                _dr["GrossPremium"] = _objMotorIns.GrossPremium;
+                _dr["RevisedGrossPremium"] = _objMotorIns.RevisedGrossPremium;
 
                 _dt.Rows.Add(_dr);
 

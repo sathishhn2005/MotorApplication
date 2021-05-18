@@ -30,11 +30,16 @@ namespace MotorApp.BusinessEntities
         public string EngineNo { get; set; }
         public string ChassisNo { get; set; }
         public decimal SumInsured { get; set; }
+        public decimal RevisedSumInsured { get; set; }
         public decimal TotalGrossPremium { get; set; }
+        public decimal RevisedGrossPremium { get; set; }
+        
+
         public string Geo { get; set; }
-        public decimal RevisedSumInsured { get; set; } 
+        
         public string RenewalStatus { get; set; }
         public string MarketingCode { get; set; }
+        public string UserName { get; set; }
 
       
     }

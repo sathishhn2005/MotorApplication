@@ -29,13 +29,11 @@ namespace MotorApp.Models
     {
 
         Admin = 1,
-
         Agent = 2,
         Broker = 3,
-
         Branches = 4,
-
-        DirectSales = 5
+        DirectSales = 5,
+        CallingAgent = 6,
 
     }
 }

@@ -212,7 +212,7 @@
                             <tr>
                                 <th>@*<input type="checkbox" id="tblMotorRowall" onchange="clicktblMotorCheckBoxsStatus('','0','tbl',this,'')">*@</th>
                                 <th>Policy No</th>
-                                
+
                                 <th>Insurance Type</th>
                                 <th>Policy Start Date</th>
                                 <th>Policy End Date</th>
@@ -239,7 +239,7 @@
                                         @Html.HiddenFor(modelItem => item.InsuranceID)
 
                                     </td>
-                                    
+
                                     <td>@Html.DisplayFor(modelItem => item.InsType)</td>
                                     <td>@Html.DisplayFor(modelItem => item.PolicyFromDate)</td>
                                     <td>@Html.DisplayFor(modelItem => item.PolicyToDate)</td>
@@ -309,11 +309,11 @@
                                 </div>
                             </div>
                             @*<div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Division Name</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="DivisionName" required id="txtDivisionName">
-                                </div>
-                            </div>*@
+                                    <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Division Name</label>
+                                    <div class="col-9">
+                                        <input type="text" class="form-control form-control-sm" readonly name="DivisionName" required id="txtDivisionName">
+                                    </div>
+                                </div>*@
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Product Code</label>
                                 <div class="col-9">
@@ -382,7 +382,19 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">OMR</span>
                                         </div>
-                                        <input type="number" class="form-control form-control-sm"  name="SumInsured" id="txtSumInsured"> 
+                                        <input type="number" class="form-control form-control-sm" name="SumInsured" id="txtSumInsured">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Revised Sum Insured</label>
+                                <div class="col-9">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">OMR</span>
+                                        </div>
+                                        <input type="number" class="form-control form-control-sm" name="RevisedSumInsured" id="txtRevisedSumInsured">
+
                                     </div>
                                 </div>
                             </div>
@@ -398,28 +410,18 @@
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Revised Sum Insured</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Revised Gross Premium</label>
                                 <div class="col-9">
                                     <div class="input-group input-group-sm">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">OMR</span>
                                         </div>
-                                        <input type="number" class="form-control form-control-sm" name="RevisedSumInsured" id="txtRevisedSumInsured">
-                                       
+                                        <input type="number" class="form-control form-control-sm" name="RevisedGrossPremium" required id="txtRevisedGrossPremium">
                                     </div>
                                 </div>
                             </div>
-                            @*<div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Renewal Premium</label>
-                                <div class="col-9">
-                                    <div class="input-group input-group-sm">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">OMR</span>
-                                        </div>
-                                        <input type="number" class="form-control form-control-sm" name="RenewalPremium" required id="txtRenewalPremium">
-                                    </div>
-                                </div>
-                            </div>*@
+
+                           
                             <div class="form-group row mb-3">
                                 <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Marketing Executive</label>
                                 <div class="col-9">
@@ -778,10 +780,12 @@
         });
     });
     function renewal(MotorId) {
-
+        
         // $('#myModal').modal('show');
         Id = MotorId;
+
         $.ajax({
+            type: "GET",
             url: '/Home/EditModal/?InsId=' + MotorId, // The method name + paramater
             success: function (data) {
 
@@ -872,6 +876,7 @@
                 }, 3000);
                 // $('#myModal').html(data); // This should be an empty div where you can inject your new html (the partial view)
             }
+           
         });
     }
 

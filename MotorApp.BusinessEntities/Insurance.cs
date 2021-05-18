@@ -54,13 +54,9 @@ namespace MotorApp.BusinessEntities
         [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy hh:mm:ss}")]
         public DateTime CallBackDate { get; set; }
 
-        [Display(Name = "Gross Premium")]
-        public long GrossPremium { get; set; }
+      
 
-        [Display(Name = "Revised Sum Insured")]
-        public long RevisedSumInsured { get; set; }
-        [Display(Name = "Renewal Premium")]
-        public long RenewalPremium { get; set; }
+       
         [Display(Name = "Marketing Executive")]
         public string MarketingExecutive { get; set; }
         [Display(Name = "Remarks")]
@@ -68,15 +64,6 @@ namespace MotorApp.BusinessEntities
         [Display(Name = "Status")]
         public string Status { get; set; }
 
-        [Display(Name = "SumInsured")]
-        public decimal SumInsured { get; set; }
-
-        [Display(Name = "ExpiredSumInsured")]
-        public decimal ExpiredSumInsured { get; set; }
-        [Display(Name = "SumAssuredPercentage")]
-        public decimal SumAssuredPercentage { get; set; }
-        [Display(Name = "RenewalSumAssured")]
-        public decimal RenewalSumAssured { get; set; }
         [Display(Name = "Customer Code")]
         public string CustomerCode { get; set; }
         [Display(Name = "Charges")]
@@ -94,6 +81,10 @@ namespace MotorApp.BusinessEntities
         public string RegNo { get; set; }
         public string EngineNo { get; set; }
         public string ChassisNo { get; set; }
+        public decimal SumInsured { get; set; }
+        public decimal RevisedSumInsured { get; set; }
+        public decimal GrossPremium { get; set; }
+        public decimal RevisedGrossPremium { get; set; }
 
     }
     public enum InssType

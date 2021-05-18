@@ -1009,11 +1009,8 @@ namespace MotorApp.DAL
                         CommandType = CommandType.StoredProcedure
                     };
 
-
-                    cmd.Parameters.AddWithValue("@PremiumAmount", objMotorModel.SumInsured);
-                    cmd.Parameters.AddWithValue("@RivisedSI", objMotorModel.RevisedSumInsured);
                     cmd.Parameters.AddWithValue("@InsId", objMotorModel.InsuranceID);
-                    cmd.Parameters.AddWithValue("@GrossPremium", objMotorModel.GrossPremium);
+                    
                     cmd.Parameters.AddWithValue("@Status", objMotorModel.Status ?? "");
                     cmd.Parameters.AddWithValue("@Description", objMotorModel.Description ?? "");
                     cmd.Parameters.AddWithValue("@UserName", uname ?? "");
@@ -1021,7 +1018,10 @@ namespace MotorApp.DAL
                     //cmd.Parameters.Add("@CallBackDate", SqlDbType.DateTime2).Value = objMotorModel.CallBackDate; //<- as example
                     DateTime CallBackDate = objMotorModel.CallBackDate == Convert.ToDateTime("01-01-0001 12.00.00 AM") ? Convert.ToDateTime("01-01-1753 12.00.00 AM") : objMotorModel.CallBackDate;
                     cmd.Parameters.AddWithValue("@CallBackDate", CallBackDate);
-                    cmd.Parameters.AddWithValue("@RenewalSumAssured", objMotorModel.RenewalSumAssured);
+                    cmd.Parameters.AddWithValue("@SumInsured", objMotorModel.SumInsured);
+                    cmd.Parameters.AddWithValue("@RivisedSI", objMotorModel.RevisedSumInsured);
+                    cmd.Parameters.AddWithValue("@GrossPremium", objMotorModel.GrossPremium);
+                    cmd.Parameters.AddWithValue("@RevisedGrossPremium", objMotorModel.RevisedGrossPremium);
                     cmd.Parameters.AddWithValue("@Flag", objMotorModel.Flag);
                     returnCode = cmd.ExecuteNonQuery();
 
@@ -1066,15 +1066,7 @@ namespace MotorApp.DAL
 
                         if (ds.Tables[0].Rows.Count > 0)
                         {
-                            //lstBIDashBoard = (from DataRow dr in ds.Tables[0].Rows
-                            //                  select new BIDashBoard()
-                            //                  {
-                            //                      CalenderId = Convert.ToInt32(dr["CalenderId"]),
-                            //                      Renewed = Convert.ToInt32(dr["Renewed"]),
-                            //                      Available = Convert.ToInt32(dr["Available"]),
-                            //                      MonthName = dr["MonthName"].ToString(),
-                            //                      BusinessType = dr["BusinessType"].ToString(),
-                            //                  }).ToList();
+                            
                             DTtoListConverter.ConvertTo(ds.Tables[0], out lstBIDashBoard);
                         }
                     }

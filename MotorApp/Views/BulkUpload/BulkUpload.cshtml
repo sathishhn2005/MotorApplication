@@ -15,23 +15,23 @@
     </ol>
 </div>
 <div class="card p-3 mx-3">
-    @using (Html.BeginForm("BulkUpdate", "BulkUpload", FormMethod.Post, new {enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("BulkUpdate", "BulkUpload", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
 
-    <div class="d-flex justify-content-between">
-        <div class="form-inline">
+        <div class="d-flex justify-content-between">
+            <div class="form-inline">
 
-            <label class="col-form-label font-bold mr-3" for="fileUploadMotorPolicies">File Upload:</label>
-            <input type="file" name="CSVFile" id="fileUploadMotorPolicies" accept=".csv" />
-            <input type="hidden" id="hdnMsgStatus" name="hdnMsgStatus" value="N">
+                <label class="col-form-label font-bold mr-3" for="fileUploadMotorPolicies">File Upload:</label>
+                <input type="file" name="CSVFile" id="fileUploadMotorPolicies" accept=".csv" />
+                <input type="hidden" id="hdnMsgStatus" name="hdnMsgStatus" value="N">
 
-            <input type="button" value="Upload CSV File" class="btn btn-primary btn-sm mx-1" onclick='return csvFileUpload()'>
-            <button id="uploadMotorPolicies" class="btn btn-primary btn-sm mx-1 hide">Upload File</button>
+                <input type="button" value="Upload CSV File" class="btn btn-primary btn-sm mx-1" onclick='return csvFileUpload()'>
+                <button id="uploadMotorPolicies" class="btn btn-primary btn-sm mx-1 hide">Upload File</button>
 
+            </div>
+
+            <p class="text-center text-success"> @ViewBag.Message </p>
         </div>
-
-        <p class="text-center text-success"> @ViewBag.Message </p>
-    </div>
     }
 </div>
 
@@ -40,7 +40,7 @@
 
     var lstMoter = [];
     function csvFileUpload() {
-      
+
         var rowCount = 0;
         var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.csv|.txt)$/;
         if (regex.test($("#fileUploadMotorPolicies").val().toLowerCase())) {
@@ -49,7 +49,7 @@
                 var reader = new FileReader();
                 reader.onload = function (e) {
 
-                    var rows = e.target.result.split('\r\n');              
+                    var rows = e.target.result.split('\r\n');
 
                     for (var i = 0; i < rows.length; i++) {
 
@@ -57,13 +57,13 @@
                         var RRC = rowCount + 1;
                         if (i == 0) {
 
-                            // Heater validation 
-                            if (cells.length == 25) {
+                            // Heater validation
+                            if (cells.length == 27) {
 
-                                if (cells[0] != "Division Code") {  
+                                if (cells[0] != "Division Code") {
                                     $('#fileUploadMotorPolicies').val('');
-                                    alert("Please check column name mismatch (Division Code).");     
-                                    return false;                                  
+                                    alert("Please check column name mismatch (Division Code).");
+                                    return false;
                                 }
                                 if (cells[1] != "Product Code") {
                                     $('#fileUploadMotorPolicies').val('');
@@ -160,29 +160,40 @@
                                     alert("Please check column name mismatch (Sum Insured).");
                                     return false;
                                 }
-                                if (cells[20] != "Total Gross Premium") {
-                                    $('#fileUploadMotorPolicies').val('');
-                                    alert("Please check column name mismatch (Total Gross Premium).");
-                                    return false;
-                                }
-                                if (cells[21] != "Geo") {
-                                    $('#fileUploadMotorPolicies').val('');
-                                    alert("Please check column name mismatch (Geo).");
-                                    return false;
-                                }
-                                if (cells[22] != "Revised Sum Insured") {
+                                if (cells[20] != "Revised Sum Insured") {
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check column name mismatch (Revised Sum Insured).");
                                     return false;
                                 }
-                                if (cells[23] != "Renewal Status") {
+                                if (cells[21] != "Total Gross Premium") {
+                                    $('#fileUploadMotorPolicies').val('');
+                                    alert("Please check column name mismatch (Total Gross Premium).");
+                                    return false;
+                                }
+                                if (cells[22] != "Revised Gross Premium") {
+                                    $('#fileUploadMotorPolicies').val('');
+                                    alert("Please check column name mismatch (Revised Gross Premium).");
+                                    return false;
+                                }
+                                if (cells[23] != "Geo") {
+                                    $('#fileUploadMotorPolicies').val('');
+                                    alert("Please check column name mismatch (Geo).");
+                                    return false;
+                                }
+
+                                if (cells[24] != "Renewal Status") {
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check column name mismatch (Renewal Status).");
                                     return false;
                                 }
-                                if (cells[24] != "Marketing Code") {
+                                if (cells[25] != "Marketing Code") {
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check column name mismatch (Marketing Code).");
+                                    return false;
+                                }
+                                if (cells[26] != "UserName") {
+                                    $('#fileUploadMotorPolicies').val('');
+                                    alert("Please check column name mismatch (UserName).");
                                     return false;
                                 }
 
@@ -194,11 +205,11 @@
                             }
 
                         } else {
-                            // Row validation 
-                            if (cells.length == 25) {
+                            // Row validation
+                            if (cells.length == 27) {
 
-                              
-                                 
+
+
                                 if (cells[0] == "") {
                                     $('#fileUploadMotorPolicies').val('');
                                     lstMoter = [];
@@ -250,7 +261,7 @@
                                     alert("Please check Row NO : " + RRC + " Insured Name is empty");
                                     return false;
                                 }
-                              
+
 
                                 if (cells[6] == "") {
                                     lstMoter = [];
@@ -303,7 +314,7 @@
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Customer Code is empty");
                                     return false;
-                                }                              
+                                }
                                 if (cells[11] == "") {
                                     lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
@@ -370,65 +381,86 @@
                                 if (cells[20] == "") {
                                     lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
-                                    alert("Please check Row NO : " + RRC + " Total Gross Premium is empty");
-                                    return false;
-                                }
-                                else {
-                                    // Check Decimal valitation
-                                    if (!isDecimal(cells[20])) {
-                                        lstMoter = [];
-                                        $('#fileUploadMotorPolicies').val('');
-                                        alert("Please check Row NO : " + RRC + " Total Gross Premium is not Decimal value");
-                                        return false;
-                                    }
-                                }
-                                if (cells[21] == "") {
-                                    lstMoter = [];
-                                    $('#fileUploadMotorPolicies').val('');
-                                    alert("Please check Row NO : " + RRC + " Geo  is empty");
-                                    return false;
-                                }
-                                if (cells[22] == "") {
-                                    lstMoter = [];
-                                    $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Revised Sum Insured is empty");
                                     return false;
                                 } else {
                                     // Check Decimal valitation
-                                    if (!isDecimal(cells[22])) {
+                                    if (!isDecimal(cells[20])) {
                                         lstMoter = [];
                                         $('#fileUploadMotorPolicies').val('');
                                         alert("Please check Row NO : " + RRC + " Revised Sum Insured is not Decimal value");
                                         return false;
                                     }
                                 }
-
+                                if (cells[21] == "") {
+                                    lstMoter = [];
+                                    $('#fileUploadMotorPolicies').val('');
+                                    alert("Please check Row NO : " + RRC + " Total Gross Premium is empty");
+                                    return false;
+                                }
+                                else {
+                                    // Check Decimal valitation
+                                    if (!isDecimal(cells[21])) {
+                                        lstMoter = [];
+                                        $('#fileUploadMotorPolicies').val('');
+                                        alert("Please check Row NO : " + RRC + " Total Gross Premium is not Decimal value");
+                                        return false;
+                                    }
+                                }
+                                if (cells[22] == "") {
+                                    lstMoter = [];
+                                    $('#fileUploadMotorPolicies').val('');
+                                    alert("Please check Row NO : " + RRC + " Revised Gross Premium is empty");
+                                    return false;
+                                }
+                                else {
+                                    // Check Decimal valitation
+                                    if (!isDecimal(cells[22])) {
+                                        lstMoter = [];
+                                        $('#fileUploadMotorPolicies').val('');
+                                        alert("Please check Row NO : " + RRC + " Revised Gross Premium is not Decimal value");
+                                        return false;
+                                    }
+                                }
                                 if (cells[23] == "") {
+                                    lstMoter = [];
+                                    $('#fileUploadMotorPolicies').val('');
+                                    alert("Please check Row NO : " + RRC + " Geo  is empty");
+                                    return false;
+                                }
+                                
+
+                                if (cells[24] == "") {
                                     lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Renewal Status is empty");
                                     return false;
                                 }
-                               
 
-                                if (cells[24] == "") {
+
+                                if (cells[25] == "") {
                                     lstMoter = [];
                                     $('#fileUploadMotorPolicies').val('');
                                     alert("Please check Row NO : " + RRC + " Marketing Code is empty");
                                     return false;
                                 }
+                                if (cells[26] == "") {
+                                    $('#fileUploadMotorPolicies').val('');
+                                    alert("Please check column name mismatch (UserName).");
+                                    return false;
+                                }
 
-                                lstMoter.push({                                   
-                                    PolicyNo: cells[4]                                   
+                                lstMoter.push({
+                                    PolicyNo: cells[4]
                                 });
 
                             }
                             else {
 
-                                if (cells.length >1) {
+                                if (cells.length > 1) {
                                     $('#fileUploadMotorPolicies').val('');
                                     lstMoter = [];
-                                    alert("Please check Row NO : " + RRC + " This row have comma simple or invalied Column length");
+                                    alert("Please check Row No. : " + RRC + " This row have comma symbol or invalid Column length");
                                     return false;
                                 }
 
@@ -440,8 +472,8 @@
 
                     }
 
-                    if (rowCount == rows.length) {                        
-                         $("#hdnMsgStatus").val('Y');
+                    if (rowCount == rows.length) {
+                        $("#hdnMsgStatus").val('Y');
                         $("#uploadMotorPolicies").click();
 
                     }
@@ -460,24 +492,24 @@
 
         }
 
-       
+
 
     }
 
     function isDecimal(inputtxt) {
         var decimal = /^[-+]?[0-9]+\.[0-9]+$/;
         if ($.trim(inputtxt).match(decimal)) {
-           // alert('Correct, try another...')
+            // alert('Correct, try another...')
             return true;
         }
         else {
-           // alert('Wrong...!')
+            // alert('Wrong...!')
             return false;
         }
-    } 
+    }
 
     function isValidatedate(inputText) {
-       
+
         var splitDate = inputText.split(' ');
 
         if (splitDate[0].length != 10 && splitDate[1].length != 4) {
@@ -485,11 +517,11 @@
         }
 
         var aDate = moment(inputText, 'MM-DD-YYYY HH:mm', true);
-        var isValid = aDate.isValid();     
+        var isValid = aDate.isValid();
 
         return isValid;
 
     }
-   
+
 
 </script>

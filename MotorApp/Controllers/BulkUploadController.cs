@@ -188,11 +188,13 @@ namespace MotorApp.Controllers
             objCsvFileBulkUplaod.EngineNo = values[17];
             objCsvFileBulkUplaod.ChassisNo = values[18];
             objCsvFileBulkUplaod.SumInsured = Convert.ToDecimal(values[19]);
-            objCsvFileBulkUplaod.TotalGrossPremium = Convert.ToDecimal(values[20]);
-            objCsvFileBulkUplaod.Geo = values[21];
-            objCsvFileBulkUplaod.RevisedSumInsured = Convert.ToDecimal(values[22]);
-            objCsvFileBulkUplaod.RenewalStatus = values[23];
-            objCsvFileBulkUplaod.MarketingCode = values[24];
+            objCsvFileBulkUplaod.RevisedSumInsured = Convert.ToDecimal(values[20]);
+            objCsvFileBulkUplaod.TotalGrossPremium = Convert.ToDecimal(values[21]);
+            objCsvFileBulkUplaod.RevisedGrossPremium= Convert.ToDecimal(values[22]);
+            objCsvFileBulkUplaod.Geo = values[23];
+            objCsvFileBulkUplaod.RenewalStatus = values[24];
+            objCsvFileBulkUplaod.MarketingCode = values[25];
+            objCsvFileBulkUplaod.UserName = values[26];
             return objCsvFileBulkUplaod;
         }
        
