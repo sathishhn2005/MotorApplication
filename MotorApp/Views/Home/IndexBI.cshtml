@@ -115,7 +115,7 @@
     <div class="col-xl-12 col-lg-12">
         <div class="card mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Producer's Performance </h6>
+                <h6 class="m-0 font-weight-bold text-primary">Producer Performance </h6>
                 @*<div class="">
                         <label class="font-weight-bold mr-2">Yearly</label>
                         <input type="checkbox" data-toggle="toggle" data-size="xs">
@@ -124,12 +124,12 @@
             <div class="card-body">
                 <canvas id="ProducerPerformance" height="100"></canvas>
             </div>
-        </div>
+        </div>0
     </div>
-    <div class="col-xl-12 col-lg-12">
+    <div class="hide col-xl-12 col-lg-12">
         <div class="card mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Specific Producer's Chart </h6>
+                <h6 class="m-0 font-weight-bold text-primary">Individual Producer Chart</h6>
                 <div class="flex-grow-1">
                     <form class="form-inline  d-flex flex-row align-items-center justify-content-around">
                         <label for="cars" class="col-form-label">Choose Role</label>
@@ -141,36 +141,16 @@
                             <option value="Branches">Branches</option>
                         </select>
 
-                        @*<div class="col-md-4">
-                                <label class="col-form-label text-right font-bold">Business Type</label>
-                                @Html.DropDownListFor(model => model.BusinessType, lstBT, "-- Select BusinessType --",
-                               new { @class = "form-control form-control-sm", @onchange = "javascript:GetUsers(this.value);" })
-
-                            </div>*@
-                        @*<div class="col-md-4">
-                                <label class="col-form-label text-right font-bold">Users</label>
-                                <select id="Users" name="Users" class="form-control form-control-sm">
-                                    <option value="0">-Select-</option>
-                                </select>
-                            </div>*@
+                      
                         <label for="cars" class="col-form-label">Choose Producer</label>
                         <select id="Users" name="Users" class="form-control form-control-sm">
                             <option value="0">-Select-</option>
                         </select>
-                        @*<select id="ddlProducer" class="form-control form-control-sm col-md-3">
-                            <option>--Select--</option>
-                            <option>BA001</option>
-                            <option>BA818</option>
-                            <option>BA237</option>
-                            <option>BA233</option>
-                        </select>*@
+                      
                         <button type="button" id="randomizeData" class="btn btn-primary btn-sm">Search</button>
                     </form>
                 </div>
-                <div class="">
-                    <label class="font-weight-bold mr-2">Yearly</label>
-                    <input type="checkbox" data-toggle="toggle" data-size="xs">
-                </div>
+                
             </div>
             <div class="card-body">
                 <canvas id="SpecificProducer" height="100"></canvas>
@@ -187,7 +167,7 @@
     var SPBarBData = [];
 
     $('#branch').change(function () {
-        GetYearWiseReport('Branch');
+        GetYearWiseReport('Branches');
     });
     $("#broker").on('change', function () {
         if ($(this).is(':checked')) {
@@ -222,7 +202,7 @@
     $("#branch").on('change', function () {
         if ($(this).is(':checked')) {
             $(this).attr('value', 'true');
-            GetYearWiseReport('Branch');
+            GetYearWiseReport('Branches');
         } else {
             $(this).attr('value', 'false');
             loadBranch();
@@ -248,7 +228,7 @@
                     AgentMorris.setData(res.item);
                 else if (BussType == 'Direct')
                     DirectMorris.setData(res.item);
-                else if (BussType == 'Branch')
+                else if (BussType == 'Branches')
                     BranchMorris.setData(res.item);
 
             },
@@ -524,7 +504,7 @@
         }
         document.getElementById('randomizeData').addEventListener('click', function () {
             var BussType = $("#ddlRole").val();
-            var ProducerName = $("#Users").val();
+            var ProducerName = $("#Users option:selected").text();
             $.ajax({
                 type: "GET",
                 contentType: "application/json; charset=utf-8",

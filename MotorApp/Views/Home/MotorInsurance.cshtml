@@ -35,6 +35,11 @@
         Text = "DirectSales",
         Value = "DirectSales"
     });
+    lstBT.Add(new SelectListItem
+    {
+        Text = "CallingAgent",
+        Value = "CallingAgent"
+    });
 }
 @{
     List<SelectListItem> listItems = new List<SelectListItem>();
@@ -48,6 +53,11 @@
         Text = "Renewed",
         Value = "Renewed",
         Selected = true
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "To Be Renewed",
+        Value = "To Be Renewed"
     });
     listItems.Add(new SelectListItem
     {
@@ -153,6 +163,12 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
+                                                @Html.LabelFor(model => model.SourceCode, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
+                                                <div class="col-md-5">
+                                                    @Html.EditorFor(model => model.SourceCode, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
                                                 <label class="col-sm-4 col-form-label text-right font-bold">Users</label>
                                                 @if (Model != null)
                                                 {
@@ -170,8 +186,9 @@
                                                         <select class="form-control form-control-sm" id="ProducerName" name="ProducerName"></select>
                                                     </div>
                                                 }
-                                                
+
                                             </div>
+
                                             <div class="form-group row">
                                                 @Html.LabelFor(model => model.PolicyNo, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
                                                 @if (Model != null)
@@ -240,24 +257,8 @@
                                                     @Html.TextBoxFor(model => model.PolicyToDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
-                                                @Html.LabelFor(model => model.GrossPremium, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                <div class="col-md-5">
-                                                    @Html.EditorFor(model => model.GrossPremium, new { htmlAttributes = new { type = "number", @class = "form-control form-control-sm" } })
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                @Html.LabelFor(model => model.RevisedSumInsured, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                <div class="col-md-5">
-                                                    @Html.EditorFor(model => model.RevisedSumInsured, new { htmlAttributes = new { type = "number", @class = "form-control form-control-sm" } })
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                @Html.LabelFor(model => model.RenewalPremium, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
-                                                <div class="col-md-5">
-                                                    @Html.EditorFor(model => model.RenewalPremium, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                                </div>
-                                            </div>
+
+
                                             <div class="form-group row">
                                                 @Html.LabelFor(model => model.MarketingExecutive, htmlAttributes: new { @class = "col-sm-4 col-form-label text-right font-bold" })
                                                 <div class="col-md-5">
@@ -411,7 +412,7 @@
 
         // Smart Wizard
 
-       
+
     });
 
 </script>

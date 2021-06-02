@@ -3,13 +3,13 @@
 @{ Layout = "~/Views/Shared/_Layout.cshtml"; }
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Master Motor</h1>
+    <h1 class="h3 mb-0 text-gray-800">Call Back</h1>
     <ol class="breadcrumb my-2">
         <li class="breadcrumb-item">
             <a href="./">Home</a>
         </li>
         <li class="breadcrumb-item">Masters</li>
-        <li class="breadcrumb-item active" aria-current="page">Master Motor</li>
+        @*<li class="breadcrumb-item active" aria-current="page">Master Motor</li>*@
     </ol>
 </div>
 <div class="row">
@@ -29,7 +29,7 @@
                                 <th>Description</th>
                                 <th>Call Back Date</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                @*<th>Action</th>*@
 
                             </tr>
                         </thead>
@@ -70,11 +70,11 @@
                                             <span class="badge badge-info"></span>
                                         }
                                     </td>
-                                    <td class="d-flex flex-row align-items-center justify-content-between">
+                                    @*<td class="d-flex flex-row align-items-center justify-content-between">
                                         <i class="fas fa-eye pointer" aria-hidden="true" data-toggle="modal"
                                            data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="renewal(@item.InsuranceID)"></i>
-                                       
-                                    </td>
+
+                                    </td>*@
 
 
                                 </tr>
@@ -103,6 +103,7 @@
                         <form id="formRenewal" class="form-horizontal">
                             <div class="form-group row mb-3">
                                 <input type="hidden" name="InsuranceID" id="InsuranceID">
+                                <input type="hidden" name="Flag" id="Flag">
                                 <label for="inputEmail3" class="col-3 col-form-label">Division Code</label>
                                 <div class="col-9">
                                     <input type="text" class="form-control form-control-sm" readonly name="DivisionCode" required id="txtDivisionCode">
@@ -238,31 +239,32 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">₹</span>
                                         </div>
-                                        @if (Model != null)
-                                        {
-                                            if (ViewBag.RoleId == 1)
+                                        <input type="number" class="form-control form-control-sm" name="RenewalSumAssured" id="txtRenewalSumAssured">
+                                        @*@if (Model != null)
                                             {
-                                                <input type="number" class="form-control form-control-sm" name="RenewalSumAssured" required id="txtRenewalSumAssured">
-                                            }
-                                            else
-                                            {
-                                                <input type="number" class="form-control form-control-sm" readonly name="RenewalSumAssured" required id="txtRenewalSumAssured">
-                                                <select onchange="CalcRenewalSA()" class="form-control form-control-sm" id="SumAssuredPercentage" name="SumAssuredPercentage">
-                                                    <option disabled selected> -- Select % -- </option>
-                                                    <option>-1</option>
-                                                    <option>-2</option>
-                                                    <option>-3</option>
-                                                    <option>-4</option>
-                                                    <option>-5</option>
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                    <option>4</option>
-                                                    <option>5</option>
+                                                if (ViewBag.RoleId == 1)
+                                                {
+                                                    <input type="number" class="form-control form-control-sm" name="RenewalSumAssured" required id="txtRenewalSumAssured">
+                                                }
+                                                else
+                                                {
+                                                    <input type="number" class="form-control form-control-sm" readonly name="RenewalSumAssured" required id="txtRenewalSumAssured">
+                                                    <select onchange="CalcRenewalSA()" class="form-control form-control-sm" id="SumAssuredPercentage" name="SumAssuredPercentage">
+                                                        <option disabled selected> -- Select % -- </option>
+                                                        <option>-1</option>
+                                                        <option>-2</option>
+                                                        <option>-3</option>
+                                                        <option>-4</option>
+                                                        <option>-5</option>
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                        <option>4</option>
+                                                        <option>5</option>
 
-                                                </select>
-                                            }
-                                        }
+                                                    </select>
+                                                }
+                                            }*@
                                     </div>
                                 </div>
                             </div>
@@ -339,38 +341,7 @@
                         </form>
                     </div>
                     <div class="col-5 mx-auto">
-                        <div>
-                            <h4 class="primay-color mt-3 ">Call Details:</h4>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center call-section mb-5 mt-3">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png" class="rounded-circle" alt="Cinque Terre" height="60">
-                            <div>
-                                <h4 class="my-0 primay-color">(319) 555-0115</h4>
-                                <small class="text-muted font-13">Call to Alrene Fisher</small>
-                            </div>
-                            <div>
-                                <i class="fa fa-microphone font-20 text-muted mr-2 pointer"></i>
-                                <i class="fa fa-history font-20 text-muted ml-2 pointer"></i>
-                            </div>
-                            <button type="button" class="btn btn-success btn-circle btn-xl btn-large pointer">
-                                <i class="fa fa-phone"></i>
-                            </button>
-                        </div>
-                        <div>
-                            <h6 class="primay-color">Alrene Fisher Details:</h6>
-                        </div>
-                        <div class="text-muted mb-4 ">Voicemain</div>
-                        <audio controls preload="metadata" style=" width:100%;">
-                            <source src="" type="audio/mpeg">
-                            Your browser does not support the audio element.
-                        </audio>
-                        <div class="row">
-                            <div class="col-12">
-                                <label for="NotesContainer" class="control-label text-muted mt-4">Alrene Fisher Notes</label>
-                                <textarea class="form-control form-control-sm" id="NotesContainer" rows="10" placeholder="Notes">Alrene Fisher requested a call back on Tomorrow Morning 10:30 AM.
-                        </textarea>
-                            </div>
-                        </div>
+
 
                     </div>
                 </div>
@@ -384,10 +355,14 @@
 <script>
     $(document).ready(function () {
         const SARenewalCanstant = 0;
-        
+
         $(document).ready(function () {
             $('#btnRenewal').on('click', function () {
+                if ($('#txtCallBackDate').val() == "" && $('#txtStatus').val() == "Under Process") {
+                    $('#Flag').val("1");
+                }
                 var renewalData = $('#formRenewal').serialize();
+
                 $.ajax({
 
                     type: "POST",

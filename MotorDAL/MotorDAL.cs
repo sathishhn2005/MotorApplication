@@ -179,302 +179,29 @@ namespace MotorApp.DAL
 
                     if (ds.Tables[0].Rows.Count > 0)
                     {
-                        lstMotorModel = (from DataRow dr in ds.Tables[0].Rows
-                                         select new MotorModel()
-                                         {
-                                             MotorId = Convert.ToInt64(dr["MotorId"]),
-                                             //   IssueDate = Convert.ToDateTime(dr["IssueDate"]),
-                                             PolicyNo = dr["PolicyNo"].ToString(),
-                                             TypeofTransaction = dr["TypeofTransaction"].ToString(),
-                                             PolicyNumberifRenewal = dr["PolicyNumberifRenewal"].ToString(),
-                                             Branch = dr["Branch"].ToString(),
-
-                                             IssueDate = Convert.ToDateTime(dr["IssueDate"]),
-                                             UAEExtensionNilPremiaum = dr["UAEExtensionNilPremiaum"].ToString(),
-                                             GeographicalArea = dr["GeographicalArea"].ToString(),
-                                             SpecialDiscount = dr["SpecialDiscount"].ToString(),
-                                             Hirepurchase_BankName = dr["Hirepurchase_BankName"].ToString(),
-                                             EmailId = dr["EmailId"].ToString(),
-                                             MazayaCard = dr["MazayaCard"].ToString(),
-                                             FirstRegDate = Convert.ToDateTime(dr["FirstRegDate"].ToString()),
-                                             PurchaseType = dr["PurchaseType"].ToString(),
-                                             AssuredName = dr["AssuredName"].ToString(),
-                                             NillAdditionalDriver = dr["NillAdditionalDriver"].ToString(),
-                                             Make_Model = dr["Make_Model"].ToString(),
-                                             SeatingCapacity = Convert.ToInt32(dr["SeatingCapacity"].ToString()),
-                                             AgencyRepair = dr["AgencyRepair"].ToString(),
-                                             AssuredName_Arabic = dr["AssuredName_Arabic"].ToString(),
-                                             Marketer = dr["Marketer"].ToString(),
-                                             BodyType = dr["BodyType"].ToString(),
-                                             RoadAssistance = dr["RoadAssistance"].ToString(),
-                                             RegistrationNo = dr["RegistrationNo"].ToString(),
-                                             CivilID_CRNo = dr["CivilID_CRNo"].ToString(),
-                                             IssueFrom = dr["IssueFrom"].ToString(),
-                                             VehicleType = dr["VehicleType"].ToString(),
-                                             SumInsured_RO = Convert.ToInt64(dr["SumInsured_RO"]),
-                                             MakeModel = dr["MakeModel"].ToString(),
-                                             PostBox = dr["PostBox"].ToString(),
-                                             VIPCustomer = dr["VIPCustomer"].ToString(),
-                                             PolicyStartDate = Convert.ToDateTime(dr["PolicyStartDate"]),
-                                             YearofManufacture = Convert.ToInt32(dr["YearofManufacture"]),
-                                             Voluntaryexcess = dr["Voluntaryexcess"].ToString(),
-                                             EngineNo = dr["EngineNo"].ToString(),
-                                             PostalCode = dr["PostalCode"].ToString(),
-                                             PolicyEndDate = Convert.ToDateTime(dr["PolicyEndDate"]),
-                                             VehicleAge = dr["VehicleAge"].ToString(),
-                                             NoClaimsDiscount = dr["NoClaimsDiscount"].ToString(),
-                                             ChassisNo = dr["ChassisNo"].ToString(),
-                                             City = dr["City"].ToString(),
-                                             AgentCode_BrokerCode = dr["AgentCode_BrokerCode"].ToString(),
-                                             Tonnage = dr["Tonnage"].ToString(),
-                                             LicenceFirstIssued = Convert.ToDateTime(dr["LicenceFirstIssued"]),
-                                             VehicleCC = dr["VehicleCC"].ToString(),
-                                             ResPhoneNo = dr["ResPhoneNo"].ToString(),
-                                             PlateColor = dr["PlateColor"].ToString(),
-                                             Nationality = dr["Nationality"].ToString(),
-                                             Cylinder = dr["Cylinder"].ToString(),
-                                             Color = dr["Color"].ToString(),
-                                             MobileNo = dr["MobileNo"].ToString(),
-                                             DriverAge = dr["DriverAge"].ToString(),
-                                             SumInsured = Convert.ToInt64(dr["SumInsured"]),
-                                             PremiumAmount = Convert.ToInt64(dr["PremiumAmount"]),
-                                             RivisedSI = Convert.ToInt64(dr["RivisedSI"]),
-                                             CustomerCode = dr["CustomerCode"].ToString(),
-                                             CustomerName = dr["CustomerName"].ToString(),
-                                             Status = dr["Status"].ToString(),
-                                             AgentCode = dr["AgentCode"].ToString()
-
-                                         }).ToList();
+                        DTtoListConverter.ConvertTo(ds.Tables[0], out lstMotorModel);
                     }
                     if (ds.Tables[1].Rows.Count > 0)
                     {
-                        lstTravelModel = (from DataRow dr in ds.Tables[1].Rows
-                                          select new TravelModel()
-                                          {
-                                              TravelId = (long)dr["TravelId"],
-                                              IssueDate = Convert.ToDateTime(dr["IssueDate"]),
-                                              PolicyNo = dr["PolicyNo"].ToString(),
-                                              Branch = dr["Branch"].ToString(),
-                                              Planning = dr["Planning"].ToString(),
-                                              NoOfDays = (int)dr["NoOfDays"],
-                                              CoverageType = dr["CoverageType"].ToString(),
-                                              DepartureDate = Convert.ToDateTime(dr["DepartureDate"]),
-                                              DateOfReturn = Convert.ToDateTime(dr["DateOfReturn"]),
-                                              DateOfBirth = Convert.ToDateTime(dr["DateOfBirth"]),
-                                              TravelDestination = dr["TravelDestination"].ToString(),
-                                              PurposeOfVisit = dr["PurposeOfVisit"].ToString(),
-                                              Marketer = dr["Marketer"].ToString(),
-                                              Broker_AgentCode = dr["Broker_AgentCode"].ToString(),
-                                              IssueFrom = dr["IssueFrom"].ToString(),
-                                              AssuredName = dr["AssuredName"].ToString(),
-                                              Gender = dr["Gender"].ToString(),
-                                              CivilID = dr["CivilID"].ToString(),
-                                              Mobile = (long)dr["Mobile"],
-                                              PostBox = dr["PostBox"].ToString(),
-                                              PostalCode = dr["PostalCode"].ToString(),
-                                              City = dr["City"].ToString(),
-                                              Email = dr["Email"].ToString(),
-                                              LocalPersonName = dr["LocalPersonName"].ToString(),
-                                              LocalPersonNo = dr["LocalPersonNo"].ToString(),
-                                              Nationality = dr["Nationality"].ToString(),
-                                              PassportNo = dr["PassportNo"].ToString(),
-                                              Extension = dr["Extension"].ToString(),
-                                              VipCustomer = dr["VipCustomer"].ToString(),
-                                              Remarks = dr["Remarks"].ToString(),
-                                              PolicyIsForOmanNationals_LegalResidentsOfOman = dr["PolicyIsForOmanNationals_LegalResidentsOfOman"].ToString(),
-                                              SpecialDiscount = dr["SpecialDiscount"].ToString(),
-                                              AdditionalConditions = dr["AdditionalConditions"].ToString(),
-                                              MazayaCard = dr["MazayaCard"].ToString(),
-                                              AssuredNameFamilyMember = dr["AssuredNameFamilyMember"].ToString(),
-                                              DateOfBirthFamilyMember = Convert.ToDateTime(dr["DateOfBirthFamilyMember"]),
-                                              Age = (int)dr["Age"],
-                                              Relationship = dr["Relationship"].ToString(),
-                                              Sex = dr["Sex"].ToString(),
-                                              PassportNoFamilyMember = dr["PassportNoFamilyMember"].ToString(),
-                                              ExtensionFamilyMember = dr["ExtensionFamilyMember"].ToString(),
-                                              AgentCode = dr["AgentCode"].ToString(),
-                                              SumInsured = Convert.ToInt64(dr["SumInsured"]),
-                                              PremiumAmount = Convert.ToInt64(dr["PremiumAmount"]),
-                                              RivisedSI = Convert.ToInt64(dr["RivisedSI"]),
-                                              CustomerCode = dr["CustomerCode"].ToString(),
-                                              CustomerName = dr["CustomerName"].ToString(),
-                                              Status = dr["Status"].ToString()
-
-                                          }).ToList();
+                        DTtoListConverter.ConvertTo(ds.Tables[1], out lstTravelModel);
                     }
                     if (ds.Tables[2].Rows.Count > 0)
                     {
-                        lstIndividualModel = (from DataRow dr in ds.Tables[2].Rows
-                                              select new IndividualModel()
-                                              {
-                                                  IndividualId = (long)dr["IndividualId"],
-                                                  QuotationNo = dr["QuotationNo"].ToString(),
-                                                  PolicyNo = dr["PolicyNo"].ToString(),
-                                                  IssueDate = Convert.ToDateTime(dr["IssueDate"]),
-                                                  Branch = dr["Branch"].ToString(),
-                                                  PolicyStartDate = Convert.ToDateTime(dr["PolicyStartDate"]),
-                                                  PolicyEndDate = Convert.ToDateTime(dr["PolicyEndDate"]),
-                                                  NameofthePlan = dr["NameofthePlan"].ToString(),
-                                                  SumAssured = (long)dr["SumAssured"],
-                                                  DateofBirth = Convert.ToDateTime(dr["DateofBirth"]),
-                                                  Age = (int)dr["Age"],
-                                                  Gender = dr["Gender"].ToString(),
-                                                  Broker_AgentCode = dr["Broker_AgentCode"].ToString(),
-                                                  LifeAssuredName = dr["LifeAssuredName"].ToString(),
-                                                  LifeAssuredName_Arabic = dr["LifeAssuredName_Arabic"].ToString(),
-                                                  AssuredGender = dr["AssuredGender"].ToString(),
-                                                  AssuredDateofBirth = Convert.ToDateTime(dr["AssuredDateofBirth"]),
-                                                  AssuredCountryofBirth = dr["AssuredCountryofBirth"].ToString(),
-                                                  AssuredCivilID = dr["AssuredCivilID"].ToString(),
-                                                  AssuredBldgNo_Street = dr["AssuredBldgNo_Street"].ToString(),
-                                                  AssuredPostBox = dr["AssuredPostBox"].ToString(),
-                                                  AssuredPostalCode = dr["AssuredPostalCode"].ToString(),
-                                                  AssuredCity = dr["AssuredCity"].ToString(),
-                                                  AssuredResPhoneNo = dr["AssuredResPhoneNo"].ToString(),
-                                                  AssuredMobileNo = dr["AssuredMobileNo"].ToString(),
-                                                  AssuredEMail = dr["AssuredEMail"].ToString(),
-                                                  Marketer = dr["Marketer"].ToString(),
-                                                  IssueFrom = dr["IssueFrom"].ToString(),
-                                                  Referral = dr["Referral"].ToString(),
-                                                  ReferralRemarks = dr["ReferralRemarks"].ToString(),
-                                                  NomineeName = dr["NomineeName"].ToString(),
-                                                  NomineeName_Arabic = dr["NomineeName_Arabic"].ToString(),
-                                                  NomineeGender = dr["NomineeGender"].ToString(),
-                                                  NomineeDOB = Convert.ToDateTime(dr["NomineeDOB"]),
-                                                  NomineeCountryofBirth = dr["NomineeCountryofBirth"].ToString(),
-                                                  NomineeCivilID = dr["NomineeCivilID"].ToString(),
-                                                  NomineeBldgNo_Street = dr["NomineeBldgNo_Street"].ToString(),
-                                                  NomineePostBox = dr["NomineePostBox"].ToString(),
-                                                  NomineePostalCode = dr["NomineePostalCode"].ToString(),
-                                                  NomineeCity = dr["NomineeCity"].ToString(),
-                                                  NomineeResPhoneNo = dr["NomineeResPhoneNo"].ToString(),
-                                                  NomineeMobileNo = dr["NomineeMobileNo"].ToString(),
-                                                  NomineeEMail = dr["NomineeEMail"].ToString(),
-
-                                                  AppointeeName = dr["AppointeeName"].ToString(),
-                                                  AppointeeAge = Convert.ToInt32(dr["AppointeeAge"]),
-                                                  AppointeeContactNo = dr["AppointeeContactNo"].ToString(),
-                                                  RelationshiptotheNominee = dr["RelationshiptotheNominee"].ToString(),
-
-                                                  AppointeeCivilIDNo = dr["AppointeeCivilIDNo"].ToString(),
-                                                  NomineeOfficePhoneNo = dr["NomineeOfficePhoneNo"].ToString(),
-                                                  AgentCode = dr["AgentCode"].ToString(),
-                                                  SumInsured = Convert.ToInt64(dr["SumInsured"]),
-                                                  PremiumAmount = Convert.ToInt64(dr["PremiumAmount"]),
-                                                  RivisedSI = Convert.ToInt64(dr["RivisedSI"]),
-                                                  CustomerCode = dr["CustomerCode"].ToString(),
-                                                  CustomerName = dr["CustomerName"].ToString(),
-                                                  Status = dr["Status"].ToString()
-
-                                              }).ToList();
+                        DTtoListConverter.ConvertTo(ds.Tables[2], out lstIndividualModel);
                     }
                     if (ds.Tables[3].Rows.Count > 0)
                     {
-                        lstDomesticModel = (from DataRow dr in ds.Tables[3].Rows
-                                            select new DomesticModel()
-                                            {
-
-                                                DomesticId = (long)dr["DomesticId"],
-                                                DraftNo = dr["DraftNo"].ToString(),
-                                                PolicyNo = dr["PolicyNo"].ToString(),
-                                                IssueDate = Convert.ToDateTime(dr["IssueDate"].ToString()),
-                                                Branch = dr["Branch"].ToString(),
-                                                PolicyStartDate = Convert.ToDateTime(dr["PolicyStartDate"].ToString()),
-                                                PolicyEndDate = Convert.ToDateTime(dr["PolicyEndDate"].ToString()),
-                                                NoofYears = (int)dr["NoofYears"],
-                                                Marketer = dr["Marketer"].ToString(),
-                                                Broker_AgentCode = dr["Broker_AgentCode"].ToString(),
-                                                IssueFrom = dr["IssueFrom"].ToString(),
-                                                SpecialDiscount = dr["SpecialDiscount"].ToString(),
-                                                Amount = (long)dr["Amount"],
-                                                AssuredName = dr["AssuredName"].ToString(),
-                                                AssuredName_Arabic = dr["AssuredName_Arabic"].ToString(),
-                                                CivilID = (long)dr["CivilID"],
-                                                PostBox = (long)dr["PostBox"],
-                                                PostalCode = (long)dr["PostalCode"],
-                                                City = dr["City"].ToString(),
-                                                ResPhoneNo = (long)dr["ResPhoneNo"],
-                                                OfficePhoneNo = (long)dr["OfficePhoneNo"],
-                                                MobileNo = (long)dr["MobileNo"],
-                                                HelperProfession = dr["HelperProfession"].ToString(),
-                                                Gender = dr["Gender"].ToString(),
-                                                DateofBirth = Convert.ToDateTime(dr["DateofBirth"]),
-                                                Age = (int)dr["Age"],
-                                                PassportNo = (long)dr["PassportNo"],
-                                                Nationality = dr["Nationality"].ToString(),
-                                                MazayaCard = dr["MazayaCard"].ToString(),
-                                                SameasHouseMaidAddress = dr["SameasHouseMaidAddress"].ToString(),
-                                                Sponsor_ProposerName = dr["Sponsor_ProposerName"].ToString(),
-                                                SponsorPostBox = (long)dr["SponsorPostBox"],
-                                                SponsorPostalCode = (long)dr["SponsorPostalCode"],
-                                                SponsorCity = dr["SponsorCity"].ToString(),
-                                                SponsorMobileNo = (long)dr["SponsorMobileNo"],
-                                                SponsorOfficePhone = (long)dr["SponsorOfficePhone"],
-                                                SponsorNationality = dr["SponsorNationality"].ToString(),
-                                                VIPCustomer = dr["VIPCustomer"].ToString(),
-                                                Email = dr["Email"].ToString(),
-                                                AgentCode = dr["AgentCode"].ToString(),
-                                                SumInsured = Convert.ToInt64(dr["SumInsured"]),
-                                                PremiumAmount = Convert.ToInt64(dr["PremiumAmount"]),
-                                                RivisedSI = Convert.ToInt64(dr["RivisedSI"]),
-                                                CustomerCode = dr["CustomerCode"].ToString(),
-                                                CustomerName = dr["CustomerName"].ToString(),
-                                                Status = dr["Status"].ToString()
-
-
-                                            }).ToList();
+                        DTtoListConverter.ConvertTo(ds.Tables[3], out lstDomesticModel);
                     }
                     if (ds.Tables[4].Rows.Count > 0)
                     {
-                        lstProducerCodeMaster = (from DataRow dr in ds.Tables[4].Rows
-                                                 select new ProducerCodeMaster()
-                                                 {
-
-                                                     ProducerCodeId = (long)dr["ProducerCodeId"],
-                                                     ProducerCode = dr["ProducerCode"].ToString(),
-                                                     ProducerName = dr["ProducerName"].ToString(),
-                                                 }).ToList();
+                        DTtoListConverter.ConvertTo(ds.Tables[4], out lstProducerCodeMaster);
                     }
                     if (ds.Tables[5].Rows.Count > 0)
                     {
-                        //DTtoListConverter.ConvertTo(ds.Tables[5], out lstNewIns);
-                        lstNewIns = (from DataRow dr in ds.Tables[5].Rows
-                                     select new Insurance()
-                                     {
-                                         InsuranceID = Convert.ToInt64(dr["InsuranceID"]),
-                                         DivisionName = dr["DivisionName"].ToString(),
-                                         ProductCode = dr["ProductCode"].ToString(),
-                                         ProductName = dr["ProductName"].ToString(),
-                                         BusinessType = dr["BusinessType"].ToString(),
-
-                                         PolicyNo = dr["PolicyNo"].ToString(),
-                                         AssuredName = dr["AssuredName"].ToString(),
-                                         AssuredMobile = dr["AssuredMobile"].ToString(),
-                                         CustomerName = dr["CustomerName"].ToString(),
-                                         SourceCode = dr["SourceCode"].ToString(),
-
-                                         SourceName = dr["SourceName"].ToString(),
-                                         CustomerCategory = dr["CustomerCategory"].ToString(),
-                                         PolicyFromDate = Convert.ToDateTime(dr["PolicyFromDate"]),
-                                         PolicyToDate = Convert.ToDateTime(dr["PolicyToDate"]),
-                                         GrossPremium = Convert.ToInt64(dr["GrossPremium"]),
-
-                                         DivisionCode = dr["DivnCode"].ToString(),
-                                         CustomerCode = dr["CustomerCode"].ToString(),
-                                         Charges = Convert.ToInt64(dr["Charges"]),
-                                         Status = dr["Status"].ToString(),
-                                         InsType = dr["InsType"].ToString(),
-
-                                         RevisedSumInsured = Convert.ToInt64(dr["RevisedSumInsured"]),
-                                         RenewalPremium = Convert.ToInt64(dr["RenewalPremium"]),
-                                         MarketingExecutive = dr["MarketingExecutive"].ToString(),
-                                         Remarks = dr["Remarks"].ToString(),
-                                         ProducerName = dr["ProducerName"].ToString(),
-                                         Description = dr["Description"].ToString(),
-                                         CallBackDate = Convert.ToDateTime(dr["CallBackDate"]),
-                                         RenewalSumAssured = Convert.ToDecimal(dr["RenewalSumAssured"]),
-                                     }).ToList();
+                        DTtoListConverter.ConvertTo(ds.Tables[5], out lstNewIns);
                     }
+
                     returnCode = 1;
                 }
             }
@@ -888,6 +615,7 @@ namespace MotorApp.DAL
                     cmd.Parameters.AddWithValue("@Password", obj.Password);
                     cmd.Parameters.AddWithValue("@RoleId", obj.Role);
                     cmd.Parameters.AddWithValue("@UserName", obj.UserName);
+                    cmd.Parameters.AddWithValue("@SubRoleType", obj.SubRoleType);
 
                     SqlParameter param = new SqlParameter
                     {
@@ -1281,16 +1009,20 @@ namespace MotorApp.DAL
                         CommandType = CommandType.StoredProcedure
                     };
 
-
-                    cmd.Parameters.AddWithValue("@PremiumAmount", objMotorModel.RenewalPremium);
-                    cmd.Parameters.AddWithValue("@RivisedSI", objMotorModel.RevisedSumInsured);
                     cmd.Parameters.AddWithValue("@InsId", objMotorModel.InsuranceID);
-                    cmd.Parameters.AddWithValue("@GrossPremium", objMotorModel.GrossPremium);
+                    
                     cmd.Parameters.AddWithValue("@Status", objMotorModel.Status ?? "");
                     cmd.Parameters.AddWithValue("@Description", objMotorModel.Description ?? "");
                     cmd.Parameters.AddWithValue("@UserName", uname ?? "");
-                    cmd.Parameters.AddWithValue("@CallBackDate", objMotorModel.CallBackDate);
-                    cmd.Parameters.AddWithValue("@RenewalSumAssured", objMotorModel.RenewalSumAssured);
+                    //cmd.Parameters.Add()
+                    //cmd.Parameters.Add("@CallBackDate", SqlDbType.DateTime2).Value = objMotorModel.CallBackDate; //<- as example
+                    DateTime CallBackDate = objMotorModel.CallBackDate == Convert.ToDateTime("01-01-0001 12.00.00 AM") ? Convert.ToDateTime("01-01-1753 12.00.00 AM") : objMotorModel.CallBackDate;
+                    cmd.Parameters.AddWithValue("@CallBackDate", CallBackDate);
+                    cmd.Parameters.AddWithValue("@SumInsured", objMotorModel.SumInsured);
+                    cmd.Parameters.AddWithValue("@RivisedSI", objMotorModel.RevisedSumInsured);
+                    cmd.Parameters.AddWithValue("@GrossPremium", objMotorModel.GrossPremium);
+                    cmd.Parameters.AddWithValue("@RevisedGrossPremium", objMotorModel.RevisedGrossPremium);
+                    cmd.Parameters.AddWithValue("@Flag", objMotorModel.Flag);
                     returnCode = cmd.ExecuteNonQuery();
 
 
@@ -1310,7 +1042,7 @@ namespace MotorApp.DAL
             try
             {
                 DataSet ds = new DataSet();
-                string[] strBussType = { "Broker", "Direct", "Branch", "Agent" };
+                string[] strBussType = { "Broker", "Direct", "Branches", "Agent" };
                 foreach (var item in strBussType)
                 {
                     using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
@@ -1334,15 +1066,8 @@ namespace MotorApp.DAL
 
                         if (ds.Tables[0].Rows.Count > 0)
                         {
-                            lstBIDashBoard = (from DataRow dr in ds.Tables[0].Rows
-                                              select new BIDashBoard()
-                                              {
-                                                  CalenderId = Convert.ToInt32(dr["CalenderId"]),
-                                                  Renewed = Convert.ToInt32(dr["Renewed"]),
-                                                  Available = Convert.ToInt32(dr["Available"]),
-                                                  MonthName = dr["MonthName"].ToString(),
-                                                  BusinessType = dr["BusinessType"].ToString(),
-                                              }).ToList();
+                            
+                            DTtoListConverter.ConvertTo(ds.Tables[0], out lstBIDashBoard);
                         }
                     }
                 }
@@ -1508,7 +1233,7 @@ namespace MotorApp.DAL
                     cmd.Connection = con;
 
                     cmd.Parameters.AddWithValue("@RoleId", RoleId);
-                    
+
                     cmd.Parameters.AddWithValue("@ProducerName", Uname);
 
 
@@ -1531,7 +1256,10 @@ namespace MotorApp.DAL
             }
             return returnCode;
         }
-        public long GetSearchIns(long RoleId, string PolicyNo, string DivisionName, string AssuredName, string ProductName, string Status, string Uname, out List<Insurance> lstNewIns)
+        public long GetSearchIns(long RoleId, string PolicyNo, string DivisionName, string AssuredName, string ProductName, string Status, 
+                string Uname,DateTime PolicyFromDate, DateTime PolicyToDate, out List<Insurance> lstNewIns
+            , int PageNo,string PageType
+            )
         {
             long returnCode = -1;
 
@@ -1545,8 +1273,8 @@ namespace MotorApp.DAL
                     con.Open();
                     SqlCommand cmd = new SqlCommand
                     {
-                        CommandText = "SP_GetSearch"
-                    };
+                        CommandText = "PGetSearchMasterMotor" //SP_GetSearch
+                };
 
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Connection = con;
@@ -1558,6 +1286,14 @@ namespace MotorApp.DAL
                     cmd.Parameters.AddWithValue("@ProductName", ProductName);
                     cmd.Parameters.AddWithValue("@Status", Status);
                     cmd.Parameters.AddWithValue("@ProducerName", Uname);
+                  //  cmd.Parameters.AddWithValue("@PolicyFromDate", PolicyFromDate);
+                  //  cmd.Parameters.AddWithValue("@PolicyToDate", PolicyToDate);
+                  //  SqlCommand cmd = new SqlCommand("insertsomeDate", conn);
+                    //cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@PolicyFromDate", SqlDbType.DateTime).Value = PolicyFromDate;
+                    cmd.Parameters.Add("@PolicyToDate", SqlDbType.DateTime).Value = PolicyToDate;
+                    cmd.Parameters.AddWithValue("@PageNo", PageNo);
+                    cmd.Parameters.AddWithValue("@PageType", PageType);
 
 
                     SqlDataAdapter sdaAdapter = new SqlDataAdapter
@@ -1568,39 +1304,59 @@ namespace MotorApp.DAL
 
                     if (ds.Tables[0].Rows.Count > 0)
                     {
-                        lstNewIns = (from DataRow dr in ds.Tables[0].Rows
-                                     select new Insurance()
-                                     {
-                                         InsuranceID = Convert.ToInt64(dr["InsuranceID"]),
-                                         DivisionName = dr["DivisionName"].ToString(),
-                                         ProductCode = dr["ProductCode"].ToString(),
-                                         ProductName = dr["ProductName"].ToString(),
-                                         BusinessType = dr["BusinessType"].ToString(),
+                        DTtoListConverter.ConvertTo(ds.Tables[0], out lstNewIns);
+                    }
+                    returnCode = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return returnCode;
+        }
+        public long GetDelegateSearchIns(string PolicyNo, string CustCode, string SourceCode,  DateTime PolicyFromDate, DateTime PolicyToDate, out List<Insurance> lstNewIns
+            , int PageNo, string PageType
+            )
+        {
+            long returnCode = -1;
 
-                                         PolicyNo = dr["PolicyNo"].ToString(),
-                                         AssuredName = dr["AssuredName"].ToString(),
-                                         AssuredMobile = dr["AssuredMobile"].ToString(),
-                                         CustomerName = dr["CustomerName"].ToString(),
-                                         SourceCode = dr["SourceCode"].ToString(),
+            lstNewIns = new List<Insurance>();
 
-                                         SourceName = dr["SourceName"].ToString(),
-                                         CustomerCategory = dr["CustomerCategory"].ToString(),
-                                         PolicyFromDate = Convert.ToDateTime(dr["PolicyFromDate"]),
-                                         PolicyToDate = Convert.ToDateTime(dr["PolicyToDate"]),
-                                         GrossPremium = Convert.ToInt64(dr["GrossPremium"]),
+            try
+            {
+                DataSet ds = new DataSet();
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = "PGetSearchDelegateMotor" //SP_GetSearch
+                    };
 
-                                         DivisionCode = dr["DivnCode"].ToString(),
-                                         CustomerCode = dr["CustomerCode"].ToString(),
-                                         Charges = Convert.ToInt64(dr["Charges"]),
-                                         Status = dr["Status"].ToString(),
-                                         InsType = dr["InsType"].ToString(),
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
 
-                                         RevisedSumInsured = Convert.ToInt64(dr["RevisedSumInsured"]),
-                                         RenewalPremium = Convert.ToInt64(dr["RenewalPremium"]),
-                                         MarketingExecutive = dr["MarketingExecutive"].ToString(),
-                                         Remarks = dr["Remarks"].ToString(),
+                    
+                    cmd.Parameters.AddWithValue("@PolicyNo", PolicyNo);
+                    cmd.Parameters.AddWithValue("@CustCode", CustCode);
+                    cmd.Parameters.AddWithValue("@SourceCode", SourceCode);
+                 
+                    cmd.Parameters.Add("@PolicyFromDate", SqlDbType.DateTime).Value = PolicyFromDate;
+                    cmd.Parameters.Add("@PolicyToDate", SqlDbType.DateTime).Value = PolicyToDate;
+                    cmd.Parameters.AddWithValue("@PageNo", PageNo);
+                    cmd.Parameters.AddWithValue("@PageType", PageType);
 
-                                     }).ToList();
+
+                    SqlDataAdapter sdaAdapter = new SqlDataAdapter
+                    {
+                        SelectCommand = cmd
+                    };
+                    sdaAdapter.Fill(ds);
+
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        DTtoListConverter.ConvertTo(ds.Tables[0], out lstNewIns);
                     }
                     returnCode = 1;
                 }
@@ -1637,15 +1393,16 @@ namespace MotorApp.DAL
 
                     if (ds.Tables[0].Rows.Count > 0)
                     {
-                        lst = (from DataRow dr in ds.Tables[0].Rows
-                               select new Users()
-                               {
-                                   UserId = (long)dr["UserId"],
-                                   UserName = dr["UserName"].ToString(),
-                                   Password = dr["Password"].ToString(),
-                                   RoleId = (long)dr["RoleId"],
-                                   RoleName = dr["RoleName"].ToString(),
-                               }).ToList();
+                        //lst = (from DataRow dr in ds.Tables[0].Rows
+                        //       select new Users()
+                        //       {
+                        //           UserId = (long)dr["UserId"],
+                        //           UserName = dr["UserName"].ToString(),
+                        //           Password = dr["Password"].ToString(),
+                        //           RoleId = (long)dr["RoleId"],
+                        //           RoleName = dr["RoleName"].ToString(),
+                        //       }).ToList();
+                        DTtoListConverter.ConvertTo(ds.Tables[0], out lst);
                     }
                     cmd.Dispose();
                 }
@@ -1656,5 +1413,280 @@ namespace MotorApp.DAL
             }
             return lst;
         }
+        public long GetYearwiseReport(dynamic lstInput, int Years, out DashBoard lstInfo)
+        {
+            long returnCode = -1;
+            lstInfo = new DashBoard();
+            try
+            {
+                if (Years.Equals(0))
+                {
+                    Years = DateTime.Now.Year;
+                }
+                DataSet ds = new DataSet();
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = "SP_GetYearwisePolicyReport"
+                    };
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+                    cmd.Parameters.AddWithValue("@UserName", lstInput.UserName);
+                    cmd.Parameters.AddWithValue("@Password", lstInput.Password);
+                    cmd.Parameters.AddWithValue("@RoleId", lstInput.Role);
+                    cmd.Parameters.AddWithValue("@Year", Years);
+
+                    SqlDataReader reader;
+                    reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        lstInfo.TNPYear = (long)reader.GetValue(0);
+                        lstInfo.TNPUnderProcessYear = (long)reader.GetValue(1);
+                        lstInfo.TNPLostYear = (long)reader.GetValue(2);
+                        lstInfo.TNPRenewedYear = (long)reader.GetValue(3);
+                        lstInfo.PercentageRenewedYear = (decimal)reader.GetValue(4);
+                        lstInfo.TNPMonth = (long)reader.GetValue(5);
+                        lstInfo.TNPLostMonth = (long)reader.GetValue(6);
+                        lstInfo.TNPUnderProcessMonth = (long)reader.GetValue(7);
+                        lstInfo.TNPRenewedMonth = (long)reader.GetValue(8);
+                        lstInfo.PercentageRenewedMonth = (decimal)reader.GetValue(9);
+                        lstInfo.TNPYearPremium = (long)reader.GetValue(10);
+                        lstInfo.TNPUPYearPremium = (long)reader.GetValue(11);
+                        lstInfo.TNPLostYearPremium = (long)reader.GetValue(12);
+                        lstInfo.TNPRenewedYearPremium = (long)reader.GetValue(13);
+                        lstInfo.PercentPremiumRenewedYear = (decimal)reader.GetValue(14);
+                        lstInfo.TNPMonthPremium = (long)reader.GetValue(15);
+                        lstInfo.TNPLostMonthPremium = (long)reader.GetValue(16);
+                        lstInfo.TNPUPMonthPremium = (long)reader.GetValue(17);
+                        lstInfo.TNPRenewedMonthPremium = (long)reader.GetValue(18);
+                        lstInfo.PercentPremiumRenewedMonth = (decimal)reader.GetValue(19);
+                        lstInfo.UserName = (string)reader.GetValue(20);
+
+                        lstInfo.TotPoltoBeRenewed = 0;
+                        lstInfo.TotPolforRenewal = 0;
+                        lstInfo.NoOfPoRenewed = 0;
+                        lstInfo.PolicyLost = 0;
+
+                        lstInfo.TotPoltoBeRenewedCM = 0;
+                        lstInfo.TotPolforRenewalCM = 0;
+
+                        lstInfo.NoOfPoRenewedCM = 0;
+                        lstInfo.PolicyLostCM = 0;
+
+
+                        returnCode = 1;
+                    }
+                    reader.Close();
+                    cmd.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return returnCode;
+        }
+
+        public long BulkUpdateInsuranceStatus(string InsuranceStatusJson, long Loginid, string UserName, string FileType, out string ErrorMsg)
+        {
+            long returnCode = -1;
+            ErrorMsg = string.Empty;
+            //DataTable dt = new DataTable();
+            string sp_name = string.Empty;
+            if (Loginid.Equals(-1))
+            {
+                sp_name = "pBulkDelegateStatus";
+            }
+            else
+            {
+                sp_name = "pBulkUpdateInsuranceStatus";
+            }
+            try
+            {
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = sp_name,
+                        CommandTimeout = 180,
+                        Connection = con,
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    cmd.Parameters.AddWithValue("@InsuranceStatusJson", InsuranceStatusJson);
+                    cmd.Parameters.AddWithValue("@Loginid", Loginid);
+                    cmd.Parameters.AddWithValue("@UserName", UserName);
+                    cmd.Parameters.AddWithValue("@FileType", FileType);
+
+                    SqlParameter param = new SqlParameter
+                    {
+                        ParameterName = "@ErrorMsg",
+                        Direction = ParameterDirection.Output,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Size = 4000,
+                    };
+                    cmd.Parameters.Add(param);
+
+                    returnCode = cmd.ExecuteNonQuery();
+
+                    if (cmd.Parameters["@ErrorMsg"].Value != DBNull.Value)
+                    {
+                        ErrorMsg = cmd.Parameters["@ErrorMsg"].Value.ToString();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return returnCode;
+        }
+        public long GetDelegateAssignToData(out List<Insurance> lstNewIns)
+        {
+            long returnCode = -1;
+
+            lstNewIns = new List<Insurance>();
+
+            try
+            {
+                DataSet ds = new DataSet();
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = "pGetDelegateData"
+                    };
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+
+
+                    SqlDataAdapter sdaAdapter = new SqlDataAdapter
+                    {
+                        SelectCommand = cmd
+                    };
+                    sdaAdapter.Fill(ds);
+                    //ds.Tables[0].Rows.Count;
+
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        DTtoListConverter.ConvertTo(ds.Tables[0], out lstNewIns);
+                    }
+
+
+                    returnCode = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return returnCode;
+        }
+        public long BulkUpdateInsurance(string InsuranceJson, long Loginid, string UserName, string FileType, out string ErrorMsg)
+        {
+            long returnCode = -1;
+            ErrorMsg = string.Empty;
+           
+            try
+            {
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = "pBulkUploadInsurance",
+                        CommandTimeout = 180,
+                        Connection = con,
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    cmd.Parameters.AddWithValue("@InsuranceJson", InsuranceJson);
+                    cmd.Parameters.AddWithValue("@Loginid", Loginid);
+                    cmd.Parameters.AddWithValue("@UserName", UserName);
+                    cmd.Parameters.AddWithValue("@FileType", FileType);
+
+                    SqlParameter param = new SqlParameter
+                    {
+                        ParameterName = "@ErrorMsg",
+                        Direction = ParameterDirection.Output,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Size = 4000,
+                    };
+                    cmd.Parameters.Add(param);
+
+                    returnCode = cmd.ExecuteNonQuery();
+
+                    if (cmd.Parameters["@ErrorMsg"].Value != DBNull.Value)
+                    {
+                        ErrorMsg = cmd.Parameters["@ErrorMsg"].Value.ToString();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return returnCode;
+        }
+
+        public long GetAutocompleteUserList(string Prefix,string PageType, out List<Users> lstUsers)
+        {
+            long returnCode = -1;
+
+            lstUsers = new List<Users>();
+            
+            
+            try
+            {
+                DataSet ds = new DataSet();
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = "pGetUserAutoComplete"
+                    };
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+
+                    cmd.Parameters.AddWithValue("@Prefix", Prefix);
+                    cmd.Parameters.AddWithValue("@Type", PageType);
+
+                    SqlDataAdapter sdaAdapter = new SqlDataAdapter
+                    {
+                        SelectCommand = cmd
+                    };
+                    sdaAdapter.Fill(ds);
+                    
+
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        DTtoListConverter.ConvertTo(ds.Tables[0], out lstUsers);
+                    }
+
+
+                    returnCode = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return returnCode;
+        }
+        
+
     }
 }

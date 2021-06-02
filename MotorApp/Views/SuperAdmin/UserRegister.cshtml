@@ -27,6 +27,7 @@
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
             </div>
         </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.RoleName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -34,6 +35,13 @@
                   new SelectList(Enum.GetValues(typeof(MotorInsRoles))),
                   "Select Role",
                   new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.SubRoleType, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SubRoleType, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SubRoleType, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
@@ -54,14 +62,18 @@
                 event.preventDefault();
                 var username;
                 var role;
-                var pwsd;
+                var pswd;
+                var subType;
                 role = $('#Role').val();
                 username = $('#UserName').val();
                 pswd = $('#Password').val();
+                subType = $('#SubRoleType').val();
+
                 var Users = {
                     UserName: username,
                     Role: role,
                     Password: pswd,
+                    SubRoleType: subType,
 
                 };
                 $.ajax({

@@ -22,19 +22,18 @@ namespace MotorApp.Models
 
         public long RoleId { get; set; }
         public string RoleName { get; set; }
+        public string SubRoleType { get; set; }
         public MotorInsRoles Role { get; set; }
     }
     public enum MotorInsRoles
     {
 
         Admin = 1,
-
         Agent = 2,
         Broker = 3,
-
         Branches = 4,
-
-        DirectSales = 5
+        DirectSales = 5,
+        CallingAgent = 6,
 
     }
 }

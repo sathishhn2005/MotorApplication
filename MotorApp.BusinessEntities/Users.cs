@@ -15,6 +15,10 @@ namespace MotorApp.BusinessEntities
         public long RoleId { get; set; }
         public string RoleName { get; set; }
         public MotorInsRoles Role { get; set; }
+        
+        public string DivisionCode { get; set; }
+
+        public string DivisionName { get; set; }
     }
     public enum MotorInsRoles
     {

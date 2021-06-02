@@ -1,8 +1,7 @@
 ﻿@model IEnumerable<MotorApp.BusinessEntities.Insurance>
 @using MotorApp.BusinessEntities;
 @{ Layout = "~/Views/Shared/_Layout.cshtml"; }
-@{
-    List<SelectListItem> listItems = new List<SelectListItem>();
+@{ List<SelectListItem> listItems = new List<SelectListItem>();
     listItems.Add(new SelectListItem
     {
         Text = "Lost",
@@ -15,18 +14,43 @@
     });
     listItems.Add(new SelectListItem
     {
+        Text = "To Be Renewed",
+        Value = "To Be Renewed"
+    });
+    listItems.Add(new SelectListItem
+    {
         Text = "Under Process",
         Value = "Under Process"
-    });
-}
+    }); }
+
+<style type="text/css">
+    .ui-autocomplete {
+        max-height: 100px;
+        overflow-y: auto;
+        /* prevent horizontal scrollbar */
+        overflow-x: hidden;
+    }
+    /* IE 6 doesn't support max-height
+    * we use height instead, but this forces the menu to always be this tall
+    */
+    * html .ui-autocomplete {
+        height: 100px;
+    }
+
+    .fixed-height {
+        padding: 1px;
+        max-height: 200px;
+        overflow: auto;
+    }
+</style>
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Master Motor</h1>
+    <h1 class="h3 mb-0 text-gray-800">Transactions</h1>
     <ol class="breadcrumb my-2">
         <li class="breadcrumb-item">
             <a href="./">Home</a>
         </li>
         <li class="breadcrumb-item">Masters</li>
-        <li class="breadcrumb-item active" aria-current="page">Master Motor</li>
+        @*<li class="breadcrumb-item active" aria-current="page">Master Motor</li>*@
     </ol>
 </div>
 <div class="row">
@@ -42,20 +66,19 @@
                         {
                             <div class="col-2">
                                 @*<input class="form-control form-control-sm  mb-3" name="PolicyNo" type="text" placeholder="Policy No">*@
-                                @Html.TextBox("PolicyNo", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Policy No" })
+                                @Html.TextBox("PolicyNo", "", new { @class = "form-control form-control-sm  mb-3", @onchange = "onchangPolicyNo();", PlaceHolder = "Policy No" })
+
                             </div>
                             <div class="col-2">
                                 @*<input class="form-control form-control-sm  mb-3" name="DivisionName" type="text" placeholder="Division Name">*@
-                                @Html.TextBox("DivisionName", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Division Name" })
+                                @*@Html.TextBox("DivisionName", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Division Name" })*@
+                                @Html.TextBox("PolicyFromDate", "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
                             </div>
                             <div class="col-2">
                                 @*<input class="form-control form-control-sm  mb-3" name="AssuredName" type="text" placeholder="Assured Name">*@
-                                @Html.TextBox("AssuredName", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Assured Name" })
-                            </div>
-                            <div class="col-2">
-                                @*<input class="form-control form-control-sm  mb-3" name="ProductName" type="text" placeholder="Product Name">*@
-                                @Html.TextBox("ProductName", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Product Name" })
-                            </div>
+                                @*@Html.TextBox("AssuredName", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Assured Name" })*@
+                                @Html.TextBox("PolicyToDate", "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
+                            </div> @*<div class="col-2">*@ @*<input class="form-control form-control-sm  mb-3" name="ProductName" type="text" placeholder="Product Name">*@ @*@Html.TextBox("ProductName", "", new { @class = "form-control form-control-sm  mb-3", PlaceHolder = "Product Name" })*@ @*</div>*@
                             <div class="col-2">
                                 @*<select class="form-control form-control-sm" name="Status" id="Status">
                                         <option value="">-Select-</option>
@@ -65,14 +88,29 @@
                                     </select>*@
                                 @Html.DropDownList("Status", listItems, "-- Select Status --", new { @class = "form-control form-control-sm" })
                             </div>
-                            <div class="col-2 text-center">
+                            <div class="col-2">
+                                @if (ViewBag.RoleId == 1)
+                                {
+                                    <input type="text" class="form-control form-control-sm" name="UserName" id="txtUserName" placeholder="User Name" />
+
+                                }
+                            </div>
+                            <div class="col-2">
+                                @if (ViewBag.RoleId == 1)
+                                {
+                                    <input type="text" class="form-control form-control-sm" name="DivisionName" id="txtDivisionNam" placeholder="Branch Name" />
+
+                                }
+                            </div>
+
+                            <div class="col-2">
                                 @*
                                     <a>Search</a>*@
                                 @*
                                     <button class="btn btn-primary btn-sm" type="button">
                                     <i class="fas fa-search fa-sm"></i> Search
                                     </button>*@
-                                <input class="btn btn-primary btn-sm" type="submit" value="Search" />
+                                <input id="btnMotorSearch" class="btn btn-primary btn-sm" type="submit" value="Search" />
                                 @*<input type="button" value="Submit" id="btnsubmit" onclick="submitForm()">*@
 
                                 <button type="button" id="btnClear" class="btn btn-secondary btn-sm waves-effect">Clear</button>
@@ -94,26 +132,87 @@
                 </div>
                 @if (ViewBag.RoleId == 1)
                 {
-                    <div>
-                        <a class="btn btn-primary btn-sm mx-1" href="MotorInsurance#step-1">
-                            <i class="fas fa-user-plus fa-sm"></i> Add
-                            Single Policy
-                        </a>
-                        <button class="btn btn-primary btn-sm mx-1" type="button" data-toggle="modal" data-backdrop="static"
-                                data-target="#uploadBulk">
-                            <i class="fas fa-upload fa-sm"></i> Bulk Upload Policy
-                        </button>
+                    <table>
+                        <tr>
+                            @*<td>
+                                    <input type="file" id="fileUploadAssignTo" onchange="HideManuvalUpdateControl();" accept=".csv" />
+                                    <input type="button" id="btnBulkAssignTo" class="btn btn-primary btn-sm mx-1" value="Upload AssignTo" onclick="csvFileUpload();" />
 
-                    </div>
-                }
+                                </td>*@
+                            <td>
+                                <a class="btn btn-primary btn-sm mx-1" href="MotorInsurance#step-1">
+                                    <i class="fas fa-user-plus fa-sm"></i> Add
+                                    Single Policy
+                                </a>
+
+                            </td>
+                            @*<td>
+                                    <button class="btn btn-primary btn-sm mx-1" type="button" data-toggle="modal" data-backdrop="static"
+                                            data-target="#uploadBulk">
+                                        <i class="fas fa-upload fa-sm"></i> Bulk Upload Policy
+                                    </button>
+                                </td>*@
+                        </tr>
+
+                    </table>}
+
             </div>
+
+            @if (ViewBag.RoleId == 1)
+            {
+                <div class="card p-3 mx-3">
+                    <div class="d-flex justify-content-between">
+
+
+                        <div class="form-inline">
+                            <label class="col-form-label font-bold mr-3" for="fileUploadMotorPolicies">File Upload:</label>
+                            <input type="file" id="fileUploadMotorPolicies" onchange="HideManuvalUpdateControl();" accept=".csv" />
+                            <input type="button" id="uploadMotorPolicies" class="btn btn-primary btn-sm mx-1" value="Upload CSV File" onclick="csvFileUpload();" />
+                        </div>
+                        <div>
+                            <div class="d-flex justify-content-start">
+                                <div id="tdUpdatecheckbox" class="form-inline">
+                                    <label class="col-form-label font-bold mr-3" for="inlineFormInputName2">Bulk Select Option:</label>
+                                    <input type="checkbox" id="tblMotorRowall" class="form-check-input" onchange="clicktblMotorCheckBoxsStatus('','0','tbl',this,'')">
+                                    <label class="form-check-label" for="tblMotorRowall">
+                                        Select All
+                                    </label>
+                                </div>
+                                <div id="tdddlGrdStatus" class="form-inline mx-5">
+                                    <label class="col-form-label font-bold mr-3" for="ddlGrdStatus">Bulk Select Option:</label>
+                                    <select class="form-control form-control-sm" id="ddlGrdStatus" name="Status" required="required" onchange="onchangeDDlBulkStatus();">
+                                        <option disabled selected value="0"> -- Select an option -- </option>
+                                        <option value="1">Renewed</option>
+                                        <option value="2">Lost</option>
+                                        <option value="3">Under Process</option>
+                                    </select>
+                                </div>
+
+                                <div id="tdUpdateStatus">
+                                    <button class="btn btn-primary btn-sm mx-1" type="button" id="btnManualUpdate" onclick="bulkUpdateStatus('Manual');">
+                                        Update Status
+                                    </button>
+                                    <input type="button" id="btnresetCall" class="btn btn-secondary btn-sm waves-effect" value="Reset" onclick="resetCall();" />
+
+                                    @*<hidden id="hdntblMotorValue" value=@Html.Raw(Json.Encode(Model))></hidden>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
             <div class="card-body">
-                <div class="table-responsive">
+                <div class="table-responsive position-relative overflow-hidden">
+                    <div class="lds-ring-bg"><div class="lds-ring"><div></div><div></div><div></div><div></div></div></div>
+
                     <table id="tblMotor" class="table align-items-center table-flush">
                         <thead>
                             <tr>
+                                <th>@*<input type="checkbox" id="tblMotorRowall" onchange="clicktblMotorCheckBoxsStatus('','0','tbl',this,'')">*@</th>
                                 <th>Policy No</th>
-                                <th>Division Name</th>
+
                                 <th>Insurance Type</th>
                                 <th>Policy Start Date</th>
                                 <th>Policy End Date</th>
@@ -134,8 +233,13 @@
                             foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>@Html.DisplayFor(modelItem => item.PolicyNo)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.DivisionName)</td>
+                                    <td><input type="checkbox" id="tblMotorRow" onchange="clicktblMotorCheckBoxsStatus('@Html.DisplayFor(modelItem => item.PolicyNo)',@Html.DisplayFor(modelItem => item.InsuranceID),'tr',this,'@Html.DisplayFor(modelItem => item.Status)')"></td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PolicyNo)
+                                        @Html.HiddenFor(modelItem => item.InsuranceID)
+
+                                    </td>
+
                                     <td>@Html.DisplayFor(modelItem => item.InsType)</td>
                                     <td>@Html.DisplayFor(modelItem => item.PolicyFromDate)</td>
                                     <td>@Html.DisplayFor(modelItem => item.PolicyToDate)</td>
@@ -143,16 +247,18 @@
                                     <td>
                                         @if (item.Status.Equals("Renewed"))
                                         {
-                                            <span class="badge badge-success">@Html.DisplayFor(modelItem => item.Status)</span>
-                                        }
+                                            <span class="badge badge-success">@Html.DisplayFor(modelItem => item.Status)</span>}
 
                                         @if (item.Status.Equals("Lost"))
                                         {
-                                            <span class="badge badge-danger">@Html.DisplayFor(modelItem => item.Status)</span>
-                                        }
+                                            <span class="badge badge-danger">@Html.DisplayFor(modelItem => item.Status)</span>}
                                         @if (item.Status.Equals("Under Process"))
                                         {
                                             <span class="badge badge-info">@Html.DisplayFor(modelItem => item.Status)</span>
+                                        }
+                                        @if (item.Status.Equals("To Be Renewed"))
+                                        {
+                                            <span class="badge badge-dark">@Html.DisplayFor(modelItem => item.Status)</span>
                                         }
                                         @if (item.Status.Equals(""))
                                         {
@@ -167,8 +273,7 @@
 
                                             <a href="Edit?MotorID=@item.InsuranceID">
                                                 <i class="fas fa-pencil-alt pointer" aria-hidden="true"></i>
-                                            </a>
-                                        }
+                                            </a>}
                                     </td>
 
                                 </tr>
@@ -186,288 +291,261 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title mt-0" id="myModalLabel">Premium Sheet</h5>
+                <h5 class="modal-title mt-0 text-center" id="myModalLabel">Premium Sheet</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-5 mx-auto">
-                        <form id="formRenewal" class="form-horizontal">
+                <form id="formRenewal" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-5 mx-auto">
+
                             <div class="form-group row mb-3">
                                 <input type="hidden" name="InsuranceID" id="InsuranceID">
-                                <label for="inputEmail3" class="col-3 col-form-label">Division Code</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Division Code</label>
                                 <div class="col-9">
                                     <input type="text" class="form-control form-control-sm" readonly name="DivisionCode" required id="txtDivisionCode">
                                 </div>
                             </div>
+                            @*<div class="form-group row mb-3">
+                                    <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Division Name</label>
+                                    <div class="col-9">
+                                        <input type="text" class="form-control form-control-sm" readonly name="DivisionName" required id="txtDivisionName">
+                                    </div>
+                                </div>*@
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Division Name</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="DivisionName" required id="txtDivisionName">
-                                </div>
-                            </div>
-                            <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Product Code</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Product Code</label>
                                 <div class="col-9">
                                     <input type="text" class="form-control form-control-sm" readonly name="ProductCode" required id="txtProductCode">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Product Name</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Product Name</label>
                                 <div class="col-9">
                                     <input type="text" class="form-control form-control-sm" readonly name="ProductName" required id="txtProductName">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Business Type</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Business Type</label>
                                 <div class="col-9">
                                     <input type="text" class="form-control form-control-sm" readonly name="BusinessType" required id="txtBusinessType">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Policy No</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Policy No</label>
                                 <div class="col-9">
                                     <input type="text" class="form-control form-control-sm" readonly name="PolicyNo" required id="txtPolicyNo">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Assured Name</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Assured Name</label>
                                 <div class="col-9">
                                     <input type="text" class="form-control form-control-sm" readonly name="AssuredName" required id="txtAssuredName">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Assured Mobile</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Assured Mobile</label>
                                 <div class="col-9">
                                     <input type="text" class="form-control form-control-sm" readonly name="AssuredMobile" required id="txtAssuredMobile">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Customer Name</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Customer Name</label>
                                 <div class="col-9">
                                     <input type="text" class="form-control form-control-sm" readonly name="CustomerName" required id="txtCustomerName">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Source Code</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Source Code</label>
                                 <div class="col-9">
                                     <input type="text" class="form-control form-control-sm" readonly name="SourceCode" required id="txtSourceCode">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Source Name</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Source Name</label>
                                 <div class="col-9">
                                     <input type="text" class="form-control form-control-sm" readonly name="SourceName" required id="txtSourceName">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Customer Category</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Customer Category</label>
                                 <div class="col-9">
                                     <input type="text" class="form-control form-control-sm" readonly name="CustomerCategory" required id="txtCustomerCategory">
                                 </div>
                             </div>
-                            <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Policy From Date</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="PolicyFromDate" required id="PolicyFromDate">
-                                </div>
-                            </div>
-                            <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Policy To Date</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="PolicyToDate" required id="PolicyToDate">
-                                </div>
-                            </div>
 
-                            @*<div class="form-group row mb-3">
-                                    <label for="inputEmail3" class="col-3 col-form-label">Expired Gross Premium</label>
-                                    <div class="col-9">
-                                        <div class="input-group input-group-sm">
-                                            <div class="input-group-prepend">
-                                                <sp
-                                +an class="input-group-text" id="basic-addon1">₹</span>
-                                            </div>
-                                            <input type="number" class="form-control form-control-sm" name="GrossPremium" required id="txtGrossPremium">
-                                        </div>
-                                    </div>
-                                </div>*@
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Expired SumInsured</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Sum Insured</label>
                                 <div class="col-9">
                                     <div class="input-group input-group-sm">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">₹</span>
+                                            <span class="input-group-text" id="basic-addon1">OMR</span>
                                         </div>
-                                        @if (Model != null)
-                                        {
-                                            if (ViewBag.RoleId == 1)
-                                            {
-                                                <input type="number" class="form-control form-control-sm" onkeyup="CalcRenewalAdmin()" name="RevisedSumInsured" id="txtRevisedSumInsured">
-                                            }
-                                            else
-                                            {
-                                                <input type="number" class="form-control form-control-sm" readonly name="RevisedSumInsured" id="txtRevisedSumInsured">
-                                            }
-                                        }
+                                        <input type="number" class="form-control form-control-sm" name="SumInsured" id="txtSumInsured">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Expired Premium</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Revised Sum Insured</label>
                                 <div class="col-9">
                                     <div class="input-group input-group-sm">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">₹</span>
+                                            <span class="input-group-text" id="basic-addon1">OMR</span>
+                                        </div>
+                                        <input type="number" class="form-control form-control-sm" name="RevisedSumInsured" id="txtRevisedSumInsured">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Gross Premium</label>
+                                <div class="col-9">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">OMR</span>
                                         </div>
                                         <input type="number" class="form-control form-control-sm" name="GrossPremium" required id="txtGrossPremium">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Renewal Sum Assured</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Revised Gross Premium</label>
                                 <div class="col-9">
                                     <div class="input-group input-group-sm">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">₹</span>
+                                            <span class="input-group-text" id="basic-addon1">OMR</span>
                                         </div>
-                                        @if (Model != null)
-                                        {
-                                            if (ViewBag.RoleId == 1)
-                                            {
-                                                <input type="number" class="form-control form-control-sm" name="RenewalSumAssured" required id="txtRenewalSumAssured">
-                                            }
-                                            else
-                                            {
-                                                <input type="number" class="form-control form-control-sm" readonly name="RenewalSumAssured" required id="txtRenewalSumAssured">
-                                                <select onchange="CalcRenewalSA()" class="form-control form-control-sm" id="SumAssuredPercentage" name="SumAssuredPercentage">
-                                                    <option disabled selected> -- Select % -- </option>
-                                                    <option>-1</option>
-                                                    <option>-2</option>
-                                                    <option>-3</option>
-                                                    <option>-4</option>
-                                                    <option>-5</option>
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                    <option>4</option>
-                                                    <option>5</option>
+                                        <input type="number" class="form-control form-control-sm" name="RevisedGrossPremium" required id="txtRevisedGrossPremium">
+                                    </div>
+                                </div>
+                            </div>
 
-                                                </select>
-                                            }
-                                        }
-                                    </div>
-                                </div>
-                            </div>
+                           
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Renewal Premium</label>
-                                <div class="col-9">
-                                    <div class="input-group input-group-sm">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">₹</span>
-                                        </div>
-                                        <input type="number" class="form-control form-control-sm" name="RenewalPremium" required id="txtRenewalPremium">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Marketing Executive</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Marketing Executive</label>
                                 <div class="col-9">
                                     <input type="text" class="form-control form-control-sm" readonly name="MarketingExecutive" required id="txtMarketingExecutive">
                                 </div>
                             </div>
+
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Remarks</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="Remarks" required id="txtRemarks">
-                                </div>
-                            </div>
-                            <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Customer Code</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Customer Code</label>
                                 <div class="col-9">
                                     <input type="text" class="form-control form-control-sm" readonly name="CustomerCode" required id="txtCustomerCode">
                                 </div>
                             </div>
+                            @*<div class="form-group row mb-3">
+                                    <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Charges</label>
+                                    <div class="col-9">
+                                        <input type="text" class="form-control form-control-sm" readonly name="Charges" required id="txtCharges">
+                                    </div>
+                                </div>*@
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Charges</label>
-                                <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" readonly name="Charges" required id="txtCharges">
-                                </div>
-                            </div>
-                            <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Insurance Type</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Insurance Type</label>
                                 <div class="col-9">
                                     <input type="text" class="form-control form-control-sm" readonly name="InsuranceType" required id="txtInsuranceType">
                                 </div>
                             </div>
+
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">CallBack Date</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Vehicle Type</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" readonly name="VehicleType" required id="txtVehicleType">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Vehicle Make</label>
+                                <div class="col-9">
+
+                                    <input type="text" class="form-control form-control-sm" readonly name="VehicleMake" required id="txtVehicleMake">
+
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">RegNo</label>
+                                <div class="col-9">
+
+                                    <input type="text" class="form-control form-control-sm" readonly name="RegNo" required id="txtRegNo">
+
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">EngineNo</label>
+                                <div class="col-9">
+
+                                    <input type="text" class="form-control form-control-sm" readonly name="ChassisNo" required id="txtEngineNo">
+
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">ChassisNo</label>
+                                <div class="col-9">
+                                    <input type="text" class="form-control form-control-sm" readonly name="VehicleType" required id="txtChassisNo">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">CallBack Date</label>
                                 <div class="col-9">
                                     <input type="datetime-local" class="form-control form-control-sm" name="CallBackDate" id="txtCallBackDate">
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="inputEmail3" class="col-3 col-form-label">Status</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Status <span class="text-danger">*</span></label>
                                 <div class="col-9">
                                     <select class="form-control form-control-sm" id="txtStatus" name="Status" required="required">
                                         <option disabled selected> -- Select an option -- </option>
                                         <option>Renewed</option>
+                                        <option>To Be Renewed</option>
                                         <option>Lost</option>
                                         <option>Under Process</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
-                                <label for="Description13" class="col-3 col-form-label">Description</label>
+                                <label for="inputEmail3" class="col-3 col-form-label pt-0 font-14">Remarks <span class="text-danger">*</span></label>
                                 <div class="col-9">
-                                    <textarea type="text" class="form-control form-control-sm" rows="3" name="Description" required id="txtDescription"></textarea>
+                                    @*<input type="text" class="form-control form-control-sm" name="Remarks" required id="txtRemarks">*@
+                                    <textarea type="text" class="form-control form-control-sm" rows="3" name="Description" required id="txtRemarks"></textarea>
                                 </div>
                             </div>
+
                             <div class="form-group row mb-3 col-md-offset-4">
                                 <div class="justify-content-center">
                                     <button type="button" data-dismiss="modal" class="btn btn-secondary btn-sm waves-effect">Close</button>
                                     <button type="button" id="btnRenewal" class="btn btn-primary btn-sm waves-effect waves-light">Submit</button>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                    <div class="col-5 mx-auto">
-                        <div>
-                            <h4 class="primay-color mt-3 ">Call Details:</h4>
+
                         </div>
-                        <div class="d-flex justify-content-between align-items-center call-section mb-5 mt-3">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png" class="rounded-circle" alt="Cinque Terre" height="60">
-                            <div>
-                                <h4 class="my-0 primay-color">(319) 555-0115</h4>
-                                <small class="text-muted font-13">Call to Alrene Fisher</small>
+                        <div class="col-6 mx-auto">
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="">
+                                        <div class="card">
+                                            <div class="card-header"><div class="image text-center mt-2"> <img src="https://cdn.document360.io/e6158f83-d9fe-47bc-ab7f-2339b3e6f8b6/Images/Documentation/zoiper-logo.png" class="rounded" width="155"> </div></div><div class="card-body">
+                                                <div class="d-flex flex-column align-items-center text-center">
+                                                    <div class="">
+                                                        <h5 id="h1AssuredName">
+                                                        </h5>
+                                                        <p id="h1PolicyNumber" class="text-secondary mb-1 font-16"></p>
+                                                        <p id="h1PolicyFromToDate" class="text-muted mb-1 font-16"></p>
+                                                        <p id="h1MobileNumber" class="text-muted font-16"></p>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <i class="fa fa-microphone font-20 text-muted mr-2 pointer"></i>
-                                <i class="fa fa-history font-20 text-muted ml-2 pointer"></i>
-                            </div>
-                            <button type="button" class="btn btn-success btn-circle btn-xl btn-large pointer">
-                                <i class="fa fa-phone"></i>
-                            </button>
-                        </div>
-                        <div>
-                            <h6 class="primay-color">Alrene Fisher Details:</h6>
-                        </div>
-                        <div class="text-muted mb-4 ">Voicemain</div>
-                        <audio controls preload="metadata" style=" width:100%;">
-                            <source src="" type="audio/mpeg">
-                            Your browser does not support the audio element.
-                        </audio>
-                        <div class="row">
-                            <div class="col-12">
-                                <label for="NotesContainer" class="control-label text-muted mt-4">Alrene Fisher Notes</label>
-                                <textarea class="form-control form-control-sm" id="NotesContainer" rows="10" placeholder="Notes">Alrene Fisher requested a call back on Tomorrow Morning 10:30 AM.
-                        </textarea>
-                            </div>
+
                         </div>
 
                     </div>
-                </div>
+                </form>
             </div>
 
         </div>
@@ -702,13 +780,15 @@
         });
     });
     function renewal(MotorId) {
-
+        
         // $('#myModal').modal('show');
         Id = MotorId;
+
         $.ajax({
+            type: "GET",
             url: '/Home/EditModal/?InsId=' + MotorId, // The method name + paramater
             success: function (data) {
-                
+
                 $('#InsuranceID').val(data.InsuranceID);
                 $('#txtDivisionCode').val(data.DivisionCode);
                 $('#txtDivisionName').val(data.DivisionName);
@@ -721,10 +801,14 @@
 
                 $('#txtAssuredName').val(data.AssuredName);
 
+
                 $('#txtAssuredMobile').val(data.AssuredMobile);
 
-                $('#txtCustomerName').val(data.CustomerName);
+                document.getElementById("h1MobileNumber").innerHTML = 'Tel:' + data.AssuredMobile;
+                document.getElementById("h1PolicyNumber").innerHTML = 'Policy Number: ' + data.PolicyNo;
+                document.getElementById("h1AssuredName").innerHTML = data.AssuredName;
 
+                $('#txtCustomerName').val(data.CustomerName);
                 $('#txtSourceCode').val(data.SourceCode);
 
                 $('#txtSourceName').val(data.SourceName);
@@ -735,10 +819,6 @@
                 //Fromvalue = value.toDateString()
                 Fromvalue = value.toISOString();
 
-                //var Str =
-                //    ("00" + (value.getDate())).slice(-2)
-                //    + "-" + ("00" + value.getMonth()+1).slice(-2)
-                //    + "-" + value.getFullYear();
                 var Str =
 
                     ("00" + value.getDate()).slice(-2)
@@ -754,12 +834,11 @@
                     + "-" + ("00" + (valuee.getMonth() + 1)).slice(-2)
                     + "-" + valuee.getFullYear()
                 $('#PolicyToDate').val(ToStr);
+                document.getElementById("h1PolicyFromToDate").innerHTML = 'Policy Date: ' + Str + ' To ' + ToStr;
 
+                $('#txtSumInsured').val(data.SumInsured);
                 $('#txtGrossPremium').val(data.GrossPremium);
-
                 $('#txtRevisedSumInsured').val(data.RevisedSumInsured);
-
-                $('#txtRenewalPremium').val(data.RenewalPremium);
 
                 $('#txtMarketingExecutive').val(data.MarketingExecutive);
 
@@ -772,6 +851,13 @@
                 $('#txtDescription').val(data.Description);
                 $('#txtRenewalSumAssured').val(data.RenewalSumAssured);
 
+                //Vechile Information
+                $('#txtVehicleType').val(data.VehicleType);
+                $('#txtVehicleMake').val(data.VehicleMake);
+                $('#txtRegNo').val(data.RegNo);
+                $('#txtEngineNo').val(data.EngineNo);
+                $('#txtChassisNo').val(data.ChassisNo);
+
                 SARenewalCanstant = data.RenewalSumAssured;
 
                 var callBackValue = new Date(parseInt(data.CallBackDate.replace("/Date(", "").replace(")/", ""), 10));
@@ -781,14 +867,30 @@
                     + "-" + ("00" + (callBackValue.getMonth() + 1)).slice(-2)
                     + "-" + callBackValue.getFullYear()
                 $('#txtCallBackDate').val(ToStrCB);
+                setTimeout(function () {
+                    $('a[href^="zoiper:+968"]').each(function () {
+                        var oldNumber = $(this).attr("href"); // Get current url
+                        var newNumber = oldNumber.replace("zoiper:+968", "zoiper:0"); // Create new url
+                        $(this).attr("href", newNumber); // Set herf value
+                    });
+                }, 3000);
                 // $('#myModal').html(data); // This should be an empty div where you can inject your new html (the partial view)
             }
+           
         });
     }
 
 
     $(document).ready(function () {
         $('#btnRenewal').on('click', function () {
+            if ($('#txtRemarks').val() == "" || $('#txtRemarks').val() == "") {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '',
+                    text: "Please provide Remarks.",
+                })
+                return false;
+            }
             var renewalData = $('#formRenewal').serialize();
             $.ajax({
 
@@ -824,6 +926,8 @@
         });
     });
 
+    var lstMoter = [];
+
     $(document).ready(function () {
         $('#btnSearch').on('click', function () {
             var formData = $('#MotorForm').serialize();
@@ -845,93 +949,135 @@
                 }
             })
         });
+
+
+        $(".dataTables_paginate").on('click', function (event) {
+            //event.stopPropagation();
+            // event.stopImmediatePropagation();
+            //(... rest of your JS code)
+
+            if ($("#tblMotorRowall").prop("checked") == true) {
+                $("#tblMotorRowall").prop("checked", false);
+                // clicktblMotorCheckBoxsStatus('', '0', 'tbl', this, '');
+            }
+
+            //$($('.dataTables_paginate')[0].childNodes[0].childNodes).each(function (index, value) {
+
+
+            //    //var ClassList = $('.dataTables_paginate')[0].childNodes[0].childNodes[index].classList;
+            //    //for (i = 0; i  <= ClassList.length; i++) {
+            //    //    if (ClassList[i] == 'active') {
+            //    //        var PageId = $('.dataTables_paginate')[0].childNodes[0].childNodes[index].innerText;
+            //    //    }
+
+            //    //}
+            //    //alert(PageId);
+            //});
+
+
+            //alert('Page button');
+        });
+
+
     });
 
     window.onload = function () {
-        var btn = document.getElementById('uploadBtn'),
-            progressBar = document.getElementById('progressBar'),
-            progressOuter = document.getElementById('progressOuter'),
-            msgBox = document.getElementById('msgBox');
-        var fileUpload = $("#fileUploadMotor").get(0);
-        var files = fileUpload.files;
-        var files = fileUpload.files;
+        //var btn = document.getElementById('uploadBtn'),
+        //    progressBar = document.getElementById('progressBar'),
+        //    progressOuter = document.getElementById('progressOuter'),
+        //    msgBox = document.getElementById('msgBox');
+        //var fileUpload = $("#fileUploadMotor").get(0);
+        //var files = fileUpload.files;
+        //var files = fileUpload.files;
 
-        // Create FormData object
-        var fileData = new FormData();
-        $("#btnUpload").attr("disabled", "disabled");
-        // Looping over all files and add it to FormData object
-        for (var i = 0; i < files.length; i++) {
-            fileData.append(files[i].name, files[i]);
-        }
-        $('#tblMotor').DataTable({
+        //// Create FormData object
+        //var fileData = new FormData();
+        //$("#btnUpload").attr("disabled", "disabled");
+        //// Looping over all files and add it to FormData object
+        //for (var i = 0; i < files.length; i++) {
+        //    fileData.append(files[i].name, files[i]);
+        //}
+        var table = $('#tblMotor').DataTable({
             dom: 'Bfrtip',
+            "lengthMenu": [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, "All"]],
+            "pageLength": 100,
+            "language": {
+                "processing": '<i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(75, 183, 245);"></i>'
+            },
+            "drawCallback": function (settings) {
+                $(".lds-ring-bg").addClass('d-none');
+            },
             buttons: {
                 buttons: [
                     {
                         extend: 'csv',
-                        className: 'btn btn-sm btn-primary',
+                        className: 'btn-sm',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5]
+                            columns: [1, 2, 3, 4, 5, 6]
                         }
                     },
                     {
                         extend: 'pdf',
-                        className: 'btn btn-sm btn-primary',
+                        className: 'btn-sm',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5]
+                            columns: [1, 2, 3, 4, 5, 6]
                         }
+                    },
+                    {
+                        extend: 'pageLength',
+                        className: 'btn-sm',
                     }
                 ]
             }
         });
         // Adding one more key to FormData object
-        fileData.append('txtMotorMaster', '1');
-        var uploader = new ss.SimpleUpload({
-            button: btn,
-            url: '/Home/UploadFiles',
-            multipart: true,
-            data: fileData,
-            hoverClass: 'hover',
-            focusClass: 'focus',
-            responseType: 'json',
-            startXHR: function () {
-                progressOuter.style.display = 'block'; // make progress bar visible
-                this.setProgressBar(progressBar);
-            },
-            onSubmit: function () {
-                msgBox.innerHTML = ''; // empty the message box
-                btn.innerHTML = 'Uploading...'; // change button text to "Uploading..."
-            },
-            onComplete: function (filename, response) {
+        //fileData.append('txtMotorMaster', '1');
+        //var uploader = new ss.SimpleUpload({
+        //    button: btn,
+        //    url: '/Home/UploadFiles',
+        //    multipart: true,
+        //    data: fileData,
+        //    hoverClass: 'hover',
+        //    focusClass: 'focus',
+        //    responseType: 'json',
+        //    startXHR: function () {
+        //        progressOuter.style.display = 'block'; // make progress bar visible
+        //        this.setProgressBar(progressBar);
+        //    },
+        //    onSubmit: function () {
+        //        msgBox.innerHTML = ''; // empty the message box
+        //        btn.innerHTML = 'Uploading...'; // change button text to "Uploading..."
+        //    },
+        //    onComplete: function (filename, response) {
 
-                btn.innerHTML = 'Choose Another File';
-                progressOuter.style.display = 'none'; // hide progress bar when upload is completed
+        //        btn.innerHTML = 'Choose Another File';
+        //        progressOuter.style.display = 'none'; // hide progress bar when upload is completed
 
-                if (!response) {
-                    msgBox.innerHTML = 'Unable to upload file';
-                    return;
-                }
+        //        if (!response) {
+        //            msgBox.innerHTML = 'Unable to upload file';
+        //            return;
+        //        }
 
-                if (response.success === true) {
-                    msgBox.innerHTML = '< strong > ' + escapeTags(filename) + '</strong > ' + ' successfully uploaded.';
+        //        if (response.success === true) {
+        //            msgBox.innerHTML = '< strong > ' + escapeTags(filename) + '</strong > ' + ' successfully uploaded.';
 
-                } else {
-                    if (response.msg) {
-                        msgBox.innerHTML = escapeTags(response.msg);
+        //        } else {
+        //            if (response.msg) {
+        //                msgBox.innerHTML = escapeTags(response.msg);
 
-                    } else {
-                        msgBox.innerHTML = 'An error occurred and the upload failed.';
-                    }
-                }
-            },
-            onError: function () {
-                progressOuter.style.display = 'none';
-                msgBox.innerHTML = 'Unable to upload file';
-            }
-        });
+        //            } else {
+        //                msgBox.innerHTML = 'An error occurred and the upload failed.';
+        //            }
+        //        }
+        //    },
+        //    onError: function () {
+        //        progressOuter.style.display = 'none';
+        //        msgBox.innerHTML = 'Unable to upload file';
+        //    }
+        //});
+
 
     };
-    
     function CalcRenewalSA() {
 
         var perc = "";
@@ -977,4 +1123,304 @@
     }
 
 
+
+    function clicktblMotorCheckBoxsStatus(pPolicyNo, pInsuranceID, Type, objThis, pStatus) {
+
+
+        if ($("#ddlGrdStatus  option:selected").val() != "0") {
+
+            var valStatus = $("#ddlGrdStatus  option:selected").text();
+            var equalStatusPolicyNo = '';
+
+            if (Type == 'tbl') {
+
+                $('#tblMotor tbody tr ').each(function () {
+
+
+                    valInsuranceID = $(this).find("td").eq(1).find("input[type=hidden]")[0].value;
+                    valPolicyNo = $.trim($(this).find("td:eq(1)").text());
+                    rowStatus = $.trim($(this).find("td:eq(6)").text());
+
+                    if ($("#ddlGrdStatus  option:selected").text() != rowStatus) {
+                        if ($("#tblMotorRowall").prop("checked") == true) {
+
+                            if ($(this).find("td").eq(0).find("input[type=checkbox]").prop("checked") == false) {
+
+                                checkAndRemoveExistsRow(valPolicyNo, valInsuranceID, 'Manual');
+
+                                lstMoter.push({
+                                    InsuranceID: valInsuranceID,
+                                    PolicyNo: valPolicyNo,
+                                    Status: valStatus
+                                });
+
+
+                                $(this).find("td").eq(0).find("input[type=checkbox]").prop("checked", true);
+                            }
+                        }
+                        else {
+                            if ($(this).find("td").eq(0).find("input[type=checkbox]").prop("checked") == true) {
+                                checkAndRemoveExistsRow(valPolicyNo, valInsuranceID, 'Manual');
+                                $(this).find("td").eq(0).find("input[type=checkbox]").prop("checked", false);
+                            }
+                        }
+                    }
+                    else {
+                        equalStatusPolicyNo += valPolicyNo + " , ";
+                    }
+
+                });
+
+                if ($(objThis).prop("checked") == true && equalStatusPolicyNo != "") {
+                    alert(equalStatusPolicyNo + "This Policy status and Upadated status are same, Please check.");
+                }
+
+            }
+            else {
+
+                if ($("#ddlGrdStatus  option:selected").text() != pStatus) {
+                    valInsuranceID = $.trim(pInsuranceID);
+                    valPolicyNo = $.trim(pPolicyNo);
+
+                    checkAndRemoveExistsRow(valPolicyNo, valInsuranceID, 'Manual');
+
+                    if ($(objThis).prop("checked") == true) {
+                        lstMoter.push({
+                            InsuranceID: valInsuranceID,
+                            PolicyNo: valPolicyNo,
+                            Status: valStatus
+                        });
+                    }
+                } else {
+                    $(objThis).prop("checked", false);
+                    alert("Please check selected row status and Upadated status value are same");
+                    return;
+                }
+
+            }
+        }
+        else {
+            $(objThis).prop("checked", false);
+            $("#ddlGrdStatus").focus();
+            alert("Please select Update status");
+            return;
+        }
+    }
+
+    function checkAndRemoveExistsRow(pPolicyNo, pInsuranceID, UFType) {
+
+        index = lstMoter.findIndex(x => x.InsuranceID == pInsuranceID && x.PolicyNo == pPolicyNo);
+
+        if (UFType == 'Manual') {
+
+            if (index > -1) {
+                //delete lstMoter[index]
+                lstMoter.splice(index, 1);
+            };
+        }
+        else {
+            return index;
+        }
+
+
+    }
+
+    function bulkUpdateStatus(UType) {
+
+        if (lstMoter.length > 0) {
+            $.post('/Home/BulkUpdateStatus', { lstMoter: lstMoter, UploadType: UType },
+                function (returnedData) {
+                    alert(returnedData);
+                });
+
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/Home/BulkUpdateStatus",
+            //    contentType: "application/json; charset=utf-8",
+            //    dataType: "json",
+            //    //data: JSON.stringify(lstMoter),
+            //    success: function (response) {
+            //        alert("updated successfully");
+            //    },
+            //    failure: function (response) {
+            //        alert(response.responseText);
+            //    },
+            //    error: function (response) {
+            //        alert(response.responseText);
+            //    }
+            //});
+
+            $("#btnMotorSearch").click();
+        }
+        else {
+            if (UType == "Manual") {
+                alert("Please select at least any one row");
+                return;
+            }
+        }
+
+    }
+    function onchangeDDlBulkStatus() {
+        if (lstMoter.length > 0) {
+            if (confirm("Are sure you what change the staus")) {
+                lstMoter = [];
+                $("#btnMotorSearch").click();
+                //tblMotorRow
+                //find("input[type=checkbox]").prop("checked", false);
+
+            }
+        }
+
+        if ($("#tblMotorRowall").prop("checked") == true) {
+            $("#tblMotorRowall").prop("checked", false);
+        }
+
+
+    }
+
+    function csvFileUpload() {
+        lstMoter = [];
+        var rowCount = 0;
+        var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.csv|.txt)$/;
+        if (regex.test($("#fileUploadMotorPolicies").val().toLowerCase())) {
+            if (typeof (FileReader) != "undefined") {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+
+                    var rows = e.target.result.split('\r\n');
+
+                    if (rows.length > 1005) {
+                        alert("Upload file maximum limit 1000, Please check");
+                        return false;
+                    }
+
+
+                    for (var i = 0; i < rows.length; i++) {
+
+                        var cells = rows[i].split(",");
+
+                        if (cells.length == 6 && i > 0) {
+
+                            res = $.trim(cells[0].replace('""', '"'));
+
+                            index = checkAndRemoveExistsRow($.trim(cells[0].replace('""', '"')), 0, 'CsvFile');
+
+                            if (index > -1) {
+                                $('#fileUploadMotorPolicies').val("");
+                                alert("Policy No :" + $.trim(cells[0].replace('""', '"')) + " already exists, Please check");
+
+                                return;
+                            }
+                            lstMoter.push({
+                                InsuranceID: 0,
+                                PolicyNo: $.trim(cells[0].replace('""', '"')),
+                                DivisionName: $.trim(cells[1].replace('""', '"')),
+                                InsuranceType: $.trim(cells[2].replace('""', '"')),
+                                Status: $.trim(cells[5].replace('""', '"'))
+                            });
+
+                        }
+                        rowCount += 1;
+
+                    }
+
+                    if (rowCount == rows.length) {
+                        bulkUpdateStatus("CSVFileUpload");
+                    }
+
+                }
+                reader.readAsText($("#fileUploadMotorPolicies")[0].files[0]);
+            } else {
+                $('#fileUploadMotorPolicies').val("");
+                alert("This browser does not support HTML5.");
+            }
+        } else {
+            $('#fileUploadMotorPolicies').val("");
+
+            alert("Please upload a valid CSV file.");
+
+        }
+
+
+    }
+
+    function resetCall() {
+        $("#btnMotorSearch").click();
+    }
+    function HideManuvalUpdateControl() {
+
+        if ($("#btnManualUpdate") != null) {
+            //$("#uploadMotorPolicies").removeClass("hide");
+            //$("#btnManualUpdate").addClass("hide");
+            $("#btnManualUpdate").attr("disabled");
+            //$("#tdUpdatecheckbox").addClass("hide");
+            //$("#ddlGrdStatus").addClass("hide");
+        }
+
+    }
+
+    //$(document).ready(function(){
+    //    //$('a[href^="zoiper:+968"]').each(function(){
+    //    //    var oldNumber = $(this).attr("href"); // Get current url
+    //    //    var newNumber = oldNumber.replace("zoiper:+968", "zoiper:0"); // Create new url
+    //    //    $(this).attr("href", newNumber); // Set herf value
+    //    //});
+    //});
+
+    $(document).ready(function () {
+        $("#txtUserName").autocomplete({
+            maxShowItems: 10,
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Home/SearchUser",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.UserName, value: item.UserName };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+
+    })
+    $(document).ready(function () {
+        $("#txtDivisionNam").autocomplete({
+            maxShowItems: 10,
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Home/BranchWiseSearch",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.DivisionCode, value: item.DivisionCode };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+
+    })
+
+    function onchangPolicyNo() {
+
+        $("#PolicyFromDate").val('');
+        $("#PolicyToDate").val('');
+        $("#txtUserName").val('');
+        $("#Status option:contains(Select Status)").attr('selected', 'selected');
+
+    }
 </script>
+

@@ -1,19 +1,16 @@
-﻿using System;
+﻿using MotorApp.BAL;
+using MotorApp.BusinessEntities;
+using MotorApp.Models;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Data;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using MotorApp.Models;
-using MotorApp.BAL;
+using System.Configuration;
 using MotorApp.Utilities;
-using MotorApp.BusinessEntities;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Caching;
-using System.Web.Routing;
-using System.Web.Services;
-using System.Runtime.Serialization;
-using Newtonsoft.Json;
-using System.Data;
 
 namespace MotorApp.Controllers
 {
@@ -27,23 +24,29 @@ namespace MotorApp.Controllers
         private List<DomesticModel> domesModel;
         private List<ProducerCodeMaster> lstProducerCodeMaster;
         private List<Insurance> lstNewIns;
-        private DashBoard lstInfo;
+        private DashBoard lstInfo = new DashBoard();
         string IsExists = string.Empty;
         static string U_Name = string.Empty;
+        static List<int> Year;
         static long RoleId = 0;
         static int TypeId = 0;
         dynamic lstInput;
         static bool IsUserLogin;
 
-        public HomeController()
-        {
-            if (!string.IsNullOrEmpty(U_Name))
-            {
-                long returnCode = objMotorBAL.GetMasterViews(out motorModel, out travelModel, out indiviModel, out domesModel, out lstProducerCodeMaster, out lstNewIns);
-            }
+        //public HomeController()
+        //{
+        //    if (!string.IsNullOrEmpty(U_Name))
+        //    {
+        //        long returnCode = objMotorBAL.GetMasterViews(out motorModel, out travelModel, out indiviModel, out domesModel, out lstProducerCodeMaster, out lstNewIns);
+        //        if (lstNewIns != null)
+        //        {
+        //            lstInfo.lstYears = lstNewIns.Where(p => p.PolicyToDate != null).Select(p => p.PolicyToDate.Year).Distinct().
+        //                AsEnumerable().Select(x => new DateTime(x, 1, 1).Year).ToList();
+        //        }
+        //    }
 
 
-        }
+        //}
 
         public IEnumerable<SelectListItem> lstProItems
         {
@@ -59,6 +62,7 @@ namespace MotorApp.Controllers
             {
                 string uname = Request.Form["ddlProducer"];
                 TypeId = 5;
+                ViewBag.TypeId = TypeId;
                 if (string.IsNullOrEmpty(uname) || uname.Equals("Admin"))
                 {
                     if (TempData["Input"] != null)
@@ -94,7 +98,24 @@ namespace MotorApp.Controllers
                     ViewBag.TNPRenewedMonthPremium = lstInfo.TNPRenewedMonthPremium;
                     ViewBag.PercentPremiumRenewedMonth = lstInfo.PercentPremiumRenewedMonth;
 
+                    if (lstNewIns != null)
+                    {
+                        lstInfo.lstYears = lstNewIns.Where(p => p.PolicyToDate != null).Select(p => p.PolicyToDate.Year).Distinct().
+                            AsEnumerable().Select(x => new DateTime(x, 1, 1).Year).ToList();
 
+                        Year = lstInfo.lstYears;
+                    }
+                    else
+                    {
+                        returnCode = objMotorBAL.GetMasterViews(out motorModel, out travelModel, out indiviModel, out domesModel, out lstProducerCodeMaster, out lstNewIns);
+                        if (lstNewIns != null)
+                        {
+                            lstInfo.lstYears = lstNewIns.Where(p => p.PolicyToDate != null).Select(p => p.PolicyToDate.Year).Distinct().
+                                AsEnumerable().Select(x => new DateTime(x, 1, 1).Year).ToList();
+                            Year = lstInfo.lstYears;
+                        }
+
+                    }
                     //ViewBag.TotPoltoBeRenewed =  lstInfo.TotPoltoBeRenewed;
                     //ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
                     //ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
@@ -180,6 +201,8 @@ namespace MotorApp.Controllers
         [HttpGet]
         public ActionResult MasterDatabase(Insurance objMotorModel)
         {
+            string ProducerName = string.Empty;
+
             int IsLoggedIn = IsUserLoggedIn();
             if (IsLoggedIn > 0)
             {
@@ -192,41 +215,24 @@ namespace MotorApp.Controllers
                 string productName = objMotorModel.ProductName ?? "";
                 string instype = objMotorModel.InsType ?? "";
                 string Status = objMotorModel.Status ?? "";
+               
+                DateTime PolicyFDate = objMotorModel.PolicyFromDate == Convert.ToDateTime("01-01-0001 12.00.00 AM") ? Convert.ToDateTime("01-01-1753 12.00.00 AM") : objMotorModel.PolicyFromDate;
+                DateTime PolicyTDate = objMotorModel.PolicyToDate == Convert.ToDateTime("01-01-0001 12.00.00 AM") ? Convert.ToDateTime("01-01-1753 12.00.00 AM") : objMotorModel.PolicyToDate;
                 ViewBag.UserName = U_Name;
                 List<Insurance> lst = new List<Insurance>();
 
-                if (!string.IsNullOrEmpty(PolicyNo) || !string.IsNullOrEmpty(divisionName) || !string.IsNullOrEmpty(productName) || !string.IsNullOrEmpty(AssuredName)
-                    || !string.IsNullOrEmpty(Status))
+                ProducerName = RoleId.Equals(1) ? objMotorModel.UserName : U_Name;
 
-                {
-                    if (RoleId.Equals(1))
-                    {
-                        long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, U_Name, out lst);
-                        //if (lstNewIns.Count > 0)
-                        //{
-                        //    lst = lstNewIns.Where(x => x.PolicyNo == PolicyNo.Trim() || x.DivisionName == divisionName.Trim() ||
-                        //                      x.AssuredName == AssuredName.Trim() || x.ProductName == productName.Trim() || x.InsType == instype.Trim()).OrderBy(x => x.InsuranceID).ToList();
-                        //}
-                    }
-                    else
-                    {
-                        long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, U_Name, out lst);
-                    }
 
-                    return View(lst);
-                }
-                else if (RoleId.Equals(1))
-                {
-                    long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, U_Name, out lst);
-                    return View(lst);
+                if (!string.IsNullOrEmpty(PolicyNo) || DateValidation.isValidDate(PolicyFDate.Day, PolicyFDate.Month, PolicyFDate.Year) || !string.IsNullOrEmpty(Status)
+                    || !string.IsNullOrEmpty(ProducerName) || !string.IsNullOrEmpty(divisionName))
+
+                { 
+                    long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, ProducerName, PolicyFDate, PolicyTDate, out lst, 0, "");
                 }
 
+                return View(lst);
 
-                else if (lstNewIns != null)
-                    return View(lstNewIns.Where(x => x.ProducerName == U_Name).OrderBy(x => x.InsuranceID));
-
-                else
-                    return RedirectToAction("Login");
 
             }
             else
@@ -641,15 +647,15 @@ namespace MotorApp.Controllers
             long returnCode = 1;
             try
             {
-                if (model.RevisedSumInsured > 0 && model.GrossPremium > 0 && model.RenewalPremium > 0 && model.InsuranceID > 0)
-                {
+                //if (model.RevisedSumInsured > 0 && model.GrossPremium > 0 && model.RenewalPremium > 0 && model.InsuranceID > 0)
+                //{
                     returnCode = objMotorBAL.UpdateNewIns(model, U_Name);
                     //  returnCode = objMotorBAL.SaveNewIns(model);
-                }
-                else
-                {
-                    returnCode = -2;
-                }
+               // }
+                //else
+                //{
+                //    returnCode = -2;
+                //}
 
             }
             catch (Exception ex)
@@ -746,7 +752,20 @@ namespace MotorApp.Controllers
                 ViewBag.RoleId = RoleId;
                 ViewBag.UserName = U_Name;
                 IList<Insurance> motorList = new List<Insurance>();
-                motorList = lstNewIns;
+
+                if (lstNewIns != null)
+                {
+                    motorList = lstNewIns;
+                }
+                else
+                {
+                    long returnCode = objMotorBAL.GetMasterViews(out motorModel, out travelModel, out indiviModel, out domesModel, out lstProducerCodeMaster, out lstNewIns);
+                    if (lstNewIns != null)
+                    {
+                        motorList = lstNewIns;
+                    }
+
+                }
                 var std = motorList.Where(s => s.InsuranceID == MotorId).FirstOrDefault();
                 string BT = string.Empty;
                 BT = std.BusinessType;
@@ -791,16 +810,19 @@ namespace MotorApp.Controllers
         public ActionResult EditModal(int InsId)
         {
 
-            //IList<MotorModel> motorList = new List<MotorModel>();
-            //motorList = motorModel;
 
-            //var std = motorList.Where(s => s.MotorId == MotorId).FirstOrDefault();
             IList<Insurance> motorList = new List<Insurance>();
-            motorList = lstNewIns;
 
-            var std = motorList.Where(s => s.InsuranceID == InsId).FirstOrDefault();
+            long returnCode = objMotorBAL.GetMasterViews(out motorModel, out travelModel, out indiviModel, out domesModel, out lstProducerCodeMaster, out lstNewIns);
+            if (lstNewIns != null)
+            {
+                motorList = lstNewIns;
+                var std = motorList.Where(s => s.InsuranceID == InsId).FirstOrDefault();
+                return Json(std, JsonRequestBehavior.AllowGet);
+            }
 
-            return Json(std, JsonRequestBehavior.AllowGet);
+            return Json(null, JsonRequestBehavior.AllowGet);
+
         }
         /*Motor Single entry Edit/Add End*/
         /*Travel Single entry Edit/Add Start*/
@@ -952,6 +974,9 @@ namespace MotorApp.Controllers
                 ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
                 ViewBag.PolicyLost = lstInfo.PolicyLost;
                 ViewBag.UserName = lstInfo.UserName;
+                lstInfo.lstYears = Year;
+
+
                 if (!returnCode.Equals(1))
                 {
 
@@ -983,6 +1008,8 @@ namespace MotorApp.Controllers
                 ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
                 ViewBag.PolicyLost = lstInfo.PolicyLost;
                 ViewBag.UserName = lstInfo.UserName;
+                lstInfo.lstYears = Year;
+
                 if (!returnCode.Equals(1))
                 {
 
@@ -996,6 +1023,40 @@ namespace MotorApp.Controllers
             }
 
 
+        }
+        public JsonResult GetSpecificYearWiseReport(int Years)
+        {
+            try
+            {
+                int IsLoggedIn = IsUserLoggedIn();
+                //if (IsLoggedIn > 0)
+                //{
+                if (TempData["Input"] != null)
+                {
+                    lstInput = TempData["Input"];
+                }
+
+                long returnCode = objMotorBAL.GetInfoYearWise(lstInput, Years, out lstInfo);
+
+                AssignDataToViewBag(lstInfo);
+                ViewBag.RoleId = RoleId;
+                ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
+                ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
+                ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
+                ViewBag.PolicyLost = lstInfo.PolicyLost;
+                ViewBag.UserName = lstInfo.UserName;
+
+                return Json(new
+                {
+                    list = lstInfo
+                }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
         public ActionResult IndividualDB()
         {
@@ -1015,6 +1076,7 @@ namespace MotorApp.Controllers
                 ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
                 ViewBag.PolicyLost = lstInfo.PolicyLost;
                 ViewBag.UserName = lstInfo.UserName;
+                lstInfo.lstYears = Year;
                 if (!returnCode.Equals(1))
                 {
 
@@ -1046,7 +1108,7 @@ namespace MotorApp.Controllers
                 ViewBag.NoOfPoRenewed = lstInfo.NoOfPoRenewed;
                 ViewBag.PolicyLost = lstInfo.PolicyLost;
                 ViewBag.UserName = lstInfo.UserName;
-
+                lstInfo.lstYears = Year;
                 if (!returnCode.Equals(1))
                 {
 
@@ -1150,8 +1212,8 @@ namespace MotorApp.Controllers
                               select new DataPoint()
                               {
                                   y = item.MonthName,
-                                  a = item.Available,
-                                  b = item.Renewed,
+                                  a = item.Renewed,
+                                  b = item.Available,
                                   BusinessType = item.BusinessType
                               }).ToList();
 
@@ -1165,7 +1227,7 @@ namespace MotorApp.Controllers
                     agentList = dataPoints.Where(x => x.BusinessType == "Agent"),
                     brokerList = dataPoints.Where(x => x.BusinessType == "Broker"),
                     directList = dataPoints.Where(x => x.BusinessType == "Direct"),
-                    branchList = dataPoints.Where(x => x.BusinessType == "Branch")
+                    branchList = dataPoints.Where(x => x.BusinessType == "Branches")
                 }, JsonRequestBehavior.AllowGet);
             }
             return Json(new
@@ -1173,7 +1235,7 @@ namespace MotorApp.Controllers
                 agentList = dataPoints.Where(x => x.BusinessType == "Agent"),
                 brokerList = dataPoints.Where(x => x.BusinessType == "Broker"),
                 directList = dataPoints.Where(x => x.BusinessType == "Direct"),
-                branchList = dataPoints.Where(x => x.BusinessType == "Branch")
+                branchList = dataPoints.Where(x => x.BusinessType == "Branches")
             }, JsonRequestBehavior.AllowGet);
 
         }
@@ -1191,8 +1253,8 @@ namespace MotorApp.Controllers
                               select new DataPoint()
                               {
                                   y = item.MonthName,
-                                  a = item.Available,
-                                  b = item.Renewed,
+                                  a = item.Renewed,
+                                  b = item.Available,
                                   BusinessType = item.BusinessType
                               }).ToList();
 
@@ -1206,7 +1268,7 @@ namespace MotorApp.Controllers
                     Agent = dataPoints.Where(x => x.BusinessType == "Agent"),
                     Broker = dataPoints.Where(x => x.BusinessType == "Broker"),
                     Direct = dataPoints.Where(x => x.BusinessType == "Direct"),
-                    Branch = dataPoints.Where(x => x.BusinessType == "Branch")
+                    Branch = dataPoints.Where(x => x.BusinessType == "Branches")
                 }, JsonRequestBehavior.AllowGet);
             }
             return Json(new
@@ -1214,7 +1276,7 @@ namespace MotorApp.Controllers
                 Agent = dataPoints.Where(x => x.BusinessType == "Agent"),
                 Broker = dataPoints.Where(x => x.BusinessType == "Broker"),
                 Direct = dataPoints.Where(x => x.BusinessType == "Direct"),
-                Branch = dataPoints.Where(x => x.BusinessType == "Branch")
+                Branch = dataPoints.Where(x => x.BusinessType == "Branches")
             }, JsonRequestBehavior.AllowGet);
 
         }
@@ -1245,8 +1307,8 @@ namespace MotorApp.Controllers
                               select new DataPoint()
                               {
                                   y = item.MonthName,
-                                  a = item.Available,
-                                  b = item.Renewed,
+                                  a = item.Renewed,
+                                  b = item.Available,
 
                               }).ToList();
 
@@ -1324,6 +1386,96 @@ namespace MotorApp.Controllers
             }
 
         }
+
+
+        [HttpPost]
+        public ActionResult BulkUpdateStatus(List<Insurance> lstMoter, string UploadType)
+        {
+            long returnCode = -1;
+            string InsuranceStatusJson = string.Empty;
+            string ErrorMsg = string.Empty;
+
+            try
+            {
+                InsuranceStatusJson = JsonConvert.SerializeObject(lstMoter);
+                returnCode = new MotorBAL().BulkUpdateInsuranceStatus(InsuranceStatusJson, 1, "UserName", UploadType, out ErrorMsg);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return Json(ErrorMsg);
+        }
+        public ActionResult UserRegister()
+        {
+            ViewBag.RoleId = RoleId;
+            return View();
+
+        }
+        [HttpPost]
+        public ActionResult Register(LoginViewModel obj)
+        {
+            try
+            {
+                long returnCode = -1;
+                ViewBag.RoleId = RoleId;
+                if (!string.IsNullOrEmpty(obj.UserName) && !string.IsNullOrEmpty(obj.Role.ToString()))
+                {
+                    MotorBAL objBAL = new MotorBAL();
+                    returnCode = objBAL.RegisterUser(obj);
+
+                }
+                else
+                {
+                    returnCode = -2;
+                    return Json(new { msg = returnCode });
+                }
+                return Json(new { msg = returnCode });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost]
+        public JsonResult SearchUser(string Prefix)
+        {
+            long returnCode = -1;
+            MotorBAL objBAL = new MotorBAL();
+            List<Users> lstUser = new List<Users>();
+
+            returnCode = objBAL.GetAutocompleteUserList(Prefix, "", out lstUser);
+            return Json(lstUser, JsonRequestBehavior.AllowGet);
+
+
+        }
+        [HttpPost]
+        public JsonResult BranchWiseSearch(string Prefix)
+        {
+            long returnCode = -1;
+            MotorBAL objBAL = new MotorBAL();
+            List<Users> lstUser = new List<Users>();
+
+            returnCode = objBAL.GetAutocompleteUserList(Prefix, "Branches", out lstUser);
+            return Json(lstUser, JsonRequestBehavior.AllowGet);
+
+
+        }
+
     }
 
+
+    //public class City
+    //{
+    //    public int Id { get; set; }
+    //    public string CityName { get; set; }
+
+    //}
+
+
 }
+
+
+

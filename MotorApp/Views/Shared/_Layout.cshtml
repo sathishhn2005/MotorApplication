@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Motor Insurance</title>
+    <title>TotalNet</title>
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="~/img/logo/logo.png" rel="icon">
@@ -15,7 +15,9 @@
     <link href="~/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="~/css/ruang-admin.css" rel="stylesheet" />
     <link href="~/vendor/smart_wizard/css/smart_wizard_all.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.22/r-2.2.6/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.23/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.bootstrap4.min.css" />
+
     <script src="~/vendor/jquery/jquery.js"></script>
     @*@Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")*@
@@ -26,11 +28,11 @@
     <div id="wrapper">
         <!-- Sidebar -->
         <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
                 @*<div class="sidebar-brand-icon">
-                <img src="~/img/logo/logoMI.png">
-            </div>*@
-                <div class="sidebar-brand-text mx-2">Motor <span class="logo-sub">Renet</span></div>
+                        <img src="~/img/logo/logoMI.png">
+                    </div>*@
+                <div class="sidebar-brand-text mx-2">Total<span class="logo-sub">Net</span></div>
             </a>
             <hr class="sidebar-divider mb-3 mt-0" />
             <div class="sidebar-heading">
@@ -38,40 +40,39 @@
             </div>
 
             <li class="nav-item ">
-                <a class="nav-link" href="index">
+                <a class="nav-link" href="/Home/Index">
                     <i class="fas fa-fw fa-star"></i>
                     <span>MIS Dashboard</span>
                 </a>
             </li>
             @if (ViewBag.RoleId == 1)
             {
-                <li class="nav-item ">
-                    <a class="nav-link" href="indexBI">
-                        <i class="fas fa-fw fa-star"></i>
-                        <span>BI Dashboard</span>
-                    </a>
-                </li>
-            }
+<li class="nav-item ">
+    <a class="nav-link" href="indexBI">
+        <i class="fas fa-fw fa-star"></i>
+        <span>BI Dashboard</span>
+    </a>
+</li>}
             <li class="nav-item ">
-                <a class="nav-link" href="MotorDB">
+                <a class="nav-link" href="/Home/MotorDB">
                     <i class="fas fa-fw fa-car"></i>
                     <span>Motor Policies</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="IndividualDB">
+                <a class="nav-link" href="/Home/IndividualDB">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Individual life Policies</span>
                 </a>
             </li>
+            @*<li class="nav-item">
+                    <a class="nav-link" href="/Home/TravelDB">
+                        <i class="fas fa-fw fa-plane"></i>
+                        <span>Travel Insurance Policies</span>
+                    </a>
+                </li>*@
             <li class="nav-item">
-                <a class="nav-link" href="TravelDB">
-                    <i class="fas fa-fw fa-plane"></i>
-                    <span>Travel Insurance Policies</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="DomesticDB">
+                <a class="nav-link" href="/Home/DomesticDB">
                     <i class="fas fa-fw fa-users"></i>
                     <span>Domestic Helper Policy</span>
                 </a>
@@ -81,44 +82,64 @@
 
             </div>
             <li class="nav-item">
-                <a class="nav-link" href="MasterDatabase">
+                <a class="nav-link" href="/Home/MasterDatabase">
                     <i class="fas fa-fw fa-car"></i>
-                    <span>Transcation</span>
+                    <span>Transaction</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="CallBack">
+                <a class="nav-link" href="/Home/CallBack">
                     <i class="fas fa-fw fa-phone"></i>
                     <span>Call Back</span>
                 </a>
             </li>
-            @*<li class="nav-item">
-            <a class="nav-link" href="MasterTravel">
-                <i class="fas fa-fw fa-user"></i>
-                <span>Travel Insurance Masters</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="MasterIndividual">
-                <i class="fas fa-fw fa-plane"></i>
-                <span>Individual Insurance Masters</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="MasterDomestic">
-                <i class="fas fa-fw fa-users"></i>
-                <span>Domestic Insurance Masters</span>
-            </a>
-        </li>*@
+            @if (ViewBag.RoleId == 1)
+            {
+            <li class="nav-item">
+                <a class="nav-link" href="/Home/UserRegister">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Register New User</span>
+                </a>
+            </li> 
+            }
+            <li class="nav-item">
+                <a class="nav-link" href="/BulkUpload/Index">
+                    <i class="fas fa-fw fa-share"></i>
+                    <span>Delegate</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/BulkUpload/BulkUpload">
+                    <i class="fas fa-fw fa-mail-bulk"></i>
+                    <span>Bulk Upload</span>
+                </a>
+            </li> @*<li class="nav-item">
+                    <a class="nav-lik" href="MasterTravel">
+                        <i class="fas fa-fw fa-user"></i>
+                        <span>Travel Insurance Masters</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="MasterIndividual">
+                        <i class="fas fa-fw fa-plane"></i>
+                        <span>Individual Insurance Masters</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="MasterDomestic">
+                        <i class="fas fa-fw fa-users"></i>
+                        <span>Domestic Insurance Masters</span>
+                    </a>
+                </li>*@
             <li class="nav-item hide">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
                    aria-expanded="true" aria-controls="collapseBootstrap">
                     <i class="far fa-fw fa-window-maximize"></i>
-                    <span>Master Motor</span>
+                    @*<span>Master Motor</span>*@
                 </a>
                 <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Master Motor</h6>
+                        @*<h6 class="collapse-header">Master Motor</h6>*@
                         <a class="collapse-item" href="#">Uploading Renewal policy</a>
                         <a class="collapse-item" href="#">Uploading of raw data</a>
                         <a class="collapse-item" href="#">All renewal policies</a>
@@ -305,19 +326,19 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 @*<a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div>*@
-                                <a class="dropdown-item" href="login">
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Profile
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Settings
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Activity Log
+                                    </a>
+                                    <div class="dropdown-divider"></div>*@
+                                <a class="dropdown-item" href="/Home/Login">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -380,11 +401,20 @@
     <script src="~/vendor/pekeUpload/SimpleAjaxUploader.js"></script>
     <script src="~/vendor/smart_wizard/js/jquery.smartWizard.js"></script>
     <script src="~/vendor/Bootstrap-Checkbox/bootstrap4-toggle.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.22/r-2.2.6/datatables.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
+
+    @* AutoComplete *@
+    <link href="~/Scripts/Autocomplete/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Scripts/Autocomplete/jquery-ui.js"></script>
+
+    <script src="~/Scripts/moment.min.js"></script>
 </body>
 </html>
