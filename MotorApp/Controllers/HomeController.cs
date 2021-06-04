@@ -28,7 +28,7 @@ namespace MotorApp.Controllers
         string IsExists = string.Empty;
         //string U_Name = string.Empty;
         static List<int> Year;
-        static long RoleId = 0;
+        long RoleId = 0;
         static int TypeId = 0;
         dynamic lstInput;
         bool IsUserLogin = false;
@@ -99,6 +99,7 @@ namespace MotorApp.Controllers
                         Session["Input"] = lstInput;
                         IsUserLogin = true;
                         Session["IsUserLogin"] = true;
+                        Session["RoleId"] = RoleId;
                         return objMod;
                         //return RedirectToAction("Index");
                     }
@@ -148,7 +149,7 @@ namespace MotorApp.Controllers
                     }
 
                     //long returnCode = objMotorBAL.GetMIDashBoard(lstInput, out lstInfo);
-                    ViewBag.RoleId = RoleId;
+                    ViewBag.RoleId = Session["RoleId"];
 
                     ViewBag.TNPYear = lstInfo.TNPYear;
                     ViewBag.TNPUnderProcessYear = lstInfo.TNPUnderProcessYear;
@@ -213,7 +214,7 @@ namespace MotorApp.Controllers
                 else
                 {
                     returnCode = objMotorBAL.GetUserReport(uname, out lstInfo);
-                    ViewBag.RoleId = RoleId;
+                    ViewBag.RoleId = Session["RoleId"];
 
                     ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
                     ViewBag.TotPolforRenewal = lstInfo.TotPolforRenewal;
@@ -232,7 +233,7 @@ namespace MotorApp.Controllers
             int IsLoggedIn = IsUserLoggedIn();
             if (IsLoggedIn > 0)
             {
-                ViewBag.RoleId = RoleId;
+                ViewBag.RoleId = Session["RoleId"];
                 ViewBag.UserName = Session["UserName"].ToString();
                 return View();
             }
@@ -276,7 +277,7 @@ namespace MotorApp.Controllers
             if (IsLoggedIn > 0)
             {
 
-                ViewBag.RoleId = RoleId;
+                ViewBag.RoleId = Session["RoleId"];
 
                 string PolicyNo = objMotorModel.PolicyNo ?? "";
                 string divisionName = objMotorModel.DivisionName ?? "";
@@ -297,6 +298,7 @@ namespace MotorApp.Controllers
                     || !string.IsNullOrEmpty(ProducerName) || !string.IsNullOrEmpty(divisionName))
 
                 {
+                    RoleId = Convert.ToInt64(Session["RoleId"]);
                     long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, ProducerName, PolicyFDate, PolicyTDate, out lst, 0, "");
                 }
 
@@ -320,6 +322,7 @@ namespace MotorApp.Controllers
             {
                 ViewBag.UserName = Session["UserName"];
                 List<Insurance> lst = new List<Insurance>();
+                RoleId = Convert.ToInt64(Session["RoleId"]);
                 long returnCode = objMotorBAL.GetCallBackDetails(RoleId, Session["UserName"].ToString(), out lst);
                 return View(lst);
             }
@@ -334,7 +337,7 @@ namespace MotorApp.Controllers
             int IsLoggedIn = IsUserLoggedIn();
             if (IsLoggedIn > 0)
             {
-                ViewBag.RoleId = RoleId;
+                ViewBag.RoleId = Session["RoleId"];
                 if (RoleId.Equals(1))
                     return View(motorModel);
                 //query.Where(s => s.AgentCode_BrokerCode == lstInfo.UserName).FirstOrDefault();
@@ -353,7 +356,7 @@ namespace MotorApp.Controllers
         [HttpGet]
         public ActionResult MasterTravel(TravelModel objTravelModel)
         {
-            ViewBag.RoleId = RoleId;
+            ViewBag.RoleId = Session["RoleId"];
 
             string PolicyNo = objTravelModel.PolicyNo ?? "";
             string AgentCode_BrokerCode = objTravelModel.Broker_AgentCode ?? "";
@@ -363,10 +366,11 @@ namespace MotorApp.Controllers
             string Status = objTravelModel.Status ?? "";
 
             List<TravelModel> lst = new List<TravelModel>();
-
+            RoleId = Convert.ToInt64(Session["RoleId"]);
             if (!string.IsNullOrEmpty(PolicyNo) || !string.IsNullOrEmpty(AgentCode_BrokerCode) || !string.IsNullOrEmpty(Branch) || !string.IsNullOrEmpty(AssuredName)
                 || !string.IsNullOrEmpty(Status))
             {
+                
                 if (RoleId.Equals(1))
                     lst = travelModel.Where(x => x.PolicyNo == PolicyNo || x.Broker_AgentCode == AgentCode_BrokerCode ||
                                       x.Branch == Branch || x.AssuredName == AssuredName && x.Status == Status).OrderBy(x => x.TravelId).ToList();
@@ -408,7 +412,7 @@ namespace MotorApp.Controllers
         [HttpGet]
         public ActionResult MasterIndividual(IndividualModel objInd)
         {
-            ViewBag.RoleId = RoleId;
+            ViewBag.RoleId = Session["RoleId"];
 
             string PolicyNo = objInd.PolicyNo ?? "";
             string AgentCode_BrokerCode = objInd.Broker_AgentCode ?? "";
@@ -418,7 +422,7 @@ namespace MotorApp.Controllers
             string Status = objInd.Status ?? "";
 
             List<IndividualModel> lst = new List<IndividualModel>();
-
+            RoleId = Convert.ToInt64(Session["RoleId"]);
             if (!string.IsNullOrEmpty(PolicyNo) || !string.IsNullOrEmpty(AgentCode_BrokerCode) || !string.IsNullOrEmpty(Branch) || !string.IsNullOrEmpty(AssuredName)
                 || !string.IsNullOrEmpty(Status))
             {
@@ -454,7 +458,7 @@ namespace MotorApp.Controllers
         [HttpGet]
         public ActionResult MasterDomestic(DomesticModel objDom)
         {
-            ViewBag.RoleId = RoleId;
+            ViewBag.RoleId = Session["RoleId"];
 
             string PolicyNo = objDom.PolicyNo ?? "";
             string AgentCode_BrokerCode = objDom.Broker_AgentCode ?? "";
@@ -464,7 +468,7 @@ namespace MotorApp.Controllers
             string Status = objDom.Status ?? "";
 
             List<DomesticModel> lst = new List<DomesticModel>();
-
+            RoleId = Convert.ToInt64(Session["RoleId"]);
             if (!string.IsNullOrEmpty(PolicyNo) || !string.IsNullOrEmpty(AgentCode_BrokerCode) || !string.IsNullOrEmpty(Branch) || !string.IsNullOrEmpty(AssuredName)
                 || !string.IsNullOrEmpty(Status))
             {
@@ -517,6 +521,7 @@ namespace MotorApp.Controllers
                         Session["UserName"] = objModels.UserName;
                         Session["IsUserLogin"] = true;
                         IsUserLogin = true;
+                        Session["RoleId"] = RoleId;
                         return RedirectToAction("Index");
                     }
                     else
