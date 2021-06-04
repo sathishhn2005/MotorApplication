@@ -31,7 +31,7 @@ namespace MotorApp.Controllers
         static long RoleId = 0;
         static int TypeId = 0;
         dynamic lstInput;
-        static bool IsUserLogin;
+        bool IsUserLogin = false;
 
         public HomeController()
         {
@@ -98,6 +98,7 @@ namespace MotorApp.Controllers
                         TempData["Input"] = lstInput;
                         Session["Input"] = lstInput;
                         IsUserLogin = true;
+                        Session["IsUserLogin"] = true;
                         return objMod;
                         //return RedirectToAction("Index");
                     }
@@ -232,7 +233,7 @@ namespace MotorApp.Controllers
             if (IsLoggedIn > 0)
             {
                 ViewBag.RoleId = RoleId;
-                ViewBag.UserName = lstInput.UserName;
+                ViewBag.UserName = Session["UserName"].ToString();
                 return View();
             }
             else
@@ -251,18 +252,7 @@ namespace MotorApp.Controllers
 
             ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
 
-            if (Session["Input"] != null)
-            {
-                lstInput = Session["Input"];
-            }
-            else
-            {
-                getContextInfo();
-            }
-            long returnCode = objMotorBAL.GetUserInsInfo(lstInput, out lstInfo);
-            if (lstInfo != null)
-                Session["UserName"] = lstInfo.UserName;
-            if (!returnCode.Equals(1))
+            if (Session["UserName"] != null)
             {
 
                 //  return dataPoints;
@@ -382,7 +372,7 @@ namespace MotorApp.Controllers
                                       x.Branch == Branch || x.AssuredName == AssuredName && x.Status == Status).OrderBy(x => x.TravelId).ToList();
                 else
                     lst = travelModel.Where(x => x.PolicyNo == PolicyNo || x.Broker_AgentCode == AgentCode_BrokerCode ||
-                                  x.Branch == Branch || x.AssuredName == AssuredName || x.Status == Status && x.AgentCode == Session["UserName"]).OrderBy(x => x.TravelId).ToList();
+                                  x.Branch == Branch || x.AssuredName == AssuredName || x.Status == Status && x.AgentCode == Session["UserName"].ToString()).OrderBy(x => x.TravelId).ToList();
 
                 return View(lst);
             }
@@ -390,7 +380,7 @@ namespace MotorApp.Controllers
                 return View(travelModel);
 
             else
-                return View(travelModel.Where(x => x.AgentCode == Session["UserName"]).OrderBy(x => x.TravelId));
+                return View(travelModel.Where(x => x.AgentCode == Session["UserName"].ToString()).OrderBy(x => x.TravelId));
 
 
 
@@ -437,7 +427,7 @@ namespace MotorApp.Controllers
                                       x.Branch == Branch || x.LifeAssuredName == AssuredName && x.Status == Status).OrderBy(x => x.IndividualId).ToList();
                 else
                     lst = indiviModel.Where(x => x.PolicyNo == PolicyNo || x.Broker_AgentCode == AgentCode_BrokerCode ||
-                                  x.Branch == Branch || x.LifeAssuredName == AssuredName || x.Status == Status && x.AgentCode == Session["UserName"]).OrderBy(x => x.IndividualId).ToList();
+                                  x.Branch == Branch || x.LifeAssuredName == AssuredName || x.Status == Status && x.AgentCode == Session["UserName"].ToString()).OrderBy(x => x.IndividualId).ToList();
 
                 return View(lst);
             }
@@ -445,7 +435,7 @@ namespace MotorApp.Controllers
                 return View(indiviModel);
 
             else
-                return View(indiviModel.Where(x => x.AgentCode == Session["UserName"]).OrderBy(x => x.IndividualId));
+                return View(indiviModel.Where(x => x.AgentCode == Session["UserName"].ToString()).OrderBy(x => x.IndividualId));
 
 
 
@@ -483,7 +473,7 @@ namespace MotorApp.Controllers
                                       x.Branch == Branch || x.AssuredName == AssuredName && x.Status == Status).OrderBy(x => x.DomesticId).ToList();
                 else
                     lst = domesModel.Where(x => x.PolicyNo == PolicyNo || x.Broker_AgentCode == AgentCode_BrokerCode ||
-                                  x.Branch == Branch || x.AssuredName == AssuredName || x.Status == Status && x.AgentCode == Session["UserName"]).OrderBy(x => x.DomesticId).ToList();
+                                  x.Branch == Branch || x.AssuredName == AssuredName || x.Status == Status && x.AgentCode == Session["UserName"].ToString()).OrderBy(x => x.DomesticId).ToList();
 
                 return View(lst);
             }
@@ -491,12 +481,13 @@ namespace MotorApp.Controllers
                 return View(domesModel);
 
             else
-                return View(domesModel.Where(x => x.AgentCode == Session["UserName"]).OrderBy(x => x.DomesticId));
+                return View(domesModel.Where(x => x.AgentCode == Session["UserName"].ToString()).OrderBy(x => x.DomesticId));
 
         }
         public ActionResult Login()
         {
             // Session["Input"] = null;
+            Session["IsUserLogin"] = true;
             IsUserLogin = false;
             if (TempData["IsExists"] == null)
                 TempData["IsExists"] = "";
@@ -521,9 +512,10 @@ namespace MotorApp.Controllers
                         ViewBag.RoleId = RoleId;
                         lstInput = objModels;
                         // TempData["Input"] = lstInput;
-                       // Session["UserName"] = objModels.UserName;
+                        // Session["UserName"] = objModels.UserName;
                         Session["Input"] = lstInput;
                         Session["UserName"] = objModels.UserName;
+                        Session["IsUserLogin"] = true;
                         IsUserLogin = true;
                         return RedirectToAction("Index");
                     }
@@ -1390,6 +1382,7 @@ namespace MotorApp.Controllers
             int i = 0;
             try
             {
+                IsUserLogin = Convert.ToBoolean(Session["IsUserLogin"]);
                 if (IsUserLogin)
                 {
                     i = 1;

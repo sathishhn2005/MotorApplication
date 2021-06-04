@@ -174,38 +174,39 @@ namespace MotorApp.BAL
         }
         public long GetUserInsInfo(dynamic lstInput, out DashBoard lstInfo)
         {
-            //long returnCode = -1;
+            long returnCode = -1;
             lstInfo = new DashBoard();
-            return objMotorAppDAL.GetUserInsuranceInfo(lstInput, out lstInfo);
-          /*  using (TransactionScope transactionScope = new TransactionScope())
-            {
-                try
-                {
-                    // returnCode = objMotorAppDAL.GetUserInsuranceInfo(lstInput, out lstInfo);
-                    if (HttpContext.Current.Cache["InputData"].ToString() != "" && HttpContext.Current.Cache["InputData"] != null)
-                    {
-                        if (lstInput == null)
-                            lstInput = (dynamic)HttpContext.Current.Cache["InputData"];
-                        returnCode = objMotorAppDAL.GetUserInsuranceInfo(lstInput, out lstInfo);
-                    }
-                    else
-                    {
-                        returnCode = objMotorAppDAL.GetUserInsuranceInfo(lstInput, out lstInfo);
-                        HttpContext.Current.Cache.Insert("InputData", lstInput);
-                    }
+            returnCode = objMotorAppDAL.GetUserInsuranceInfo(lstInput, out lstInfo);
+            return returnCode;
+            /*  using (TransactionScope transactionScope = new TransactionScope())
+              {
+                  try
+                  {
+                      // returnCode = objMotorAppDAL.GetUserInsuranceInfo(lstInput, out lstInfo);
+                      if (HttpContext.Current.Cache["InputData"].ToString() != "" && HttpContext.Current.Cache["InputData"] != null)
+                      {
+                          if (lstInput == null)
+                              lstInput = (dynamic)HttpContext.Current.Cache["InputData"];
+                          returnCode = objMotorAppDAL.GetUserInsuranceInfo(lstInput, out lstInfo);
+                      }
+                      else
+                      {
+                          returnCode = objMotorAppDAL.GetUserInsuranceInfo(lstInput, out lstInfo);
+                          HttpContext.Current.Cache.Insert("InputData", lstInput);
+                      }
 
-                    transactionScope.Complete();
-                    transactionScope.Dispose();
+                      transactionScope.Complete();
+                      transactionScope.Dispose();
 
-                }
-                catch (Exception ex)
-                {
-                    transactionScope.Dispose();
-                    //  throw ex;
-                }
+                  }
+                  catch (Exception ex)
+                  {
+                      transactionScope.Dispose();
+                      //  throw ex;
+                  }
 
-                return returnCode;
-            }*/
+                  return returnCode;
+              }*/
         }
         public long RegisterUser(dynamic obj)
         {
@@ -552,12 +553,12 @@ namespace MotorApp.BAL
             try
             {
                 returnCode = objMotorAppDAL.GetDelegateSearchIns(PolicyNo, CustCode, SourceCode, PolicyFromDate, PolicyToDate, out lstNewIns, PageNo, PageType);
-                
+
 
             }
             catch (Exception ex)
             {
-                
+
                 throw ex;
             }
 
@@ -713,14 +714,14 @@ namespace MotorApp.BAL
         {
             return objMotorAppDAL.GetAutocompleteUserList(Prefix, PageType, out lstUsers);
         }
-        public long GetUserInfo(dynamic tempUser, out string UserName, out string Password, out long RoleIdd,out DashBoard lstInfo)
+        public long GetUserInfo(dynamic tempUser, out string UserName, out string Password, out long RoleIdd, out DashBoard lstInfo)
         {
             UserName = string.Empty;
             Password = string.Empty;
             RoleIdd = 0;
             lstInfo = new DashBoard();
             var res = objMotorAppDAL.IsExistsUser(tempUser, out UserName, out Password, out RoleIdd);
-            return objMotorAppDAL.GetUserInsuranceMultiple(UserName, Password, RoleIdd,out lstInfo);
+            return objMotorAppDAL.GetUserInsuranceMultiple(UserName, Password, RoleIdd, out lstInfo);
         }
     }
 }

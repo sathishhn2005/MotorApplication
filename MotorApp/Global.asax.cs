@@ -20,13 +20,13 @@ namespace MotorApp
             //GlobalFilters.Filters.Add(new AuthorizationFilter());
 
         }
-        //protected void Application_BeginRequest()
-        //{
-        //    //HttpContext.Current.Cache["InputData"] = "";
-        //    Response.Cache.SetCacheability(HttpCacheability.NoCache);
-        //    Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
-        //    Response.Cache.SetNoStore();
-        //}
+        protected void Application_BeginRequest()
+        {
+            //HttpContext.Current.Cache["InputData"] = "";
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
+            Response.Cache.SetNoStore();
+        }
         //protected void Session_End(object sender, EventArgs e)
         //{
         //    // Code that runs when a session ends. 
