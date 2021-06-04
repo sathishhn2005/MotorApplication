@@ -1010,7 +1010,7 @@ namespace MotorApp.DAL
                     };
 
                     cmd.Parameters.AddWithValue("@InsId", objMotorModel.InsuranceID);
-                    
+
                     cmd.Parameters.AddWithValue("@Status", objMotorModel.Status ?? "");
                     cmd.Parameters.AddWithValue("@Description", objMotorModel.Description ?? "");
                     cmd.Parameters.AddWithValue("@UserName", uname ?? "");
@@ -1066,7 +1066,7 @@ namespace MotorApp.DAL
 
                         if (ds.Tables[0].Rows.Count > 0)
                         {
-                            
+
                             DTtoListConverter.ConvertTo(ds.Tables[0], out lstBIDashBoard);
                         }
                     }
@@ -1256,9 +1256,9 @@ namespace MotorApp.DAL
             }
             return returnCode;
         }
-        public long GetSearchIns(long RoleId, string PolicyNo, string DivisionName, string AssuredName, string ProductName, string Status, 
-                string Uname,DateTime PolicyFromDate, DateTime PolicyToDate, out List<Insurance> lstNewIns
-            , int PageNo,string PageType
+        public long GetSearchIns(long RoleId, string PolicyNo, string DivisionName, string AssuredName, string ProductName, string Status,
+                string Uname, DateTime PolicyFromDate, DateTime PolicyToDate, out List<Insurance> lstNewIns
+            , int PageNo, string PageType
             )
         {
             long returnCode = -1;
@@ -1274,7 +1274,7 @@ namespace MotorApp.DAL
                     SqlCommand cmd = new SqlCommand
                     {
                         CommandText = "PGetSearchMasterMotor" //SP_GetSearch
-                };
+                    };
 
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Connection = con;
@@ -1286,9 +1286,9 @@ namespace MotorApp.DAL
                     cmd.Parameters.AddWithValue("@ProductName", ProductName);
                     cmd.Parameters.AddWithValue("@Status", Status);
                     cmd.Parameters.AddWithValue("@ProducerName", Uname);
-                  //  cmd.Parameters.AddWithValue("@PolicyFromDate", PolicyFromDate);
-                  //  cmd.Parameters.AddWithValue("@PolicyToDate", PolicyToDate);
-                  //  SqlCommand cmd = new SqlCommand("insertsomeDate", conn);
+                    //  cmd.Parameters.AddWithValue("@PolicyFromDate", PolicyFromDate);
+                    //  cmd.Parameters.AddWithValue("@PolicyToDate", PolicyToDate);
+                    //  SqlCommand cmd = new SqlCommand("insertsomeDate", conn);
                     //cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@PolicyFromDate", SqlDbType.DateTime).Value = PolicyFromDate;
                     cmd.Parameters.Add("@PolicyToDate", SqlDbType.DateTime).Value = PolicyToDate;
@@ -1315,7 +1315,7 @@ namespace MotorApp.DAL
             }
             return returnCode;
         }
-        public long GetDelegateSearchIns(string PolicyNo, string CustCode, string SourceCode,  DateTime PolicyFromDate, DateTime PolicyToDate, out List<Insurance> lstNewIns
+        public long GetDelegateSearchIns(string PolicyNo, string CustCode, string SourceCode, DateTime PolicyFromDate, DateTime PolicyToDate, out List<Insurance> lstNewIns
             , int PageNo, string PageType
             )
         {
@@ -1337,11 +1337,11 @@ namespace MotorApp.DAL
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Connection = con;
 
-                    
+
                     cmd.Parameters.AddWithValue("@PolicyNo", PolicyNo);
                     cmd.Parameters.AddWithValue("@CustCode", CustCode);
                     cmd.Parameters.AddWithValue("@SourceCode", SourceCode);
-                 
+
                     cmd.Parameters.Add("@PolicyFromDate", SqlDbType.DateTime).Value = PolicyFromDate;
                     cmd.Parameters.Add("@PolicyToDate", SqlDbType.DateTime).Value = PolicyToDate;
                     cmd.Parameters.AddWithValue("@PageNo", PageNo);
@@ -1595,7 +1595,7 @@ namespace MotorApp.DAL
         {
             long returnCode = -1;
             ErrorMsg = string.Empty;
-           
+
             try
             {
                 using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
@@ -1640,13 +1640,13 @@ namespace MotorApp.DAL
             return returnCode;
         }
 
-        public long GetAutocompleteUserList(string Prefix,string PageType, out List<Users> lstUsers)
+        public long GetAutocompleteUserList(string Prefix, string PageType, out List<Users> lstUsers)
         {
             long returnCode = -1;
 
             lstUsers = new List<Users>();
-            
-            
+
+
             try
             {
                 DataSet ds = new DataSet();
@@ -1669,7 +1669,7 @@ namespace MotorApp.DAL
                         SelectCommand = cmd
                     };
                     sdaAdapter.Fill(ds);
-                    
+
 
                     if (ds.Tables[0].Rows.Count > 0)
                     {
@@ -1686,7 +1686,120 @@ namespace MotorApp.DAL
             }
             return returnCode;
         }
-        
 
+        public long IsExistsUser(dynamic obj, out string UserName, out string Password, out long RoleIdd)
+        {
+            long returnCode = -1;
+            long RoleId = 0;
+            UserName = string.Empty;
+            Password = string.Empty;
+            RoleIdd = 0;
+
+            SqlCommand cmd;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+
+                    string query = "Select distinct UserName,Password,RoleId from TB_Users where UserName='" + obj + "'";
+                    cmd = new SqlCommand(query, con);
+                    SqlDataReader reader;
+                    reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        UserName = (string)reader.GetValue(0);
+                        Password = (string)reader.GetValue(1);
+                        RoleIdd = Convert.ToInt64(reader.GetValue(2));
+                        returnCode = Convert.ToInt64(reader.GetValue(2));
+
+                    }
+                    reader.Close();
+                    cmd.Dispose();
+
+                    if (returnCode > 0)
+                    {
+                        returnCode = RoleId;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return returnCode;
+        }
+        public long GetUserInsuranceMultiple(string UserName, string Password,long RoleId, out DashBoard lstInfo)
+        {
+            long returnCode = -1;
+            lstInfo = new DashBoard();
+            try
+            {
+                DataSet ds = new DataSet();
+                using (SqlConnection con = new SqlConnection(objUtility.GetConnectionString()))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = "SP_GetUserInsInfo"
+                    };
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+                    cmd.Parameters.AddWithValue("@UserName", UserName);
+                    cmd.Parameters.AddWithValue("@Password", Password);
+                    cmd.Parameters.AddWithValue("@RoleId", RoleId);
+
+                    SqlDataReader reader;
+                    reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        lstInfo.TNPYear = (long)reader.GetValue(0);
+                        lstInfo.TNPUnderProcessYear = (long)reader.GetValue(1);
+                        lstInfo.TNPLostYear = (long)reader.GetValue(2);
+                        lstInfo.TNPRenewedYear = (long)reader.GetValue(3);
+                        lstInfo.PercentageRenewedYear = (decimal)reader.GetValue(4);
+                        lstInfo.TNPMonth = (long)reader.GetValue(5);
+                        lstInfo.TNPLostMonth = (long)reader.GetValue(6);
+                        lstInfo.TNPUnderProcessMonth = (long)reader.GetValue(7);
+                        lstInfo.TNPRenewedMonth = (long)reader.GetValue(8);
+                        lstInfo.PercentageRenewedMonth = (decimal)reader.GetValue(9);
+                        lstInfo.TNPYearPremium = (long)reader.GetValue(10);
+                        lstInfo.TNPUPYearPremium = (long)reader.GetValue(11);
+                        lstInfo.TNPLostYearPremium = (long)reader.GetValue(12);
+                        lstInfo.TNPRenewedYearPremium = (long)reader.GetValue(13);
+                        lstInfo.PercentPremiumRenewedYear = (decimal)reader.GetValue(14);
+                        lstInfo.TNPMonthPremium = (long)reader.GetValue(15);
+                        lstInfo.TNPLostMonthPremium = (long)reader.GetValue(16);
+                        lstInfo.TNPUPMonthPremium = (long)reader.GetValue(17);
+                        lstInfo.TNPRenewedMonthPremium = (long)reader.GetValue(18);
+                        lstInfo.PercentPremiumRenewedMonth = (decimal)reader.GetValue(19);
+                        lstInfo.UserName = (string)reader.GetValue(20);
+
+                        lstInfo.TotPoltoBeRenewed = 0;
+                        lstInfo.TotPolforRenewal = 0;
+                        lstInfo.NoOfPoRenewed = 0;
+                        lstInfo.PolicyLost = 0;
+
+                        lstInfo.TotPoltoBeRenewedCM = 0;
+                        lstInfo.TotPolforRenewalCM = 0;
+
+                        lstInfo.NoOfPoRenewedCM = 0;
+                        lstInfo.PolicyLostCM = 0;
+
+                        returnCode = 1;
+                    }
+                    reader.Close();
+                    cmd.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return returnCode;
+        }
     }
 }

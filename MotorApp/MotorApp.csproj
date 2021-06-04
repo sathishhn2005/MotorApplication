@@ -50,6 +50,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -124,9 +125,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AuthorizationFilter.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BulkUploadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SuperAdminController.cs" />
     <Compile Include="Global.asax.cs">
@@ -166,10 +169,15 @@
     <Content Include="js\demo\chart-pie-demo.js" />
     <Content Include="js\ruang-admin.js" />
     <Content Include="js\ruang-admin.min.js" />
+    <Content Include="Scripts\Autocomplete\jquery-ui.css" />
+    <Content Include="Scripts\Autocomplete\jquery-ui.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="img\logo\logo.ai" />
     <Content Include="MasterUploads\NewBulkUpload.xlsx" />
+    <Content Include="MasterUploads\Insurance\20210516215939_Bulkupload.csv" />
+    <Content Include="MasterUploads\Insurance\20210516223903_Bulkupload.csv" />
+    <Content Include="MasterUploads\Insurance\20210518180108_Bulkupload.csv" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -182,6 +190,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Uploads\LOGO2 %281%29.png" />
     <Content Include="vendor\Bootstrap-Checkbox\bootstrap4-toggle.js" />
     <Content Include="vendor\bootstrap\css\bootstrap.css" />
     <Content Include="vendor\bootstrap\css\bootstrap.min.css" />
@@ -1949,9 +1958,21 @@
     <Content Include="Views\Shared\_Add.cshtml" />
     <Content Include="Views\Home\CallBack.cshtml" />
     <Content Include="Views\Home\UserRegister.cshtml" />
+    <Content Include="Uploads\Copy of Dump Data 190920 %282%29.xlsx" />
+    <Content Include="Uploads\DomesticBulkUpload.xlsx" />
+    <Content Include="Uploads\IndividualBulkUpload.xlsx" />
+    <Content Include="Uploads\MotorBulkUpload %281%29.xlsx" />
+    <Content Include="Uploads\MotorBulkUpload.xlsx" />
+    <Content Include="Uploads\NewBulkUpload %281%29.xlsx" />
+    <Content Include="Uploads\NewBulkUpload.xlsx" />
+    <Content Include="Uploads\NewBulkUpload_test.xlsx" />
+    <Content Include="Uploads\TravelBulkUpload.xlsx" />
+    <Content Include="Views\BulkUpload\BulkUpload.cshtml" />
+    <Content Include="Views\BulkUpload\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

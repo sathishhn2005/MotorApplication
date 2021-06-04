@@ -26,27 +26,99 @@ namespace MotorApp.Controllers
         private List<Insurance> lstNewIns;
         private DashBoard lstInfo = new DashBoard();
         string IsExists = string.Empty;
-        static string U_Name = string.Empty;
+        //string U_Name = string.Empty;
         static List<int> Year;
         static long RoleId = 0;
         static int TypeId = 0;
         dynamic lstInput;
         static bool IsUserLogin;
 
-        //public HomeController()
+        public HomeController()
+        {
+            //if (!string.IsNullOrEmpty(U_Name))
+            //{
+            //    long returnCode = objMotorBAL.GetMasterViews(out motorModel, out travelModel, out indiviModel, out domesModel, out lstProducerCodeMaster, out lstNewIns);
+            //    if (lstNewIns != null)
+            //    {
+            //        lstInfo.lstYears = lstNewIns.Where(p => p.PolicyToDate != null).Select(p => p.PolicyToDate.Year).Distinct().
+            //            AsEnumerable().Select(x => new DateTime(x, 1, 1).Year).ToList();
+            //    }
+
+            //}
+            // Session["Input"] = lstInfo;
+            //if (Session["Input"] != null)
+            //{
+            //    lstInput = Session["Input"];
+            //}
+
+        }
+        // GET: Default  
+
+
+        //[ValidateAntiForgeryToken]  
+
+        //[HttpPost]
+        //[AllowAnonymous]
+        //public ActionResult LoginMotor()
         //{
-        //    if (!string.IsNullOrEmpty(U_Name))
+        //    string u = Request["UserName"];
+        //    string p = Request["Password"];
+        //    long r = 5;// Request["Role"];
+        //    LoginViewModel objVM = AuthUser(u, p, r);
+        //    if (objVM != null)
         //    {
-        //        long returnCode = objMotorBAL.GetMasterViews(out motorModel, out travelModel, out indiviModel, out domesModel, out lstProducerCodeMaster, out lstNewIns);
-        //        if (lstNewIns != null)
-        //        {
-        //            lstInfo.lstYears = lstNewIns.Where(p => p.PolicyToDate != null).Select(p => p.PolicyToDate.Year).Distinct().
-        //                AsEnumerable().Select(x => new DateTime(x, 1, 1).Year).ToList();
-        //        }
+        //        Session["Input"] = objVM;
+        //        IsUserLogin = true;
+        //        return RedirectToAction("Index", "Home");
         //    }
-
-
+        //    return RedirectToAction("Login", "Home");
         //}
+
+        public LoginViewModel AuthUser(string username, string password, long RoleId)
+        {
+            //if (password.Equals("123") && username.Equals("user"))
+            //    return "User";
+            //else
+            //    return null;
+            LoginViewModel objMod = new LoginViewModel();
+            try
+            {
+                if (username != null && password != null)
+                {
+
+                    objMod.UserName = username;
+                    objMod.Password = password;
+                    objMod.RoleId = RoleId;
+                    long returnCode = objMotorBAL.IsUserExists(objMod);
+                    if (returnCode > 0)
+                    {
+                        RoleId = returnCode;
+                        ViewBag.RoleId = RoleId;
+                        lstInput = objMod;
+                        TempData["Input"] = lstInput;
+                        Session["Input"] = lstInput;
+                        IsUserLogin = true;
+                        return objMod;
+                        //return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        TempData["IsExists"] = "User not found";
+                        return objMod;
+                    }
+
+                }
+                else
+                {
+                    ViewBag.Err = "Please Provide all the mandatory fields.";
+                    return objMod;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public IEnumerable<SelectListItem> lstProItems
         {
@@ -54,9 +126,12 @@ namespace MotorApp.Controllers
         }
 
         MotorBAL objMotorBAL = new MotorBAL();
+        [HttpGet]
+        [AllowAnonymous]
         public ActionResult Index()
         {
             //  IsUserLogin = true;
+            long returnCode = -1;
             int IsLoggedIn = IsUserLoggedIn();
             if (IsLoggedIn > 0)
             {
@@ -65,12 +140,12 @@ namespace MotorApp.Controllers
                 ViewBag.TypeId = TypeId;
                 if (string.IsNullOrEmpty(uname) || uname.Equals("Admin"))
                 {
-                    if (TempData["Input"] != null)
+                    if (Session["Input"] != null)
                     {
-                        lstInput = TempData["Input"];
+                        lstInput = Session["Input"];
+                        returnCode = objMotorBAL.GetUserInsInfo(lstInput, out lstInfo);
                     }
 
-                    long returnCode = objMotorBAL.GetUserInsInfo(lstInput, out lstInfo);
                     //long returnCode = objMotorBAL.GetMIDashBoard(lstInput, out lstInfo);
                     ViewBag.RoleId = RoleId;
 
@@ -124,8 +199,8 @@ namespace MotorApp.Controllers
                     TempData["un"] = lstInfo.UserName;
                     if (lstInfo != null)
                     {
-                        U_Name = lstInfo.UserName;
-                        ViewBag.UserName = U_Name;
+                        Session["UserName"] = lstInfo.UserName;
+                        ViewBag.UserName = lstInput.UserName;
                     }
                     if (!returnCode.Equals(1))
                     {
@@ -136,7 +211,7 @@ namespace MotorApp.Controllers
                 }
                 else
                 {
-                    long returnCode = objMotorBAL.GetUserReport(uname, out lstInfo);
+                    returnCode = objMotorBAL.GetUserReport(uname, out lstInfo);
                     ViewBag.RoleId = RoleId;
 
                     ViewBag.TotPoltoBeRenewed = lstInfo.TotPoltoBeRenewed;
@@ -157,7 +232,7 @@ namespace MotorApp.Controllers
             if (IsLoggedIn > 0)
             {
                 ViewBag.RoleId = RoleId;
-                ViewBag.UserName = U_Name;
+                ViewBag.UserName = lstInput.UserName;
                 return View();
             }
             else
@@ -172,17 +247,21 @@ namespace MotorApp.Controllers
         {
             List<DashBoard> lst = new List<DashBoard>();
             List<DataPoint> dataPoints = new List<DataPoint>();
-            dataPoints = objMotorBAL.GetBarChart(TypeId, U_Name);
+            dataPoints = objMotorBAL.GetBarChart(TypeId, Session["UserName"].ToString());
 
             ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
 
-            if (TempData["Input"] != null)
+            if (Session["Input"] != null)
             {
-                lstInput = TempData["Input"];
+                lstInput = Session["Input"];
+            }
+            else
+            {
+                getContextInfo();
             }
             long returnCode = objMotorBAL.GetUserInsInfo(lstInput, out lstInfo);
             if (lstInfo != null)
-                U_Name = lstInfo.UserName;
+                Session["UserName"] = lstInfo.UserName;
             if (!returnCode.Equals(1))
             {
 
@@ -215,19 +294,19 @@ namespace MotorApp.Controllers
                 string productName = objMotorModel.ProductName ?? "";
                 string instype = objMotorModel.InsType ?? "";
                 string Status = objMotorModel.Status ?? "";
-               
+
                 DateTime PolicyFDate = objMotorModel.PolicyFromDate == Convert.ToDateTime("01-01-0001 12.00.00 AM") ? Convert.ToDateTime("01-01-1753 12.00.00 AM") : objMotorModel.PolicyFromDate;
                 DateTime PolicyTDate = objMotorModel.PolicyToDate == Convert.ToDateTime("01-01-0001 12.00.00 AM") ? Convert.ToDateTime("01-01-1753 12.00.00 AM") : objMotorModel.PolicyToDate;
-                ViewBag.UserName = U_Name;
+                ViewBag.UserName = Session["UserName"].ToString();
                 List<Insurance> lst = new List<Insurance>();
 
-                ProducerName = RoleId.Equals(1) ? objMotorModel.UserName : U_Name;
+                ProducerName = RoleId.Equals(1) ? objMotorModel.UserName : Session["UserName"].ToString();
 
 
                 if (!string.IsNullOrEmpty(PolicyNo) || DateValidation.isValidDate(PolicyFDate.Day, PolicyFDate.Month, PolicyFDate.Year) || !string.IsNullOrEmpty(Status)
                     || !string.IsNullOrEmpty(ProducerName) || !string.IsNullOrEmpty(divisionName))
 
-                { 
+                {
                     long returnCode = objMotorBAL.GetSearchData(RoleId, PolicyNo, divisionName, AssuredName, productName, Status, ProducerName, PolicyFDate, PolicyTDate, out lst, 0, "");
                 }
 
@@ -249,9 +328,9 @@ namespace MotorApp.Controllers
             int IsLoggedIn = IsUserLoggedIn();
             if (IsLoggedIn > 0)
             {
-                ViewBag.UserName = U_Name;
+                ViewBag.UserName = Session["UserName"];
                 List<Insurance> lst = new List<Insurance>();
-                long returnCode = objMotorBAL.GetCallBackDetails(RoleId, U_Name, out lst);
+                long returnCode = objMotorBAL.GetCallBackDetails(RoleId, Session["UserName"].ToString(), out lst);
                 return View(lst);
             }
             else
@@ -270,8 +349,8 @@ namespace MotorApp.Controllers
                     return View(motorModel);
                 //query.Where(s => s.AgentCode_BrokerCode == lstInfo.UserName).FirstOrDefault();
                 //return View(motorModel);
-                if (!string.IsNullOrEmpty(U_Name))
-                    return View(motorModel.Where(x => x.AgentCode == U_Name).OrderBy(x => x.MotorId));
+                if (!string.IsNullOrEmpty(Session["UserName"].ToString()))
+                    return View(motorModel.Where(x => x.AgentCode == Session["UserName"].ToString()).OrderBy(x => x.MotorId));
                 else
                     return View(motorModel);
             }
@@ -303,7 +382,7 @@ namespace MotorApp.Controllers
                                       x.Branch == Branch || x.AssuredName == AssuredName && x.Status == Status).OrderBy(x => x.TravelId).ToList();
                 else
                     lst = travelModel.Where(x => x.PolicyNo == PolicyNo || x.Broker_AgentCode == AgentCode_BrokerCode ||
-                                  x.Branch == Branch || x.AssuredName == AssuredName || x.Status == Status && x.AgentCode == U_Name).OrderBy(x => x.TravelId).ToList();
+                                  x.Branch == Branch || x.AssuredName == AssuredName || x.Status == Status && x.AgentCode == Session["UserName"]).OrderBy(x => x.TravelId).ToList();
 
                 return View(lst);
             }
@@ -311,7 +390,7 @@ namespace MotorApp.Controllers
                 return View(travelModel);
 
             else
-                return View(travelModel.Where(x => x.AgentCode == U_Name).OrderBy(x => x.TravelId));
+                return View(travelModel.Where(x => x.AgentCode == Session["UserName"]).OrderBy(x => x.TravelId));
 
 
 
@@ -321,8 +400,8 @@ namespace MotorApp.Controllers
              ViewBag.RoleId = RoleId;
              if (RoleId.Equals(1))
                  return View(travelModel);
-             if (!string.IsNullOrEmpty(U_Name))
-                 return View(travelModel.Where(x => x.AgentCode == U_Name).OrderBy(x => x.TravelId));
+             if (!string.IsNullOrEmpty(Session["UserName"]))
+                 return View(travelModel.Where(x => x.AgentCode == Session["UserName"]).OrderBy(x => x.TravelId));
              else
                  return View(travelModel);
          }*/
@@ -331,8 +410,8 @@ namespace MotorApp.Controllers
              ViewBag.RoleId = RoleId;
              if (RoleId.Equals(1))
                  return View(indiviModel);
-             if (!string.IsNullOrEmpty(U_Name))
-                 return View(indiviModel.Where(x => x.AgentCode == U_Name).OrderBy(x => x.IndividualId));
+             if (!string.IsNullOrEmpty(Session["UserName"]))
+                 return View(indiviModel.Where(x => x.AgentCode == Session["UserName"]).OrderBy(x => x.IndividualId));
              else
                  return View(indiviModel);
          }*/
@@ -358,7 +437,7 @@ namespace MotorApp.Controllers
                                       x.Branch == Branch || x.LifeAssuredName == AssuredName && x.Status == Status).OrderBy(x => x.IndividualId).ToList();
                 else
                     lst = indiviModel.Where(x => x.PolicyNo == PolicyNo || x.Broker_AgentCode == AgentCode_BrokerCode ||
-                                  x.Branch == Branch || x.LifeAssuredName == AssuredName || x.Status == Status && x.AgentCode == U_Name).OrderBy(x => x.IndividualId).ToList();
+                                  x.Branch == Branch || x.LifeAssuredName == AssuredName || x.Status == Status && x.AgentCode == Session["UserName"]).OrderBy(x => x.IndividualId).ToList();
 
                 return View(lst);
             }
@@ -366,7 +445,7 @@ namespace MotorApp.Controllers
                 return View(indiviModel);
 
             else
-                return View(indiviModel.Where(x => x.AgentCode == U_Name).OrderBy(x => x.IndividualId));
+                return View(indiviModel.Where(x => x.AgentCode == Session["UserName"]).OrderBy(x => x.IndividualId));
 
 
 
@@ -376,8 +455,8 @@ namespace MotorApp.Controllers
                ViewBag.RoleId = RoleId;
                if (RoleId.Equals(1))
                    return View(domesModel);
-               if (!string.IsNullOrEmpty(U_Name))
-                   return View(domesModel.Where(x => x.AgentCode == U_Name).OrderBy(x => x.DomesticId));
+               if (!string.IsNullOrEmpty(Session["UserName"]))
+                   return View(domesModel.Where(x => x.AgentCode == Session["UserName"]).OrderBy(x => x.DomesticId));
                else
                    return View(domesModel);
 
@@ -404,7 +483,7 @@ namespace MotorApp.Controllers
                                       x.Branch == Branch || x.AssuredName == AssuredName && x.Status == Status).OrderBy(x => x.DomesticId).ToList();
                 else
                     lst = domesModel.Where(x => x.PolicyNo == PolicyNo || x.Broker_AgentCode == AgentCode_BrokerCode ||
-                                  x.Branch == Branch || x.AssuredName == AssuredName || x.Status == Status && x.AgentCode == U_Name).OrderBy(x => x.DomesticId).ToList();
+                                  x.Branch == Branch || x.AssuredName == AssuredName || x.Status == Status && x.AgentCode == Session["UserName"]).OrderBy(x => x.DomesticId).ToList();
 
                 return View(lst);
             }
@@ -412,12 +491,12 @@ namespace MotorApp.Controllers
                 return View(domesModel);
 
             else
-                return View(domesModel.Where(x => x.AgentCode == U_Name).OrderBy(x => x.DomesticId));
+                return View(domesModel.Where(x => x.AgentCode == Session["UserName"]).OrderBy(x => x.DomesticId));
 
         }
         public ActionResult Login()
         {
-            // TempData["Input"] = null;
+            // Session["Input"] = null;
             IsUserLogin = false;
             if (TempData["IsExists"] == null)
                 TempData["IsExists"] = "";
@@ -441,7 +520,10 @@ namespace MotorApp.Controllers
                         RoleId = returnCode;
                         ViewBag.RoleId = RoleId;
                         lstInput = objModels;
-                        TempData["Input"] = lstInput;
+                        // TempData["Input"] = lstInput;
+                       // Session["UserName"] = objModels.UserName;
+                        Session["Input"] = lstInput;
+                        Session["UserName"] = objModels.UserName;
                         IsUserLogin = true;
                         return RedirectToAction("Index");
                     }
@@ -450,9 +532,7 @@ namespace MotorApp.Controllers
                         TempData["IsExists"] = "User not found";
                         return RedirectToAction("Login");
                     }
-                    //lstInput = objModels;
-                    //TempData["Input"] = lstInput;
-                    //return RedirectToAction("Index");
+
                 }
                 else
                 {
@@ -614,7 +694,7 @@ namespace MotorApp.Controllers
             int IsLoggedIn = IsUserLoggedIn();
             if (IsLoggedIn > 0)
             {
-                ViewBag.UserName = U_Name;
+                ViewBag.UserName = lstInput.UserName;
                 ViewBag.RoleId = RoleId;
                 //ViewBag.lstProducerMaster = lstProducerCodeMaster;
                 return View();
@@ -649,9 +729,9 @@ namespace MotorApp.Controllers
             {
                 //if (model.RevisedSumInsured > 0 && model.GrossPremium > 0 && model.RenewalPremium > 0 && model.InsuranceID > 0)
                 //{
-                    returnCode = objMotorBAL.UpdateNewIns(model, U_Name);
-                    //  returnCode = objMotorBAL.SaveNewIns(model);
-               // }
+                returnCode = objMotorBAL.UpdateNewIns(model, Session["UserName"].ToString());
+                //  returnCode = objMotorBAL.SaveNewIns(model);
+                // }
                 //else
                 //{
                 //    returnCode = -2;
@@ -750,7 +830,7 @@ namespace MotorApp.Controllers
             if (IsLoggedIn > 0)
             {
                 ViewBag.RoleId = RoleId;
-                ViewBag.UserName = U_Name;
+                ViewBag.UserName = lstInput.UserName;
                 IList<Insurance> motorList = new List<Insurance>();
 
                 if (lstNewIns != null)
@@ -960,12 +1040,9 @@ namespace MotorApp.Controllers
             int IsLoggedIn = IsUserLoggedIn();
             if (IsLoggedIn > 0)
             {
-                if (TempData["Input"] != null)
-                {
-                    lstInput = TempData["Input"];
-                }
 
-                long returnCode = objMotorBAL.UserMDB(U_Name, 1, out lstInfo);
+
+                long returnCode = objMotorBAL.UserMDB(Session["UserName"].ToString(), 1, out lstInfo);
                 ViewBag.RoleId = RoleId;
                 TypeId = 1;
                 AssignDataToViewBag(lstInfo);
@@ -995,11 +1072,8 @@ namespace MotorApp.Controllers
             int IsLoggedIn = IsUserLoggedIn();
             if (IsLoggedIn > 0)
             {
-                if (TempData["Input"] != null)
-                {
-                    lstInput = TempData["Input"];
-                }
-                long returnCode = objMotorBAL.UserMDB(U_Name, 2, out lstInfo);
+
+                long returnCode = objMotorBAL.UserMDB(Session["UserName"].ToString(), 2, out lstInfo);
                 TypeId = 2;
                 AssignDataToViewBag(lstInfo);
                 ViewBag.RoleId = RoleId;
@@ -1031,10 +1105,7 @@ namespace MotorApp.Controllers
                 int IsLoggedIn = IsUserLoggedIn();
                 //if (IsLoggedIn > 0)
                 //{
-                if (TempData["Input"] != null)
-                {
-                    lstInput = TempData["Input"];
-                }
+
 
                 long returnCode = objMotorBAL.GetInfoYearWise(lstInput, Years, out lstInfo);
 
@@ -1063,11 +1134,8 @@ namespace MotorApp.Controllers
             int IsLoggedIn = IsUserLoggedIn();
             if (IsLoggedIn > 0)
             {
-                if (TempData["Input"] != null)
-                {
-                    lstInput = TempData["Input"];
-                }
-                long returnCode = objMotorBAL.UserMDB(U_Name, 3, out lstInfo);
+
+                long returnCode = objMotorBAL.UserMDB(Session["UserName"].ToString(), 3, out lstInfo);
                 ViewBag.RoleId = RoleId;
                 TypeId = 3;
                 AssignDataToViewBag(lstInfo);
@@ -1095,11 +1163,8 @@ namespace MotorApp.Controllers
             int IsLoggedIn = IsUserLoggedIn();
             if (IsLoggedIn > 0)
             {
-                if (TempData["Input"] != null)
-                {
-                    lstInput = TempData["Input"];
-                }
-                long returnCode = objMotorBAL.UserMDB(U_Name, 4, out lstInfo);
+
+                long returnCode = objMotorBAL.UserMDB(Session["UserName"].ToString(), 4, out lstInfo);
                 ViewBag.RoleId = RoleId;
                 TypeId = 4;
                 AssignDataToViewBag(lstInfo);
@@ -1329,6 +1394,14 @@ namespace MotorApp.Controllers
                 {
                     i = 1;
                 }
+                //if (Session["Input"] != null)
+                //{
+                //    lstInput = Session["Input"];
+                //}
+                //else
+                //{
+                //    getContextInfo();
+                //}
             }
             catch (Exception ex)
             {
@@ -1462,6 +1535,20 @@ namespace MotorApp.Controllers
             return Json(lstUser, JsonRequestBehavior.AllowGet);
 
 
+        }
+        public void getContextInfo()
+        {
+            dynamic tempname = TempData.Values.ToList();
+            string UserName = string.Empty;
+            string Password = string.Empty;
+            long RoleIdd = 0;
+            var getUserInfo = objMotorBAL.GetUserInfo(tempname[0], out UserName, out Password, out RoleIdd, out lstInfo);
+            LoginViewModel obj = new LoginViewModel();
+            obj.UserName = UserName;
+            obj.Password = Password;
+            obj.RoleId = RoleId;
+            lstInput = obj;
+            Session["Input"] = lstInput;
         }
 
     }

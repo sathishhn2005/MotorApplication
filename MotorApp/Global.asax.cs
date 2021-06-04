@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MotorApp.App_Start;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,14 +17,16 @@ namespace MotorApp
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            //GlobalFilters.Filters.Add(new AuthorizationFilter());
+
         }
-        protected void Application_BeginRequest()
-        {
-            // HttpContext.Current.Cache["InputData"] = "";
-            Response.Cache.SetCacheability(HttpCacheability.NoCache);
-            Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
-            Response.Cache.SetNoStore();
-        }
+        //protected void Application_BeginRequest()
+        //{
+        //    //HttpContext.Current.Cache["InputData"] = "";
+        //    Response.Cache.SetCacheability(HttpCacheability.NoCache);
+        //    Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
+        //    Response.Cache.SetNoStore();
+        //}
         //protected void Session_End(object sender, EventArgs e)
         //{
         //    // Code that runs when a session ends. 

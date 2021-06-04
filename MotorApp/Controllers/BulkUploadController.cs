@@ -24,6 +24,10 @@ namespace MotorApp.Controllers
             string PolicyNo = objMotorModel.PolicyNo ?? "";
             string CustCode = objMotorModel.CustomerCode ?? "";
             string SourceCode = objMotorModel.SourceCode ?? "";
+            if (Session["UserName"] != null)
+            {
+                ViewBag.UserName = Session["UserName"].ToString();
+            }
 
             DateTime PolicyFDate = objMotorModel.PolicyFromDate == Convert.ToDateTime("01-01-0001 12.00.00 AM") ? Convert.ToDateTime("01-01-1753 12.00.00 AM") : objMotorModel.PolicyFromDate;
             DateTime PolicyTDate = objMotorModel.PolicyToDate == Convert.ToDateTime("01-01-0001 12.00.00 AM") ? Convert.ToDateTime("01-01-1753 12.00.00 AM") : objMotorModel.PolicyToDate;
@@ -45,6 +49,10 @@ namespace MotorApp.Controllers
             long returnCode = -1;
             string InsuranceStatusJson = string.Empty;
             string ErrorMsg = string.Empty;
+            if (Session["UserName"] != null)
+            {
+                ViewBag.UserName = Session["UserName"].ToString();
+            }
 
             try
             {
@@ -60,6 +68,10 @@ namespace MotorApp.Controllers
         }
         public ActionResult BulkUpload()
         {
+            if (Session["UserName"] != null)
+            {
+                ViewBag.UserName = Session["UserName"].ToString();
+            }
             return View();
         }
 
@@ -67,6 +79,10 @@ namespace MotorApp.Controllers
         public ActionResult BulkUpdate(HttpPostedFileBase CSVFile, string hdnMsgStatus)
         {
             long returnCode = -1;
+            if (Session["UserName"] != null)
+            {
+                ViewBag.UserName = Session["UserName"].ToString();
+            }
             string InsuranceStatusJson = string.Empty;
             string ErrorMsg = string.Empty;
             string ErrorMssage = string.Empty;

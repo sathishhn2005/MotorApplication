@@ -174,9 +174,10 @@ namespace MotorApp.BAL
         }
         public long GetUserInsInfo(dynamic lstInput, out DashBoard lstInfo)
         {
-            long returnCode = -1;
+            //long returnCode = -1;
             lstInfo = new DashBoard();
-            using (TransactionScope transactionScope = new TransactionScope())
+            return objMotorAppDAL.GetUserInsuranceInfo(lstInput, out lstInfo);
+          /*  using (TransactionScope transactionScope = new TransactionScope())
             {
                 try
                 {
@@ -204,7 +205,7 @@ namespace MotorApp.BAL
                 }
 
                 return returnCode;
-            }
+            }*/
         }
         public long RegisterUser(dynamic obj)
         {
@@ -711,6 +712,15 @@ namespace MotorApp.BAL
         public long GetAutocompleteUserList(string Prefix, string PageType, out List<Users> lstUsers)
         {
             return objMotorAppDAL.GetAutocompleteUserList(Prefix, PageType, out lstUsers);
+        }
+        public long GetUserInfo(dynamic tempUser, out string UserName, out string Password, out long RoleIdd,out DashBoard lstInfo)
+        {
+            UserName = string.Empty;
+            Password = string.Empty;
+            RoleIdd = 0;
+            lstInfo = new DashBoard();
+            var res = objMotorAppDAL.IsExistsUser(tempUser, out UserName, out Password, out RoleIdd);
+            return objMotorAppDAL.GetUserInsuranceMultiple(UserName, Password, RoleIdd,out lstInfo);
         }
     }
 }
