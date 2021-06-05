@@ -471,11 +471,11 @@
             }
         });
 
-        function initspMorris(SPBarAData, SPBarBData) {
+        function initspMorris(SPBarAData, SPBarBData, SPBarBMonthName) {
             var spBarChart = new Chart(document.getElementById("SpecificProducer"), {
                 "type": "bar",
                 "data": {
-                    "labels": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                    "labels": SPBarBMonthName,
                     "datasets": [{
                         "label": 'Renewed',
                         "backgroundColor": '#E65A26',
@@ -522,7 +522,11 @@
 
                         SPBarBData.push(value.b);
                     });
-                    initspMorris(SPBarAData, SPBarBData);
+                    var SPBarBMonthName = []; jQuery.each(res, function (key, value) {
+
+                        SPBarBMonthName.push(value.y);
+                    });
+                    initspMorris(SPBarAData, SPBarBData, SPBarBMonthName);
                     //console.log(res);
                     //spBarChart.data.datasets.forEach(function (res) {
                     //    dataset.res = dataset.data.map(function () {

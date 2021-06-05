@@ -278,6 +278,7 @@ namespace MotorApp.Controllers
             {
 
                 ViewBag.RoleId = Session["RoleId"];
+                RoleId = Convert.ToInt64(Session["RoleId"]);
 
                 string PolicyNo = objMotorModel.PolicyNo ?? "";
                 string divisionName = objMotorModel.DivisionName ?? "";
@@ -370,7 +371,7 @@ namespace MotorApp.Controllers
             if (!string.IsNullOrEmpty(PolicyNo) || !string.IsNullOrEmpty(AgentCode_BrokerCode) || !string.IsNullOrEmpty(Branch) || !string.IsNullOrEmpty(AssuredName)
                 || !string.IsNullOrEmpty(Status))
             {
-                
+
                 if (RoleId.Equals(1))
                     lst = travelModel.Where(x => x.PolicyNo == PolicyNo || x.Broker_AgentCode == AgentCode_BrokerCode ||
                                       x.Branch == Branch || x.AssuredName == AssuredName && x.Status == Status).OrderBy(x => x.TravelId).ToList();
@@ -691,8 +692,9 @@ namespace MotorApp.Controllers
             int IsLoggedIn = IsUserLoggedIn();
             if (IsLoggedIn > 0)
             {
-                ViewBag.UserName = lstInput.UserName;
-                ViewBag.RoleId = RoleId;
+               
+                ViewBag.UserName = Session["UserName"];
+                ViewBag.RoleId = Session["RoleId"];
                 //ViewBag.lstProducerMaster = lstProducerCodeMaster;
                 return View();
             }
@@ -1103,7 +1105,7 @@ namespace MotorApp.Controllers
                 //if (IsLoggedIn > 0)
                 //{
 
-
+                lstInput = Session["Input"];
                 long returnCode = objMotorBAL.GetInfoYearWise(lstInput, Years, out lstInfo);
 
                 AssignDataToViewBag(lstInfo);

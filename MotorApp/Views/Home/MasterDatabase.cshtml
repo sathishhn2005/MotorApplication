@@ -780,7 +780,7 @@
         });
     });
     function renewal(MotorId) {
-        
+
         // $('#myModal').modal('show');
         Id = MotorId;
 
@@ -838,6 +838,8 @@
 
                 $('#txtSumInsured').val(data.SumInsured);
                 $('#txtGrossPremium').val(data.GrossPremium);
+                $('#txtRevisedGrossPremium').val(data.RevisedGrossPremium);
+                
                 $('#txtRevisedSumInsured').val(data.RevisedSumInsured);
 
                 $('#txtMarketingExecutive').val(data.MarketingExecutive);
@@ -876,7 +878,7 @@
                 }, 3000);
                 // $('#myModal').html(data); // This should be an empty div where you can inject your new html (the partial view)
             }
-           
+
         });
     }
 
