@@ -34,7 +34,7 @@
     <h1 class="h3 mb-0 text-gray-800">BI Dashboard</h1>
 
     <ol class="breadcrumb my-2">
-        <li class="breadcrumb-item"><a href="./">Home</a></li>
+        <li class="breadcrumb-item">Home</li>
         <li class="breadcrumb-item active" aria-current="page">BI Dashboard</li>
     </ol>
 </div>
@@ -165,6 +165,7 @@
     var BranchMorris;
     var SPBarAData = [];
     var SPBarBData = [];
+    var SPBarBMonthName = [];
 
     $('#branch').change(function () {
         GetYearWiseReport('Branches');
@@ -501,6 +502,7 @@
                     }
                 }
             });
+           // spBarChart.destroy();
         }
         document.getElementById('randomizeData').addEventListener('click', function () {
             var BussType = $("#ddlRole").val();
@@ -514,15 +516,15 @@
                 success: function (Result) {
                     //console.log(Result.lst);
                     var res = Result.lst;
-                    var SPBarAData = []; jQuery.each(res, function (key, value) {
+                    jQuery.each(res, function (key, value) {
 
                         SPBarAData.push(value.a);
                     });
-                    var SPBarBData = []; jQuery.each(res, function (key, value) {
+                    jQuery.each(res, function (key, value) {
 
                         SPBarBData.push(value.b);
                     });
-                    var SPBarBMonthName = []; jQuery.each(res, function (key, value) {
+                    jQuery.each(res, function (key, value) {
 
                         SPBarBMonthName.push(value.y);
                     });

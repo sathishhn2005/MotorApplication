@@ -294,7 +294,10 @@ namespace MotorApp.Controllers
 
                 ProducerName = RoleId.Equals(1) ? objMotorModel.UserName : Session["UserName"].ToString();
 
-
+                if (ProducerName == null)
+                {
+                    ProducerName = Session["UserName"].ToString();
+                }
                 if (!string.IsNullOrEmpty(PolicyNo) || DateValidation.isValidDate(PolicyFDate.Day, PolicyFDate.Month, PolicyFDate.Year) || !string.IsNullOrEmpty(Status)
                     || !string.IsNullOrEmpty(ProducerName) || !string.IsNullOrEmpty(divisionName))
 
@@ -692,7 +695,7 @@ namespace MotorApp.Controllers
             int IsLoggedIn = IsUserLoggedIn();
             if (IsLoggedIn > 0)
             {
-               
+
                 ViewBag.UserName = Session["UserName"];
                 ViewBag.RoleId = Session["RoleId"];
                 //ViewBag.lstProducerMaster = lstProducerCodeMaster;
@@ -828,8 +831,8 @@ namespace MotorApp.Controllers
             int IsLoggedIn = IsUserLoggedIn();
             if (IsLoggedIn > 0)
             {
-                ViewBag.RoleId = RoleId;
-                ViewBag.UserName = lstInput.UserName;
+                ViewBag.UserName = Session["UserName"];
+                ViewBag.RoleId = Session["RoleId"];
                 IList<Insurance> motorList = new List<Insurance>();
 
                 if (lstNewIns != null)

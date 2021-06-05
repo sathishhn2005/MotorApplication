@@ -28,6 +28,10 @@ namespace MotorApp.Controllers
             {
                 ViewBag.UserName = Session["UserName"].ToString();
             }
+            if (Session["RoleId"] != null)
+            {
+                ViewBag.RoleId = Session["RoleId"];
+            }
 
             DateTime PolicyFDate = objMotorModel.PolicyFromDate == Convert.ToDateTime("01-01-0001 12.00.00 AM") ? Convert.ToDateTime("01-01-1753 12.00.00 AM") : objMotorModel.PolicyFromDate;
             DateTime PolicyTDate = objMotorModel.PolicyToDate == Convert.ToDateTime("01-01-0001 12.00.00 AM") ? Convert.ToDateTime("01-01-1753 12.00.00 AM") : objMotorModel.PolicyToDate;
@@ -53,6 +57,10 @@ namespace MotorApp.Controllers
             {
                 ViewBag.UserName = Session["UserName"].ToString();
             }
+            if (Session["RoleId"] != null)
+            {
+                ViewBag.RoleId = Session["RoleId"];
+            }
 
             try
             {
@@ -72,6 +80,10 @@ namespace MotorApp.Controllers
             {
                 ViewBag.UserName = Session["UserName"].ToString();
             }
+            if (Session["RoleId"] != null)
+            {
+                ViewBag.RoleId = Session["RoleId"];
+            }
             return View();
         }
 
@@ -82,6 +94,10 @@ namespace MotorApp.Controllers
             if (Session["UserName"] != null)
             {
                 ViewBag.UserName = Session["UserName"].ToString();
+            }
+            if (Session["RoleId"] != null)
+            {
+                ViewBag.RoleId = Session["RoleId"];
             }
             string InsuranceStatusJson = string.Empty;
             string ErrorMsg = string.Empty;
@@ -126,7 +142,7 @@ namespace MotorApp.Controllers
 
                                 if (ErrorMsg != "Successfully")
                                 {
-                                    ErrorMssage = ErrorMssage+ErrorMsg;
+                                    ErrorMssage = ErrorMssage + ErrorMsg;
                                 }
 
                             }
@@ -146,7 +162,8 @@ namespace MotorApp.Controllers
                         {
                             ViewBag.Message = "Upload Successfully";
                         }
-                        else {
+                        else
+                        {
                             ViewBag.Message = "Upload Successfully, Please Check already exists Policy NOs : " + ErrorMssage;
                         }
 
@@ -206,13 +223,13 @@ namespace MotorApp.Controllers
             objCsvFileBulkUplaod.SumInsured = Convert.ToDecimal(values[19]);
             objCsvFileBulkUplaod.RevisedSumInsured = Convert.ToDecimal(values[20]);
             objCsvFileBulkUplaod.TotalGrossPremium = Convert.ToDecimal(values[21]);
-            objCsvFileBulkUplaod.RevisedGrossPremium= Convert.ToDecimal(values[22]);
+            objCsvFileBulkUplaod.RevisedGrossPremium = Convert.ToDecimal(values[22]);
             objCsvFileBulkUplaod.Geo = values[23];
             objCsvFileBulkUplaod.RenewalStatus = values[24];
             objCsvFileBulkUplaod.MarketingCode = values[25];
             objCsvFileBulkUplaod.UserName = values[26];
             return objCsvFileBulkUplaod;
         }
-       
+
     }
 }

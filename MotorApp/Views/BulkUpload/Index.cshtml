@@ -27,7 +27,7 @@
     <h1 class="h3 mb-0 text-gray-800">Motor Delegate</h1>
     <ol class="breadcrumb my-2">
         <li class="breadcrumb-item">
-            <a href="./">Home</a>
+            Home
         </li>
         <li class="breadcrumb-item">Delegate</li>
         <li class="breadcrumb-item active" aria-current="page">Motor Delegate</li>
@@ -154,7 +154,10 @@
 
     var lstMoter = [];
 
+    $('#btnClear').on('click', function () {
+        window.location.href = "/BulkUpload/Index" //in your case, /employee/empl
 
+    });
     function bulkUpdateStatus(UType) {
 
         if (lstMoter.length > 0) {
