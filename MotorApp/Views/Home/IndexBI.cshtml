@@ -471,37 +471,54 @@
                 alert("Error");
             }
         });
-
-        function initspMorris(SPBarAData, SPBarBData, SPBarBMonthName) {
-            var spBarChart = new Chart(document.getElementById("SpecificProducer"), {
-                "type": "bar",
-                "data": {
-                    "labels": SPBarBMonthName,
-                    "datasets": [{
-                        "label": 'Renewed',
-                        "backgroundColor": '#E65A26',
-                        "borderColor": '#E65A26',
-                        "borderWidth": 1,
-                        "data": SPBarAData,
-                    }, {
-                        "label": 'Available',
-                        "backgroundColor": '#537bc4',
-                        "borderColor": '#537bc4',
-                        "borderWidth": 1,
-                        "data": SPBarBData,
+        var ctx = document.getElementById("SpecificProducer").getContext("2d");
+        window.spBarChart = new Chart(ctx, {
+            "type": "bar",
+            "data": {
+                "labels": [],
+                "datasets": [{
+                    "label": 'Renewed',
+                    "backgroundColor": '#E65A26',
+                    "borderColor": '#E65A26',
+                    "borderWidth": 1,
+                    "data": [],
+                }, {
+                    "label": 'Available',
+                    "backgroundColor": '#537bc4',
+                    "borderColor": '#537bc4',
+                    "borderWidth": 1,
+                    "data": [],
+                }]
+            },
+            "options": {
+                "scales": {
+                    "yAxes": [{
+                        "ticks": {
+                            "beginAtZero": true
+                        }
                     }]
-
-                },
-                "options": {
-                    "scales": {
-                        "yAxes": [{
-                            "ticks": {
-                                "beginAtZero": true
-                            }
-                        }]
-                    }
                 }
-            });
+            }
+        });
+        function initspMorris(SPBarAData, SPBarBData, SPBarBMonthName) {
+            var newDataObject = {
+                "labels": SPBarBMonthName,
+                "datasets": [{
+                    "label": 'Renewed',
+                    "backgroundColor": '#E65A26',
+                    "borderColor": '#E65A26',
+                    "borderWidth": 1,
+                    "data": SPBarAData,
+                }, {
+                    "label": 'Available',
+                    "backgroundColor": '#537bc4',
+                    "borderColor": '#537bc4',
+                    "borderWidth": 1,
+                    "data": SPBarBData,
+                }]
+            }
+            spBarChart.data = newDataObject;
+            window.spBarChart.update();
            // spBarChart.destroy();
         }
         document.getElementById('randomizeData').addEventListener('click', function () {
@@ -514,8 +531,13 @@
                 data: { 'ProducerName': ProducerName, 'BusinessType': BussType, },
                 dataType: "json",
                 success: function (Result) {
-                    //console.log(Result.lst);
+                    
+
                     var res = Result.lst;
+                    //console.log(res);
+                    SPBarAData = [];
+                    SPBarBData = [];
+                    SPBarBMonthName = [];
                     jQuery.each(res, function (key, value) {
 
                         SPBarAData.push(value.a);
