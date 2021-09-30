@@ -14,6 +14,10 @@ namespace MotorApp.Controllers
         // GET: SuperAdmin
         public ActionResult UserRegister()
         {
+            if (Session["UserName"] != null)
+            {
+                ViewBag.UserName = Session["UserName"].ToString();
+            }
             return View();
         }
         [HttpPost]
@@ -22,6 +26,10 @@ namespace MotorApp.Controllers
             try
             {
                 long returnCode = -1;
+                if (Session["UserName"] != null)
+                {
+                    ViewBag.UserName = Session["UserName"].ToString();
+                }
                 if (!string.IsNullOrEmpty(obj.UserName) && !string.IsNullOrEmpty(obj.Role.ToString()))
                 {
 
